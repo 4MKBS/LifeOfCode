@@ -1,0 +1,128 @@
+# General
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+.idea/
+.vscode/
+*.bak
+*.old
+*.orig
+*.rej
+*.patch
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.sqlite3
+*.egg
+*.egg-info/
+dist/
+build/
+*.tox
+*.coverage
+*.hypothesis/
+*.nox/
+
+# C / C++
+*.o
+*.obj
+*.so
+# ignore all .exe file anywhere or any folder in the project
+
+*.exe
+
+*.out
+*.a
+*.lib
+*.dll
+*.dSYM/
+*.pdb
+*.idb
+*.gcno
+*.gcda
+*.stackdump
+*.tlo
+*.tlb
+*.lo
+*.lai
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.out
+*.bsp
+*.iml
+*.classpath
+*.project
+*.settings/
+
+# JavaScript / Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+*.log
+*.env
+*.local
+*.tsbuildinfo
+package-lock.json
+yarn.lock
+
+# Go
+# *.exe
+*.test
+*.out
+*.dll
+*.so
+*.a
+vendor/
+
+# Rust
+target/
+
+# PHP
+*.log
+vendor/
+*.phpunit.result.cache
+composer.lock
+composer.phar
+
+# Shell / Bash
+*.sh~
+*.bash_history
+*.bashrc
+*.zshrc
+*.zsh_history
+*.env
+
+# Visual Studio Code
+.vscode/
+
+# IntelliJ / JetBrains IDEs
+.idea/
+
+# Eclipse IDE
+.classpath
+.project
+.settings/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Other language-specific ignores (e.g., Ruby, Swift)
+.ruby-version
+.ruby-gemset
+*.gem
+*.rbc
