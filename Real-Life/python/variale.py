@@ -59,3 +59,8 @@ print("name:", name)
 print("is_active:", is_active)
 print("user_age:", user_age)
 print("PI:", PI)
+
+e, f, g = "Orange", "Banana", "Cherry"
+print(e)
+print(f)
+print(g)
