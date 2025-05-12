@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fullscreen Text Display</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0d0f0;
+            transition: background-color 0.4s ease;
+        }
+
+        #formContainer {
+            background: #999fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+            width: 320px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .color-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .color-group label {
+            font-size: 14px;
+            margin-right: 10px;
+            color: #555;
+        }
+
+        input[type="color"] {
+            height: 32px;
+            width: 50px;
+            border: none;
+            cursor: pointer;
+            background: none;
+        }
+
+        #displayText {
+            display: none;
+            text-align: center;
+            word-break: break-word;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="formContainer">
+        <h2>Enter Display Info</h2>
+        <input type="text" id="textInput" placeholder="Enter your text here">
+        <input type="number" id="fontSizeInput" placeholder="Font size (e.g. 40)">
+
+        <div class="color-group">
+            <label for="textColor">Text Color:</label>
+            <input type="color" id="textColor" value="#000000">
+        </div>
+
+        <div class="color-group">
+            <label for="bgColor">Background:</label>
+            <input type="color" id="bgColor" value="#ffffff">
+        </div>
+
+        <p><em>Press (Alt + f) Or Double-click anywhere to toggle fullscreen mode</em></p>
+    </div>
+
+    <div id="displayText"></div>
+
+    <script>
+        const formContainer = document.getElementById('formContainer');
+        const textInput = document.getElementById('textInput');
+        const fontSizeInput = document.getElementById('fontSizeInput');
+        const displayText = document.getElementById('displayText');
+        const textColorInput = document.getElementById('textColor');
+        const bgColorInput = document.getElementById('bgColor');
+
+        async function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                let text = textInput.value.trim();
+                let fontSize = fontSizeInput.value.trim();
+                const textColor = textColorInput.value;
+                const bgColor = bgColorInput.value;
+
+                if (!text) {
+                    text = 'No text provided';
+                }
+                if (!fontSize) {
+                    fontSize = 40;
+                }
+
+                displayText.textContent = text;
+                displayText.style.fontSize = `${fontSize}px`;
+                displayText.style.color = textColor;
+                document.body.style.backgroundColor = bgColor;
+
+                displayText.style.display = 'flex';
+                displayText.style.justifyContent = 'center';
+                displayText.style.alignItems = 'center';
+
+                formContainer.style.display = 'none';
+                await document.documentElement.requestFullscreen();
+            } else {
+                displayText.style.display = 'none';
+                formContainer.style.display = 'block';
+                document.body.style.backgroundColor = "#eee349";
+                await document.exitFullscreen();
+            }
+        }
+
+        document.body.ondblclick = toggleFullscreen;
+
+        document.addEventListener('keydown', (event) => {
+            if (event.altKey && event.key.toLowerCase() === 'f') {
+                event.preventDefault(); // Optional: prevent browser behavior
+                toggleFullscreen();
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
