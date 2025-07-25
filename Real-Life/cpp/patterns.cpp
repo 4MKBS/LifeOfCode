@@ -64,6 +64,18 @@ void reverseRightAngleTrianglePattern(int n)
     }
 }
 
+void squarePattern(int n)
+{
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= n; j++)
+        {
+            cout << "* ";
+        }
+        cout << endl;
+    }
+}
+
 int main()
 {
     // patterns Example in C++
@@ -71,9 +83,11 @@ int main()
     cout << "Enter the number of rows: ";
     cin >> n;
 
-    TrianglePattern(n);
-    invertedTrianglePattern(n);
-    rightAngleTrianglePattern(n);
-    reverseRightAngleTrianglePattern(n);
+    // TrianglePattern(n);
+    // invertedTrianglePattern(n);
+    // rightAngleTrianglePattern(n);
+    // reverseRightAngleTrianglePattern(n);
+
+    squarePattern(n);
     return 0;
 }
