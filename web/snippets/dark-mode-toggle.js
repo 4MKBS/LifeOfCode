@@ -1,20 +1,21 @@
-// Dark Mode Toggle Snippet
-// Usage: include a button with id="themeToggle" and optional data-icon-light/dark
-(function(){
+// Theme toggle + small progressive enhancements
+(function() {
   const root = document.documentElement;
   const btn = document.getElementById('themeToggle');
-  if(!btn) return;
+  const yearEl = document.getElementById('year');
+
+  yearEl && (yearEl.textContent = new Date().getFullYear());
+
   const stored = localStorage.getItem('loc-theme');
-  if(stored) root.setAttribute('data-theme', stored);
-  function icon(theme){
-    return theme === 'dark' ? (btn.dataset.iconLight || '☀️') : (btn.dataset.iconDark || '🌙');
+  if (stored) {
+    root.setAttribute('data-theme', stored);
+    if (btn) btn.textContent = stored === 'dark' ? '☀️' : '🌙';
   }
-  btn.textContent = icon(stored || root.getAttribute('data-theme') || 'light');
-  btn.addEventListener('click', () => {
-    const isDark = root.getAttribute('data-theme') === 'dark';
-    const next = isDark ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('loc-theme', next);
-    btn.textContent = icon(next);
+
+  btn && btn.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', current);
+    localStorage.setItem('loc-theme', current);
+    btn.textContent = current === 'dark' ? '☀️' : '🌙';
   });
 })();

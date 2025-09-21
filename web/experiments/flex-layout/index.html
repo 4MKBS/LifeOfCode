@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flexbox Layout Experiment | Life of Code</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Flexbox Layout Experiment</h1>
+        <p>Exploring flexible box behaviors, wrapping, alignment, ordering, and responsiveness.</p>
+    </header>
+
+    <section class="controls" aria-label="Layout controls">
+        <form id="flexForm">
+            <fieldset>
+                <legend>Container Settings</legend>
+                <label>Direction:
+                    <select name="flex-direction">
+                        <option value="row">row</option>
+                        <option value="row-reverse">row-reverse</option>
+                        <option value="column">column</option>
+                        <option value="column-reverse">column-reverse</option>
+                    </select>
+                </label>
+                <label>Wrap:
+                    <select name="flex-wrap">
+                        <option value="nowrap">nowrap</option>
+                        <option value="wrap" selected>wrap</option>
+                        <option value="wrap-reverse">wrap-reverse</option>
+                    </select>
+                </label>
+                <label>Justify Content:
+                    <select name="justify-content">
+                        <option>flex-start</option>
+                        <option>center</option>
+                        <option>flex-end</option>
+                        <option>space-between</option>
+                        <option>space-around</option>
+                        <option>space-evenly</option>
+                    </select>
+                </label>
+                <label>Align Items:
+                    <select name="align-items">
+                        <option>stretch</option>
+                        <option>flex-start</option>
+                        <option>center</option>
+                        <option>flex-end</option>
+                        <option>baseline</option>
+                    </select>
+                </label>
+                <label>Gap:
+                    <input type="range" name="gap" min="0" max="48" value="16" />
+                </label>
+            </fieldset>
+        </form>
+    </section>
+
+    <main class="flex-demo" id="flexDemo">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box grow">4 (grow)</div>
+        <div class="box">5</div>
+        <div class="box order">6 (order)</div>
+        <div class="box">7</div>
+        <div class="box shrink">8 (shrink)</div>
+        <div class="box">9</div>
+    </main>
+
+    <section class="notes">
+        <h2>Notes</h2>
+        <ul>
+            <li>Interactive form updates live flex container styles.</li>
+            <li>Item 4 uses <code>flex: 1 1 160px;</code> to grow.</li>
+            <li>Item 6 has custom <code>order: -1;</code>.</li>
+            <li>Item 8 shrinks aggressively with <code>flex: 0 1 60px;</code>.</li>
+        </ul>
+    </section>
+
+    <footer class="site-footer">
+        <small>Extend this: add align-content, place-content, or nested flex examples.</small>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>
