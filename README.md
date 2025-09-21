@@ -57,6 +57,24 @@ This section contains utility scripts like:
 - Running all scripts at once
 - Setting up environments for competitive coding
 
+### 6. **Web Design** (`web/`)
+
+Front-end practice and design system experiments:
+
+- `vanilla/`: Pure HTML/CSS/JS mini projects (no build tools) – great for fundamentals.
+- `components/`: Reusable markup fragments (navbar, footer, cards, buttons, etc.).
+- `experiments/`: Layout, animation, accessibility, performance experiments.
+- `snippets/`: Copy-ready boilerplate (meta tags, dark-mode toggle, responsive helpers).
+
+Guidelines:
+
+- Keep examples dependency-free unless a subfolder explicitly documents tooling.
+- Prefer semantic HTML and accessible patterns (labels, landmarks, alt text).
+- Use `kebab-case` for file/folder names.
+- Dark mode via CSS custom properties; progressive enhancement only.
+
+> Roadmap ideas: responsive navigation, form best practices, grid vs flex layouts, accessible modal component.
+
 ## 🛠️ Setup Instructions
 
 ### 1. **Clone the Repository**
@@ -68,7 +86,6 @@ git clone https://github.com/4mkbs/lifeofcode.git
 cd lifeofcode
 ```
 
-
 <!-- Feel free to contribute -->
 
 ## 🤝 Contribution Guidelines
@@ -78,37 +95,40 @@ We welcome contributions from everyone! To contribute to **Life of Code**, follo
 0. **Star This Repository**
 
 1. **Fork the Repository**  
-    Click the "Fork" button on the top-right corner of the repository page.
+   Click the "Fork" button on the top-right corner of the repository page.
 
 2. **Clone Your Fork**  
-    Clone your forked repository to your local machine:
-    ```bash
-    git clone https://github.com/4mkbs/lifeofcode.git
-    cd lifeofcode
-    ```
+   Clone your forked repository to your local machine:
+
+   ```bash
+   git clone https://github.com/4mkbs/lifeofcode.git
+   cd lifeofcode
+   ```
 
 3. **Create a Branch**  
-    Create a new branch for your feature or bug fix:
-    ```bash
-    git checkout -b feature-name
-    ```
+   Create a new branch for your feature or bug fix:
+
+   ```bash
+   git checkout -b feature-name
+   ```
 
 4. **Make Changes**  
-    Add your code or documentation changes. Ensure your code follows the repository's structure and style.
+   Add your code or documentation changes. Ensure your code follows the repository's structure and style.
 
 5. **Test Your Changes**  
-    Test your code to ensure it works as expected.
+   Test your code to ensure it works as expected.
 
 6. **Commit and Push**  
-    Commit your changes with a meaningful message:
-    ```bash
-    git add .
-    git commit -m "Add feature-name or Fix issue-name"
-    git push origin feature-name
-    ```
+   Commit your changes with a meaningful message:
+
+   ```bash
+   git add .
+   git commit -m "Add feature-name or Fix issue-name"
+   git push origin feature-name
+   ```
 
 7. **Create a Pull Request**  
-    Go to the original repository and create a pull request from your branch. Provide a clear description of your changes.
+   Go to the original repository and create a pull request from your branch. Provide a clear description of your changes.
 
 ### 📋 Contribution Rules
 

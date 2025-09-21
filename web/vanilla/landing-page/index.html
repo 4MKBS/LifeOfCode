@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Simple responsive landing page demo" />
+    <title>Landing Page | Life of Code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container flex-between">
+            <h1 class="logo">Life<span>Of</span>Code</h1>
+            <nav aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#cta" class="btn primary small">Get Started</a></li>
+                </ul>
+            </nav>
+            <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode">🌙</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="hero">
+            <div class="container grid-2">
+                <div>
+                    <h2>Build. Learn. Iterate.</h2>
+                    <p>A minimal landing page template to practice semantic HTML, modern CSS, and accessible
+                        interactions.</p>
+                    <div class="actions">
+                        <a href="#features" class="btn primary">Explore Features</a>
+                        <a href="#about" class="btn ghost">Learn More</a>
+                    </div>
+                </div>
+                <div class="hero-art" aria-hidden="true">
+                    <div class="shape a"></div>
+                    <div class="shape b"></div>
+                    <div class="shape c"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section">
+            <div class="container">
+                <h3 class="section-title">Features</h3>
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <h4>Semantic Markup</h4>
+                        <p>Readable, accessible structure using native HTML elements.</p>
+                    </article>
+                    <article class="feature-card">
+                        <h4>Responsive Layout</h4>
+                        <p>Mobile-first flex and grid utilities with minimal CSS.</p>
+                    </article>
+                    <article class="feature-card">
+                        <h4>Theme Ready</h4>
+                        <p>Light/Dark mode toggle using CSS variables and JS enhancement.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section alt">
+            <div class="container narrow">
+                <h3 class="section-title">About This Demo</h3>
+                <p>This page is a starting point. Extend it with real content, animations, component abstractions, or
+                    integrate a build pipeline later (Vite, bundlers, etc.). Keep the base version dependency-free for
+                    learning clarity.</p>
+            </div>
+        </section>
+
+        <section id="cta" class="section cta">
+            <div class="container narrow center">
+                <h3>Ready to Contribute?</h3>
+                <p>Fork the repository, add a new component or experiment, and help improve the web section.</p>
+                <a href="https://github.com/4mkbs/lifeofcode" class="btn primary large" target="_blank"
+                    rel="noopener">Contribute Now</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container flex-between">
+            <p>&copy; <span id="year"></span> Life of Code. MIT Licensed.</p>
+            <a href="#hero" class="back-top">Back to top ↑</a>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>

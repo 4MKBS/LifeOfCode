@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid Layout Experiment | Life of Code</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <header>
+        <h1>CSS Grid Layout Experiment</h1>
+        <p>Exploring responsive, auto-fitting panels with graceful degradation.</p>
+    </header>
+
+    <main class="grid-panels">
+        <article class="panel">Panel 1</article>
+        <article class="panel tall">Panel 2 (tall)</article>
+        <article class="panel">Panel 3</article>
+        <article class="panel">Panel 4</article>
+        <article class="panel wide">Panel 5 (wide)</article>
+        <article class="panel">Panel 6</article>
+        <article class="panel">Panel 7</article>
+        <article class="panel">Panel 8</article>
+    </main>
+
+    <section class="notes">
+        <h2>Notes</h2>
+        <ul>
+            <li>Uses <code>repeat(auto-fit, minmax())</code> for responsive columns.</li>
+            <li>Utility classes adjust span using <code>grid-column: span N;</code></li>
+            <li>Fallback: simple flex-wrap if grid unsupported.</li>
+        </ul>
+    </section>
+
+    <footer>
+        <small>Experiment. Extend with masonry variant or subgrid tests.</small>
+    </footer>
+</body>
+
+</html>

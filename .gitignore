@@ -1,3 +1,51 @@
+############################
+# Build / Artifact Ignoring #
+############################
+
+# Compiled C/C++/Rust objects
+**/*.o
+**/*.obj
+**/*.rlib
+**/*.dll
+**/*.so
+**/*.dylib
+
+# Java / JVM
+**/*.class
+**/*.jar
+**/*.war
+**/*.ear
+
+# Python
+__pycache__/
+**/*.py[cod]
+*.pyo
+
+# Node / JS
+node_modules/
+dist/
+build/
+.parcel-cache/
+.vite/
+
+# Logs / Temp
+*.log
+tmp/
+temp/
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Environment / secrets (placeholders only, don't commit real .env)
+.env
+.env.*
+
+# Misc
+coverage/
+reports/
 # General
 *.log
 *.tmp
