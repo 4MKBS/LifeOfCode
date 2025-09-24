@@ -1,12 +1,12 @@
 # Life of Code
 
-Welcome to **Life of Code**, a repository dedicated to solving real-life problems, Data Structures & Algorithms (DSA), and competitive programming challenges in multiple programming languages.(Initial Phase)
+Welcome to **Life of Code**, a repository dedicated to programming language fundamentals, Data Structures & Algorithms (DSA), and competitive programming challenges in multiple programming languages.(Initial Phase)
 
 ## 🚀 Overview
 
 **Life of Code** is a collection of solutions for various problems, categorized into different sections:
 
-- **Real-life problems**: Practical coding challenges like calculators, trackers, and other useful tools.
+- **Fundamentals**: Programming language basics, syntax examples, and core concepts across multiple languages.
 - **Data Structures & Algorithms (DSA)**: Common DSA problems like sorting, searching, trees, graphs, and dynamic programming.
 - **Competitive programming**: Solutions to problems from various platforms such as Codeforces, LeetCode, CodeChef, AtCoder, and HackerRank.
 - **Math**: Solutions to basic and advanced mathematical problems and algorithms.
@@ -16,14 +16,14 @@ The goal of this repository is to have an open, collaborative space for coding p
 
 ## 🌱 Sections
 
-### 1. **Real-life Problems** (`real_life/`)
+### 1. **Fundamentals** (`fundamentals/`)
 
-This section contains practical, real-world solutions, such as:
+This section contains programming language fundamentals and syntax examples across multiple languages:
 
-- Expense trackers
-- Unit converters
-- BMI calculators
-- To-do lists
+- Basic syntax demonstrations (variables, loops, functions, etc.)
+- Language-specific features and idioms
+- Programming concepts implemented in various languages
+- Organized by language (C, C++, Java, JavaScript, PHP, Python, Go, Rust)
 
 ### 2. **Data Structures & Algorithms** (`dsa/`)
 
@@ -43,7 +43,7 @@ This section contains solutions to competitive programming problems from platfor
 - **AtCoder**
 - **HackerRank**
 
-### 4. **Math Problems** (`real_life/math/` and `dsa/math/`)
+### 4. **Math Problems** (`fundamentals/math/` and `dsa/math/`)
 
 Solutions to common and advanced math problems:
 
