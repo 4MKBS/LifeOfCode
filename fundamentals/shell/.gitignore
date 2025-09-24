@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# But don't ignore .sh files
+!*.sh
+
+# Don't ignore directories so Git can look into them
+!*/
+
+# Don't ignore .gitignore itself
+!.gitignore
