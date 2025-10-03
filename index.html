@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life of Code - Learning Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --secondary: #f093fb;
+            --dark: #1a1a2e;
+            --dark-light: #16213e;
+            --light: #eee;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px var(--shadow-dark);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .navigation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .nav-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow-dark);
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .nav-card.fundamentals::before {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .nav-card.dsa::before {
+            background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .nav-card.competitive::before {
+            background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .nav-card.web::before {
+            background: linear-gradient(90deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .nav-card.utility::before {
+            background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%);
+        }
+
+        .nav-card.docs::before {
+            background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .nav-card.reallife::before {
+            background: linear-gradient(90deg, #ff8a80 0%, #ea80fc 100%);
+        }
+
+        .nav-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .nav-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .nav-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .nav-card .folder-path {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .stats-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 3rem;
+        }
+
+        .footer a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Animation delays */
+        .nav-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .nav-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .nav-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .nav-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .nav-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .nav-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .nav-card:nth-child(7) {
+            animation-delay: 0.7s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .navigation-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .nav-card {
+                padding: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .nav-icon {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Dark mode toggle (optional) */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+
+    <div class="container">
+        <header class="header">
+            <h1>🚀 Life of Code</h1>
+            <p>Welcome to my coding journey! Explore different sections of my programming learning adventure, from
+                fundamental concepts to advanced algorithms and practical applications.</p>
+        </header>
+
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Sections</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">8+</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Learning</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Passion</span>
+                </div>
+            </div>
+        </section>
+
+        <nav class="navigation-grid">
+            <a href="fundamentals/" class="nav-card fundamentals">
+                <span class="nav-icon">📚</span>
+                <h3>Fundamentals</h3>
+                <p>Programming language basics, syntax examples, and core concepts across multiple languages including
+                    C, C++, Java, JavaScript, Python, Go, Rust, and PHP.</p>
+                <div class="folder-path">./fundamentals/</div>
+            </a>
+
+            <a href="dsa/" class="nav-card dsa">
+                <span class="nav-icon">🧩</span>
+                <h3>Data Structures & Algorithms</h3>
+                <p>Implementation of essential data structures and algorithms. From arrays and linked lists to advanced
+                    graph algorithms and dynamic programming.</p>
+                <div class="folder-path">./dsa/</div>
+            </a>
+
+            <a href="competitive/" class="nav-card competitive">
+                <span class="nav-icon">🏆</span>
+                <h3>Competitive Programming</h3>
+                <p>Solutions to competitive programming problems from platforms like Codeforces, LeetCode, HackerRank,
+                    and other online judges.</p>
+                <div class="folder-path">./competitive/</div>
+            </a>
+
+            <a href="web/" class="nav-card web">
+                <span class="nav-icon">🌐</span>
+                <h3>Web Development</h3>
+                <p>Front-end development practice with HTML, CSS, and JavaScript. Includes components, experiments, and
+                    responsive design patterns.</p>
+                <div class="folder-path">./web/</div>
+            </a>
+
+            <a href="real-life/" class="nav-card reallife">
+                <span class="nav-icon">🛠️</span>
+                <h3>Real-Life Projects</h3>
+                <p>Practical applications and real-world projects including calculators, expense trackers, games, and
+                    other useful tools.</p>
+                <div class="folder-path">./real-life/</div>
+            </a>
+
+            <a href="Utility/" class="nav-card utility">
+                <span class="nav-icon">⚙️</span>
+                <h3>Utilities & Tools</h3>
+                <p>Helper scripts, automation tools, and utilities for development workflow. Includes formatters,
+                    runners, and system scripts.</p>
+                <div class="folder-path">./Utility/</div>
+            </a>
+
+            <a href="Docs/" class="nav-card docs">
+                <span class="nav-icon">📖</span>
+                <h3>Documentation</h3>
+                <p>Learning notes, guides, references, and documentation for various programming concepts, best
+                    practices, and project standards.</p>
+                <div class="folder-path">./Docs/</div>
+            </a>
+        </nav>
+
+        <footer class="footer">
+            <p>Built with ❤️ for learning • <a href="https://github.com">View on GitHub</a></p>
+            <p>Keep coding, keep growing! 🌱</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const button = document.querySelector('.theme-toggle');
+
+            if (body.style.filter === 'invert(1) hue-rotate(180deg)') {
+                body.style.filter = '';
+                button.textContent = '🌙';
+            } else {
+                body.style.filter = 'invert(1) hue-rotate(180deg)';
+                button.textContent = '☀️';
+            }
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.nav-card');
+
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add click effect
+            cards.forEach(card => {
+                card.addEventListener('click', function (e) {
+                    // Create ripple effect
+                    const ripple = document.createElement('div');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(102, 126, 234, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                    `;
+
+                    this.style.position = 'relative';
+                    this.appendChild(ripple);
+
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>
