@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animations Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .demo-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            background: #f8f9fa;
+        }
+
+        .demo-section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .demo-box {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .animated-element {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Transition Examples */
+        .transition-hover {
+            transition: all 0.3s ease;
+        }
+
+        .transition-hover:hover {
+            transform: scale(1.2);
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-radius: 50%;
+        }
+
+        .transition-complex {
+            transition:
+                transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                background-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .transition-complex:hover {
+            transform: translateY(-10px) rotate(10deg);
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Keyframe Animations */
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-30px);
+            }
+
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .bounce-animation {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rotate-animation {
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .slide-animation {
+            animation: slide 3s ease-in-out infinite;
+        }
+
+        @keyframes colorChange {
+            0% {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+
+            25% {
+                background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            }
+
+            50% {
+                background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            }
+
+            75% {
+                background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+            }
+
+            100% {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+        }
+
+        .color-animation {
+            animation: colorChange 4s ease-in-out infinite;
+        }
+
+        /* Complex Animation */
+        @keyframes complexMove {
+            0% {
+                transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+                border-radius: 8px;
+            }
+
+            25% {
+                transform: translateX(100px) translateY(-50px) rotate(90deg) scale(1.2);
+                border-radius: 50%;
+            }
+
+            50% {
+                transform: translateX(100px) translateY(50px) rotate(180deg) scale(0.8);
+                border-radius: 8px;
+            }
+
+            75% {
+                transform: translateX(-100px) translateY(50px) rotate(270deg) scale(1.1);
+                border-radius: 50%;
+            }
+
+            100% {
+                transform: translateX(0) translateY(0) rotate(360deg) scale(1);
+                border-radius: 8px;
+            }
+        }
+
+        .complex-animation {
+            animation: complexMove 4s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        /* Loading Animations */
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .dots-loader {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: dotPulse 1.4s ease-in-out infinite both;
+        }
+
+        .dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0s;
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Interactive Controls */
+        .controls {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .controls button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .controls button:hover {
+            background: #5a67d8;
+        }
+
+        .controls button.active {
+            background: #28a745;
+        }
+
+        .custom-element {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        /* Card hover effects */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            max-width: 300px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        /* Button animations */
+        .animated-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .animated-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .animated-button:hover::before {
+            left: 100%;
+        }
+
+        .animated-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .best-practices {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .best-practices h3 {
+            color: #0056b3;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn">← Back to CSS Reference</a>
+
+        <h1>CSS Animations & Transitions Demo</h1>
+
+        <div class="demo-section">
+            <h2>CSS Transitions</h2>
+            <div class="code-example">
+                .element {
+                transition: all 0.3s ease;
+                }
+
+                .element:hover {
+                transform: scale(1.2);
+                background-color: #28a745;
+                }</div>
+            <div class="demo-box">
+                <div class="animated-element transition-hover">Hover Me</div>
+                <div class="animated-element transition-complex">Complex</div>
+            </div>
+            <p><em>Hover over the elements to see the transitions!</em></p>
+        </div>
+
+        <div class="demo-section">
+            <h2>Basic Keyframe Animations</h2>
+            <div class="code-example">
+                @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+                40% { transform: translateY(-30px); }
+                60% { transform: translateY(-15px); }
+                }
+
+                .bounce { animation: bounce 2s infinite; }</div>
+            <div class="demo-box">
+                <div class="animated-element bounce-animation">Bounce</div>
+                <div class="animated-element rotate-animation">Rotate</div>
+                <div class="animated-element pulse-animation">Pulse</div>
+                <div class="animated-element slide-animation">Slide</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Color Animation</h2>
+            <div class="code-example">
+                @keyframes colorChange {
+                0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+                25% { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+                50% { background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%); }
+                75% { background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%); }
+                100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+                }</div>
+            <div class="demo-box">
+                <div class="animated-element color-animation">Colors</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Complex Animation</h2>
+            <div class="code-example">
+                @keyframes complexMove {
+                0% { transform: translateX(0) translateY(0) rotate(0deg) scale(1); }
+                25% { transform: translateX(100px) translateY(-50px) rotate(90deg) scale(1.2); }
+                50% { transform: translateX(100px) translateY(50px) rotate(180deg) scale(0.8); }
+                75% { transform: translateX(-100px) translateY(50px) rotate(270deg) scale(1.1); }
+                100% { transform: translateX(0) translateY(0) rotate(360deg) scale(1); }
+                }</div>
+            <div class="demo-box" style="min-height: 300px;">
+                <div class="animated-element complex-animation">Complex</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Loading Animations</h2>
+            <div class="code-example">
+                /* Spinner */
+                .loader {
+                border: 6px solid #f3f3f3;
+                border-top: 6px solid #667eea;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                }
+
+                /* Dots */
+                .dot { animation: dotPulse 1.4s ease-in-out infinite both; }
+                .dot:nth-child(1) { animation-delay: -0.32s; }</div>
+            <div class="demo-box">
+                <div class="loader"></div>
+                <div class="dots-loader">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Interactive Animation Control</h2>
+            <div class="controls">
+                <button onclick="toggleAnimation('bounce')">Bounce</button>
+                <button onclick="toggleAnimation('rotate')">Rotate</button>
+                <button onclick="toggleAnimation('pulse')">Pulse</button>
+                <button onclick="toggleAnimation('colorChange')">Color Change</button>
+                <button onclick="resetAnimation()">Stop All</button>
+            </div>
+            <div class="demo-box">
+                <div class="custom-element" id="controllable">Interactive</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Real-World Example: Card Hover Effect</h2>
+            <div class="code-example">
+                .card {
+                transition: all 0.3s ease;
+                }
+
+                .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+                }</div>
+            <div class="demo-box">
+                <div class="card">
+                    <h3>Hover Card</h3>
+                    <p>This card lifts up when you hover over it, creating a nice interactive effect.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Real-World Example: Animated Button</h2>
+            <div class="code-example">
+                .button::before {
+                content: '';
+                position: absolute;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+                transition: left 0.5s ease;
+                }
+
+                .button:hover::before {
+                left: 100%; /* Creates shine effect */
+                }</div>
+            <div class="demo-box">
+                <button class="animated-button">Click Me!</button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Animation Timing Functions</h2>
+            <div class="code-example">
+                /* Different easing functions */
+                transition-timing-function: ease; /* Default */
+                transition-timing-function: linear; /* Constant speed */
+                transition-timing-function: ease-in; /* Slow start */
+                transition-timing-function: ease-out; /* Slow end */
+                transition-timing-function: ease-in-out; /* Slow start and end */
+                transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Custom */</div>
+            <div class="controls">
+                <button onclick="demonstrateEasing('ease')">Ease</button>
+                <button onclick="demonstrateEasing('linear')">Linear</button>
+                <button onclick="demonstrateEasing('ease-in')">Ease In</button>
+                <button onclick="demonstrateEasing('ease-out')">Ease Out</button>
+                <button onclick="demonstrateEasing('ease-in-out')">Ease In-Out</button>
+                <button onclick="demonstrateEasing('cubic-bezier(0.68, -0.55, 0.265, 1.55)')">Bounce</button>
+            </div>
+            <div class="demo-box">
+                <div class="animated-element" id="easingDemo">Timing</div>
+            </div>
+        </div>
+
+        <div class="best-practices">
+            <h3>🎯 Animation Best Practices:</h3>
+            <ul>
+                <li><strong>Performance first</strong>: Animate transform and opacity for best performance</li>
+                <li><strong>Use appropriate duration</strong>: 200-300ms for micro-interactions, 500ms+ for complex
+                    animations</li>
+                <li><strong>Choose right easing</strong>: ease-out for entrances, ease-in for exits</li>
+                <li><strong>Respect user preferences</strong>: Use prefers-reduced-motion for accessibility</li>
+                <li><strong>Purposeful animations</strong>: Every animation should serve a purpose</li>
+                <li><strong>Don't overdo it</strong>: Too many animations can be distracting</li>
+                <li><strong>Test on different devices</strong>: Ensure smooth performance across devices</li>
+                <li><strong>Use will-change wisely</strong>: Only when needed for performance optimization</li>
+                <li><strong>Consider battery life</strong>: Continuous animations drain battery on mobile</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let currentAnimation = '';
+        const controllableElement = document.getElementById('controllable');
+        const easingDemo = document.getElementById('easingDemo');
+
+        function toggleAnimation(animationType) {
+            // Remove any existing animation classes
+            controllableElement.className = 'custom-element';
+
+            // Clear any inline styles
+            controllableElement.style.animation = '';
+
+            if (currentAnimation === animationType) {
+                // If clicking the same animation, stop it
+                currentAnimation = '';
+                updateButtons();
+                return;
+            }
+
+            currentAnimation = animationType;
+
+            // Apply the animation
+            switch (animationType) {
+                case 'bounce':
+                    controllableElement.style.animation = 'bounce 2s infinite';
+                    break;
+                case 'rotate':
+                    controllableElement.style.animation = 'rotate 2s linear infinite';
+                    break;
+                case 'pulse':
+                    controllableElement.style.animation = 'pulse 1.5s ease-in-out infinite';
+                    break;
+                case 'colorChange':
+                    controllableElement.style.animation = 'colorChange 4s ease-in-out infinite';
+                    break;
+            }
+
+            updateButtons();
+        }
+
+        function resetAnimation() {
+            controllableElement.className = 'custom-element';
+            controllableElement.style.animation = '';
+            currentAnimation = '';
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const buttons = document.querySelectorAll('.controls button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if (button.textContent.toLowerCase() === currentAnimation) {
+                    button.classList.add('active');
+                }
+            });
+        }
+
+        function demonstrateEasing(easingType) {
+            easingDemo.style.transition = 'none';
+            easingDemo.style.transform = 'translateX(0)';
+
+            setTimeout(() => {
+                easingDemo.style.transition = `transform 2s ${easingType}`;
+                easingDemo.style.transform = 'translateX(200px)';
+
+                setTimeout(() => {
+                    easingDemo.style.transform = 'translateX(0)';
+                }, 2000);
+            }, 50);
+        }
+
+        // Accessibility: Respect user's motion preferences
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            // Reduce or disable animations
+            document.documentElement.style.setProperty('--animation-duration', '0.01s');
+        }
+    </script>
+</body>
+
+</html>

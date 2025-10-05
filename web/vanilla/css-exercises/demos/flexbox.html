@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .demo-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            background: #f8f9fa;
+        }
+
+        .demo-section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .flex-container {
+            background: #fff;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            min-height: 200px;
+        }
+
+        .flex-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            margin: 0.25rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Interactive Controls */
+        .controls {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .controls label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+            color: #333;
+            margin: 0.5rem 0;
+        }
+
+        .controls select,
+        .controls input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 0.25rem 0.5rem;
+        }
+
+        /* Demo 1: Basic Flexbox */
+        .demo1 {
+            display: flex;
+        }
+
+        /* Demo 2: Flex Direction */
+        .demo2-row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .demo2-column {
+            display: flex;
+            flex-direction: column;
+            height: 300px;
+        }
+
+        .demo2-row-reverse {
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        /* Demo 3: Justify Content */
+        .demo3-start {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .demo3-center {
+            display: flex;
+            justify-content: center;
+        }
+
+        .demo3-end {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .demo3-between {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .demo3-around {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .demo3-evenly {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        /* Demo 4: Align Items */
+        .demo4-start {
+            display: flex;
+            align-items: flex-start;
+            height: 200px;
+        }
+
+        .demo4-center {
+            display: flex;
+            align-items: center;
+            height: 200px;
+        }
+
+        .demo4-end {
+            display: flex;
+            align-items: flex-end;
+            height: 200px;
+        }
+
+        .demo4-stretch {
+            display: flex;
+            align-items: stretch;
+            height: 200px;
+        }
+
+        .demo4-stretch .flex-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Demo 5: Flex Wrap */
+        .demo5-nowrap {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .demo5-wrap {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .demo5-wrap .flex-item {
+            min-width: 200px;
+        }
+
+        /* Demo 6: Flex Grow/Shrink */
+        .demo6 {
+            display: flex;
+        }
+
+        .demo6 .item1 {
+            flex-grow: 1;
+        }
+
+        .demo6 .item2 {
+            flex-grow: 2;
+        }
+
+        .demo6 .item3 {
+            flex-grow: 1;
+        }
+
+        /* Demo 7: Align Self */
+        .demo7 {
+            display: flex;
+            align-items: center;
+            height: 200px;
+        }
+
+        .demo7 .item1 {
+            align-self: flex-start;
+        }
+
+        .demo7 .item2 {
+            align-self: center;
+        }
+
+        .demo7 .item3 {
+            align-self: flex-end;
+        }
+
+        .demo7 .item4 {
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Demo 8: Gap */
+        .demo8 {
+            display: flex;
+            gap: 2rem;
+        }
+
+        /* Interactive Demo */
+        .interactive-demo {
+            display: flex;
+            transition: all 0.3s ease;
+        }
+
+        /* Real-world Examples */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #343a40;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .navbar .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .card-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            flex: 1 1 300px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .best-practices {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .best-practices h3 {
+            color: #0056b3;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn">← Back to CSS Reference</a>
+
+        <h1>Flexbox Layout Demo</h1>
+
+        <div class="demo-section">
+            <h2>Basic Flexbox</h2>
+            <div class="code-example">
+                .flex-container {
+                display: flex;
+                }</div>
+            <div class="flex-container demo1">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Flex Direction</h2>
+            <div class="code-example">
+                flex-direction: row | row-reverse | column | column-reverse;</div>
+
+            <h3>Row (default)</h3>
+            <div class="flex-container demo2-row">
+                <div class="flex-item">1</div>
+                <div class="flex-item">2</div>
+                <div class="flex-item">3</div>
+            </div>
+
+            <h3>Column</h3>
+            <div class="flex-container demo2-column">
+                <div class="flex-item">1</div>
+                <div class="flex-item">2</div>
+                <div class="flex-item">3</div>
+            </div>
+
+            <h3>Row Reverse</h3>
+            <div class="flex-container demo2-row-reverse">
+                <div class="flex-item">1</div>
+                <div class="flex-item">2</div>
+                <div class="flex-item">3</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Justify Content (Main Axis)</h2>
+            <div class="code-example">
+                justify-content: flex-start | center | flex-end | space-between | space-around | space-evenly;</div>
+
+            <h3>Flex Start</h3>
+            <div class="flex-container demo3-start">
+                <div class="flex-item">1</div>
+                <div class="flex-item">2</div>
+                <div class="flex-item">3</div>
+            </div>
+
+            <h3>Center</h3>
+            <div class="flex-container demo3-center">
+                <div class="flex-item">1</div>
+                <div class="flex-item">2</div>
+                <div class="flex-item">3</div>
+            </div>
+
+            <h3>Space Between</h3>
+            <div class="flex-container demo3-between">
+                <div class="flex-item">1</div>
+                <div class="flex-item">2</div>
+                <div class="flex-item">3</div>
+            </div>
+
+            <h3>Space Around</h3>
+            <div class="flex-container demo3-around">
+                <div class="flex-item">1</div>
+                <div class="flex-item">2</div>
+                <div class="flex-item">3</div>
+            </div>
+
+            <h3>Space Evenly</h3>
+            <div class="flex-container demo3-evenly">
+                <div class="flex-item">1</div>
+                <div class="flex-item">2</div>
+                <div class="flex-item">3</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Align Items (Cross Axis)</h2>
+            <div class="code-example">
+                align-items: flex-start | center | flex-end | stretch | baseline;</div>
+
+            <h3>Flex Start</h3>
+            <div class="flex-container demo4-start">
+                <div class="flex-item">Short</div>
+                <div class="flex-item">Much longer content here</div>
+                <div class="flex-item">Medium</div>
+            </div>
+
+            <h3>Center</h3>
+            <div class="flex-container demo4-center">
+                <div class="flex-item">Short</div>
+                <div class="flex-item">Much longer content here</div>
+                <div class="flex-item">Medium</div>
+            </div>
+
+            <h3>Stretch</h3>
+            <div class="flex-container demo4-stretch">
+                <div class="flex-item">Short</div>
+                <div class="flex-item">Much longer content here</div>
+                <div class="flex-item">Medium</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Flex Wrap</h2>
+            <div class="code-example">
+                flex-wrap: nowrap | wrap | wrap-reverse;</div>
+
+            <h3>No Wrap (default)</h3>
+            <div class="flex-container demo5-nowrap">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+                <div class="flex-item">Item 4</div>
+                <div class="flex-item">Item 5</div>
+            </div>
+
+            <h3>Wrap</h3>
+            <div class="flex-container demo5-wrap">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+                <div class="flex-item">Item 4</div>
+                <div class="flex-item">Item 5</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Flex Grow</h2>
+            <div class="code-example">
+                .item1 { flex-grow: 1; }
+                .item2 { flex-grow: 2; }
+                .item3 { flex-grow: 1; }</div>
+            <div class="flex-container demo6">
+                <div class="flex-item item1">Flex: 1</div>
+                <div class="flex-item item2">Flex: 2</div>
+                <div class="flex-item item3">Flex: 1</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Align Self</h2>
+            <div class="code-example">
+                .item1 { align-self: flex-start; }
+                .item2 { align-self: center; }
+                .item3 { align-self: flex-end; }
+                .item4 { align-self: stretch; }</div>
+            <div class="flex-container demo7">
+                <div class="flex-item item1">Start</div>
+                <div class="flex-item item2">Center</div>
+                <div class="flex-item item3">End</div>
+                <div class="flex-item item4">Stretch</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Gap Property</h2>
+            <div class="code-example">
+                .flex-container {
+                display: flex;
+                gap: 2rem;
+                }</div>
+            <div class="flex-container demo8">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Interactive Flexbox Playground</h2>
+            <div class="controls">
+                <label>Flex Direction:</label>
+                <select id="flexDirection">
+                    <option value="row">row</option>
+                    <option value="row-reverse">row-reverse</option>
+                    <option value="column">column</option>
+                    <option value="column-reverse">column-reverse</option>
+                </select><br>
+
+                <label>Justify Content:</label>
+                <select id="justifyContent">
+                    <option value="flex-start">flex-start</option>
+                    <option value="center">center</option>
+                    <option value="flex-end">flex-end</option>
+                    <option value="space-between">space-between</option>
+                    <option value="space-around">space-around</option>
+                    <option value="space-evenly">space-evenly</option>
+                </select><br>
+
+                <label>Align Items:</label>
+                <select id="alignItems">
+                    <option value="stretch">stretch</option>
+                    <option value="flex-start">flex-start</option>
+                    <option value="center">center</option>
+                    <option value="flex-end">flex-end</option>
+                </select><br>
+
+                <label>Flex Wrap:</label>
+                <select id="flexWrap">
+                    <option value="nowrap">nowrap</option>
+                    <option value="wrap">wrap</option>
+                    <option value="wrap-reverse">wrap-reverse</option>
+                </select>
+            </div>
+
+            <div class="flex-container interactive-demo" id="playground" style="height: 250px;">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+                <div class="flex-item">Item 4</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Real-World Example: Navbar</h2>
+            <div class="code-example">
+                .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                }
+
+                .nav-links {
+                display: flex;
+                gap: 2rem;
+                }</div>
+            <nav class="navbar">
+                <div class="logo">Brand</div>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="demo-section">
+            <h2>Real-World Example: Card Layout</h2>
+            <div class="code-example">
+                .card-layout {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem;
+                }
+
+                .card {
+                flex: 1 1 300px; /* grow shrink basis */
+                }</div>
+            <div class="card-layout">
+                <div class="card">
+                    <h3>Card 1</h3>
+                    <p>This is a flexible card that adapts to available space. Minimum width is 300px.</p>
+                </div>
+                <div class="card">
+                    <h3>Card 2</h3>
+                    <p>Cards will wrap to new lines when space is limited, maintaining readability.</p>
+                </div>
+                <div class="card">
+                    <h3>Card 3</h3>
+                    <p>The flex-basis sets the initial size before growing or shrinking.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="best-practices">
+            <h3>🎯 Flexbox Best Practices:</h3>
+            <ul>
+                <li><strong>Use for 1D layouts</strong>: Flexbox excels at single-dimension layouts</li>
+                <li><strong>Mobile-first approach</strong>: Start with mobile layout, then enhance</li>
+                <li><strong>Combine flex properties</strong>: Use shorthand like flex: 1 1 300px</li>
+                <li><strong>Mind the main/cross axes</strong>: Understanding axes prevents confusion</li>
+                <li><strong>Use gap over margins</strong>: Gap property is more predictable</li>
+                <li><strong>Accessibility first</strong>: Ensure logical tab order isn't disrupted</li>
+                <li><strong>Fallback support</strong>: Consider older browsers if needed</li>
+                <li><strong>Performance matters</strong>: Flexbox can be performance-intensive with many items</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Interactive playground
+        const playground = document.getElementById('playground');
+        const flexDirection = document.getElementById('flexDirection');
+        const justifyContent = document.getElementById('justifyContent');
+        const alignItems = document.getElementById('alignItems');
+        const flexWrap = document.getElementById('flexWrap');
+
+        function updatePlayground() {
+            playground.style.flexDirection = flexDirection.value;
+            playground.style.justifyContent = justifyContent.value;
+            playground.style.alignItems = alignItems.value;
+            playground.style.flexWrap = flexWrap.value;
+        }
+
+        flexDirection.addEventListener('change', updatePlayground);
+        justifyContent.addEventListener('change', updatePlayground);
+        alignItems.addEventListener('change', updatePlayground);
+        flexWrap.addEventListener('change', updatePlayground);
+    </script>
+</body>
+
+</html>

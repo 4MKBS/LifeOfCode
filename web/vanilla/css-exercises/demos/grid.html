@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .demo-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            background: #f8f9fa;
+        }
+
+        .demo-section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .grid-container {
+            background: #fff;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            gap: 10px;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+
+        /* Basic Grid */
+        .grid-basic {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 100px);
+        }
+
+        /* Grid with different column sizes */
+        .grid-columns {
+            display: grid;
+            grid-template-columns: 200px 1fr 100px;
+            grid-template-rows: repeat(2, 80px);
+        }
+
+        /* Grid areas */
+        .grid-areas {
+            display: grid;
+            grid-template-areas:
+                "header header header"
+                "sidebar main main"
+                "footer footer footer";
+            grid-template-columns: 200px 1fr 1fr;
+            grid-template-rows: 80px 200px 60px;
+        }
+
+        .header {
+            grid-area: header;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+        }
+
+        .main {
+            grid-area: main;
+        }
+
+        .footer {
+            grid-area: footer;
+        }
+
+        /* Grid line placement */
+        .grid-lines {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 80px);
+        }
+
+        .span-item {
+            grid-column: 2 / 4;
+            grid-row: 1 / 3;
+        }
+
+        /* Auto-fit and auto-fill */
+        .grid-responsive {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Nested grids */
+        .nested-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .nested-item {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .nested-item .grid-item {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            min-height: 40px;
+            font-size: 0.8rem;
+        }
+
+        /* Real-world layout examples */
+        .website-layout {
+            display: grid;
+            grid-template-areas:
+                "header header header"
+                "nav content aside"
+                "footer footer footer";
+            grid-template-columns: 200px 1fr 200px;
+            grid-template-rows: 80px 1fr 60px;
+            min-height: 400px;
+            gap: 10px;
+        }
+
+        .website-layout .header {
+            grid-area: header;
+            background: #343a40;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .website-layout .nav {
+            grid-area: nav;
+            background: #6c757d;
+            color: white;
+            padding: 1rem;
+        }
+
+        .website-layout .content {
+            grid-area: content;
+            background: #f8f9fa;
+            padding: 1rem;
+        }
+
+        .website-layout .aside {
+            grid-area: aside;
+            background: #e9ecef;
+            padding: 1rem;
+        }
+
+        .website-layout .footer {
+            grid-area: footer;
+            background: #343a40;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Card grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Image gallery grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Interactive controls */
+        .controls {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .controls label {
+            display: inline-block;
+            width: 180px;
+            font-weight: bold;
+            color: #333;
+            margin: 0.5rem 0;
+        }
+
+        .controls input,
+        .controls select {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 0.25rem 0.5rem;
+            width: 200px;
+        }
+
+        .interactive-grid {
+            display: grid;
+            gap: 10px;
+            transition: all 0.3s ease;
+            min-height: 300px;
+        }
+
+        .best-practices {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .best-practices h3 {
+            color: #0056b3;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn">← Back to CSS Reference</a>
+
+        <h1>CSS Grid Layout Demo</h1>
+
+        <div class="demo-section">
+            <h2>Basic Grid</h2>
+            <div class="code-example">
+                .grid-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 100px);
+                gap: 10px;
+                }</div>
+            <div class="grid-container grid-basic">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Different Column Sizes</h2>
+            <div class="code-example">
+                grid-template-columns: 200px 1fr 100px;
+                /* Fixed - Flexible - Fixed */</div>
+            <div class="grid-container grid-columns">
+                <div class="grid-item">200px Fixed</div>
+                <div class="grid-item">1fr Flexible</div>
+                <div class="grid-item">100px Fixed</div>
+                <div class="grid-item">Second Row</div>
+                <div class="grid-item">Expands</div>
+                <div class="grid-item">Fixed</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Grid Template Areas</h2>
+            <div class="code-example">
+                grid-template-areas:
+                "header header header"
+                "sidebar main main"
+                "footer footer footer";
+
+                .header { grid-area: header; }
+                .sidebar { grid-area: sidebar; }</div>
+            <div class="grid-container grid-areas">
+                <div class="grid-item header">Header</div>
+                <div class="grid-item sidebar">Sidebar</div>
+                <div class="grid-item main">Main Content</div>
+                <div class="grid-item footer">Footer</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Grid Line Placement</h2>
+            <div class="code-example">
+                .span-item {
+                grid-column: 2 / 4; /* From line 2 to line 4 */
+                grid-row: 1 / 3; /* From line 1 to line 3 */
+                }</div>
+            <div class="grid-container grid-lines">
+                <div class="grid-item">1</div>
+                <div class="grid-item span-item">Spans 2 columns & 2 rows</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+                <div class="grid-item">7</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Responsive Grid (Auto-fit)</h2>
+            <div class="code-example">
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                /* Automatically adjusts number of columns based on available space */</div>
+            <div class="grid-container grid-responsive">
+                <div class="grid-item">Item 1</div>
+                <div class="grid-item">Item 2</div>
+                <div class="grid-item">Item 3</div>
+                <div class="grid-item">Item 4</div>
+                <div class="grid-item">Item 5</div>
+                <div class="grid-item">Item 6</div>
+            </div>
+            <p><em>Resize your browser to see the responsive behavior!</em></p>
+        </div>
+
+        <div class="demo-section">
+            <h2>Nested Grids</h2>
+            <div class="code-example">
+                .nested-item {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                }</div>
+            <div class="grid-container nested-grid">
+                <div class="grid-item">Simple Item</div>
+                <div class="nested-item">
+                    <div class="grid-item">A</div>
+                    <div class="grid-item">B</div>
+                    <div class="grid-item">C</div>
+                    <div class="grid-item">D</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Interactive Grid Playground</h2>
+            <div class="controls">
+                <label>Columns:</label>
+                <input type="text" id="gridColumns" value="repeat(3, 1fr)" placeholder="e.g., repeat(3, 1fr)"><br>
+
+                <label>Rows:</label>
+                <input type="text" id="gridRows" value="repeat(2, 100px)" placeholder="e.g., repeat(2, 100px)"><br>
+
+                <label>Gap:</label>
+                <input type="range" id="gridGap" min="0" max="50" value="10"> <span id="gapValue">10px</span><br>
+
+                <button onclick="updateGrid()"
+                    style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Apply
+                    Changes</button>
+                <button onclick="resetGrid()"
+                    style="background: #6c757d; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; margin-left: 0.5rem;">Reset</button>
+            </div>
+
+            <div class="grid-container interactive-grid" id="playground">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Real-World Example: Website Layout</h2>
+            <div class="code-example">
+                .website-layout {
+                display: grid;
+                grid-template-areas:
+                "header header header"
+                "nav content aside"
+                "footer footer footer";
+                grid-template-columns: 200px 1fr 200px;
+                grid-template-rows: 80px 1fr 60px;
+                }</div>
+            <div class="website-layout">
+                <div class="header">Website Header</div>
+                <div class="nav">
+                    <h4>Navigation</h4>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin: 0.5rem 0;">Home</li>
+                        <li style="margin: 0.5rem 0;">About</li>
+                        <li style="margin: 0.5rem 0;">Services</li>
+                        <li style="margin: 0.5rem 0;">Contact</li>
+                    </ul>
+                </div>
+                <div class="content">
+                    <h3>Main Content</h3>
+                    <p>This is the main content area. It takes up the most space and is flexible.</p>
+                </div>
+                <div class="aside">
+                    <h4>Sidebar</h4>
+                    <p>Related links, ads, or additional info.</p>
+                </div>
+                <div class="footer">Website Footer</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Real-World Example: Card Grid</h2>
+            <div class="code-example">
+                .card-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                }</div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">Feature 1</div>
+                    <div class="card-body">
+                        <p>Responsive card layout that adapts to screen size. Cards maintain minimum width of 300px.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Feature 2</div>
+                    <div class="card-body">
+                        <p>Grid automatically calculates the optimal number of columns based on available space.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Feature 3</div>
+                    <div class="card-body">
+                        <p>Perfect for dashboard layouts, product grids, or any content that needs flexible arrangement.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Real-World Example: Image Gallery</h2>
+            <div class="code-example">
+                .gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
+                }
+
+                .gallery-item {
+                aspect-ratio: 1; /* Maintains square aspect */
+                }</div>
+            <div class="gallery-grid">
+                <div class="gallery-item">Image 1</div>
+                <div class="gallery-item">Image 2</div>
+                <div class="gallery-item">Image 3</div>
+                <div class="gallery-item">Image 4</div>
+                <div class="gallery-item">Image 5</div>
+                <div class="gallery-item">Image 6</div>
+            </div>
+        </div>
+
+        <div class="best-practices">
+            <h3>🎯 CSS Grid Best Practices:</h3>
+            <ul>
+                <li><strong>Use for 2D layouts</strong>: Grid excels when you need both rows and columns</li>
+                <li><strong>Start with template areas</strong>: Easier to visualize and maintain</li>
+                <li><strong>Combine with Flexbox</strong>: Use Grid for layout, Flexbox for components</li>
+                <li><strong>Mobile-first approach</strong>: Start simple, add complexity for larger screens</li>
+                <li><strong>Mind the implicit grid</strong>: Grid creates tracks automatically if needed</li>
+                <li><strong>Use fr units wisely</strong>: They share available space after fixed sizes</li>
+                <li><strong>Accessibility matters</strong>: Visual order should match document order</li>
+                <li><strong>Browser support</strong>: Modern browsers have excellent support</li>
+                <li><strong>Performance</strong>: Grid is very performant for complex layouts</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Interactive playground
+        const playground = document.getElementById('playground');
+        const gridColumns = document.getElementById('gridColumns');
+        const gridRows = document.getElementById('gridRows');
+        const gridGap = document.getElementById('gridGap');
+        const gapValue = document.getElementById('gapValue');
+
+        // Update gap value display
+        gridGap.addEventListener('input', function () {
+            gapValue.textContent = this.value + 'px';
+        });
+
+        function updateGrid() {
+            try {
+                playground.style.gridTemplateColumns = gridColumns.value;
+                playground.style.gridTemplateRows = gridRows.value;
+                playground.style.gap = gridGap.value + 'px';
+            } catch (error) {
+                alert('Invalid CSS values. Please check your syntax.');
+            }
+        }
+
+        function resetGrid() {
+            gridColumns.value = 'repeat(3, 1fr)';
+            gridRows.value = 'repeat(2, 100px)';
+            gridGap.value = '10';
+            gapValue.textContent = '10px';
+            updateGrid();
+        }
+
+        // Initialize
+        updateGrid();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Selectors Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .demo-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            background: #f8f9fa;
+        }
+
+        .demo-section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .result-box {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        /* Demo Styles for Selectors */
+
+        /* Type Selector Demo */
+        p {
+            color: #333;
+            margin: 0.5rem 0;
+        }
+
+        /* Class Selector Demo */
+        .highlight {
+            background-color: #fff3cd;
+            padding: 0.5rem;
+            border-left: 4px solid #ffc107;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 0.5rem;
+            border-left: 4px solid #dc3545;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 0.5rem;
+            border-left: 4px solid #28a745;
+        }
+
+        /* ID Selector Demo */
+        #unique-element {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Descendant Selector Demo */
+        .navigation ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .navigation ul li {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        /* Child Selector Demo */
+        .parent>.direct-child {
+            background: #28a745;
+            color: white;
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            border-radius: 4px;
+        }
+
+        /* Adjacent Sibling Demo */
+        h3+p {
+            color: #667eea;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        /* General Sibling Demo */
+        .trigger~.affected {
+            background: #ffc107;
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            border-radius: 4px;
+        }
+
+        /* Attribute Selector Demo */
+        input[type="text"] {
+            border: 2px solid #667eea;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin: 0.25rem;
+        }
+
+        input[type="email"] {
+            border: 2px solid #28a745;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin: 0.25rem;
+        }
+
+        a[href^="https://"] {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        a[href$=".pdf"] {
+            color: #dc3545;
+            text-decoration: none;
+        }
+
+        a[href$=".pdf"]::after {
+            content: " 📄";
+        }
+
+        /* Pseudo-class Demo */
+        .hover-demo {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hover-demo:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .focus-demo {
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0.75rem;
+            border: 2px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .focus-demo:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+        }
+
+        /* nth-child Demo */
+        .list-demo li:nth-child(odd) {
+            background: #f8f9fa;
+        }
+
+        .list-demo li:nth-child(even) {
+            background: #e9ecef;
+        }
+
+        .list-demo li:nth-child(3n) {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Pseudo-element Demo */
+        .quote {
+            font-style: italic;
+            position: relative;
+            padding: 1rem 2rem;
+            margin: 1rem 0;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 3rem;
+            color: #667eea;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .quote::after {
+            content: '"';
+            font-size: 3rem;
+            color: #667eea;
+            position: absolute;
+            right: 0;
+            bottom: -1rem;
+        }
+
+        /* Specificity Demo */
+        .specificity-demo p {
+            color: blue;
+            /* 0,0,1,1 */
+        }
+
+        .specificity-demo .class-demo {
+            color: green;
+            /* 0,0,2,0 */
+        }
+
+        #specific {
+            color: red;
+            /* 0,1,0,0 */
+        }
+
+        .list-demo {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .list-demo li {
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            border-radius: 4px;
+        }
+
+        .best-practices {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .best-practices h3 {
+            color: #0056b3;
+            margin-bottom: 1rem;
+        }
+
+        .best-practices ul {
+            margin-left: 1.5rem;
+        }
+
+        .best-practices li {
+            margin: 0.5rem 0;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn">← Back to CSS Reference</a>
+
+        <h1>CSS Selectors Demo</h1>
+
+        <div class="demo-section">
+            <h2>Type Selectors</h2>
+            <div class="code-example">
+                p {
+                color: #333;
+                margin: 0.5rem 0;
+                }</div>
+            <div class="result-box">
+                <p>This paragraph is styled with a type selector.</p>
+                <p>All paragraph elements get the same styling.</p>
+                <p>Type selectors have low specificity but wide reach.</p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Class Selectors</h2>
+            <div class="code-example">
+                .highlight { background-color: #fff3cd; }
+                .error { background-color: #f8d7da; }
+                .success { background-color: #d4edda; }</div>
+            <div class="result-box">
+                <div class="highlight">This is highlighted content using .highlight class</div>
+                <div class="error">This is an error message using .error class</div>
+                <div class="success">This is a success message using .success class</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>ID Selector</h2>
+            <div class="code-example">
+                #unique-element {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 1rem;
+                }</div>
+            <div class="result-box">
+                <div id="unique-element">This element has a unique ID and special styling</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Descendant Selector</h2>
+            <div class="code-example">
+                .navigation ul li {
+                background: #667eea;
+                color: white;
+                padding: 0.5rem 1rem;
+                }</div>
+            <div class="result-box">
+                <nav class="navigation">
+                    <ul>
+                        <li>Home</li>
+                        <li>About</li>
+                        <li>Services</li>
+                        <li>Contact</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Child Selector</h2>
+            <div class="code-example">
+                .parent > .direct-child {
+                background: #28a745;
+                color: white;
+                }</div>
+            <div class="result-box">
+                <div class="parent">
+                    <div class="direct-child">Direct child - gets styling</div>
+                    <div>
+                        <div class="direct-child">Nested child - no styling</div>
+                    </div>
+                    <div class="direct-child">Another direct child - gets styling</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Adjacent Sibling Selector</h2>
+            <div class="code-example">
+                h3 + p {
+                color: #667eea;
+                font-weight: bold;
+                font-style: italic;
+                }</div>
+            <div class="result-box">
+                <h3>This is a heading</h3>
+                <p>This paragraph immediately follows the h3 and gets special styling.</p>
+                <p>This paragraph doesn't get the styling because it's not adjacent to h3.</p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>General Sibling Selector</h2>
+            <div class="code-example">
+                .trigger ~ .affected {
+                background: #ffc107;
+                padding: 0.5rem;
+                }</div>
+            <div class="result-box">
+                <div class="trigger">Trigger element</div>
+                <div class="affected">This sibling is affected</div>
+                <div>Regular div</div>
+                <div class="affected">This sibling is also affected</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Attribute Selectors</h2>
+            <div class="code-example">
+                input[type="text"] { border: 2px solid #667eea; }
+                input[type="email"] { border: 2px solid #28a745; }
+                a[href^="https://"] { color: #28a745; }
+                a[href$=".pdf"]::after { content: " 📄"; }</div>
+            <div class="result-box">
+                <input type="text" placeholder="Text input">
+                <input type="email" placeholder="Email input">
+                <br><br>
+                <a href="https://example.com">Secure link</a><br>
+                <a href="document.pdf">PDF document</a><br>
+                <a href="http://example.com">Regular link</a>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Pseudo-classes</h2>
+            <div class="code-example">
+                .hover-demo:hover {
+                background: #667eea;
+                color: white;
+                transform: scale(1.05);
+                }
+
+                .focus-demo:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+                }</div>
+            <div class="result-box">
+                <div class="hover-demo">Hover over me!</div>
+                <input type="text" class="focus-demo" placeholder="Click to focus">
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>nth-child Selectors</h2>
+            <div class="code-example">
+                li:nth-child(odd) { background: #f8f9fa; }
+                li:nth-child(even) { background: #e9ecef; }
+                li:nth-child(3n) { color: #667eea; font-weight: bold; }</div>
+            <div class="result-box">
+                <ul class="list-demo">
+                    <li>Item 1 (odd)</li>
+                    <li>Item 2 (even)</li>
+                    <li>Item 3 (odd + 3n)</li>
+                    <li>Item 4 (even)</li>
+                    <li>Item 5 (odd)</li>
+                    <li>Item 6 (even + 3n)</li>
+                    <li>Item 7 (odd)</li>
+                    <li>Item 8 (even)</li>
+                    <li>Item 9 (odd + 3n)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Pseudo-elements</h2>
+            <div class="code-example">
+                .quote::before { content: '"'; font-size: 3rem; }
+                .quote::after { content: '"'; font-size: 3rem; }</div>
+            <div class="result-box">
+                <p class="quote">This quote is automatically wrapped with quotation marks using pseudo-elements.</p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Specificity Example</h2>
+            <div class="code-example">
+                .specificity-demo p { color: blue; } /* 0,0,1,1 */
+                .specificity-demo .class-demo { color: green; } /* 0,0,2,0 */
+                #specific { color: red; } /* 0,1,0,0 */</div>
+            <div class="result-box">
+                <div class="specificity-demo">
+                    <p>This paragraph is blue (lowest specificity)</p>
+                    <p class="class-demo">This paragraph is green (higher specificity)</p>
+                    <p class="class-demo" id="specific">This paragraph is red (highest specificity)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="best-practices">
+            <h3>🎯 CSS Selector Best Practices:</h3>
+            <ul>
+                <li><strong>Keep specificity low</strong>: Use classes over IDs for styling</li>
+                <li><strong>Avoid over-qualifying</strong>: Don't use div.class when .class is enough</li>
+                <li><strong>Use semantic selectors</strong>: Choose selectors that reflect content meaning</li>
+                <li><strong>Minimize nesting</strong>: Deep nesting makes CSS hard to maintain</li>
+                <li><strong>Group related selectors</strong>: Use comma separation for efficiency</li>
+                <li><strong>Use attribute selectors wisely</strong>: Great for form inputs and state</li>
+                <li><strong>Leverage pseudo-classes</strong>: Better UX with :hover, :focus, :active</li>
+                <li><strong>Plan for maintainability</strong>: Use consistent naming conventions</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

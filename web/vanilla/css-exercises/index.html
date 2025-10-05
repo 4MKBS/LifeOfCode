@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>CSS Properties & Concepts Reference</h1>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#selectors">Selectors</a></li>
+                <li><a href="#box-model">Box Model</a></li>
+                <li><a href="#typography">Typography</a></li>
+                <li><a href="#colors-backgrounds">Colors & Backgrounds</a></li>
+                <li><a href="#layout">Layout</a></li>
+                <li><a href="#flexbox">Flexbox</a></li>
+                <li><a href="#grid">Grid</a></li>
+                <li><a href="#animations">Animations</a></li>
+                <li><a href="#responsive">Responsive Design</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="selectors">
+            <h2>CSS Selectors</h2>
+            <ul>
+                <li><code>element</code> - Type selector</li>
+                <li><code>.class</code> - Class selector</li>
+                <li><code>#id</code> - ID selector</li>
+                <li><code>*</code> - Universal selector</li>
+                <li><code>element, element</code> - Group selector</li>
+                <li><code>element element</code> - Descendant selector</li>
+                <li><code>element > element</code> - Child selector</li>
+                <li><code>element + element</code> - Adjacent sibling</li>
+                <li><code>element ~ element</code> - General sibling</li>
+                <li><code>[attribute]</code> - Attribute selector</li>
+                <li><code>:hover, :focus, :active</code> - Pseudo-classes</li>
+                <li><code>::before, ::after</code> - Pseudo-elements</li>
+            </ul>
+            <a href="demos/selectors.html" class="demo-link">🚀 View Live Demo</a>
+        </section>
+
+        <section id="box-model">
+            <h2>Box Model</h2>
+            <ul>
+                <li><code>width, height</code> - Element dimensions</li>
+                <li><code>padding</code> - Inner spacing</li>
+                <li><code>margin</code> - Outer spacing</li>
+                <li><code>border</code> - Element border</li>
+                <li><code>box-sizing</code> - Box model calculation</li>
+                <li><code>overflow</code> - Content overflow handling</li>
+                <li><code>min-width, max-width</code> - Size constraints</li>
+                <li><code>min-height, max-height</code> - Height constraints</li>
+            </ul>
+            <a href="demos/box-model.html" class="demo-link">🚀 View Live Demo</a>
+        </section>
+
+        <section id="typography">
+            <h2>Typography</h2>
+            <ul>
+                <li><code>font-family</code> - Font selection</li>
+                <li><code>font-size</code> - Text size</li>
+                <li><code>font-weight</code> - Text weight</li>
+                <li><code>font-style</code> - Text style</li>
+                <li><code>line-height</code> - Line spacing</li>
+                <li><code>letter-spacing</code> - Character spacing</li>
+                <li><code>word-spacing</code> - Word spacing</li>
+                <li><code>text-align</code> - Text alignment</li>
+                <li><code>text-decoration</code> - Text decoration</li>
+                <li><code>text-transform</code> - Text transformation</li>
+                <li><code>text-indent</code> - First line indent</li>
+                <li><code>white-space</code> - Whitespace handling</li>
+            </ul>
+            <a href="demos/typography.html" class="demo-link">🚀 View Live Demo</a>
+        </section>
+
+        <section id="colors-backgrounds">
+            <h2>Colors & Backgrounds</h2>
+            <ul>
+                <li><code>color</code> - Text color</li>
+                <li><code>background-color</code> - Background color</li>
+                <li><code>background-image</code> - Background image</li>
+                <li><code>background-repeat</code> - Image repeat</li>
+                <li><code>background-position</code> - Image position</li>
+                <li><code>background-size</code> - Image size</li>
+                <li><code>background-attachment</code> - Scroll behavior</li>
+                <li><code>linear-gradient()</code> - Linear gradients</li>
+                <li><code>radial-gradient()</code> - Radial gradients</li>
+                <li><code>opacity</code> - Element transparency</li>
+                <li><code>rgba(), hsla()</code> - Transparent colors</li>
+            </ul>
+            <a href="demos/colors-backgrounds.html" class="demo-link">🚀 View Live Demo</a>
+        </section>
+
+        <section id="layout">
+            <h2>Layout & Positioning</h2>
+            <ul>
+                <li><code>display</code> - Display type</li>
+                <li><code>position</code> - Positioning method</li>
+                <li><code>top, right, bottom, left</code> - Position offsets</li>
+                <li><code>z-index</code> - Stacking order</li>
+                <li><code>float</code> - Element floating</li>
+                <li><code>clear</code> - Float clearing</li>
+                <li><code>visibility</code> - Element visibility</li>
+                <li><code>clip-path</code> - Element clipping</li>
+            </ul>
+            <a href="demos/layout.html" class="demo-link">🚀 View Live Demo</a>
+        </section>
+
+        <section id="flexbox">
+            <h2>Flexbox</h2>
+            <ul>
+                <li><code>display: flex</code> - Flex container</li>
+                <li><code>flex-direction</code> - Main axis direction</li>
+                <li><code>justify-content</code> - Main axis alignment</li>
+                <li><code>align-items</code> - Cross axis alignment</li>
+                <li><code>align-content</code> - Multi-line alignment</li>
+                <li><code>flex-wrap</code> - Wrapping behavior</li>
+                <li><code>flex-grow, flex-shrink</code> - Flex factors</li>
+                <li><code>flex-basis</code> - Initial size</li>
+                <li><code>align-self</code> - Individual alignment</li>
+                <li><code>gap</code> - Spacing between items</li>
+            </ul>
+            <a href="demos/flexbox.html" class="demo-link">🚀 View Live Demo</a>
+        </section>
+
+        <section id="grid">
+            <h2>CSS Grid</h2>
+            <ul>
+                <li><code>display: grid</code> - Grid container</li>
+                <li><code>grid-template-columns</code> - Column tracks</li>
+                <li><code>grid-template-rows</code> - Row tracks</li>
+                <li><code>grid-template-areas</code> - Named areas</li>
+                <li><code>grid-column, grid-row</code> - Item placement</li>
+                <li><code>grid-area</code> - Area assignment</li>
+                <li><code>justify-items, align-items</code> - Item alignment</li>
+                <li><code>justify-content, align-content</code> - Grid alignment</li>
+                <li><code>grid-gap</code> - Grid spacing</li>
+                <li><code>fr</code> - Fractional units</li>
+            </ul>
+            <a href="demos/grid.html" class="demo-link">🚀 View Live Demo</a>
+        </section>
+
+        <section id="animations">
+            <h2>Animations & Transitions</h2>
+            <ul>
+                <li><code>transition</code> - Property transitions</li>
+                <li><code>transition-duration</code> - Animation time</li>
+                <li><code>transition-timing-function</code> - Easing</li>
+                <li><code>transition-delay</code> - Start delay</li>
+                <li><code>transform</code> - Element transformation</li>
+                <li><code>@keyframes</code> - Animation sequences</li>
+                <li><code>animation</code> - Animation properties</li>
+                <li><code>animation-iteration-count</code> - Loop count</li>
+                <li><code>animation-direction</code> - Play direction</li>
+                <li><code>animation-fill-mode</code> - State retention</li>
+            </ul>
+            <a href="demos/animations.html" class="demo-link">🚀 View Live Demo</a>
+        </section>
+
+        <section id="responsive">
+            <h2>Responsive Design</h2>
+            <ul>
+                <li><code>@media</code> - Media queries</li>
+                <li><code>min-width, max-width</code> - Breakpoints</li>
+                <li><code>viewport units</code> - vw, vh, vmin, vmax</li>
+                <li><code>rem, em</code> - Relative units</li>
+                <li><code>clamp()</code> - Responsive values</li>
+                <li><code>aspect-ratio</code> - Aspect ratio</li>
+                <li><code>object-fit</code> - Image fitting</li>
+                <li><code>container queries</code> - Container-based queries</li>
+            </ul>
+            <a href="demos/responsive.html" class="demo-link">🚀 View Live Demo</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="footer-year">2025</span> Life of Code. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
