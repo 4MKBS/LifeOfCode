@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Structure Demo</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .structure-demo {
+            border: 2px dashed #667eea;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .tag-label {
+            background: #667eea;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="../index.html"
+                style="background: #667eea; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 8px;">←
+                Back to Reference</a>
+        </nav>
+
+        <h1>Document Structure Tags Demo</h1>
+
+        <div class="structure-demo">
+            <div class="tag-label">&lt;header&gt;</div>
+            <header style="background: #667; padding: 1rem; border-radius: 8px;">
+                <h2>This is a Header Section</h2>
+                <p>Headers typically contain site navigation, logos, and introductory content.</p>
+            </header>
+        </div>
+
+        <div class="structure-demo">
+            <div class="tag-label">&lt;nav&gt;</div>
+            <nav style="background: #e9ecef; padding: 1rem; border-radius: 8px;">
+                <ul style="list-style: none; display: flex; gap: 1rem; margin: 0; padding: 0;">
+                    <li><a href="#" style="text-decoration: none; color: #667eea;">Home</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #667eea;">About</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #667eea;">Services</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #667eea;">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="structure-demo">
+            <div class="tag-label">&lt;main&gt;</div>
+            <main style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                <div class="structure-demo" style="border-color: #28a745;">
+                    <div class="tag-label" style="background: #28a745;">&lt;section&gt;</div>
+                    <section style="background: white; padding: 1rem; border-radius: 8px;">
+                        <h3>Section 1: Introduction</h3>
+                        <p>This is a section containing related content.</p>
+                    </section>
+                </div>
+
+                <div class="structure-demo" style="border-color: #ffc107;">
+                    <div class="tag-label" style="background: #ffc107; color: black;">&lt;article&gt;</div>
+                    <article style="background: white; padding: 1rem; border-radius: 8px;">
+                        <h3>Article Title</h3>
+                        <p>Articles contain self-contained, independent content that could be distributed separately.
+                        </p>
+                        <time datetime="2025-10-05">October 5, 2025</time>
+                    </article>
+                </div>
+
+                <div class="structure-demo" style="border-color: #dc3545;">
+                    <div class="tag-label" style="background: #dc3545;">&lt;aside&gt;</div>
+                    <aside style="background: white; padding: 1rem; border-radius: 8px;">
+                        <h4>Related Information</h4>
+                        <p>Aside contains content related to the main content, like sidebars or callout boxes.</p>
+                    </aside>
+                </div>
+            </main>
+        </div>
+
+        <div class="structure-demo">
+            <div class="tag-label">&lt;footer&gt;</div>
+            <footer style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                <p>&copy; 2025 Document Structure Demo. All rights reserved.</p>
+                <p>Footers contain copyright, contact info, and site links.</p>
+            </footer>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: #e7f3ff; border-radius: 8px;">
+            <h3>🎯 Key Points:</h3>
+            <ul>
+                <li><strong>Semantic HTML</strong>: These tags give meaning to your content</li>
+                <li><strong>Accessibility</strong>: Screen readers understand the page structure</li>
+                <li><strong>SEO Friendly</strong>: Search engines can better index your content</li>
+                <li><strong>Maintainable</strong>: Code is easier to read and maintain</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

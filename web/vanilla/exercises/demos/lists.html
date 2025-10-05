@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lists Demo</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-demo {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .styled-list {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="../index.html"
+                style="background: #667eea; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 8px;">←
+                Back to Reference</a>
+        </nav>
+
+        <h1>Lists Demo</h1>
+
+        <div class="list-demo">
+            <h2>Unordered Lists (&lt;ul&gt;)</h2>
+            <div class="styled-list">
+                <h3>Shopping List:</h3>
+                <ul>
+                    <li>🍎 Apples</li>
+                    <li>🥛 Milk</li>
+                    <li>🍞 Bread</li>
+                    <li>🧀 Cheese</li>
+                    <li>🥚 Eggs</li>
+                </ul>
+            </div>
+
+            <div class="styled-list">
+                <h3>Nested Unordered List:</h3>
+                <ul>
+                    <li>Frontend Technologies
+                        <ul>
+                            <li>HTML</li>
+                            <li>CSS</li>
+                            <li>JavaScript</li>
+                        </ul>
+                    </li>
+                    <li>Backend Technologies
+                        <ul>
+                            <li>Node.js</li>
+                            <li>Python</li>
+                            <li>PHP</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="list-demo">
+            <h2>Ordered Lists (&lt;ol&gt;)</h2>
+            <div class="styled-list">
+                <h3>Recipe Steps:</h3>
+                <ol>
+                    <li>Preheat oven to 350°F (175°C)</li>
+                    <li>Mix dry ingredients in a large bowl</li>
+                    <li>In separate bowl, combine wet ingredients</li>
+                    <li>Gradually add wet to dry ingredients</li>
+                    <li>Pour into greased baking pan</li>
+                    <li>Bake for 25-30 minutes</li>
+                </ol>
+            </div>
+
+            <div class="styled-list">
+                <h3>Different Number Types:</h3>
+                <ol type="A">
+                    <li>Type A (Capital Letters)</li>
+                    <li>Second item</li>
+                    <li>Third item</li>
+                </ol>
+
+                <ol type="a">
+                    <li>Type a (Lowercase Letters)</li>
+                    <li>Second item</li>
+                    <li>Third item</li>
+                </ol>
+
+                <ol type="I">
+                    <li>Type I (Roman Numerals)</li>
+                    <li>Second item</li>
+                    <li>Third item</li>
+                </ol>
+
+                <ol start="5">
+                    <li>Starting from number 5</li>
+                    <li>Number 6</li>
+                    <li>Number 7</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="list-demo">
+            <h2>Description Lists (&lt;dl&gt;)</h2>
+            <div class="styled-list">
+                <h3>Programming Terms:</h3>
+                <dl>
+                    <dt style="font-weight: bold; color: #667eea; margin-top: 1rem;">HTML</dt>
+                    <dd style="margin-left: 1rem; color: #666;">HyperText Markup Language - used to structure web
+                        content</dd>
+
+                    <dt style="font-weight: bold; color: #667eea; margin-top: 1rem;">CSS</dt>
+                    <dd style="margin-left: 1rem; color: #666;">Cascading Style Sheets - used to style and layout web
+                        pages</dd>
+
+                    <dt style="font-weight: bold; color: #667eea; margin-top: 1rem;">JavaScript</dt>
+                    <dd style="margin-left: 1rem; color: #666;">A programming language that enables interactive web
+                        pages</dd>
+
+                    <dt style="font-weight: bold; color: #667eea; margin-top: 1rem;">API</dt>
+                    <dd style="margin-left: 1rem; color: #666;">Application Programming Interface</dd>
+                    <dd style="margin-left: 1rem; color: #666;">A set of protocols and tools for building software
+                        applications</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="list-demo">
+            <h2>Mixed Lists Example</h2>
+            <div class="styled-list">
+                <h3>Web Development Learning Path:</h3>
+                <ol>
+                    <li><strong>Fundamentals</strong>
+                        <ul>
+                            <li>HTML structure and semantics</li>
+                            <li>CSS styling and layout</li>
+                            <li>JavaScript basics</li>
+                        </ul>
+                    </li>
+                    <li><strong>Intermediate</strong>
+                        <ul>
+                            <li>Responsive design</li>
+                            <li>CSS Grid and Flexbox</li>
+                            <li>DOM manipulation</li>
+                        </ul>
+                    </li>
+                    <li><strong>Advanced</strong>
+                        <ul>
+                            <li>Frameworks (React, Vue, Angular)</li>
+                            <li>Build tools (Webpack, Vite)</li>
+                            <li>Version control (Git)</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: #e7f3ff; border-radius: 8px;">
+            <h3>🎯 List Best Practices:</h3>
+            <ul>
+                <li><strong>Choose the Right List Type</strong>: Use &lt;ol&gt; for sequential items, &lt;ul&gt; for
+                    non-sequential</li>
+                <li><strong>Description Lists</strong>: Perfect for glossaries, FAQs, and key-value pairs</li>
+                <li><strong>Nesting</strong>: Lists can be nested for hierarchical information</li>
+                <li><strong>Accessibility</strong>: Screen readers announce list types and item counts</li>
+                <li><strong>Styling</strong>: Use CSS to customize list appearance (bullets, numbers, spacing)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

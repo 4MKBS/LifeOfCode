@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links & Navigation Demo</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .links-demo {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .links-example {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .nav-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .nav-demo a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-demo a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .breadcrumb {
+            background: #f8f9fa;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .link-styles a {
+            display: inline-block;
+            margin: 0.25rem 0.5rem 0.25rem 0;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="../index.html"
+                style="background: #667eea; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 8px;">←
+                Back to Reference</a>
+        </nav>
+
+        <h1>Links & Navigation Demo</h1>
+
+        <div class="links-demo">
+            <h2>Basic Links (&lt;a&gt;)</h2>
+            <div class="links-example">
+                <h3>Different Types of Links:</h3>
+
+                <h4>External Links:</h4>
+                <p>
+                    Visit <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Google</a> (opens
+                    in new tab)<br>
+                    Check out <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a><br>
+                    Learn at <a href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer">MDN Web
+                        Docs</a>
+                </p>
+
+                <h4>Internal Links:</h4>
+                <p>
+                    <a href="#section1">Jump to Section 1</a><br>
+                    <a href="#section2">Jump to Section 2</a><br>
+                    <a href="#top">Back to Top</a>
+                </p>
+
+                <h4>Email and Phone Links:</h4>
+                <p>
+                    <a href="mailto:contact@example.com">Send Email</a><br>
+                    <a href="tel:+1234567890">Call Us: +1 (234) 567-890</a><br>
+                    <a href="sms:+1234567890">Send SMS</a>
+                </p>
+
+                <h4>File Download Links:</h4>
+                <p>
+                    <a href="#" download="sample.pdf">Download PDF</a><br>
+                    <a href="#" download="image.jpg">Download Image</a><br>
+                    <a href="#" download="document.docx">Download Document</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="links-demo">
+            <h2>Navigation Patterns</h2>
+
+            <div class="links-example">
+                <h3>Horizontal Navigation:</h3>
+                <nav class="nav-demo">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#services">Services</a>
+                    <a href="#portfolio">Portfolio</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+            </div>
+
+            <div class="links-example">
+                <h3>Breadcrumb Navigation:</h3>
+                <nav class="breadcrumb">
+                    <a href="#home">Home</a> &gt;
+                    <a href="#category">Category</a> &gt;
+                    <a href="#subcategory">Subcategory</a> &gt;
+                    <span>Current Page</span>
+                </nav>
+            </div>
+
+            <div class="links-example">
+                <h3>Sidebar Navigation:</h3>
+                <div style="display: flex; gap: 2rem;">
+                    <nav style="background: #f8f9fa; padding: 1rem; border-radius: 8px; min-width: 200px;">
+                        <h4 style="margin-top: 0; color: #667eea;">Documentation</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 0.5rem 0;"><a href="#getting-started"
+                                    style="color: #667eea; text-decoration: none;">Getting Started</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="#installation"
+                                    style="color: #667eea; text-decoration: none;">Installation</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="#configuration"
+                                    style="color: #667eea; text-decoration: none;">Configuration</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="#api-reference"
+                                    style="color: #667eea; text-decoration: none;">API Reference</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="#examples"
+                                    style="color: #667eea; text-decoration: none;">Examples</a></li>
+                        </ul>
+                    </nav>
+                    <div style="flex: 1; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                        <h4 style="margin-top: 0;">Main Content Area</h4>
+                        <p>This is where your main content would appear. The sidebar navigation allows users to quickly
+                            jump between different sections of your documentation or website.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="links-demo">
+            <h2>Button-Style Links</h2>
+            <div class="links-example link-styles">
+                <h3>Call-to-Action Buttons:</h3>
+                <a href="#" class="btn-primary">Get Started</a>
+                <a href="#" class="btn-success">Sign Up</a>
+                <a href="#" class="btn-danger">Delete Account</a>
+                <a href="#" class="btn-outline">Learn More</a>
+            </div>
+        </div>
+
+        <div class="links-demo">
+            <h2>Advanced Link Features</h2>
+
+            <div class="links-example">
+                <h3>Links with Tooltips:</h3>
+                <p>
+                    <a href="#" title="This link goes to our homepage">Home Page</a><br>
+                    <a href="#" title="Contact us via email or phone">Contact Information</a><br>
+                    <a href="#" title="Download our latest company brochure (PDF, 2.5MB)">Company Brochure</a>
+                </p>
+            </div>
+
+            <div class="links-example">
+                <h3>Links with Icons:</h3>
+                <p>
+                    <a href="#"
+                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #667eea; text-decoration: none;">
+                        🏠 Home
+                    </a><br>
+                    <a href="mailto:contact@example.com"
+                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #667eea; text-decoration: none;">
+                        ✉️ Email Us
+                    </a><br>
+                    <a href="tel:+1234567890"
+                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #667eea; text-decoration: none;">
+                        📞 Call Now
+                    </a><br>
+                    <a href="#" target="_blank" rel="noopener noreferrer"
+                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #667eea; text-decoration: none;">
+                        🔗 External Link
+                    </a>
+                </p>
+            </div>
+
+            <div class="links-example">
+                <h3>Skip Links (Accessibility):</h3>
+                <div style="background: #e7f3ff; padding: 1rem; border-radius: 8px;">
+                    <a href="#main-content"
+                        style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; background: #667eea; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px;"
+                        onfocus="this.style.position='static'; this.style.left='auto'; this.style.width='auto'; this.style.height='auto'; this.style.overflow='visible';"
+                        onblur="this.style.position='absolute'; this.style.left='-9999px'; this.style.width='1px'; this.style.height='1px'; this.style.overflow='hidden';">Skip
+                        to main content</a>
+                    <p><em>💡 The skip link above becomes visible when focused (try tabbing to it). This helps screen
+                            reader users quickly navigate to main content.</em></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Target sections for internal links -->
+        <div id="section1" class="links-demo">
+            <h2>Section 1</h2>
+            <div class="links-example">
+                <p>This is Section 1. You can link to this section using <code>&lt;a href="#section1"&gt;</code></p>
+                <p><a href="#top">Back to top</a></p>
+            </div>
+        </div>
+
+        <div id="section2" class="links-demo">
+            <h2>Section 2</h2>
+            <div class="links-example">
+                <p>This is Section 2. You can link to this section using <code>&lt;a href="#section2"&gt;</code></p>
+                <p><a href="#top">Back to top</a></p>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: #e7f3ff; border-radius: 8px;">
+            <h3>🎯 Link Best Practices:</h3>
+            <ul>
+                <li><strong>Descriptive Text</strong>: Use meaningful link text, avoid "click here" or "read more"</li>
+                <li><strong>External Links</strong>: Use target="_blank" and rel="noopener noreferrer" for security</li>
+                <li><strong>Accessibility</strong>: Provide clear focus indicators and skip links</li>
+                <li><strong>Visual Distinction</strong>: Make links easily identifiable (color, underline, etc.)</li>
+                <li><strong>Hover States</strong>: Provide visual feedback on hover and focus</li>
+                <li><strong>Mobile Friendly</strong>: Ensure links have adequate touch targets (44px minimum)</li>
+                <li><strong>SEO</strong>: Use relevant anchor text for internal linking</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

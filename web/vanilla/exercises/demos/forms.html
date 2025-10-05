@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms Demo</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-demo {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 2px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.25);
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        fieldset {
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        legend {
+            padding: 0 0.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="../index.html"
+                style="background: #667eea; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 8px;">←
+                Back to Reference</a>
+        </nav>
+
+        <h1>Forms Demo</h1>
+
+        <div class="form-demo">
+            <h2>Complete Registration Form</h2>
+            <form action="#" method="post" style="background: white; padding: 2rem; border-radius: 8px;">
+                <fieldset>
+                    <legend>Personal Information</legend>
+
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="user@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number:</label>
+                        <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthdate">Date of Birth:</label>
+                        <input type="date" id="birthdate" name="birthdate">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Account Details</legend>
+
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" minlength="3" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" minlength="8" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Preferences</legend>
+
+                    <div class="form-group">
+                        <label for="country">Country:</label>
+                        <select id="country" name="country">
+                            <option value="">Select a country</option>
+                            <option value="us">United States</option>
+                            <option value="ca">Canada</option>
+                            <option value="uk">United Kingdom</option>
+                            <option value="de">Germany</option>
+                            <option value="fr">France</option>
+                            <option value="jp">Japan</option>
+                            <option value="au">Australia</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="radio" name="gender" value="male"
+                                    style="width: auto; margin-right: 0.5rem;">
+                                Male
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="radio" name="gender" value="female"
+                                    style="width: auto; margin-right: 0.5rem;">
+                                Female
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="radio" name="gender" value="other"
+                                    style="width: auto; margin-right: 0.5rem;">
+                                Other
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Interests (check all that apply):</label>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; margin-top: 0.5rem;">
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" name="interests" value="sports"
+                                    style="width: auto; margin-right: 0.5rem;">
+                                Sports
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" name="interests" value="music"
+                                    style="width: auto; margin-right: 0.5rem;">
+                                Music
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" name="interests" value="movies"
+                                    style="width: auto; margin-right: 0.5rem;">
+                                Movies
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" name="interests" value="reading"
+                                    style="width: auto; margin-right: 0.5rem;">
+                                Reading
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" name="interests" value="travel"
+                                    style="width: auto; margin-right: 0.5rem;">
+                                Travel
+                            </label>
+                            <label style="display: flex; align-items: center; font-weight: normal;">
+                                <input type="checkbox" name="interests" value="technology"
+                                    style="width: auto; margin-right: 0.5rem;">
+                                Technology
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Bio:</label>
+                        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="website">Website URL:</label>
+                        <input type="url" id="website" name="website" placeholder="https://example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Years of Experience:</label>
+                        <input type="range" id="experience" name="experience" min="0" max="20" value="5"
+                            oninput="document.getElementById('experienceValue').textContent = this.value"
+                            style="width: 100%;">
+                        <span>Years: <span id="experienceValue">5</span></span>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>File Uploads</legend>
+
+                    <div class="form-group">
+                        <label for="avatar">Profile Picture:</label>
+                        <input type="file" id="avatar" name="avatar" accept="image/*">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resume">Resume (PDF):</label>
+                        <input type="file" id="resume" name="resume" accept=".pdf">
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; font-weight: normal;">
+                        <input type="checkbox" name="terms" required style="width: auto; margin-right: 0.5rem;">
+                        I agree to the <a href="#" style="color: #667eea;">Terms and Conditions</a>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; font-weight: normal;">
+                        <input type="checkbox" name="newsletter" style="width: auto; margin-right: 0.5rem;">
+                        Subscribe to our newsletter
+                    </label>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button type="submit">Register Account</button>
+                    <button type="reset" style="background: #6c757d;">Clear Form</button>
+                    <button type="button" onclick="alert('Form cancelled')" style="background: #dc3545;">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: #e7f3ff; border-radius: 8px;">
+            <h3>🎯 Form Best Practices:</h3>
+            <ul>
+                <li><strong>Labels</strong>: Always associate labels with form controls using the "for" attribute</li>
+                <li><strong>Validation</strong>: Use HTML5 validation attributes (required, pattern, min, max)</li>
+                <li><strong>Input Types</strong>: Use specific input types (email, tel, date) for better user experience
+                </li>
+                <li><strong>Fieldsets</strong>: Group related form controls with fieldset and legend</li>
+                <li><strong>Accessibility</strong>: Proper labeling and structure helps screen readers</li>
+                <li><strong>User Feedback</strong>: Provide clear error messages and success indicators</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Simple form validation example
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const firstName = document.getElementById('firstName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            alert(`Form submitted successfully!\nWelcome, ${firstName}!\nEmail: ${email}`);
+        });
+    </script>
+</body>
+
+</html>

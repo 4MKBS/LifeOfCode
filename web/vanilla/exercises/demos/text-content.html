@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Content Demo</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-demo {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .tag-example {
+            background: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="../index.html"
+                style="background: #667eea; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 8px;">←
+                Back to Reference</a>
+        </nav>
+
+        <h1>Text Content Tags Demo</h1>
+
+        <div class="text-demo">
+            <h2>Heading Tags (h1 - h6)</h2>
+            <div class="tag-example">
+                <h1>This is an H1 heading</h1>
+                <h2>This is an H2 heading</h2>
+                <h3>This is an H3 heading</h3>
+                <h4>This is an H4 heading</h4>
+                <h5>This is an H5 heading</h5>
+                <h6>This is an H6 heading</h6>
+            </div>
+        </div>
+
+        <div class="text-demo">
+            <h2>Paragraph and Basic Text</h2>
+            <div class="tag-example">
+                <p>This is a paragraph tag (&lt;p&gt;). It's used for regular text content and automatically adds
+                    spacing above and below.</p>
+                <p>Here's another paragraph. Notice the spacing between paragraphs.</p>
+                <div>This is a div tag - it's a generic container with no semantic meaning.</div>
+                <p>This paragraph contains a <span style="color: #667eea; font-weight: bold;">span tag</span> which is
+                    used for inline styling.</p>
+            </div>
+        </div>
+
+        <div class="text-demo">
+            <h2>Line Breaks and Horizontal Rules</h2>
+            <div class="tag-example">
+                <p>This line has a break<br>right here using the &lt;br&gt; tag.</p>
+                <hr style="margin: 1rem 0; border: 1px solid #dee2e6;">
+                <p>The horizontal rule (&lt;hr&gt;) above creates a thematic break between content sections.</p>
+            </div>
+        </div>
+
+        <div class="text-demo">
+            <h2>Preformatted Text</h2>
+            <div class="tag-example">
+                <pre style="background: #2d3748; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto;">
+function greetUser(name) {
+    console.log("Hello, " + name + "!");
+    return "Welcome to our site!";
+}
+
+greetUser("Developer");
+                </pre>
+                <p>The &lt;pre&gt; tag preserves whitespace and formatting - perfect for code examples!</p>
+            </div>
+        </div>
+
+        <div class="text-demo">
+            <h2>Blockquotes and Code</h2>
+            <div class="tag-example">
+                <blockquote
+                    style="border-left: 4px solid #667eea; padding-left: 1rem; margin: 1rem 0; font-style: italic; color: #666;">
+                    "The best way to learn HTML is by practice and experimentation. Don't be afraid to try new things!"
+                    <footer>— Web Development Best Practices</footer>
+                </blockquote>
+                <p>Use <code
+                        style="background: #f8f9fa; color: #e74c3c; padding: 0.2rem 0.4rem; border-radius: 4px;">inline code</code>
+                    for short code snippets within text.</p>
+            </div>
+        </div>
+
+        <div class="text-demo">
+            <h2>Text Formatting Examples</h2>
+            <div class="tag-example">
+                <p><strong>Bold text</strong> using &lt;strong&gt; (semantic importance)</p>
+                <p><b>Bold text</b> using &lt;b&gt; (stylistic bold)</p>
+                <p><em>Emphasized text</em> using &lt;em&gt; (semantic emphasis)</p>
+                <p><i>Italic text</i> using &lt;i&gt; (stylistic italic)</p>
+                <p><mark style="background: yellow; padding: 0.1rem;">Highlighted text</mark> using &lt;mark&gt;</p>
+                <p><small>Small text</small> using &lt;small&gt;</p>
+                <p>H<sub>2</sub>O uses &lt;sub&gt; for subscript</p>
+                <p>E=mc<sup>2</sup> uses &lt;sup&gt; for superscript</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: #e7f3ff; border-radius: 8px;">
+            <h3>🎯 Best Practices:</h3>
+            <ul>
+                <li><strong>Semantic over Stylistic</strong>: Use &lt;strong&gt; instead of &lt;b&gt; for important text
+                </li>
+                <li><strong>Heading Hierarchy</strong>: Don't skip heading levels (h1 → h2 → h3)</li>
+                <li><strong>Meaningful Content</strong>: Use appropriate tags for their semantic meaning</li>
+                <li><strong>Accessibility</strong>: Screen readers understand semantic HTML better</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

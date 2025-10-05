@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tables Demo</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .demo-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-demo {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .table-example {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .basic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .basic-table th,
+        .basic-table td {
+            border: 1px solid #dee2e6;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .basic-table th {
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .basic-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .basic-table tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .styled-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .styled-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #f1f3f4;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+
+        .status-active {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .status-inactive {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            color: #ffc107;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="../index.html"
+                style="background: #667eea; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 8px;">←
+                Back to Reference</a>
+        </nav>
+
+        <h1>Tables Demo</h1>
+
+        <div class="table-demo">
+            <h2>Basic Table Structure</h2>
+            <div class="table-example">
+                <h3>Simple Data Table:</h3>
+                <table class="basic-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>City</th>
+                            <th>Occupation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>28</td>
+                            <td>New York</td>
+                            <td>Developer</td>
+                        </tr>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>32</td>
+                            <td>London</td>
+                            <td>Designer</td>
+                        </tr>
+                        <tr>
+                            <td>Mike Johnson</td>
+                            <td>25</td>
+                            <td>Tokyo</td>
+                            <td>Analyst</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-demo">
+            <h2>Advanced Table Features</h2>
+            <div class="table-example">
+                <h3>Table with Colspan and Rowspan:</h3>
+                <table class="basic-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Employee</th>
+                            <th colspan="2">Sales</th>
+                            <th rowspan="2">Total</th>
+                        </tr>
+                        <tr>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alice</td>
+                            <td>$15,000</td>
+                            <td>$18,000</td>
+                            <td><strong>$33,000</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Bob</td>
+                            <td>$12,000</td>
+                            <td>$16,000</td>
+                            <td><strong>$28,000</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td><strong>$27,000</strong></td>
+                            <td><strong>$34,000</strong></td>
+                            <td><strong>$61,000</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-demo">
+            <h2>Styled Table</h2>
+            <div class="table-example">
+                <h3>Enhanced User Dashboard:</h3>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Join Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#001</td>
+                            <td>john_doe</td>
+                            <td>john@example.com</td>
+                            <td>2024-01-15</td>
+                            <td><span class="status-active">Active</span></td>
+                            <td>
+                                <button
+                                    style="background: #28a745; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; margin-right: 0.25rem; cursor: pointer;">Edit</button>
+                                <button
+                                    style="background: #dc3545; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#002</td>
+                            <td>jane_smith</td>
+                            <td>jane@example.com</td>
+                            <td>2024-02-20</td>
+                            <td><span class="status-pending">Pending</span></td>
+                            <td>
+                                <button
+                                    style="background: #28a745; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; margin-right: 0.25rem; cursor: pointer;">Edit</button>
+                                <button
+                                    style="background: #dc3545; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#003</td>
+                            <td>mike_wilson</td>
+                            <td>mike@example.com</td>
+                            <td>2024-03-10</td>
+                            <td><span class="status-inactive">Inactive</span></td>
+                            <td>
+                                <button
+                                    style="background: #28a745; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; margin-right: 0.25rem; cursor: pointer;">Edit</button>
+                                <button
+                                    style="background: #dc3545; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#004</td>
+                            <td>sarah_davis</td>
+                            <td>sarah@example.com</td>
+                            <td>2024-03-25</td>
+                            <td><span class="status-active">Active</span></td>
+                            <td>
+                                <button
+                                    style="background: #28a745; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; margin-right: 0.25rem; cursor: pointer;">Edit</button>
+                                <button
+                                    style="background: #dc3545; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-demo">
+            <h2>Responsive Table</h2>
+            <div class="table-example">
+                <h3>Mobile-Friendly Table:</h3>
+                <div style="overflow-x: auto;">
+                    <table class="basic-table" style="min-width: 600px;">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Rating</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>iPhone 15 Pro</td>
+                                <td>Electronics</td>
+                                <td>$999.00</td>
+                                <td>25</td>
+                                <td>⭐⭐⭐⭐⭐ (4.8)</td>
+                                <td>2024-03-20</td>
+                            </tr>
+                            <tr>
+                                <td>MacBook Pro M3</td>
+                                <td>Computers</td>
+                                <td>$1,999.00</td>
+                                <td>12</td>
+                                <td>⭐⭐⭐⭐⭐ (4.9)</td>
+                                <td>2024-03-19</td>
+                            </tr>
+                            <tr>
+                                <td>AirPods Pro</td>
+                                <td>Audio</td>
+                                <td>$249.00</td>
+                                <td>45</td>
+                                <td>⭐⭐⭐⭐ (4.5)</td>
+                                <td>2024-03-18</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><em>💡 This table scrolls horizontally on smaller screens to maintain readability.</em></p>
+            </div>
+        </div>
+
+        <div class="table-demo">
+            <h2>Table with Caption and Summary</h2>
+            <div class="table-example">
+                <table class="basic-table">
+                    <caption
+                        style="caption-side: top; padding: 1rem; font-size: 1.1em; font-weight: bold; color: #667eea;">
+                        Monthly Website Analytics - March 2024
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Metric</th>
+                            <th scope="col">This Month</th>
+                            <th scope="col">Last Month</th>
+                            <th scope="col">Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Page Views</th>
+                            <td>125,430</td>
+                            <td>118,950</td>
+                            <td style="color: #28a745;">+5.4% ↗</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Unique Visitors</th>
+                            <td>89,240</td>
+                            <td>92,100</td>
+                            <td style="color: #dc3545;">-3.1% ↘</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Bounce Rate</th>
+                            <td>34.2%</td>
+                            <td>36.8%</td>
+                            <td style="color: #28a745;">-2.6% ↗</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Avg. Session Duration</th>
+                            <td>4m 32s</td>
+                            <td>4m 18s</td>
+                            <td style="color: #28a745;">+5.4% ↗</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background-color: #e9ecef; font-weight: bold;">
+                            <td colspan="4" style="text-align: center; padding: 1rem;">
+                                Data collected from Google Analytics • Updated daily
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: #e7f3ff; border-radius: 8px;">
+            <h3>🎯 Table Best Practices:</h3>
+            <ul>
+                <li><strong>Semantic Structure</strong>: Use &lt;thead&gt;, &lt;tbody&gt;, and &lt;tfoot&gt;
+                    appropriately</li>
+                <li><strong>Accessibility</strong>: Use &lt;th&gt; with scope attributes and &lt;caption&gt; for context
+                </li>
+                <li><strong>Responsive Design</strong>: Make tables scrollable on mobile or use alternative layouts</li>
+                <li><strong>Clear Headers</strong>: Always include descriptive column headers</li>
+                <li><strong>Consistent Formatting</strong>: Align data appropriately (numbers right, text left)</li>
+                <li><strong>Hover Effects</strong>: Improve usability with row highlighting</li>
+                <li><strong>Sorting/Filtering</strong>: Add JavaScript functionality for large datasets</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

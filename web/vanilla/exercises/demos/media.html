@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Demo</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .media-demo {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .media-example {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .canvas-demo {
+            border: 2px solid #667eea;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="../index.html"
+                style="background: #667eea; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 8px;">←
+                Back to Reference</a>
+        </nav>
+
+        <h1>Media Tags Demo</h1>
+
+        <div class="media-demo">
+            <h2>Images (&lt;img&gt;)</h2>
+            <div class="media-example">
+                <h3>Responsive Image Example:</h3>
+                <img src="data:image/svg+xml,%3Csvg width='400' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23667eea'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3ESample Image%3C/text%3E%3C/svg%3E"
+                    alt="Sample demonstration image" style="max-width: 100%; height: auto; border-radius: 8px;">
+                <p><strong>Alt text:</strong> "Sample demonstration image" (important for accessibility!)</p>
+            </div>
+
+            <div class="media-example">
+                <h3>Image with Different Sizes:</h3>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                    <img src="data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' fill='%2328a745'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='12'%3E100x100%3C/text%3E%3C/svg%3E"
+                        alt="Small green circle" width="100" height="100">
+                    <img src="data:image/svg+xml,%3Csvg width='150' height='150' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23ffc107'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='black' font-size='14'%3E150x150%3C/text%3E%3C/svg%3E"
+                        alt="Medium yellow square" width="150" height="150">
+                    <img src="data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='100,20 180,180 20,180' fill='%23dc3545'/%3E%3Ctext x='50%25' y='60%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='16'%3E200x200%3C/text%3E%3C/svg%3E"
+                        alt="Large red triangle" width="200" height="200">
+                </div>
+            </div>
+        </div>
+
+        <div class="media-demo">
+            <h2>Audio (&lt;audio&gt;)</h2>
+            <div class="media-example">
+                <h3>Audio Player with Controls:</h3>
+                <audio controls style="width: 100%;">
+                    <source src="#" type="audio/mpeg">
+                    <source src="#" type="audio/ogg">
+                    <p>Your browser doesn't support the audio element. Here's a <a href="#">link to the audio</a>
+                        instead.</p>
+                </audio>
+                <p><em>Note: This is a demo audio player. In a real implementation, you would provide actual audio file
+                        sources.</em></p>
+
+                <h4>Audio Attributes:</h4>
+                <ul>
+                    <li><code>controls</code> - Shows play/pause controls</li>
+                    <li><code>autoplay</code> - Starts playing automatically (not recommended)</li>
+                    <li><code>loop</code> - Repeats the audio</li>
+                    <li><code>muted</code> - Starts muted</li>
+                    <li><code>preload</code> - How much to preload (none, metadata, auto)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="media-demo">
+            <h2>Video (&lt;video&gt;)</h2>
+            <div class="media-example">
+                <h3>Video Player Example:</h3>
+                <video controls style="width: 100%; max-width: 600px; border-radius: 8px;">
+                    <source src="#" type="video/mp4">
+                    <source src="#" type="video/webm">
+                    <track kind="subtitles" src="#" srclang="en" label="English">
+                    <p>Your browser doesn't support the video element. Here's a <a href="#">link to the video</a>
+                        instead.</p>
+                </video>
+                <p><em>Note: This is a demo video player. In a real implementation, you would provide actual video file
+                        sources.</em></p>
+
+                <h4>Video with Poster:</h4>
+                <video controls
+                    poster="data:image/svg+xml,%3Csvg width='400' height='225' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23343a40'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='20'%3EVideo Poster%3C/text%3E%3C/svg%3E"
+                    style="width: 100%; max-width: 400px; border-radius: 8px;">
+                    <source src="#" type="video/mp4">
+                    <p>Your browser doesn't support the video element.</p>
+                </video>
+            </div>
+        </div>
+
+        <div class="media-demo">
+            <h2>Canvas (&lt;canvas&gt;)</h2>
+            <div class="media-example">
+                <h3>Interactive Canvas Example:</h3>
+                <canvas id="demoCanvas" class="canvas-demo" width="400" height="200">
+                    Your browser doesn't support the canvas element.
+                </canvas>
+                <div style="margin-top: 1rem;">
+                    <button onclick="drawCircle()"
+                        style="background: #28a745; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; margin-right: 0.5rem; cursor: pointer;">Draw
+                        Circle</button>
+                    <button onclick="drawRectangle()"
+                        style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; margin-right: 0.5rem; cursor: pointer;">Draw
+                        Rectangle</button>
+                    <button onclick="clearCanvas()"
+                        style="background: #6c757d; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="media-demo">
+            <h2>SVG (&lt;svg&gt;)</h2>
+            <div class="media-example">
+                <h3>Inline SVG Examples:</h3>
+
+                <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; margin: 1rem 0;">
+                    <svg width="100" height="100" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="40" stroke="#667eea" stroke-width="4" fill="#e9ecef" />
+                        <text x="50" y="55" text-anchor="middle" font-size="12" fill="#667eea">Circle</text>
+                    </svg>
+
+                    <svg width="100" height="100" viewBox="0 0 100 100">
+                        <rect x="20" y="20" width="60" height="60" stroke="#28a745" stroke-width="4" fill="#d4edda" />
+                        <text x="50" y="55" text-anchor="middle" font-size="12" fill="#28a745">Rectangle</text>
+                    </svg>
+
+                    <svg width="100" height="100" viewBox="0 0 100 100">
+                        <polygon points="50,20 80,80 20,80" stroke="#dc3545" stroke-width="4" fill="#f8d7da" />
+                        <text x="50" y="65" text-anchor="middle" font-size="12" fill="#dc3545">Triangle</text>
+                    </svg>
+                </div>
+
+                <h4>Animated SVG:</h4>
+                <svg width="200" height="100" viewBox="0 0 200 100">
+                    <circle cx="50" cy="50" r="10" fill="#667eea">
+                        <animateMotion dur="3s" repeatCount="indefinite">
+                            <path d="M 50,50 Q 100,20 150,50 Q 100,80 50,50 z" />
+                        </animateMotion>
+                    </circle>
+                    <path d="M 50,50 Q 100,20 150,50 Q 100,80 50,50 z" stroke="#667eea" stroke-width="2" fill="none"
+                        stroke-dasharray="5,5" />
+                </svg>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: #e7f3ff; border-radius: 8px;">
+            <h3>🎯 Media Best Practices:</h3>
+            <ul>
+                <li><strong>Alt Text</strong>: Always provide meaningful alt attributes for images</li>
+                <li><strong>Multiple Sources</strong>: Provide multiple video/audio formats for browser compatibility
+                </li>
+                <li><strong>Fallback Content</strong>: Include fallback content for unsupported browsers</li>
+                <li><strong>Accessibility</strong>: Use captions and subtitles for videos</li>
+                <li><strong>Performance</strong>: Optimize media files for web delivery</li>
+                <li><strong>Responsive</strong>: Make images and videos responsive with CSS</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('demoCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function drawCircle() {
+            const x = Math.random() * (canvas.width - 60) + 30;
+            const y = Math.random() * (canvas.height - 60) + 30;
+            const radius = Math.random() * 20 + 10;
+
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = '#28a745';
+            ctx.fill();
+            ctx.strokeStyle = '#1e7e34';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function drawRectangle() {
+            const x = Math.random() * (canvas.width - 60) + 10;
+            const y = Math.random() * (canvas.height - 60) + 10;
+            const width = Math.random() * 40 + 20;
+            const height = Math.random() * 40 + 20;
+
+            ctx.fillStyle = '#dc3545';
+            ctx.fillRect(x, y, width, height);
+            ctx.strokeStyle = '#c82333';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, width, height);
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Draw initial welcome message
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#667eea';
+        ctx.textAlign = 'center';
+        ctx.fillText('Click buttons to draw shapes!', canvas.width / 2, canvas.height / 2);
+    </script>
+</body>
+
+</html>
