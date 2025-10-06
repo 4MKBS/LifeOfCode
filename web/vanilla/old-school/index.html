@@ -4,794 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>শৈশবের স্মৃতি - বাংশগড়া গ্রাম</title>
+    <title>শৈশবের স্মৃতি - বাশঁগাড়া গ্রাম</title>
     <link href="https://fonts.googleapis.com/css2?family=Kalpurush&family=Poppins:wght@300;400;600;700&display=swap"
         rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', 'Kalpurush', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            min-height: 100vh;
-        }
-
-        /* Animated Background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background:
-                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            animation: backgroundShift 10s ease-in-out infinite;
-        }
-
-        @keyframes backgroundShift {
-
-            0%,
-            100% {
-                background:
-                    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                    linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            }
-
-            50% {
-                background:
-                    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-                    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-                    linear-gradient(135deg, #f093fb 0%, #667eea 50%, #764ba2 100%);
-            }
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: white;
-            position: relative;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 0 0 50px 50px;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .header .subtitle {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            margin-bottom: 0.5rem;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        .header .location {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            animation: fadeInUp 1s ease-out 0.6s both;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Memory Cards */
-        .memory-section {
-            margin: 4rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 3rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-out;
-        }
-
-        .memory-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .memory-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.4s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            animation: slideInUp 0.8s ease-out;
-        }
-
-        .memory-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .memory-card:hover::before {
-            opacity: 1;
-        }
-
-        .memory-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        .memory-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-            text-align: center;
-        }
-
-        .memory-card h3 {
-            color: white;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .memory-card p {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.8;
-            font-size: 1rem;
-        }
-
-        .bengali-text {
-            font-family: 'Kalpurush', serif;
-            font-size: 1.1rem;
-            font-weight: 400;
-        }
-
-        /* School Timeline */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 4rem auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin: 3rem 0;
-            animation: fadeInScale 0.8s ease-out;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content {
-            margin-left: 0;
-            margin-right: 50%;
-            padding-right: 2rem;
-            text-align: right;
-        }
-
-        .timeline-item:nth-child(even) .timeline-content {
-            margin-left: 50%;
-            margin-right: 0;
-            padding-left: 2rem;
-            text-align: left;
-        }
-
-        .timeline-content {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 2rem;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-content:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            background: white;
-            border: 4px solid #667eea;
-            border-radius: 50%;
-            top: 2rem;
-            z-index: 2;
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
-        }
-
-        .timeline-year {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            display: inline-block;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        /* Interactive Elements */
-        .floating-memories {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .floating-memory {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.7;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-20px) rotate(10deg);
-            }
-        }
-
-        /* Mosque and School Icons */
-        .institution-showcase {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            margin: 4rem 0;
-        }
-
-        .institution-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-            padding: 3rem;
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .institution-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .institution-card:hover::before {
-            left: 100%;
-        }
-
-        .institution-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .institution-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: block;
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        .institution-card h3 {
-            color: white;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .institution-card .years {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 15px;
-            display: inline-block;
-            margin-bottom: 1rem;
-            font-weight: bold;
-        }
-
-        /* Interactive Village Map */
-        .village-map {
-            position: relative;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 4rem 0;
-            text-align: center;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .map-title {
-            color: white;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .village-elements {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .village-element {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: white;
-        }
-
-        .village-element:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(100px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-15px);
-            }
-
-            60% {
-                transform: translateY(-7px);
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .memory-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item .timeline-content {
-                margin-left: 50px !important;
-                margin-right: 0 !important;
-                padding-left: 2rem !important;
-                padding-right: 1rem !important;
-                text-align: left !important;
-            }
-
-            .timeline-dot {
-                left: 20px;
-                transform: translateX(-50%);
-            }
-
-            .village-elements {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Scroll animations */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Games Section */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .game-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .game-card:hover::before {
-            left: 100%;
-        }
-
-        .game-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
-            border-color: rgba(255, 105, 180, 0.5);
-        }
-
-        .game-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .game-card:hover .game-icon {
-            transform: scale(1.2) rotate(15deg);
-        }
-
-        /* Seasons Section */
-        .seasons-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .season-card {
-            height: 200px;
-            border-radius: 20px;
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .season-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.3s ease;
-            opacity: 0.3;
-        }
-
-        .spring .season-bg {
-            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef);
-        }
-
-        .summer .season-bg {
-            background: linear-gradient(45deg, #ff9a56, #ffad56, #ffd93d);
-        }
-
-        .monsoon .season-bg {
-            background: linear-gradient(45deg, #4facfe, #00f2fe, #96e6a1);
-        }
-
-        .winter .season-bg {
-            background: linear-gradient(45deg, #a8edea, #fed6e3, #d299c2);
-        }
-
-        .season-content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-        }
-
-        .season-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-        }
-
-        .season-card:hover .season-bg {
-            transform: scale(1.1);
-            opacity: 0.5;
-        }
-
-        /* Festival Section */
-        .festival-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .festival-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .festival-card::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
-            transition: all 0.5s ease;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-        }
-
-        .festival-card:hover::after {
-            width: 300px;
-            height: 300px;
-        }
-
-        .festival-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
-        }
-
-        .festival-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .festival-card:hover .festival-icon {
-            transform: scale(1.1) rotate(10deg);
-        }
-
-        /* Nature Section */
-        .nature-elements {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .nature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nature-card.trees:hover {
-            box-shadow: 0 20px 40px rgba(34, 139, 34, 0.3);
-            border-color: rgba(34, 139, 34, 0.5);
-        }
-
-        .nature-card.birds:hover {
-            box-shadow: 0 20px 40px rgba(135, 206, 235, 0.3);
-            border-color: rgba(135, 206, 235, 0.5);
-        }
-
-        .nature-card.fields:hover {
-            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
-            border-color: rgba(255, 215, 0, 0.5);
-        }
-
-        .nature-card.water:hover {
-            box-shadow: 0 20px 40px rgba(0, 191, 255, 0.3);
-            border-color: rgba(0, 191, 255, 0.5);
-        }
-
-        .nature-card:hover {
-            transform: translateY(-8px) scale(1.03);
-        }
-
-        .nature-visual {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .nature-card:hover .nature-visual {
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        /* Enhanced Mobile Responsiveness */
-        @media (max-width: 768px) {
-
-            .games-grid,
-            .seasons-container,
-            .festival-grid,
-            .nature-elements {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .season-card {
-                height: 150px;
-            }
-
-            .game-icon,
-            .festival-icon {
-                font-size: 2.5rem;
-            }
-
-            .nature-visual {
-                font-size: 2rem;
-            }
-
-            .village-elements {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
@@ -814,7 +30,8 @@
                 <div class="memory-card">
                     <span class="memory-icon">🏡</span>
                     <h3 class="bengali-text">গ্রামের বাড়ি</h3>
-                    <p class="bengali-text">বাংশগড়া গ্রামের সেই ছোট্ট বাড়িটি, যেখানে কেটেছে আমার শৈশবের সবচেয়ে সুন্দর
+                    <p class="bengali-text">বাশঁগাড়া গ্রামের সেই ছোট্ট বাড়িটি, যেখানে কেটেছে আমার শৈশবের সবচেয়ে
+                        সুন্দর
                         দিনগুলো। আম-জামের গাছের ছায়ায় খেলাধুলা, দাদী-নানীর গল্প শুনে ঘুমিয়ে পড়া।</p>
                 </div>
 
@@ -1034,10 +251,354 @@
             </div>
         </section>
 
+        <!-- Daily Life Routines -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গ্রামের দৈনন্দিন জীবনযাত্রা</h2>
+            <div class="daily-life-grid">
+                <div class="daily-card morning" onclick="showDailyMemory('morning')">
+                    <div class="daily-icon">🌅</div>
+                    <h3 class="bengali-text">সকালের রুটিন</h3>
+                    <p class="bengali-text">ফজরের আজান, নামাজ, স্কুলের প্রস্তুতি</p>
+                </div>
+                <div class="daily-card noon" onclick="showDailyMemory('noon')">
+                    <div class="daily-icon">☀️</div>
+                    <h3 class="bengali-text">দুপুরের বিশ্রাম</h3>
+                    <p class="bengali-text">স্কুল থেকে ফিরে দুপুরের খাবার ও ঘুম</p>
+                </div>
+                <div class="daily-card evening" onclick="showDailyMemory('evening')">
+                    <div class="daily-icon">🌇</div>
+                    <h3 class="bengali-text">বিকেলের খেলা</h3>
+                    <p class="bengali-text">বন্ধুদের সাথে খেলাধুলা ও মজা</p>
+                </div>
+                <div class="daily-card night" onclick="showDailyMemory('night')">
+                    <div class="daily-icon">🌙</div>
+                    <h3 class="bengali-text">রাতের গল্প</h3>
+                    <p class="bengali-text">পড়াশোনা, পরিবারের সাথে সময়</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Traditional Food & Treats -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গ্রামের ঐতিহ্যবাহী খাবার</h2>
+            <div class="food-grid">
+                <div class="food-card" onclick="showFoodMemory('rice')">
+                    <div class="food-emoji">🍚</div>
+                    <h3 class="bengali-text">ভাত ও তরকারি</h3>
+                    <p class="bengali-text">দুপুরে গরম ভাত, ডাল, মাছের ঝোল</p>
+                </div>
+                <div class="food-card" onclick="showFoodMemory('pitha')">
+                    <div class="food-emoji">🥞</div>
+                    <h3 class="bengali-text">পিঠা-পুলি</h3>
+                    <p class="bengali-text">শীতে মায়ের হাতের নানা রকম পিঠা</p>
+                </div>
+                <div class="food-card" onclick="showFoodMemory('sweets')">
+                    <div class="food-emoji">🍯</div>
+                    <h3 class="bengali-text">মিষ্টি ও গুড়</h3>
+                    <p class="bengali-text">খেজুরের গুড়, রসগোল্লা, মিষ্টি</p>
+                </div>
+                <div class="food-card" onclick="showFoodMemory('fruits')">
+                    <div class="food-emoji">🥭</div>
+                    <h3 class="bengali-text">মৌসুমি ফল</h3>
+                    <p class="bengali-text">আম, জাম, কাঁঠাল, লিচু</p>
+                </div>
+                <div class="food-card" onclick="showFoodMemory('snacks')">
+                    <div class="food-emoji">🍘</div>
+                    <h3 class="bengali-text">নাস্তা</h3>
+                    <p class="bengali-text">মুড়ি, চিড়া, দই, কলা</p>
+                </div>
+                <div class="food-card" onclick="showFoodMemory('tea')">
+                    <div class="food-emoji">☕</div>
+                    <h3 class="bengali-text">চা ও শরবত</h3>
+                    <p class="bengali-text">সকালের চা, গ্রীষ্মে লেবুর শরবত</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community & Neighborhood -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">পাড়া-প্রতিবেশী ও সমাজ</h2>
+            <div class="community-grid">
+                <div class="community-card" onclick="showCommunityMemory('elders')">
+                    <div class="community-icon">👴</div>
+                    <h3 class="bengali-text">বড়দের সম্মান</h3>
+                    <p class="bengali-text">গ্রামের বয়স্কদের কাছ থেকে শেখা</p>
+                </div>
+                <div class="community-card" onclick="showCommunityMemory('neighbors')">
+                    <div class="community-icon">🏘️</div>
+                    <h3 class="bengali-text">প্রতিবেশী</h3>
+                    <p class="bengali-text">একে অপরের সাহায্য ও সহযোগিতা</p>
+                </div>
+                <div class="community-card" onclick="showCommunityMemory('gathering')">
+                    <div class="community-icon">👥</div>
+                    <h3 class="bengali-text">সামাজিক অনুষ্ঠান</h3>
+                    <p class="bengali-text">বিয়ে, জন্মদিন, ধর্মীয় অনুষ্ঠান</p>
+                </div>
+                <div class="community-card" onclick="showCommunityMemory('helping')">
+                    <div class="community-icon">🤝</div>
+                    <h3 class="bengali-text">পারস্পরিক সহায়তা</h3>
+                    <p class="bengali-text">ফসল কাটা, ঘর তোলা, অসুস্থতায় সেবা</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Traditional Crafts & Skills -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">ঐতিহ্যবাহী হস্তশিল্প ও দক্ষতা</h2>
+            <div class="crafts-grid">
+                <div class="craft-card" onclick="showCraftMemory('weaving')">
+                    <div class="craft-symbol">🧵</div>
+                    <h3 class="bengali-text">তাঁত বোনা</h3>
+                    <p class="bengali-text">হাতে বোনা কাপড়, শাড়ি, গামছা</p>
+                </div>
+                <div class="craft-card" onclick="showCraftMemory('pottery')">
+                    <div class="craft-symbol">🏺</div>
+                    <h3 class="bengali-text">মাটির কাজ</h3>
+                    <p class="bengali-text">কুমারের তৈরি হাঁড়ি, কলসি, খেলনা</p>
+                </div>
+                <div class="craft-card" onclick="showCraftMemory('bamboo')">
+                    <div class="craft-symbol">🎋</div>
+                    <h3 class="bengali-text">বাঁশের কাজ</h3>
+                    <p class="bengali-text">ঝুড়ি, মাছ ধরার সরঞ্জাম, ঘরের আসবাব</p>
+                </div>
+                <div class="craft-card" onclick="showCraftMemory('farming')">
+                    <div class="craft-symbol">🚜</div>
+                    <h3 class="bengali-text">কৃষি কাজ</h3>
+                    <p class="bengali-text">লাঙল চালানো, বীজ বপন, ফসল তোলা</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Music & Stories -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গান-গল্প ও লোকসংস্কৃতি</h2>
+            <div class="music-grid">
+                <div class="music-card" onclick="showMusicMemory('folk')">
+                    <div class="music-note">🎵</div>
+                    <h3 class="bengali-text">লোকগীতি</h3>
+                    <p class="bengali-text">ভাটিয়ালি, ভাওয়াইয়া, পল্লীগীতি</p>
+                </div>
+                <div class="music-card" onclick="showMusicMemory('stories')">
+                    <div class="music-note">📖</div>
+                    <h3 class="bengali-text">রূপকথার গল্প</h3>
+                    <p class="bengali-text">দাদী-নানীর মুখের গল্প, ঠাকুরমার ঝুলি</p>
+                </div>
+                <div class="music-card" onclick="showMusicMemory('rhymes')">
+                    <div class="music-note">🎶</div>
+                    <h3 class="bengali-text">ছড়া ও ধাঁধা</h3>
+                    <p class="bengali-text">শিশুতোষ ছড়া, মজার ধাঁধা</p>
+                </div>
+                <div class="music-card" onclick="showMusicMemory('religious')">
+                    <div class="music-note">📿</div>
+                    <h3 class="bengali-text">ধর্মীয় সংগীত</h3>
+                    <p class="bengali-text">হামদ-নাত, গজল, ইসলামী গান</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transportation & Paths -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গ্রামের যাতায়াত ও পথঘাট</h2>
+            <div class="transport-grid">
+                <div class="transport-card" onclick="showTransportMemory('walking')">
+                    <div class="transport-icon">🚶</div>
+                    <h3 class="bengali-text">হেঁটে চলা</h3>
+                    <p class="bengali-text">মেঠো পথে, ক্ষেতের আইলে হাঁটা</p>
+                </div>
+                <div class="transport-card" onclick="showTransportMemory('rickshaw')">
+                    <div class="transport-icon">🚲</div>
+                    <h3 class="bengali-text">রিকশা ও সাইকেল</h3>
+                    <p class="bengali-text">দূরে যাওয়ার জন্য রিকশায় চড়া</p>
+                </div>
+                <div class="transport-card" onclick="showTransportMemory('boat')">
+                    <div class="transport-icon">🚣</div>
+                    <h3 class="bengali-text">নৌকা</h3>
+                    <p class="bengali-text">বর্ষায় নৌকায় স্কুলে যাওয়া</p>
+                </div>
+                <div class="transport-card" onclick="showTransportMemory('bullock')">
+                    <div class="transport-icon">🐂</div>
+                    <h3 class="bengali-text">গরুর গাড়ি</h3>
+                    <p class="bengali-text">মাল পরিবহনে গরুর গাড়ি</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Traditional Occupations & Livelihoods -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গ্রামের ঐতিহ্যবাহী পেশা ও জীবিকা</h2>
+            <div class="occupation-grid">
+                <div class="occupation-card" onclick="showOccupationMemory('farmer')">
+                    <div class="occupation-icon">👨‍🌾</div>
+                    <h3 class="bengali-text">কৃষি কাজ</h3>
+                    <p class="bengali-text">ধান-পাট চাষ, সব্জি ক্ষেত, মাছ চাষ</p>
+                </div>
+                <div class="occupation-card" onclick="showOccupationMemory('weaver')">
+                    <div class="occupation-icon">🧵</div>
+                    <h3 class="bengali-text">তাঁতী</h3>
+                    <p class="bengali-text">শাড়ি, ধুতি, গামছা বুনন</p>
+                </div>
+                <div class="occupation-card" onclick="showOccupationMemory('potter')">
+                    <div class="occupation-icon">🏺</div>
+                    <h3 class="bengali-text">কুমার</h3>
+                    <p class="bengali-text">মাটির হাঁড়ি-কলসি, সরাভাতি</p>
+                </div>
+                <div class="occupation-card" onclick="showOccupationMemory('blacksmith')">
+                    <div class="occupation-icon">🔨</div>
+                    <h3 class="bengali-text">কামার</h3>
+                    <p class="bengali-text">লাঙল, কুদাল, গোড়ালি তৈরি</p>
+                </div>
+                <div class="occupation-card" onclick="showOccupationMemory('fisherman')">
+                    <div class="occupation-icon">🎣</div>
+                    <h3 class="bengali-text">জেলে</h3>
+                    <p class="bengali-text">নদী-পুকুরে মাছ ধরা</p>
+                </div>
+                <div class="occupation-card" onclick="showOccupationMemory('carpenter')">
+                    <div class="occupation-icon">🪚</div>
+                    <h3 class="bengali-text">মিস্ত্রি</h3>
+                    <p class="bengali-text">ঘর তৈরি, আসবাব তৈরি</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Folk Beliefs & Superstitions -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গ্রামের লোকবিশ্বাস ও প্রথা</h2>
+            <div class="belief-grid">
+                <div class="belief-card" onclick="showBeliefMemory('weather')">
+                    <div class="belief-symbol">⚡</div>
+                    <h3 class="bengali-text">আবহাওয়ার লক্ষণ</h3>
+                    <p class="bengali-text">পাখি-পোকামাকড় দেখে বৃষ্টির আগাম বোঝা</p>
+                </div>
+                <div class="belief-card" onclick="showBeliefMemory('spirits')">
+                    <div class="belief-symbol">👻</div>
+                    <h3 class="bengali-text">ভূত-প্রেতের গল্প</h3>
+                    <p class="bengali-text">পুকুর পাড়ে ভূত, বটগাছে পেত্নী</p>
+                </div>
+                <div class="belief-card" onclick="showBeliefMemory('healing')">
+                    <div class="belief-symbol">🌿</div>
+                    <h3 class="bengali-text">দেশী চিকিৎসা</h3>
+                    <p class="bengali-text">তুলসী, নিম, সর্পগন্ধার গুণ</p>
+                </div>
+                <div class="belief-card" onclick="showBeliefMemory('omens')">
+                    <div class="belief-symbol">🦉</div>
+                    <h3 class="bengali-text">শুভ-অশুভ লক্ষণ</h3>
+                    <p class="bengali-text">কাকের ডাক, পেঁচার ডাকের অর্থ</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bengali Linguistic Heritage -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গ্রামের ভাষার ঐতিহ্য</h2>
+            <div class="language-grid">
+                <div class="language-card" onclick="showLanguageMemory('dialect')">
+                    <div class="language-icon">🗣️</div>
+                    <h3 class="bengali-text">আঞ্চলিক ভাষা</h3>
+                    <p class="bengali-text">ঠাকুরগাঁওর আঞ্চলিক বোলি</p>
+                </div>
+                <div class="language-card" onclick="showLanguageMemory('proverbs')">
+                    <div class="language-icon">📜</div>
+                    <h3 class="bengali-text">প্রবাদ-প্রবচন</h3>
+                    <p class="bengali-text">বাঙালি প্রবাদের জ্ঞান</p>
+                </div>
+                <div class="language-card" onclick="showLanguageMemory('sayings')">
+                    <div class="language-icon">🐈</div>
+                    <h3 class="bengali-text">লোকোক্তি</h3>
+                    <p class="bengali-text">পুরানো বাক্য ও সুভাষিত</p>
+                </div>
+                <div class="language-card" onclick="showLanguageMemory('riddles')">
+                    <div class="language-icon">❓</div>
+                    <h3 class="bengali-text">ধাঁধা ও সমস্যা</h3>
+                    <p class="bengali-text">মজার ধাঁধা, বুদ্ধির খেলা</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Traditional Marriage & Life Ceremonies -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গ্রামের বিয়ে-শাদী ও সংস্কার</h2>
+            <div class="ceremony-grid">
+                <div class="ceremony-card" onclick="showCeremonyMemory('wedding')">
+                    <div class="ceremony-icon">👰</div>
+                    <h3 class="bengali-text">গায়ে হলুদ</h3>
+                    <p class="bengali-text">বিয়ের আগে হলুদ মাখানো</p>
+                </div>
+                <div class="ceremony-card" onclick="showCeremonyMemory('birth')">
+                    <div class="ceremony-icon">👶</div>
+                    <h3 class="bengali-text">জন্ম উৎসব</h3>
+                    <p class="bengali-text">শিশু জন্মে আজান, আকীকা</p>
+                </div>
+                <div class="ceremony-card" onclick="showCeremonyMemory('death')">
+                    <div class="ceremony-icon">🌺</div>
+                    <h3 class="bengali-text">মৃত্যু সংস্কার</h3>
+                    <p class="bengali-text">জানাজা, দোয়া, মিলাদ</p>
+                </div>
+                <div class="ceremony-card" onclick="showCeremonyMemory('education')">
+                    <div class="ceremony-icon">📚</div>
+                    <h3 class="bengali-text">শিক্ষা শুরু</h3>
+                    <p class="bengali-text">প্রথম অক্ষর শিখা, কুরআন পড়া</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Traditional Healthcare & Remedies -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গ্রামের আয়ুর্বেদিক চিকিৎসা</h2>
+            <div class="healthcare-grid">
+                <div class="healthcare-card" onclick="showHealthcareMemory('herbs')">
+                    <div class="healthcare-icon">🌿</div>
+                    <h3 class="bengali-text">স্বাভকৈ কুসুম</h3>
+                    <p class="bengali-text">তুলসী, নিম, অর্জুন, ঢাঁটরশাক</p>
+                </div>
+                <div class="healthcare-card" onclick="showHealthcareMemory('midwife')">
+                    <div class="healthcare-icon">👩‍⚕️</div>
+                    <h3 class="bengali-text">ধাত্রী মা</h3>
+                    <p class="bengali-text">শিশু জন্মে সাহায্যকারী</p>
+                </div>
+                <div class="healthcare-card" onclick="showHealthcareMemory('kabiraj')">
+                    <div class="healthcare-icon">👨‍⚕️</div>
+                    <h3 class="bengali-text">কবিরাজ</h3>
+                    <p class="bengali-text">সংখ্যালঘু রোগের দেশী চিকিৎসা</p>
+                </div>
+                <div class="healthcare-card" onclick="showHealthcareMemory('massage')">
+                    <div class="healthcare-icon">👋</div>
+                    <h3 class="bengali-text">তেল মালিশ</h3>
+                    <p class="bengali-text">সরিষার তেল, নারিকেল তেল</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Religious Life & Practices -->
+        <section class="memory-section animate-on-scroll">
+            <h2 class="section-title bengali-text">গ্রামের ধর্মীয় জীবন</h2>
+            <div class="religious-grid">
+                <div class="religious-card" onclick="showReligiousMemory('mosque')">
+                    <div class="religious-icon">🕌</div>
+                    <h3 class="bengali-text">মসজিদের জীবন</h3>
+                    <p class="bengali-text">পাঁচ ওয়াক্ত নামাজ, জুমার নামাজ</p>
+                </div>
+                <div class="religious-card" onclick="showReligiousMemory('ramadan')">
+                    <div class="religious-icon">🌙</div>
+                    <h3 class="bengali-text">রমজান মাস</h3>
+                    <p class="bengali-text">রোজা, ইফতার, তারাবির নামাজ</p>
+                </div>
+                <div class="religious-card" onclick="showReligiousMemory('quran')">
+                    <div class="religious-icon">📚</div>
+                    <h3 class="bengali-text">কুরআন শিক্ষা</h3>
+                    <p class="bengali-text">আরবী ভাষা, কুরআন তেলাওয়াত</p>
+                </div>
+                <div class="religious-card" onclick="showReligiousMemory('festivals')">
+                    <div class="religious-icon">🎆</div>
+                    <h3 class="bengali-text">ধর্মীয় উৎসব</h3>
+                    <p class="bengali-text">ঈদ, শব-এ-বরাত, শব-এ-মেরাজ</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Village Map -->
         <section class="memory-section animate-on-scroll">
             <div class="village-map">
-                <h2 class="map-title bengali-text">বাংশগড়া গ্রামের স্মৃতিময় স্থানগুলো</h2>
+                <h2 class="map-title bengali-text">বাশঁগাড়া গ্রামের স্মৃতিময় স্থানগুলো</h2>
                 <div class="village-elements">
                     <div class="village-element" onclick="showMemory('home')">
                         <span style="font-size: 2rem;">🏡</span>
@@ -1090,417 +651,9 @@
         </div>
     </div>
 
-    <script>
-        // Floating memories animation
-        const floatingEmojis = ['📚', '✏️', '🎒', '⚽', '🌸', '🦋', '🌟', '💫', '🏏', '🎯', '🌾', '🌺', '🦜', '🌙', '🎪', '🥞', '🏡', '🕌', '🎭', '🎨', '🎵', '🌈', '☀️', '🌧️', '❄️', '🍃'];
-        const floatingContainer = document.getElementById('floatingMemories');
+    <script src="./js/main.js"></script>
+    <script src="./js/data.js"></script>
 
-        function createFloatingMemory() {
-            const memory = document.createElement('div');
-            memory.className = 'floating-memory';
-            memory.textContent = floatingEmojis[Math.floor(Math.random() * floatingEmojis.length)];
-            memory.style.left = Math.random() * window.innerWidth + 'px';
-            memory.style.top = window.innerHeight + 'px';
-            memory.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            memory.style.animationDelay = Math.random() * 2 + 's';
-
-            floatingContainer.appendChild(memory);
-
-            setTimeout(() => {
-                memory.remove();
-            }, 8000);
-        }
-
-        // Create floating memories periodically
-        setInterval(createFloatingMemory, 3000);
-
-        // Scroll animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Memory stories for each location
-        const memoryStories = {
-            home: {
-                title: 'বাড়ির স্মৃতি',
-                content: 'আমাদের সেই ছোট্ট টিনের ঘর, যেখানে সবাই মিলে বসে খেতাম। মায়ের হাতের রান্না, রাতে সবাই মিলে বসে গল্প করা। দাদা-দাদীর কোলে বসে পুরাণের গল্প শোনা।'
-            },
-            school: {
-                title: '৭০ নং সরকারি প্রাথমিক বিদ্যালয়',
-                content: 'প্রতিদিন সকালে বন্ধুদের সাথে স্কুলে যাওয়া। প্রিয় শিক্ষকদের ক্লাস, টিফিনের সময় খেলাধুলা। বার্ষিক ক্রীড়া প্রতিযোগিতায় অংশগ্রহণ করা।'
-            },
-            madrasa: {
-                title: 'ভেলাজান আনসারিয়া ফাজিল মাদ্রাসা',
-                content: 'আরবি ভাষা শেখা, কুরআন তেলাওয়াত, হাদিস অধ্যয়ন। উস্তাদদের শিক্ষা, বন্ধুদের সাথে পড়াশোনা। জুমার নামাজে সবাই একসাথে দাঁড়ানো।'
-            },
-            field: {
-                title: 'মাঠের স্মৃতি',
-                content: 'সবুজ ধানের ক্ষেতে দৌড়াদৌড়ি, বর্ষার সময় কাদা-পানিতে খেলা। ফুটবল খেলা, চাঁদের আলোয় সন্ধ্যায় ঘুরে বেড়ানো।'
-            },
-            pond: {
-                title: 'পুকুরের স্মৃতি',
-                content: 'পুকুরে মাছ ধরা, সাঁতার কাটা। শীতের সকালে পুকুর পাড়ে বসে রোদ পোহানো। পদ্ম ফুল তুলে মাকে দেওয়া।'
-            },
-            market: {
-                title: 'বাজারের স্মৃতি',
-                content: 'বাবার সাথে বাজারে যাওয়া, দোকানদারদের সাথে আলাপ। ঈদের আগে নতুন জামা কিনতে যাওয়া। মিষ্টির দোকানে রসগোল্লা খাওয়া।'
-            },
-            mosque: {
-                title: 'মসজিদের স্মৃতি',
-                content: 'পাঁচ ওয়াক্ত নামাজ, জুমার দিনে সবাই একসাথে জামাত। রমজান মাসে ইফতার, তারাবির নামাজ। ঈদের নামাজে সবার সাথে আলিঙ্গন।'
-            },
-            playground: {
-                title: 'খেলার মাঠের স্মৃতি',
-                content: 'বিকেলে বন্ধুদের সাথে ফুটবল খেলা, ক্রিকেট। হা-ডু-ডু, কানামাছি, গোল্লাছুট। জ্যোৎস্না রাতে মাঠে বসে গল্প করা।'
-            }
-        };
-
-        // Traditional game stories
-        const gameStories = {
-            kanamachi: {
-                title: 'কানামাছি খেলার স্মৃতি',
-                content: 'একজনের চোখ বেঁধে দেওয়া হত, তারপর সে অন্যদের ধরার চেষ্টা করত। "কানামাছি ভোঁ ভোঁ, যেদিকে যাও, মাছি টেনে নিয়ে যাও!" গান গেয়ে খেলতাম। যে ধরা পড়ত, সে পরবর্তী কানামাছি হত।'
-            },
-            hadudu: {
-                title: 'হা-ডু-ডু (কাবাডি) খেলার স্মৃতি',
-                content: '"হাডুডু হাডুডু" বলে শ্বাস বন্ধ করে প্রতিপক্ষের এলাকায় ঢুকে খেলোয়াড়দের স্পর্শ করার চেষ্টা। দল বেঁধে খেলা, কৌশল করা। গ্রামের সেরা খেলোয়াড়রা ছিল আমাদের আদর্শ।'
-            },
-            gollachut: {
-                title: 'গোল্লাছুট খেলার স্মৃতি',
-                content: 'একটা বৃত্ত এঁকে তার মধ্যে এক পা দিয়ে হপ করে খেলা। পালাক্রমে সবাই চেষ্টা করত সবচেয়ে বেশি দূর যেতে। পড়ে গেলে বা দাগ ছুঁয়ে ফেললে আউট।'
-            },
-            danguli: {
-                title: 'ডাংগুলি খেলার স্মৃতি',
-                content: 'বাঁশের ছোট কাঠি দিয়ে বড় কাঠি মেরে দূরে ফেলার খেলা। কে সবচেয়ে দূরে ফেলতে পারে তা নিয়ে প্রতিযোগিতা। গ্রামের বড়রাও মাঝে মাঝে খেলত।'
-            },
-            'bou-chi': {
-                title: 'বউ-চি চি খেলার স্মৃতি',
-                content: 'মেয়েরা বেশি খেলত এই খেলা। একে অপরের হাত ধরে গোল হয়ে দাঁড়িয়ে গান গাইত। "বউ চি চি, কার বউ চি চি?" মজার গান আর নাচের মত করে খেলা।'
-            },
-            marble: {
-                title: 'মার্বেল খেলার স্মৃতি',
-                content: 'রঙিন কাঁচের গুলি দিয়ে খেলা। গর্তে ফেলার প্রতিযোগিতা, নিশানা লাগানো। জিতলে প্রতিপক্ষের মার্বেল নিয়ে নেওয়া। ছোট একটা গর্ত করে তাতে মার্বেল ফেলার চেষ্টা।'
-            }
-        };
-
-        // Seasonal memories
-        const seasonStories = {
-            spring: {
-                title: 'বসন্তকালের স্মৃতি',
-                content: 'আমের মুকুল, জামের কুঁড়ি, কৃষ্ণচূড়ার লাল ফুল। পাখিদের কলকাকলি, কোকিলের ডাক। বাগানে রঙিন প্রজাপতি উড়ে বেড়ানো। নতুন পাতায় ভরে যাওয়া গাছপালা।'
-            },
-            summer: {
-                title: 'গ্রীষ্মকালের স্মৃতি',
-                content: 'পাকা আম খাওয়ার ধুম। কাঁঠাল, জাম, লিচুর সময়। দুপুরের তীব্র রোদে পুকুরে সাঁতার। বিকেলে আমগাছের ছায়ায় বিশ্রাম। রাতে উঠানে চাটাই বিছিয়ে শোয়া।'
-            },
-            monsoon: {
-                title: 'বর্ষাকালের স্মৃতি',
-                content: 'প্রথম বৃষ্টিতে মাটির সুগন্ধ। কাগজের নৌকা বানিয়ে ভাসানো। বৃষ্টিতে ভিজে খেলা। পুকুর ভরে যাওয়া, রাস্তায় পানি। কেঁচো তোলা, শামুক কুড়ানো।'
-            },
-            winter: {
-                title: 'শীতকালের স্মৃতি',
-                content: 'সকালে কুয়াশার চাদর। খেজুরের রস খাওয়া। পিঠা-পুলির উৎসব। কোনো কোনো দিন এত ঠান্ডা যে কম্বল মুড়ি দিয়ে ঘরে থাকা। রোদে বসে গল্প করা।'
-            }
-        };
-
-        // Festival memories
-        const festivalStories = {
-            eid: {
-                title: 'ঈদ উৎসবের স্মৃতি',
-                content: 'ঈদের চাঁদ দেখা, সেহরি খাওয়া। নতুন জামা-কাপড়, পায়েস-সেমাই। ঈদগাহে নামাজ, সবার সাথে কোলাকুলি। ঈদি পাওয়ার আনন্দ, আত্মীয়দের বাড়ি বেড়াতে যাওয়া।'
-            },
-            pitha: {
-                title: 'পিঠা উৎসবের স্মৃতি',
-                content: 'শীতের সময় মায়েরা বিভিন্ন রকম পিঠা বানাতেন। ভাপা পিঠা, চিতই পিঠা, পাটিসাপটা। নতুন ধানের চাল দিয়ে গুঁড়া করে। পাড়া-প্রতিবেশীরা একসাথে মিলে বানানো।'
-            },
-            harvest: {
-                title: 'ফসল কাটার উৎসব',
-                content: 'সোনালি ধান পেকে গেলে কৃষকদের আনন্দ। সবাই মিলে ধান কাটা। "আলো আলো" গান গেয়ে কাজ করা। নতুন চালের পায়েস খাওয়া। কৃষকদের মুখে হাসি।'
-            },
-            fair: {
-                title: 'বার্ষিক মেলার স্মৃতি',
-                content: 'বছরে একবার বড় মেলা বসত। খেলনার দোকান, মিষ্টির দোকান। পুতুল নাচ, যাত্রা দেখা। চরকি, বেলুন কেনা। সন্ধ্যায় কেরোসিনের লণ্ঠনে আলো।'
-            }
-        };
-
-        // Nature memories
-        const natureStories = {
-            trees: {
-                title: 'গাছপালার স্মৃতি',
-                content: 'বিশাল আমগাছের ছায়া, নারিকেল গাছে টোকা। বর্ষায় কদম ফুলের সুগন্ধ। শিমুল তুলো উড়ে বেড়ানো। বট গাছের নিচে দাদাদের আড্ডা। পাকুড় গাছে পাখির বাসা।'
-            },
-            birds: {
-                title: 'পাখ-পাখালির স্মৃতি',
-                content: 'ভোরে কোকিলের ডাক, দোয়েল পাখির গান। শালিক, কাক, চড়ুই পাখি। বকের সারি, রাতে পেঁচার ডাক। বর্ষায় টিয়া পাখির কলরব। শীতে অতিথি পাখিদের আগমন।'
-            },
-            fields: {
-                title: 'ক্ষেত-খামারের স্মৃতি',
-                content: 'সবুজ ধানের ক্ষেত, হলুদ সরিষা ফুল। বিল জুড়ে শাপলা-শালুক। জ্যোৎস্না রাতে ক্ষেতের পাশ দিয়ে হাঁটা। ফসলের সময় কৃষকদের ব্যস্ততা। মাঠে গরু চরানো।'
-            },
-            water: {
-                title: 'জলাশয়ের স্মৃতি',
-                content: 'বিশাল পুকুরে পদ্ম ফুল, মাছেদের লাফালাফি। খালে নৌকা চলাচল। বর্ষায় বিল ভরে যাওয়া। সাঁতার কাটা, মাছ ধরা। শীতে পুকুর পাড়ে বসে রোদ পোহানো।'
-            }
-        };
-
-        function showMemory(location) {
-            const modal = document.getElementById('memoryModal');
-            const content = document.getElementById('modalContent');
-            const story = memoryStories[location];
-
-            content.innerHTML = `
-                <h3 class="bengali-text" style="margin-bottom: 1rem; font-size: 1.5rem;">${story.title}</h3>
-                <p class="bengali-text" style="line-height: 1.8; font-size: 1.1rem;">${story.content}</p>
-            `;
-
-            modal.style.display = 'block';
-
-            // Add entrance animation
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                modal.style.transition = 'opacity 0.3s ease';
-                modal.style.opacity = '1';
-            }, 10);
-        }
-
-        function showGameMemory(game) {
-            const modal = document.getElementById('memoryModal');
-            const content = document.getElementById('modalContent');
-            const story = gameStories[game];
-
-            content.innerHTML = `
-                <h3 class="bengali-text" style="margin-bottom: 1rem; font-size: 1.5rem; color: #ff69b4;">${story.title}</h3>
-                <p class="bengali-text" style="line-height: 1.8; font-size: 1.1rem;">${story.content}</p>
-            `;
-
-            modal.style.display = 'block';
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                modal.style.transition = 'opacity 0.3s ease';
-                modal.style.opacity = '1';
-            }, 10);
-        }
-
-        function showSeasonMemory(season) {
-            const modal = document.getElementById('memoryModal');
-            const content = document.getElementById('modalContent');
-            const story = seasonStories[season];
-
-            content.innerHTML = `
-                <h3 class="bengali-text" style="margin-bottom: 1rem; font-size: 1.5rem; color: #4facfe;">${story.title}</h3>
-                <p class="bengali-text" style="line-height: 1.8; font-size: 1.1rem;">${story.content}</p>
-            `;
-
-            modal.style.display = 'block';
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                modal.style.transition = 'opacity 0.3s ease';
-                modal.style.opacity = '1';
-            }, 10);
-        }
-
-        function showFestivalMemory(festival) {
-            const modal = document.getElementById('memoryModal');
-            const content = document.getElementById('modalContent');
-            const story = festivalStories[festival];
-
-            content.innerHTML = `
-                <h3 class="bengali-text" style="margin-bottom: 1rem; font-size: 1.5rem; color: #ffd700;">${story.title}</h3>
-                <p class="bengali-text" style="line-height: 1.8; font-size: 1.1rem;">${story.content}</p>
-            `;
-
-            modal.style.display = 'block';
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                modal.style.transition = 'opacity 0.3s ease';
-                modal.style.opacity = '1';
-            }, 10);
-        }
-
-        function showNatureMemory(nature) {
-            const modal = document.getElementById('memoryModal');
-            const content = document.getElementById('modalContent');
-            const story = natureStories[nature];
-
-            content.innerHTML = `
-                <h3 class="bengali-text" style="margin-bottom: 1rem; font-size: 1.5rem; color: #32cd32;">${story.title}</h3>
-                <p class="bengali-text" style="line-height: 1.8; font-size: 1.1rem;">${story.content}</p>
-            `;
-
-            modal.style.display = 'block';
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                modal.style.transition = 'opacity 0.3s ease';
-                modal.style.opacity = '1';
-            }, 10);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('memoryModal');
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('memoryModal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Add random sparkle effects
-        function createSparkle() {
-            const sparkle = document.createElement('div');
-            sparkle.innerHTML = '✨';
-            sparkle.style.position = 'fixed';
-            sparkle.style.left = Math.random() * window.innerWidth + 'px';
-            sparkle.style.top = Math.random() * window.innerHeight + 'px';
-            sparkle.style.pointerEvents = 'none';
-            sparkle.style.fontSize = '1rem';
-            sparkle.style.zIndex = '999';
-            sparkle.style.animation = 'fadeInOut 3s ease-in-out';
-            document.body.appendChild(sparkle);
-
-            setTimeout(() => sparkle.remove(), 3000);
-        }
-
-        // Add sparkle animation CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeInOut {
-                0% { opacity: 0; transform: scale(0); }
-                50% { opacity: 1; transform: scale(1); }
-                100% { opacity: 0; transform: scale(0); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Create sparkles periodically
-        setInterval(createSparkle, 5000);
-
-        // Add parallax effect to background
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = scrolled * 0.1;
-            document.querySelector('.bg-animation').style.transform = `translateY(${parallax}px)`;
-        });
-
-        // Add hover sound effect simulation (visual feedback)
-        document.querySelectorAll('.memory-card, .institution-card, .village-element, .game-card, .season-card, .festival-card, .nature-card').forEach(card => {
-            card.addEventListener('mouseenter', function () {
-                this.style.transform = this.style.transform + ' scale(1.02)';
-                // Create ripple effect
-                createRipple(this);
-            });
-
-            card.addEventListener('mouseleave', function () {
-                this.style.transform = this.style.transform.replace(' scale(1.02)', '');
-            });
-        });
-
-        // Ripple effect function
-        function createRipple(element) {
-            const ripple = document.createElement('div');
-            ripple.style.position = 'absolute';
-            ripple.style.borderRadius = '50%';
-            ripple.style.background = 'rgba(255, 255, 255, 0.3)';
-            ripple.style.transform = 'scale(0)';
-            ripple.style.animation = 'ripple 0.6s linear';
-            ripple.style.left = '50%';
-            ripple.style.top = '50%';
-            ripple.style.width = '20px';
-            ripple.style.height = '20px';
-            ripple.style.marginLeft = '-10px';
-            ripple.style.marginTop = '-10px';
-            ripple.style.pointerEvents = 'none';
-
-            element.style.position = 'relative';
-            element.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        }
-
-        // Add ripple animation CSS
-        const rippleStyle = document.createElement('style');
-        rippleStyle.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(rippleStyle);
-
-        // Random cultural quotes that appear occasionally
-        const culturalQuotes = [
-            'গ্রামের মাটিতে লুকিয়ে আছে হাজার বছরের ইতিহাস',
-            'শৈশবের স্মৃতি হৃদয়ের সবচেয়ে মূল্যবান সম্পদ',
-            'বাংলার প্রকৃতি যেন কবিতার ছন্দে লেখা',
-            'গ্রামের সহজ-সরল জীবনই প্রকৃত সুখের চাবিকাঠি'
-        ];
-
-        // Show random cultural quote
-        function showCulturalQuote() {
-            const quote = culturalQuotes[Math.floor(Math.random() * culturalQuotes.length)];
-            const quoteElement = document.createElement('div');
-            quoteElement.innerHTML = quote;
-            quoteElement.style.position = 'fixed';
-            quoteElement.style.top = '20px';
-            quoteElement.style.right = '20px';
-            quoteElement.style.background = 'rgba(255, 255, 255, 0.1)';
-            quoteElement.style.backdropFilter = 'blur(10px)';
-            quoteElement.style.padding = '1rem 2rem';
-            quoteElement.style.borderRadius = '15px';
-            quoteElement.style.color = 'white';
-            quoteElement.style.fontFamily = 'Kalpurush, sans-serif';
-            quoteElement.style.fontSize = '0.9rem';
-            quoteElement.style.maxWidth = '300px';
-            quoteElement.style.opacity = '0';
-            quoteElement.style.transform = 'translateY(-20px)';
-            quoteElement.style.transition = 'all 0.5s ease';
-            quoteElement.style.zIndex = '1001';
-            quoteElement.style.border = '1px solid rgba(255, 255, 255, 0.2)';
-
-            document.body.appendChild(quoteElement);
-
-            // Animate in
-            setTimeout(() => {
-                quoteElement.style.opacity = '1';
-                quoteElement.style.transform = 'translateY(0)';
-            }, 100);
-
-            // Remove after 5 seconds
-            setTimeout(() => {
-                quoteElement.style.opacity = '0';
-                quoteElement.style.transform = 'translateY(-20px)';
-                setTimeout(() => quoteElement.remove(), 500);
-            }, 5000);
-        }
-
-        // Show cultural quote every 30 seconds
-        setInterval(showCulturalQuote, 30000);
-
-        // Initial quote after 5 seconds
-        setTimeout(showCulturalQuote, 5000);
-    </script>
 </body>
 
 </html>
