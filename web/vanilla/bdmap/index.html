@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bangladesh Only Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+      #map {
+        background: #f0f0f0;
+        color: #d0ffe1;
+        /* light gray background */
+        height: 90vh;
+        width: 90%;
+        margin: 0 auto;
+      }
+
+      body {
+        margin: 0 auto;
+      }
+
+      .district-label {
+        font-weight: bold;
+        font-size: 13px;
+        background: white;
+        padding: 2px 5px;
+        border-radius: 4px;
+        border: 1px solid #bb1f1f;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <!-- <script>
+        var map = L.map('map', {
+            zoomControl: true,
+            attributionControl: false
+        }).setView([23.6850, 90.3563], 7); // Bangladesh center
+
+        map.setMaxBounds([
+            [20.5, 87.5],  // southwest corner
+            [27.5, 93.5]   // northeast corner
+        ]);
+        // Empty base tile layer (no country names)
+        // L.tileLayer('', {
+        //     attribution: '© OpenStreetMap contributors'
+        // }).addTo(map);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors & CartoDB',
+            subdomains: 'abcd',
+            maxZoom: 18
+        }).addTo(map);
+
+        // Function to generate random color
+        function getRandomColor() {
+            const colors = ['#99fc00', '#00e5ff', '#ffa500', '#ff4c4c', '#9b59b6', '#00d084', '#ffce00', '#f78da7'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Add Bangladesh GeoJSON only
+        // Step 4: Load GeoJSON and style districts
+        // fetch('district_v2.geojson') // Make sure this file exists in the same folder
+        //     .then(res => res.json())
+        //     .then(data => {
+        //     L.geoJSON(data, {
+        //         style: {
+        //             color: '#008000',       // District border color (dark green)
+        //             weight: 1,            // Border thickness
+        //             fillColor: '#d0ffe1',   // Fill color (light green)
+        //             fillOpacity: 0.6
+        //         }
+        //     }).addTo(map);
+        // });
+
+
+        // fetch('district_v2.geojson')
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         L.geoJSON(data, {
+        //             style: function (feature) {
+        //                 return {
+        //                     color: '#008000',             // Border color
+        //                     weight: 1,                    // Border thickness
+        //                     fillColor: getRandomColor(),  // Random fill
+        //                     fillOpacity: 0.6
+        //                 };
+        //             },
+        //             onEachFeature: function (feature, layer) {
+        //                 const name = feature.properties.name || "Unnamed";
+        //                 layer.bindTooltip(name, {
+        //                     direction: 'center',
+        //                     className: 'bn_name',
+        //                     sticky: true
+        //                 });
+        //             }
+        //         }).addTo(map);
+        //     });
+
+
+
+        // Load both files: shapes + district names
+        Promise.all([
+            fetch('district_v2.geojson').then(res => res.json()),
+            fetch('bd-districts.json').then(res => res.json())
+        ]).then(([geoData, districtData]) => {
+            const nameMap = {};
+            districtData.districts.forEach(dist => {
+                nameMap[dist.name.trim().toLowerCase()] = dist.bn_name;
+            });
+
+            L.geoJSON(geoData, {
+                style: () => ({
+                    color: '#008000',
+                    weight: 1,
+                    fillColor: getRandomColor(),
+                    fillOpacity: 0.6
+                }),
+                onEachFeature: function (feature, layer) {
+                    const englishName = (feature.properties.name || '').trim().toLowerCase();
+                    const banglaName = nameMap[englishName] || 'Unnamed';
+                    layer.bindTooltip(banglaName, {
+                        direction: 'center',
+                        className: 'district-label',
+                        sticky: true
+                    });
+                }
+            }).addTo(map);
+        });
+
+    </script> -->
+
+    <script>
+      const map = L.map("map", {
+        zoomControl: true,
+        attributionControl: false,
+      }).setView([23.685, 90.3563], 7);
+
+      map.setMaxBounds([
+        [20.5, 87.5],
+        [27.5, 93.5],
+      ]);
+
+      L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+        {
+          attribution: "&copy; OpenStreetMap contributors & CartoDB",
+          subdomains: "abcd",
+          maxZoom: 18,
+        }
+      ).addTo(map);
+
+      function getRandomColor() {
+        const colors = [
+          "#99fc00",
+          "#00e5ff",
+          "#ffa500",
+          "#ff4c4c",
+          "#9b59b6",
+          "#00d084",
+          "#ffce00",
+          "#f78da7",
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      // Load both files: shapes + district names
+      Promise.all([
+        fetch("district_v2.geojson").then((res) => res.json()),
+        fetch("bd-districts.json").then((res) => res.json()),
+      ]).then(([geoData, districtData]) => {
+        const nameMap = {};
+        districtData.districts.forEach((dist) => {
+          nameMap[dist.name] = dist.bn_name;
+        });
+
+        L.geoJSON(geoData, {
+          style: () => ({
+            color: "#008000",
+            outline: "none",
+            border: "none",
+            weight: 1,
+            fillColor: getRandomColor(),
+            fillOpacity: 0.6,
+          }),
+          onEachFeature: function (feature, layer) {
+            const englishName = feature.properties.DISTRICT_NAME || "";
+
+            const banglaName = nameMap[englishName] || "Unnamed";
+            if (banglaName === "Unnamed") {
+              console.log("No Bangla name for:", englishName, feature);
+            }
+            layer.bindTooltip(banglaName, {
+              direction: "center",
+              className: "district-label",
+              sticky: true,
+            });
+          },
+        }).addTo(map);
+      });
+    </script>
+  </body>
+</html>
