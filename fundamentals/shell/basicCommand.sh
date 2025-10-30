@@ -83,3 +83,12 @@ echo "=== Help Commands ==="
 man command     # Manual page for command
 command --help  # Show command help
 info command    # Info documentation
+
+# create multiple files
+touch file1.txt file2.txt file3.txt
+touch {a..e}.txt
+touch file{1..5}.txt
+touch file{A,B,C}.txt
+touch file{X,Y,Z}{1,2,3}.txt
+touch {1..3}name.txt
+
