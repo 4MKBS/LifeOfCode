@@ -92,3 +92,22 @@ touch file{A,B,C}.txt
 touch file{X,Y,Z}{1,2,3}.txt
 touch {1..3}name.txt
 
+# echo multiple things
+echo "Hello, World!" > hello.txt
+echo -e "Line1\nLine2\nLine3" > lines.txt
+echo "This is a sample text." >> sample.txt
+echo "User: $USER" > user.txt
+echo "Date: $(date)" > date.txt
+echo "Path: $PATH" > path.txt
+echo "Current Directory: $(pwd)" > cwd.txt
+echo "Random Number: $RANDOM" > random.txt
+echo "Hostname: $(hostname)" > hostname.txt
+echo "Uptime: $(uptime)" > uptime.txt
+
+echo {a..z} # Print letters a to z
+echo {A..Z} # Print letters A to Z
+echo {0..9} # Print numbers 0 to 9
+echo {10..20} # Print numbers 10 to 20
+echo {a..z}{0..9} # Print combinations of letters a to z with numbers 0 to 9
+echo {A..Z}{10..20} # Print combinations
+echo {10..100..2} # Print even numbers from 10 to 100
