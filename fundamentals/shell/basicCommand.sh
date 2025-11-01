@@ -127,5 +127,36 @@ cat final_output.txt # display the content
 ls -lsah 1> ls_output.txt # redirect output of
 ls -lsah >> ls_output.txt # append output of ls to the same file
 cat ls_output.txt # display the content 
+cat < ls_output.txt # input redirection from the file
+ls -lsah 1> ls_output.txt 2> ls_error.txt # redirect standard output and error to separate files
+ls -lsah 1>> ls_output.txt 2>> ls_error.txt # append standard
+ls -lsah > ls_output.txt # redirect both standard output and error to the same file
+ls -lsah 1> /dev/null # discard standard output
 
+grep "output" < output.txt
+grep "error-log.txt" < ls.txt 1> ls2.txt 2> /dev/null
 
+# combining multiple commands with pipes
+cat output.txt | grep "output" 
+
+ps aux | grep "ps aux"
+
+df -h | sort -k 5 -hr | head -n 5
+free -h | awk 'NR==2{print $3 " used out of " $2}'
+
+yes null | head -n 10 # generate 'null' 10 times
+
+yes n | head -n 5 | xargs -I {} echo "You said: {}" # simulate user input 'n' 5 times
+
+# user, group, permission commands
+whoami
+cat /etc/passwd | grep "$USER"
+groups
+id
+ls -l perm_test.txt
+
+sudo su
+sudo chown root:root perm_test.txt
+sudo chmod 600 perm_test.txt
+sudo chmod 777 perm_test.txt
+sudo chmod +x perm_test.txts
