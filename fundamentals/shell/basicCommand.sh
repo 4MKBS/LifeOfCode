@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # Basic Shell Commands Tutorial
+# warning: This script is for educational purposes only.
+# Do not run it on a production system as it may modify or delete files.
+# Always review and understand commands before executing them.
 
 echo "=== File and Directory Operations ==="
 ls          # List files and directories
@@ -111,3 +114,18 @@ echo {10..20} # Print numbers 10 to 20
 echo {a..z}{0..9} # Print combinations of letters a to z with numbers 0 to 9
 echo {A..Z}{10..20} # Print combinations
 echo {10..100..2} # Print even numbers from 10 to 100
+
+# stream and pipes
+
+echo "this will get output to the file" 1> output.txt # redirect standard output to a file
+echo "this will get appended to the file" >> output.txt # append standard output to a file
+cat output.txt | grep "output" # pipe output of cat to grep
+
+cat output.txt 1> final_output.txt # redirect standard output of cat to another file
+cat final_output.txt # display the content
+
+ls -lsah 1> ls_output.txt # redirect output of
+ls -lsah >> ls_output.txt # append output of ls to the same file
+cat ls_output.txt # display the content 
+
+
