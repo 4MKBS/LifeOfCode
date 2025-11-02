@@ -160,3 +160,32 @@ sudo chown root:root perm_test.txt
 sudo chmod 600 perm_test.txt
 sudo chmod 777 perm_test.txt
 sudo chmod +x perm_test.txts
+
+# environments
+echo hello my name is $USER
+cat /etc/environment
+cat /etc/profile
+cat ~/.bashrc
+printenv PATH
+export MY_VAR="HelloWorld"
+echo $MY_VAR
+unset MY_VAR
+echo $MY_VAR
+which bash
+
+# open programs
+xdg-open hello.txt
+xdg-open ./
+code .
+gedit hello.txt &
+nano hello.txt
+vim hello.txt
+google-chrome 
+
+# locate programs
+which ls
+whereis bash
+locate bash
+which python3
+where google-chrome
+locate google-chrome
