@@ -189,3 +189,36 @@ locate bash
 which python3
 where google-chrome
 locate google-chrome
+
+# kill processes
+sleep 300 &
+PID=$!
+echo "Sleeping process PID: $PID"
+kill $PID
+ps aux | grep "sleep 300"
+pkill sleep
+pgrep sleep
+kill -9 $PID
+
+# 
+date
+date +%Y-%m-%d
+date +%H:%M:%S
+date +"%Y-%m-%d %H:%M:%S"
+date -d "next Friday" +"%Y-%m-%d"
+date -d "2024-12-25" +"%A, %B %d"
+date -u +"%Y-%m-%d %H:%M:%S UTC"
+date +"Week number: %V"
+date +"Day of year: %j"
+date +"Timezone: %Z %z"
+
+uptime 
+touch uptime_test.txt && date >> uptime_test.txt && uptime >> uptime_test.txt
+cat uptime_test.txt
+date && cat norealfile.txt && echo "I am not showing up"
+false && echo "This will not be printed"
+false || echo "This will be printed because the previous command failed"
+false ; true ; echo "hey there"
+
+echo I think $(whoami) is a very cool user # I think ubuntu is very cool
+echo $(date +%x) – $(uptime) >> log.txt
