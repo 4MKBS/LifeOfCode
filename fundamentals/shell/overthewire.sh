@@ -102,5 +102,19 @@ strings data.txt | grep "=="
 strings data.txt | grep ==
 
 
+# Bandit Level 10 → Level 11
+echo "=== Bandit Level 10 → Level 11 ==="
+# Connect to Bandit Level 10
+ssh bandit10@bandit.labs.overthewire.org -p 2220
+# Password for bandit10 (from previous level)
+# Retrieve the password for bandit11
+base64 -d data.txt
 
 
+# Bandit Level 11 → Level 12
+echo "=== Bandit Level 11 → Level 12 ==="
+# Connect to Bandit Level 11
+ssh bandit11@bandit.labs.overthewire.org -p 2220
+# Password for bandit11 (from previous level)
+# Retrieve the password for bandit12
+ cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
