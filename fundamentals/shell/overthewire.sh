@@ -118,3 +118,22 @@ ssh bandit11@bandit.labs.overthewire.org -p 2220
 # Password for bandit11 (from previous level)
 # Retrieve the password for bandit12
  cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+
+# Bandit Level 12 → Level 13
+echo "=== Bandit Level 12 → Level 13 ==="
+# Connect to Bandit Level 12
+ssh bandit12@bandit.labs.overthewire.org -p 2220
+# Password for bandit12 (from previous level)
+# Retrieve the password for bandit13
+password is in a zipfile first make it hex to bin then unzip it
+xxd -r data.txt data.zip
+gzip -d data.zip
+check the file type
+file data
+then again unzip it using corresponding zip command
+bzip2 -d data
+tar -xvf data
+and finally read the file to get the password
+cat data.txt
+
+
