@@ -222,3 +222,15 @@ false ; true ; echo "hey there"
 
 echo I think $(whoami) is a very cool user # I think ubuntu is very cool
 echo $(date +%x) – $(uptime) >> log.txt
+
+# ssh commands
+# ssh user@hostname
+ssh -i /path/to/private_key user@hostname
+scp file.txt user@hostname:/remote/path/
+scp -r /local/directory/ user@hostname:/remote/directory/
+ssh user@hostname 'ls -la /remote/directory/'
+ssh -T user@hostname 
+# keygen
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+
