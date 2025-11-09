@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Login & Registration - Vanilla</title>
+    <style>
+        :root {
+            --bg: #f3f6fb;
+            --card: #ffffff;
+            --accent: #3b82f6;
+            --muted: #6b7280;
+            --danger: #ef4444;
+            --success: #10b981;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, var(--bg), #eaf2ff 60%);
+            color: #111827;
+            padding: 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 920px;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .info {
+            padding: 28px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.06), transparent);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+        }
+
+        .brand {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 0 0 6px;
+            font-size: 20px
+        }
+
+        p.lead {
+            margin: 0;
+            color: var(--muted)
+        }
+
+        .card {
+            background: var(--card);
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .tab {
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--muted);
+            background: transparent;
+            border: none;
+        }
+
+        .tab.active {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.12), rgba(124, 58, 237, 0.06));
+            color: var(--accent);
+        }
+
+        form {
+            display: grid;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #e6edf6;
+            background: transparent;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.06);
+            border-color: var(--accent)
+        }
+
+        .row {
+            display: flex;
+            gap: 10px
+        }
+
+        .row>* {
+            flex: 1
+        }
+
+        .muted {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 6px
+        }
+
+        button.btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        button.ghost {
+            background: transparent;
+            border: 1px solid #e6edf6;
+            color: var(--muted);
+        }
+
+        .hint {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .msg {
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 14px
+        }
+
+        .msg.error {
+            background: rgba(239, 68, 68, 0.08);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.08)
+        }
+
+        .msg.success {
+            background: rgba(16, 185, 129, 0.06);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.06)
+        }
+
+        .user-panel {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #60a5fa, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700
+        }
+
+        .user-info {
+            font-size: 14px
+        }
+
+        .small {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        @media (max-width:880px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 8px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" role="main">
+        <aside class="info">
+            <div class="brand">
+                <div class="logo">LoC</div>
+                <div>
+                    <div style="font-weight:700">LifeOfCode</div>
+                    <div class="small">Vanilla login & signup example</div>
+                </div>
+            </div>
+
+            <h1>Simple, Local & Secure-ish</h1>
+            <p class="lead">Register an account and log in using only client-side code. Passwords are hashed with
+                SHA-256 before storage in localStorage.</p>
+
+            <hr style="margin:18px 0;border:none;border-top:1px solid #eef2ff" />
+
+            <div class="card">
+                <div class="user-panel" id="sessionBox">
+                    <div class="avatar" aria-hidden>U</div>
+                    <div class="user-info">
+                        <div id="sessionName" style="font-weight:700">Not signed in</div>
+                        <div class="small" id="sessionEmail">Create an account or sign in to continue</div>
+                    </div>
+                </div>
+                <div style="margin-top:12px">
+                    <div class="hint">This demo stores users in your browser using localStorage. Do not use real
+                        passwords you care about here.</div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="card" aria-labelledby="formTitle">
+            <div class="tabs" role="tablist" aria-label="Auth tabs">
+                <button class="tab active" id="tab-login" data-target="login" role="tab" aria-selected="true">Sign
+                    in</button>
+                <button class="tab" id="tab-signup" data-target="signup" role="tab" aria-selected="false">Create
+                    account</button>
+            </div>
+
+            <h2 id="formTitle" style="margin-top:0;margin-bottom:6px;font-size:18px">Access your account</h2>
+            <p class="muted" id="formSubtitle" style="margin-top:0;margin-bottom:12px">Enter credentials to sign in, or
+                create a new account.</p>
+
+            <div id="messages" aria-live="polite"></div>
+
+            <!-- LOGIN FORM -->
+            <form id="loginForm" autocomplete="on" novalidate>
+                <label for="loginEmail">Email</label>
+                <input id="loginEmail" name="email" type="email" placeholder="you@example.com" required />
+
+                <label for="loginPassword">Password</label>
+                <input id="loginPassword" name="password" type="password" placeholder="••••••••" required />
+
+                <div class="actions">
+                    <div style="display:flex;gap:8px;align-items:center">
+                        <input id="remember" type="checkbox" />
+                        <label for="remember" class="muted">Remember</label>
+                    </div>
+                    <button type="submit" class="btn">Sign in</button>
+                </div>
+            </form>
+
+            <!-- SIGNUP FORM -->
+            <form id="signupForm" autocomplete="on" style="display:none" novalidate>
+                <label for="signupName">Full name</label>
+                <input id="signupName" name="name" type="text" placeholder="Jane Doe" required />
+
+                <label for="signupEmail">Email</label>
+                <input id="signupEmail" name="email" type="email" placeholder="you@example.com" required />
+
+                <div class="row">
+                    <div>
+                        <label for="signupPassword">Password</label>
+                        <input id="signupPassword" name="password" type="password" placeholder="At least 6 chars"
+                            required />
+                    </div>
+                    <div>
+                        <label for="signupPassword2">Confirm</label>
+                        <input id="signupPassword2" name="password2" type="password" placeholder="Repeat password"
+                            required />
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <div class="muted">Password will be hashed before storage</div>
+                    <button type="submit" class="btn">Create account</button>
+                </div>
+            </form>
+
+            <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">
+                <div class="small">Built with plain HTML/CSS/JS</div>
+                <button id="clearBtn" class="ghost" title="Clear saved users">Clear storage</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Simple client-side auth demo using localStorage and SHA-256 hashing (Web Crypto).
+        (function () {
+            // Utils
+            function qs(selector, root = document) { return root.querySelector(selector) }
+            function qsa(sel, root = document) { return Array.from(root.querySelectorAll(sel)) }
+
+            async function sha256hex(message) {
+                const enc = new TextEncoder().encode(message);
+                const digest = await crypto.subtle.digest('SHA-256', enc);
+                const hex = Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+                return hex;
+            }
+
+            function getUsers() {
+                try {
+                    return JSON.parse(localStorage.getItem('loc_users') || '{}');
+                } catch (e) { return {} }
+            }
+            function setUsers(u) { localStorage.setItem('loc_users', JSON.stringify(u)) }
+
+            function setCurrentUser(user) {
+                if (user) localStorage.setItem('loc_current', JSON.stringify(user));
+                else localStorage.removeItem('loc_current');
+                renderSession();
+            }
+            function getCurrentUser() {
+                try { return JSON.parse(localStorage.getItem('loc_current') || 'null') } catch (e) { return null }
+            }
+
+            // DOM refs
+            const tabs = qsa('.tab');
+            const loginForm = qs('#loginForm');
+            const signupForm = qs('#signupForm');
+            const messages = qs('#messages');
+            const sessionName = qs('#sessionName');
+            const sessionEmail = qs('#sessionEmail');
+            const sessionAvatar = qs('.avatar');
+
+            function showMessage(text, type = 'error', timeout = 4000) {
+                messages.innerHTML = '';
+                const el = document.createElement('div');
+                el.className = 'msg ' + (type === 'error' ? 'error' : 'success');
+                el.textContent = text;
+                messages.appendChild(el);
+                if (timeout) setTimeout(() => { if (messages.contains(el)) messages.removeChild(el) }, timeout);
+            }
+
+            // Tab switching
+            tabs.forEach(t => {
+                t.addEventListener('click', e => {
+                    tabs.forEach(x => x.classList.remove('active'));
+                    t.classList.add('active');
+                    const target = t.dataset.target;
+                    qs('#formSubtitle').textContent = target === 'login' ? 'Enter credentials to sign in.' : 'Create a new account.';
+                    if (target === 'login') { loginForm.style.display = 'grid'; signupForm.style.display = 'none' }
+                    else { loginForm.style.display = 'none'; signupForm.style.display = 'grid' }
+                    messages.innerHTML = '';
+                });
+            });
+
+            // Signup logic
+            signupForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const name = qs('#signupName').value.trim();
+                const email = qs('#signupEmail').value.trim().toLowerCase();
+                const pw = qs('#signupPassword').value;
+                const pw2 = qs('#signupPassword2').value;
+
+                if (!name) return showMessage('Please enter your name.');
+                if (!validateEmail(email)) return showMessage('Please enter a valid email address.');
+                if (pw.length < 6) return showMessage('Password must be at least 6 characters.');
+                if (pw !== pw2) return showMessage('Passwords do not match.');
+
+                const users = getUsers();
+                // check by email or name collision
+                if (users[email]) return showMessage('An account with this email already exists. Sign in or use a different email.');
+                // also prevent duplicate names (optional)
+                for (const k in users) { if (users[k].name && users[k].name.toLowerCase() === name.toLowerCase()) return showMessage('Name already taken, try a different display name.') }
+
+                const hash = await sha256hex(pw + ':' + email); // salt with email
+                users[email] = { name, email, passwordHash: hash, createdAt: Date.now() };
+                setUsers(users);
+                setCurrentUser({ name, email });
+                showMessage('Account created and signed in.', 'success');
+                signupForm.reset();
+            });
+
+            // Login logic
+            loginForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const email = qs('#loginEmail').value.trim().toLowerCase();
+                const pw = qs('#loginPassword').value;
+                if (!validateEmail(email)) return showMessage('Enter a valid email.');
+                if (!pw) return showMessage('Enter your password.');
+
+                const users = getUsers();
+                const user = users[email];
+                if (!user) return showMessage('No account found for this email.');
+
+                const hash = await sha256hex(pw + ':' + email);
+                if (hash !== user.passwordHash) return showMessage('Incorrect password.');
+
+                setCurrentUser({ name: user.name, email: user.email });
+                showMessage('Signed in successfully.', 'success');
+                loginForm.reset();
+            });
+
+            // Clear storage
+            qs('#clearBtn').addEventListener('click', function () {
+                if (confirm('Clear all saved users and sign out? This cannot be undone.')) {
+                    localStorage.removeItem('loc_users');
+                    setCurrentUser(null);
+                    showMessage('Storage cleared.', 'success');
+                }
+            });
+
+            // Helpers
+            function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) }
+
+            // Render session
+            function renderSession() {
+                const cur = getCurrentUser();
+                if (cur) {
+                    sessionName.textContent = cur.name;
+                    sessionEmail.textContent = cur.email;
+                    sessionAvatar.textContent = (cur.name || cur.email).slice(0, 1).toUpperCase();
+                    // enable sign out on click
+                    sessionName.title = 'Click to sign out';
+                    sessionName.style.cursor = 'pointer';
+                    sessionName.onclick = function () { if (confirm('Sign out?')) { setCurrentUser(null); showMessage('Signed out.', 'success') } };
+                } else {
+                    sessionName.textContent = 'Not signed in';
+                    sessionEmail.textContent = 'Create an account or sign in to continue';
+                    sessionAvatar.textContent = 'U';
+                    sessionName.title = '';
+                    sessionName.style.cursor = 'default';
+                    sessionName.onclick = null;
+                }
+            }
+
+            // Preload some demo user if none exist (optional)
+            (async function preloadDemo() {
+                const users = getUsers();
+                if (Object.keys(users).length === 0) {
+                    const demoEmail = 'demo@example.com';
+                    const demoPass = 'password123';
+                    const hash = await sha256hex(demoPass + ':' + demoEmail);
+                    users[demoEmail] = { name: 'Demo User', email: demoEmail, passwordHash: hash, createdAt: Date.now() };
+                    setUsers(users);
+                }
+                renderSession();
+            })();
+
+        })();
+    </script>
+</body>
+
+</html>
+</div>
