@@ -234,3 +234,13 @@ ssh -T user@hostname
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 
+# sftp commands
+sftp user@hostname
+sftp> put localfile.txt
+sftp> get remotefile.txt
+sftp> ls
+sftp> cd /remote/directory/
+sftp> lcd /local/directory/
+sftp> bye
+
+
