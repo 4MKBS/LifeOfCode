@@ -244,3 +244,13 @@ sftp> lcd /local/directory/
 sftp> bye
 
 
+# wget and curl
+wget https://example.com/file.txt
+wget -O custom_name.txt https://example.com/file.txt
+wget -c https://example.com/largefile.zip
+curl -O https://example.com/file.txt
+curl -o custom_name.txt https://example.com/file.txt
+curl -I https://example.com
+curl -d "param1=value1&param2=value2" -X POST https://example.com/api
+curl -H "Authorization: Bearer YOUR_TOKEN" https://example.com/protected
+curl -b cookies.txt https://example.com/protected
