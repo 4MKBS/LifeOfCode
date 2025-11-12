@@ -254,3 +254,31 @@ curl -I https://example.com
 curl -d "param1=value1&param2=value2" -X POST https://example.com/api
 curl -H "Authorization: Bearer YOUR_TOKEN" https://example.com/protected
 curl -b cookies.txt https://example.com/protected
+
+
+# package management (Debian/Ubuntu)
+sudo apt update
+sudo apt upgrade -y
+sudo apt install package_name
+sudo apt remove package_name
+sudo apt autoremove
+dpkg -i package.deb
+dpkg -r package_name
+apt-cache search keyword
+apt-cache show package_name
+apt show package_name
+apt search keyword
+apt list
+apt list --upgradable
+apt list --installed | grep package_name
+
+# snap 
+snap install package_name
+snap remove package_name
+snap list
+snap find keyword   
+snap refresh package_name
+snap info package_name
+snap revert package_name
+snap disable package_name
+snap enable package_name
