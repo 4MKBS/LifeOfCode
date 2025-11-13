@@ -282,3 +282,20 @@ snap info package_name
 snap revert package_name
 snap disable package_name
 snap enable package_name
+
+# own scripts
+./myscript.sh
+bash myscript.sh
+sh myscript.sh
+chmod +x myscript.sh
+./myscript.sh arg1 arg2
+bash -x myscript.sh  # debug mode
+./myscript.sh > output.log 2> error.log
+./myscript.sh >> output.log 2>&1
+./myscript.sh | tee output.log
+./myscript.sh &
+PID=$!
+echo "Script running in background with PID: $PID"
+wait $PID
+echo "Script completed."
+
