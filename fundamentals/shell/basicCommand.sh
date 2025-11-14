@@ -299,3 +299,14 @@ echo "Script running in background with PID: $PID"
 wait $PID
 echo "Script completed."
 
+# cron jobs
+crontab -e # edit cron jobs
+crontab -l # list cron jobs
+crontab -r # remove cron jobs
+
+/etc/cron.daily/ # place scripts here for daily execution
+/etc/cron.hourly/ # place scripts here for hourly execution
+/etc/cron.weekly/ # place scripts here for weekly execution
+/etc/cron.monthly/ # place scripts here for monthly execution
+
+
