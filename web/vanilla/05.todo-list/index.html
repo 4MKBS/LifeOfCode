@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO List</title>
+</head>
+
+<body>
+    <h1>TODO List</h1>
+    <ul id="todo-list">
+        <!-- TODO items will be added here -->
+    </ul>
+
+    <input type="text" id="new-todo" placeholder="Add a new task">
+    <button id="add-todo">Add</button>
+
+    <script>
+        const todoList = document.getElementById('todo-list');
+        const newTodoInput = document.getElementById('new-todo');
+        const addTodoButton = document.getElementById('add-todo');
+
+        addTodoButton.addEventListener('click', () => {
+            const todoText = newTodoInput.value.trim();
+            if (todoText) {
+                const li = document.createElement('li');
+                li.textContent = todoText;
+                todoList.appendChild(li);
+                newTodoInput.value = '';
+            }
+        });
+    </script>
+</body>
+
+</html>
