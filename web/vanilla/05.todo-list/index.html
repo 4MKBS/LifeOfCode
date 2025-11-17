@@ -5,31 +5,345 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODO List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        header h1 {
+            color: white;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .input {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            margin-left: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .todolists {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .todolists div {
+            width: 45%;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .todolists div:hover {
+            transform: translateY(-5px);
+        }
+
+        .todolists div h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .complete h2 {
+            color: #4caf50;
+            border-bottom-color: #4caf50;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            transition: all 0.3s ease;
+            animation: slideIn 0.4s ease-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        li input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        li .task-text {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        li .delete-btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            border-radius: 15px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        li .delete-btn:hover {
+            background: linear-gradient(135deg, #ff5252 0%, #d84557 100%);
+        }
+
+        #completed-todo-list li {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        #completed-todo-list li .task-text {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .todolists {
+                flex-direction: column;
+            }
+
+            .todolists div {
+                width: 100%;
+            }
+
+            input[type="text"] {
+                width: 200px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>TODO List</h1>
-    <ul id="todo-list">
-        <!-- TODO items will be added here -->
-    </ul>
+    <header>
+        <h1>✨ TODO List</h1>
+    </header>
+    <main>
+        <div class="input">
+            <input type="text" id="new-todo" placeholder="Add a new task">
+            <button id="add-todo">Add</button>
+        </div>
 
-    <input type="text" id="new-todo" placeholder="Add a new task">
-    <button id="add-todo">Add</button>
+        <div class="todolists">
+            <div class="incomplete">
+                <h2>📝 Incomplete Tasks</h2>
+                <ul id="todo-list"></ul>
+            </div>
+            <div class="complete">
+                <h2>✅ Completed Tasks</h2>
+                <ul id="completed-todo-list"></ul>
+            </div>
+        </div>
 
+    </main>
     <script>
-        const todoList = document.getElementById('todo-list');
-        const newTodoInput = document.getElementById('new-todo');
         const addTodoButton = document.getElementById('add-todo');
+        const newTodoInput = document.getElementById('new-todo');
+        const todoList = document.getElementById('todo-list');
+        const completedTodoList = document.getElementById('completed-todo-list');
+
+        function loadTodos() {
+            const todos = JSON.parse(localStorage.getItem('todos')) || [];
+            todos.forEach(todo => {
+                const li = createTodoElement(todo.text, todo.completed);
+                if (todo.completed) {
+                    completedTodoList.appendChild(li);
+                } else {
+                    todoList.appendChild(li);
+                }
+            });
+        }
+
+        function createTodoElement(taskText, completed) {
+            const li = document.createElement('li');
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = completed;
+
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    completedTodoList.appendChild(li);
+                    addDeleteButton();
+                } else {
+                    todoList.appendChild(li);
+                    removeDeleteButton();
+                }
+                saveTodos();
+            });
+
+            const taskSpan = document.createElement('span');
+            taskSpan.className = 'task-text';
+            taskSpan.textContent = taskText;
+
+            li.appendChild(checkbox);
+            li.appendChild(taskSpan);
+
+            if (completed) {
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.textContent = '🗑️ Delete';
+                deleteBtn.addEventListener('click', () => {
+                    li.remove();
+                    saveTodos();
+                });
+                li.appendChild(deleteBtn);
+            }
+
+            function addDeleteButton() {
+                if (!li.querySelector('.delete-btn')) {
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.textContent = '🗑️ Delete';
+                    deleteBtn.addEventListener('click', () => {
+                        li.remove();
+                        saveTodos();
+                    });
+                    li.appendChild(deleteBtn);
+                }
+            }
+
+            function removeDeleteButton() {
+                const deleteBtn = li.querySelector('.delete-btn');
+                if (deleteBtn) {
+                    deleteBtn.remove();
+                }
+            }
+
+            return li;
+        }
+
+        function saveTodos() {
+            const todos = [];
+            todoList.querySelectorAll('li').forEach(li => {
+                todos.push({ text: li.querySelector('.task-text').textContent.trim(), completed: false });
+            });
+            completedTodoList.querySelectorAll('li').forEach(li => {
+                todos.push({ text: li.querySelector('.task-text').textContent.trim(), completed: true });
+            });
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
 
         addTodoButton.addEventListener('click', () => {
-            const todoText = newTodoInput.value.trim();
-            if (todoText) {
-                const li = document.createElement('li');
-                li.textContent = todoText;
+            const taskText = newTodoInput.value.trim();
+            if (taskText) {
+                const li = createTodoElement(taskText, false);
                 todoList.appendChild(li);
                 newTodoInput.value = '';
+                saveTodos();
             }
         });
+
+        newTodoInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTodoButton.click();
+            }
+        });
+
+        loadTodos();
     </script>
 </body>
 
