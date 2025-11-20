@@ -1,258 +1,162 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Make the Day — Daytime Scene</title>
-    <style>
-        /* Basic page layout */
-        :root {
-            --sky-top: #87CEFA;
-            --sky-bottom: #BFE9FF;
-            --sun: #FFD54A;
-            --cloud: #FFFFFF;
-            --grass: #6CC070;
+<head></head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ellipse Ring</title>
+<style>
+    :root {
+        --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* purple gradient background */
+        --stroke: rgba(255, 215, 0, 0.95);
+        /* golden stroke */
+        --stroke-hover: rgba(0, 255, 255, 0.98);
+        /* cyan on hover */
+        --glow-color: rgba(255, 215, 0, 0.6);
+        /* golden glow */
+        --glow-hover: rgba(0, 255, 255, 0.7);
+        /* cyan glow on hover */
+        --count: 60;
+        --size-w: 520px;
+        --size-h: 360px;
+        --thickness: 2px;
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow: hidden;
+    }
+
+    .canvas {
+        width: 720px;
+        height: 720px;
+        position: relative;
+        display: block;
+    }
+
+    /* one ellipse template, we'll create many with JS */
+    .ellipse {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: var(--size-w);
+        height: var(--size-h);
+        transform-origin: center center;
+        transform: translate(-50%, -50%) rotate(0deg);
+        border-radius: 50% / 45%;
+        /* make elliptical shape */
+        border: var(--thickness) solid var(--stroke);
+        background: transparent;
+        box-sizing: border-box;
+        pointer-events: none;
+        mix-blend-mode: screen;
+        opacity: 0.98;
+        filter: drop-shadow(0 0 8px var(--glow-color));
+        /* Only transition specific properties for better performance */
+        transition: border-radius 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+            border-color 0.6s ease-out,
+            opacity 0.4s ease-out;
+        will-change: border-radius, border-color;
+    }
+
+    /* a central cleared circle to create the visible hole */
+    .hole {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 360px;
+        height: 360px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+        pointer-events: none;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.5),
+            inset 0 0 60px rgba(255, 215, 0, 0.1);
+        transition: border-radius 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+            transform 0.6s ease-out,
+            box-shadow 0.4s ease-out;
+        will-change: transform, border-radius;
+    }
+
+    /* Beautiful hover animation: transform to squares with cyan glow */
+    .canvas:hover .ellipse {
+        border-radius: 8%;
+        /* Transform to rounded squares */
+        border-width: 3px;
+        border-color: var(--stroke-hover);
+        filter: drop-shadow(0 0 15px var(--glow-hover)) drop-shadow(0 0 30px rgba(0, 255, 255, 0.4));
+        opacity: 1;
+    }
+
+    .canvas:hover .hole {
+        border-radius: 12%;
+        /* Transform hole to rounded square */
+        box-shadow: 0 0 60px rgba(0, 255, 255, 0.6),
+            0 0 100px rgba(0, 255, 255, 0.4),
+            inset 0 0 60px rgba(0, 255, 255, 0.2);
+        transform: translate(-50%, -50%) scale(1.05);
+        animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    /* Smooth pulsing animation - optimized for performance */
+    @keyframes pulse {
+
+        0%,
+        100% {
+            transform: translate(-50%, -50%) scale(1.05);
         }
 
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 60%, #E6F7FF 100%);
-            overflow: hidden;
-            color: #024;
+        50% {
+            transform: translate(-50%, -50%) scale(1.07);
         }
-
-        /* Scene container */
-        .scene {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-        }
-
-        /* Sun */
-        .sun {
-            position: absolute;
-            top: 8%;
-            right: 10%;
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle at 35% 30%, #fff2b8 0%, var(--sun) 40%, #FFB600 80%);
-            border-radius: 50%;
-            box-shadow: 0 0 60px rgba(255, 182, 0, 0.35), 0 10px 30px rgba(255, 182, 0, 0.12);
-            transform: translateZ(0);
-        }
-
-        /* simple rays */
-        .sun::before,
-        .sun::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform-origin: center;
-            transform: translate(-50%, -50%);
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, rgba(255, 214, 84, 0.12) 0 30deg, transparent 30deg 60deg);
-            mix-blend-mode: screen;
-            pointer-events: none;
-        }
-
-        .sun::after {
-            width: 300px;
-            height: 300px;
-            opacity: 0.25;
-            filter: blur(18px);
-        }
-
-        /* Clouds */
-        .cloud {
-            position: absolute;
-            top: 18%;
-            left: -30%;
-            width: 220px;
-            height: 70px;
-            background: var(--cloud);
-            border-radius: 50px;
-            box-shadow:
-                40px 10px 0 0 var(--cloud),
-                80px 8px 0 0 var(--cloud),
-                20px -20px 0 0 var(--cloud);
-            opacity: 0.95;
-            animation: drift 28s linear infinite;
-            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.05));
-        }
-
-        .cloud.x2 {
-            top: 28%;
-            left: -45%;
-            width: 300px;
-            height: 90px;
-            animation-duration: 38s;
-            opacity: 0.9;
-        }
-
-        .cloud.x3 {
-            top: 9%;
-            left: -10%;
-            width: 180px;
-            height: 60px;
-            animation-duration: 22s;
-            opacity: 0.98;
-        }
-
-        @keyframes drift {
-            from {
-                transform: translateX(-10vw);
-            }
-
-            to {
-                transform: translateX(120vw);
-            }
-        }
-
-        /* Ground / Horizon */
-        .ground {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 35vh;
-            background: linear-gradient(180deg, rgba(108, 192, 112, 0.9) 0%, rgba(76, 155, 84, 1) 100%);
-            clip-path: ellipse(70% 80% at 50% 100%);
-            overflow: hidden;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-        }
-
-        /* simple rolling hills */
-        .hill {
-            position: absolute;
-            bottom: 0;
-            border-radius: 50%;
-            background: linear-gradient(180deg, rgba(86, 192, 112, 0.95), rgba(60, 135, 70, 1));
-        }
-
-        .hill.h1 {
-            width: 120%;
-            height: 120%;
-            left: -10%;
-            bottom: -40%;
-            opacity: 0.95;
-        }
-
-        .hill.h2 {
-            width: 80%;
-            height: 80%;
-            left: 10%;
-            bottom: -20%;
-            opacity: 0.9;
-            transform: scaleX(1.05);
-        }
-
-        /* small sunlit house (decorative) */
-        .house {
-            position: relative;
-            width: 120px;
-            height: 100px;
-            background: #fff6e0;
-            border-radius: 6px;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-            margin-bottom: 16vh;
-        }
-
-        .house:before {
-            content: "";
-            position: absolute;
-            top: -44px;
-            left: 10px;
-            width: 100px;
-            height: 60px;
-            background: #b43a3a;
-            clip-path: polygon(50% 0, 100% 100%, 0 100%);
-            border-radius: 4px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .door {
-            position: absolute;
-            bottom: 12px;
-            left: 46%;
-            transform: translateX(-50%);
-            width: 28px;
-            height: 44px;
-            background: #492b16;
-            border-radius: 4px;
-        }
-
-        /* Page heading — subtle */
-        header {
-            position: absolute;
-            left: 24px;
-            top: 24px;
-            color: rgba(2, 20, 36, 0.9);
-            background: rgba(255, 255, 255, 0.6);
-            padding: 8px 12px;
-            border-radius: 10px;
-            backdrop-filter: blur(6px);
-            box-shadow: 0 6px 18px rgba(10, 30, 50, 0.08);
-            font-weight: 600;
-        }
-
-        /* Responsive tweaks */
-        @media (max-width:520px) {
-            .sun {
-                width: 110px;
-                height: 110px;
-                right: 6%;
-                top: 6%;
-            }
-
-            .cloud {
-                width: 160px;
-                height: 54px;
-            }
-
-            .house {
-                width: 92px;
-                height: 76px;
-                margin-bottom: 20vh;
-            }
-
-            header {
-                font-size: 14px;
-                padding: 6px 10px;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>
-    <div class="scene" aria-hidden="false">
-        <header>Make the Day</header>
+    <div class="canvas" id="canvas"></div>
 
-        <div class="sun" role="img" aria-label="Sun shining"></div>
+    <script>
+        // Generate many ellipses and vary rotation + subtle scale/skew for spirograph effect
+        const canvas = document.getElementById('canvas');
+        const count = 60; // matches --count in CSS (tweak)
+        for (let i = 0; i < count; i++) {
+            const e = document.createElement('div');
+            e.className = 'ellipse';
 
-        <div class="cloud x1 cloud" aria-hidden="true"></div>
-        <div class="cloud x2 cloud" aria-hidden="true"></div>
-        <div class="cloud x3 cloud" aria-hidden="true"></div>
+            // base rotation step
+            const rot = i * (360 / count) * 1.15; // 1.15 multiplies spacing for nicer overlaps
 
-        <div class="ground" role="presentation">
-            <div class="hill h1" aria-hidden="true"></div>
-            <div class="hill h2" aria-hidden="true"></div>
+            // vary scale and vertical squash slightly to create interlacing curves
+            const sx = 1 + Math.sin(i * 0.35) * 0.035;
+            const sy = 1 + Math.cos(i * 0.25) * 0.03;
 
-            <div style="position:relative; z-index:2; margin-bottom:6vh;">
-                <div class="house" role="img" aria-label="Small house">
-                    <div class="door"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+            // slight translate offset to break perfect symmetry
+            const tx = Math.sin(i * 0.12) * 0.6;
+            const ty = Math.cos(i * 0.11) * 0.6;
+
+            e.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) rotate(${rot}deg) scale(${sx}, ${sy})`;
+
+            // slightly reduce alpha for inner/outer rings (optional)
+            e.style.opacity = 0.95 - (Math.abs(i - count / 2) / count) * 0.12;
+
+            canvas.appendChild(e);
+        }
+
+        // add the central hole last so it's on top
+        const hole = document.createElement('div');
+        hole.className = 'hole';
+        canvas.appendChild(hole);
+    </script>
 </body>
 
 </html>
