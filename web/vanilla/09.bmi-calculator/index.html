@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - Health Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --underweight: #3b82f6;
+            --normal: #10b981;
+            --overweight: #f59e0b;
+            --obese: #ef4444;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .calculator-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Input Focus Effects */
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+
+        /* Animated Gradient Button */
+        .calc-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calc-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .calc-button:hover::before {
+            left: 100%;
+        }
+
+        .calc-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* BMI Meter Gauge */
+        .bmi-meter {
+            width: 300px;
+            height: 150px;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .gauge-background {
+            width: 100%;
+            height: 100%;
+            border-radius: 150px 150px 0 0;
+            background: conic-gradient(from 180deg at 50% 100%,
+                    #3b82f6 0deg 54deg,
+                    #10b981 54deg 126deg,
+                    #f59e0b 126deg 198deg,
+                    #ef4444 198deg 270deg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gauge-inner {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 85%;
+            background: white;
+            border-radius: 150px 150px 0 0;
+        }
+
+        .gauge-needle {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            height: 45%;
+            background: linear-gradient(to top, #1f2937, #6b7280);
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotate(-90deg);
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 4px 4px 0 0;
+            z-index: 10;
+        }
+
+        .needle-center {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            border: 3px solid white;
+            z-index: 11;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .gauge-labels {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .gauge-label {
+            position: absolute;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .label-underweight {
+            bottom: 30%;
+            left: 8%;
+            color: var(--underweight);
+        }
+
+        .label-normal {
+            bottom: 70%;
+            left: 20%;
+            color: var(--normal);
+        }
+
+        .label-overweight {
+            bottom: 70%;
+            right: 20%;
+            color: var(--overweight);
+        }
+
+        .label-obese {
+            bottom: 30%;
+            right: 8%;
+            color: var(--obese);
+        }
+
+        /* Result Animation */
+        .result-card {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .result-card.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Category Cards */
+        .category-card {
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-underweight {
+            border-color: var(--underweight);
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent);
+        }
+
+        .category-normal {
+            border-color: var(--normal);
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), transparent);
+        }
+
+        .category-overweight {
+            border-color: var(--overweight);
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), transparent);
+        }
+
+        .category-obese {
+            border-color: var(--obese);
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.1), transparent);
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+            }
+        }
+
+        .bmi-value {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* Fade in animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="calculator-card p-8 rounded-2xl shadow-2xl w-full max-w-2xl fade-in">
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1
+                class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                BMI Calculator
+            </h1>
+            <p class="text-gray-600">Track your health journey with precision</p>
+        </div>
+
+        <!-- Input Form -->
+        <form id="bmiForm" class="mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label for="weight" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Weight (kg) 🏋️
+                    </label>
+                    <input type="number" step="0.1" id="weight"
+                        class="input-field w-full border-2 border-gray-300 rounded-lg p-3 text-lg transition-all"
+                        placeholder="e.g., 70" required>
+                </div>
+                <div>
+                    <label for="height" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Height (cm) 📏
+                    </label>
+                    <input type="number" step="0.1" id="height"
+                        class="input-field w-full border-2 border-gray-300 rounded-lg p-3 text-lg transition-all"
+                        placeholder="e.g., 175" required>
+                </div>
+            </div>
+            <button type="submit" class="calc-button w-full text-white font-bold py-4 rounded-lg text-lg shadow-lg">
+                Calculate BMI 🚀
+            </button>
+        </form>
+
+        <!-- BMI Meter Gauge -->
+        <div id="meterSection" class="hidden">
+            <div class="bmi-meter">
+                <div class="gauge-background">
+                    <div class="gauge-inner"></div>
+                    <div class="gauge-labels">
+                        <span class="gauge-label label-underweight">Underweight</span>
+                        <span class="gauge-label label-normal">Normal</span>
+                        <span class="gauge-label label-overweight">Overweight</span>
+                        <span class="gauge-label label-obese">Obese</span>
+                    </div>
+                </div>
+                <div class="gauge-needle" id="gaugeNeedle"></div>
+                <div class="needle-center"></div>
+            </div>
+
+            <!-- BMI Result Display -->
+            <div id="result" class="result-card text-center mb-6"></div>
+        </div>
+
+        <!-- BMI Categories Reference -->
+        <div class="mt-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">BMI Categories</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="category-card category-underweight p-3 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-gray-700">Underweight</span>
+                        <span class="text-sm font-bold" style="color: var(--underweight);">&lt; 18.5</span>
+                    </div>
+                </div>
+                <div class="category-card category-normal p-3 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-gray-700">Normal weight</span>
+                        <span class="text-sm font-bold" style="color: var(--normal);">18.5 - 24.9</span>
+                    </div>
+                </div>
+                <div class="category-card category-overweight p-3 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-gray-700">Overweight</span>
+                        <span class="text-sm font-bold" style="color: var(--overweight);">25.0 - 29.9</span>
+                    </div>
+                </div>
+                <div class="category-card category-obese p-3 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-gray-700">Obese</span>
+                        <span class="text-sm font-bold" style="color: var(--obese);">≥ 30.0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('bmiForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const weight = parseFloat(document.getElementById('weight').value);
+            const heightCm = parseFloat(document.getElementById('height').value);
+            const heightM = heightCm / 100; // Convert cm to meters
+
+            // Calculate BMI
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
+
+            // Determine category and color
+            let category, color, emoji, advice;
+
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                color = 'var(--underweight)';
+                emoji = '💙';
+                advice = 'Consider consulting a nutritionist for a healthy weight gain plan.';
+            } else if (bmi >= 18.5 && bmi < 25) {
+                category = 'Normal weight';
+                color = 'var(--normal)';
+                emoji = '💚';
+                advice = 'Great! Maintain your healthy lifestyle.';
+            } else if (bmi >= 25 && bmi < 30) {
+                category = 'Overweight';
+                color = 'var(--overweight)';
+                emoji = '🧡';
+                advice = 'Consider regular exercise and a balanced diet.';
+            } else {
+                category = 'Obese';
+                color = 'var(--obese)';
+                emoji = '❤️';
+                advice = 'Consult with a healthcare provider for personalized guidance.';
+            }
+
+            // Show meter section
+            document.getElementById('meterSection').classList.remove('hidden');
+
+            // Animate needle
+            const needle = document.getElementById('gaugeNeedle');
+            // BMI range: 10-40, Needle range: -90deg to 90deg (180deg total)
+            const minBMI = 10;
+            const maxBMI = 40;
+            const clampedBMI = Math.max(minBMI, Math.min(maxBMI, bmi));
+            const angle = -90 + ((clampedBMI - minBMI) / (maxBMI - minBMI)) * 180;
+
+            // Reset needle first
+            needle.style.transform = 'translateX(-50%) rotate(-90deg)';
+
+            // Animate after a small delay
+            setTimeout(() => {
+                needle.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+            }, 100);
+
+            // Display result
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <div class="bmi-value inline-block bg-white rounded-2xl px-8 py-6 shadow-xl border-4" style="border-color: ${color};">
+                    <div class="text-6xl font-bold mb-2" style="color: ${color};">${bmi}</div>
+                    <div class="text-2xl font-semibold text-gray-700 mb-1">${category} ${emoji}</div>
+                    <div class="text-sm text-gray-600 max-w-xs">${advice}</div>
+                </div>
+            `;
+
+            // Trigger result animation
+            resultDiv.classList.remove('show');
+            setTimeout(() => {
+                resultDiv.classList.add('show');
+            }, 100);
+
+            // Scroll to result smoothly
+            setTimeout(() => {
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 200);
+        });
+    </script>
+</body>
+
+</html>
