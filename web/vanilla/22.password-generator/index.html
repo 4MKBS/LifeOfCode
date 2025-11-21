@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .password-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .strength-weak {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .strength-medium {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .strength-strong {
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen p-4 flex items-center justify-center">
+    <div class="glass rounded-3xl shadow-2xl p-8 max-w-lg w-full">
+        <h1
+            class="text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
+            🔐 Password Generator
+        </h1>
+
+        <!-- Password Display -->
+        <div class="bg-gray-100 rounded-xl p-6 mb-6 flex items-center justify-between">
+            <div class="password-display flex-1 text-gray-800" id="password">Click Generate</div>
+            <button onclick="copyPassword()"
+                class="ml-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-all">
+                📋 Copy
+            </button>
+        </div>
+
+        <!-- Strength Indicator -->
+        <div class="mb-6">
+            <div class="flex justify-between mb-2">
+                <span class="text-sm font-semibold text-gray-700">Password Strength:</span>
+                <span class="text-sm font-semibold" id="strengthText">-</span>
+            </div>
+            <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+                <div id="strengthBar" class="h-full w-0 transition-all duration-500"></div>
+            </div>
+        </div>
+
+        <!-- Length Slider -->
+        <div class="mb-6">
+            <div class="flex justify-between mb-2">
+                <label class="font-semibold text-gray-700">Length:</label>
+                <span class="font-bold text-purple-600" id="lengthValue">12</span>
+            </div>
+            <input type="range" id="length" min="4" max="32" value="12" class="w-full"
+                oninput="updateLength(this.value)">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                <span>4</span>
+                <span>32</span>
+            </div>
+        </div>
+
+        <!-- Options -->
+        <div class="space-y-3 mb-6">
+            <label class="flex items-center cursor-pointer">
+                <input type="checkbox" id="uppercase" checked class="mr-3 w-5 h-5">
+                <span class="text-gray-700">Include Uppercase (A-Z)</span>
+            </label>
+            <label class="flex items-center cursor-pointer">
+                <input type="checkbox" id="lowercase" checked class="mr-3 w-5 h-5">
+                <span class="text-gray-700">Include Lowercase (a-z)</span>
+            </label>
+            <label class="flex items-center cursor-pointer">
+                <input type="checkbox" id="numbers" checked class="mr-3 w-5 h-5">
+                <span class="text-gray-700">Include Numbers (0-9)</span>
+            </label>
+            <label class="flex items-center cursor-pointer">
+                <input type="checkbox" id="symbols" checked class="mr-3 w-5 h-5">
+                <span class="text-gray-700">Include Symbols (!@#$%^&*)</span>
+            </label>
+        </div>
+
+        <!-- Generate Button -->
+        <button onclick="generatePassword()"
+            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-4 rounded-xl hover:shadow-lg transition-all mb-4">
+            ✨ Generate Password
+        </button>
+
+        <!-- Password History -->
+        <div class="mt-6">
+            <h3 class="font-bold text-gray-800 mb-3">📋 Recent Passwords</h3>
+            <div id="history" class="space-y-2 max-h-48 overflow-y-auto">
+                <p class="text-center text-gray-400 py-4 text-sm">No passwords generated yet</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let history = [];
+
+        function updateLength(val) {
+            document.getElementById('lengthValue').textContent = val;
+        }
+
+        function generatePassword() {
+            const length = document.getElementById('length').value;
+            const useUppercase = document.getElementById('uppercase').checked;
+            const useLowercase = document.getElementById('lowercase').checked;
+            const useNumbers = document.getElementById('numbers').checked;
+            const useSymbols = document.getElementById('symbols').checked;
+
+            if (!useUppercase && !useLowercase && !useNumbers && !useSymbols) {
+                return alert('Please select at least one character type!');
+            }
+
+            let charset = '';
+            if (useUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (useLowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
+            if (useNumbers) charset += '0123456789';
+            if (useSymbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+
+            document.getElementById('password').textContent = password;
+            calculateStrength(password);
+            addToHistory(password);
+        }
+
+        function calculateStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+
+            if (strength <= 2) {
+                strengthBar.className = 'h-full strength-weak transition-all duration-500';
+                strengthBar.style.width = '33%';
+                strengthText.textContent = 'Weak 🔴';
+                strengthText.className = 'text-sm font-semibold text-red-600';
+            } else if (strength <= 4) {
+                strengthBar.className = 'h-full strength-medium transition-all duration-500';
+                strengthBar.style.width = '66%';
+                strengthText.textContent = 'Medium 🟡';
+                strengthText.className = 'text-sm font-semibold text-orange-600';
+            } else {
+                strengthBar.className = 'h-full strength-strong transition-all duration-500';
+                strengthBar.style.width = '100%';
+                strengthText.textContent = 'Strong 🟢';
+                strengthText.className = 'text-sm font-semibold text-green-600';
+            }
+        }
+
+        function copyPassword() {
+            const password = document.getElementById('password').textContent;
+            if (password === 'Click Generate') return;
+
+            navigator.clipboard.writeText(password).then(() => {
+                const btn = event.target;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => btn.textContent = '📋 Copy', 2000);
+            });
+        }
+
+        function addToHistory(password) {
+            history.unshift({ password, time: new Date().toLocaleTimeString() });
+            if (history.length > 5) history.pop();
+
+            document.getElementById('history').innerHTML = history.map(item => `
+                <div class="bg-gray-100 p-3 rounded-lg flex justify-between items-center text-sm">
+                    <span class="font-mono">${item.password}</span>
+                    <button onclick="copyText('${item.password}')" class="text-purple-600 hover:text-purple-700">📋</button>
+                </div>
+            `).join('');
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+        }
+
+        // Generate on load
+        generatePassword();
+    </script>
+</body>
+
+</html>
