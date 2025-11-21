@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Survey System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-8 px-4">
+    <div class="max-w-3xl mx-auto">
+        <!-- Survey Form -->
+        <div id="surveyForm" class="bg-white rounded-2xl shadow-2xl p-8 mb-6">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-indigo-600 mb-2">Customer Survey</h1>
+                <p class="text-gray-600">We'd love to hear your feedback!</p>
+            </div>
+
+            <form id="survey" class="space-y-6">
+                <!-- Name -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Full Name *</label>
+                    <input type="text" id="name" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition">
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Email Address *</label>
+                    <input type="email" id="email" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition">
+                </div>
+
+                <!-- Age Group -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Age Group *</label>
+                    <select id="age" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition">
+                        <option value="">Select your age group</option>
+                        <option value="18-25">18-25</option>
+                        <option value="26-35">26-35</option>
+                        <option value="36-50">36-50</option>
+                        <option value="51+">51+</option>
+                    </select>
+                </div>
+
+                <!-- Satisfaction Rating -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-3">Satisfaction Rating *</label>
+                    <div class="flex flex-wrap gap-3">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="rating" value="5" required class="w-4 h-4 text-indigo-600">
+                            <span class="ml-2 text-gray-700">😊 Excellent</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="rating" value="4" class="w-4 h-4 text-indigo-600">
+                            <span class="ml-2 text-gray-700">🙂 Good</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="rating" value="3" class="w-4 h-4 text-indigo-600">
+                            <span class="ml-2 text-gray-700">😐 Average</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="rating" value="2" class="w-4 h-4 text-indigo-600">
+                            <span class="ml-2 text-gray-700">🙁 Poor</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Services Used -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-3">Services Used</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" value="Product Quality" class="w-4 h-4 text-indigo-600 rounded">
+                            <span class="ml-2 text-gray-700">Product Quality</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" value="Customer Support" class="w-4 h-4 text-indigo-600 rounded">
+                            <span class="ml-2 text-gray-700">Customer Support</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" value="Delivery Service" class="w-4 h-4 text-indigo-600 rounded">
+                            <span class="ml-2 text-gray-700">Delivery Service</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" value="Website Experience" class="w-4 h-4 text-indigo-600 rounded">
+                            <span class="ml-2 text-gray-700">Website Experience</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Comments -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Additional Comments</label>
+                    <textarea id="comments" rows="4"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
+                        placeholder="Share your thoughts..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    Submit Survey
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="bg-white rounded-2xl shadow-2xl p-8 hidden">
+            <h2 class="text-3xl font-bold text-indigo-600 mb-6">Survey Results</h2>
+            <div id="resultsList" class="space-y-4"></div>
+            <button onclick="resetSurvey()"
+                class="mt-6 w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 rounded-lg transition duration-300">
+                Take Another Survey
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const surveyForm = document.getElementById('survey');
+        const surveyFormContainer = document.getElementById('surveyForm');
+        const resultsContainer = document.getElementById('results');
+        const resultsList = document.getElementById('resultsList');
+
+        surveyForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const age = document.getElementById('age').value;
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+            const services = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
+            const comments = document.getElementById('comments').value;
+
+            const ratingText = {
+                '5': 'Excellent',
+                '4': 'Good',
+                '3': 'Average',
+                '2': 'Poor'
+            };
+
+            resultsList.innerHTML = `
+                <div class="border-l-4 border-indigo-600 pl-4 py-2">
+                    <p class="text-gray-700"><span class="font-semibold">Name:</span> ${name}</p>
+                </div>
+                <div class="border-l-4 border-indigo-600 pl-4 py-2">
+                    <p class="text-gray-700"><span class="font-semibold">Email:</span> ${email}</p>
+                </div>
+                <div class="border-l-4 border-indigo-600 pl-4 py-2">
+                    <p class="text-gray-700"><span class="font-semibold">Age Group:</span> ${age}</p>
+                </div>
+                <div class="border-l-4 border-indigo-600 pl-4 py-2">
+                    <p class="text-gray-700"><span class="font-semibold">Rating:</span> ${ratingText[rating]}</p>
+                </div>
+                <div class="border-l-4 border-indigo-600 pl-4 py-2">
+                    <p class="text-gray-700"><span class="font-semibold">Services:</span> ${services.length > 0 ? services.join(', ') : 'None selected'}</p>
+                </div>
+                ${comments ? `<div class="border-l-4 border-indigo-600 pl-4 py-2">
+                    <p class="text-gray-700"><span class="font-semibold">Comments:</span> ${comments}</p>
+                </div>` : ''}
+            `;
+
+            surveyFormContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+        });
+
+        function resetSurvey() {
+            surveyForm.reset();
+            surveyFormContainer.classList.remove('hidden');
+            resultsContainer.classList.add('hidden');
+        }
+    </script>
+</body>
+
+</html>
