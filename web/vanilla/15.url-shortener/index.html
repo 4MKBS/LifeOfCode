@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-shorten {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+        }
+
+        .btn-shorten:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .url-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-left: 4px solid var(--primary);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .short-url {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="glass-card rounded-2xl shadow-2xl w-full max-w-3xl p-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1
+                class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                🔗 URL Shortener
+            </h1>
+            <p class="text-gray-600">Create short, memorable links instantly</p>
+        </div>
+
+        <!-- Input Form -->
+        <div class="mb-8">
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    Enter Long URL 🌐
+                </label>
+                <input type="url" id="longUrl"
+                    class="input-field w-full border-2 border-gray-300 rounded-lg p-4 text-lg"
+                    placeholder="https://example.com/very-long-url-here" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    Custom Alias (Optional) ✏️
+                </label>
+                <input type="text" id="customAlias"
+                    class="input-field w-full border-2 border-gray-300 rounded-lg p-4 text-lg"
+                    placeholder="my-custom-link">
+                <p class="text-xs text-gray-500 mt-1">Leave empty for random short code</p>
+            </div>
+
+            <button onclick="shortenURL()" class="btn-shorten w-full text-white font-bold py-4 rounded-lg shadow-lg">
+                ✨ Shorten URL
+            </button>
+        </div>
+
+        <!-- Result Section -->
+        <div id="result" class="hidden mb-8">
+            <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg">
+                <p class="text-sm text-green-700 mb-2">✅ URL Shortened Successfully!</p>
+                <div class="flex items-center justify-between bg-white p-4 rounded-lg">
+                    <div class="flex-1 mr-4">
+                        <p class="text-sm text-gray-500 mb-1">Short URL:</p>
+                        <a href="#" id="shortUrl" target="_blank" class="short-url text-xl break-all">-</a>
+                    </div>
+                    <button onclick="copyShortURL()"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-all">
+                        📋 Copy
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saved URLs History -->
+        <div id="historySection">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-gray-800">📚 Recent Shortened URLs</h3>
+                <button onclick="clearHistory()" class="text-sm text-red-600 hover:text-red-700 font-semibold">
+                    🗑️ Clear All
+                </button>
+            </div>
+            <div id="urlHistory" class="space-y-3">
+                <p class="text-center text-gray-400 py-8">No URLs shortened yet</p>
+            </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="mt-8 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+            <div class="flex items-start">
+                <span class="text-2xl mr-3">ℹ️</span>
+                <div class="text-sm text-blue-700">
+                    <p class="font-semibold mb-1">How it works:</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Enter any long URL you want to shorten</li>
+                        <li>Optionally add a custom alias for easy recall</li>
+                        <li>Get a shortened URL instantly (simulated)</li>
+                        <li>Copy and share your shortened links</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let urlHistory = JSON.parse(localStorage.getItem('urlHistory')) || [];
+        let currentShortUrl = '';
+
+        // Load history on page load
+        window.addEventListener('load', () => {
+            displayHistory();
+        });
+
+        function shortenURL() {
+            const longUrl = document.getElementById('longUrl').value.trim();
+            const customAlias = document.getElementById('customAlias').value.trim();
+
+            // Validate URL
+            if (!longUrl) {
+                alert('Please enter a URL to shorten');
+                return;
+            }
+
+            if (!isValidURL(longUrl)) {
+                alert('Please enter a valid URL (must start with http:// or https://)');
+                return;
+            }
+
+            // Generate short code
+            const shortCode = customAlias || generateShortCode();
+            const shortUrl = `https://short.ly/${shortCode}`;
+
+            // Save to history
+            const urlData = {
+                id: Date.now(),
+                original: longUrl,
+                short: shortUrl,
+                alias: shortCode,
+                clicks: 0,
+                created: new Date().toLocaleString()
+            };
+
+            urlHistory.unshift(urlData);
+            if (urlHistory.length > 10) urlHistory.pop(); // Keep only 10 recent
+
+            localStorage.setItem('urlHistory', JSON.stringify(urlHistory));
+
+            // Display result
+            currentShortUrl = shortUrl;
+            document.getElementById('shortUrl').textContent = shortUrl;
+            document.getElementById('shortUrl').href = longUrl; // Redirect to original URL
+            document.getElementById('result').classList.remove('hidden');
+
+            // Clear inputs
+            document.getElementById('longUrl').value = '';
+            document.getElementById('customAlias').value = '';
+
+            // Update history display
+            displayHistory();
+
+            // Scroll to result
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function generateShortCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let code = '';
+            for (let i = 0; i < 6; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        function isValidURL(url) {
+            try {
+                const urlObj = new URL(url);
+                return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+            } catch {
+                return false;
+            }
+        }
+
+        function copyShortURL() {
+            if (currentShortUrl) {
+                navigator.clipboard.writeText(currentShortUrl).then(() => {
+                    const btn = event.target;
+                    const originalText = btn.textContent;
+                    btn.textContent = '✅ Copied!';
+                    btn.classList.add('bg-green-600');
+
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.classList.remove('bg-green-600');
+                        btn.classList.add('bg-purple-600');
+                    }, 2000);
+                });
+            }
+        }
+
+        function copyURL(shortUrl) {
+            navigator.clipboard.writeText(shortUrl).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅';
+
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 1500);
+            });
+        }
+
+        function deleteURL(id) {
+            if (confirm('Delete this shortened URL?')) {
+                urlHistory = urlHistory.filter(item => item.id !== id);
+                localStorage.setItem('urlHistory', JSON.stringify(urlHistory));
+                displayHistory();
+            }
+        }
+
+        function displayHistory() {
+            const historyDiv = document.getElementById('urlHistory');
+
+            if (urlHistory.length === 0) {
+                historyDiv.innerHTML = '<p class="text-center text-gray-400 py-8">No URLs shortened yet</p>';
+                return;
+            }
+
+            historyDiv.innerHTML = urlHistory.map(item => `
+                <div class="url-item p-4 rounded-lg">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1 mr-4">
+                            <p class="text-sm text-gray-500 mb-1">Original URL:</p>
+                            <p class="text-gray-700 break-all mb-2 text-sm">${item.original}</p>
+                            <p class="text-sm text-gray-500 mb-1">Short URL:</p>
+                            <a href="${item.original}" target="_blank" class="short-url text-lg break-all">${item.short}</a>
+                            <p class="text-xs text-gray-400 mt-2">Created: ${item.created}</p>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="copyURL('${item.short}')" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold py-2 px-3 rounded transition-all">
+                                📋
+                            </button>
+                            <button onclick="deleteURL(${item.id})" class="bg-red-500 hover:bg-red-600 text-white text-sm font-semibold py-2 px-3 rounded transition-all">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function clearHistory() {
+            if (confirm('Clear all shortened URLs from history?')) {
+                urlHistory = [];
+                localStorage.removeItem('urlHistory');
+                displayHistory();
+            }
+        }
+    </script>
+</body>
+
+</html>
