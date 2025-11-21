@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session-Based Counter</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .counter-display {
+            font-size: 6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .btn-control {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .btn-control:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-control:active {
+            transform: scale(0.95);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .increment-animation {
+            animation: popUp 0.3s ease-out;
+        }
+
+        @keyframes popUp {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .decrement-animation {
+            animation: popDown 0.3s ease-out;
+        }
+
+        @keyframes popDown {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.9);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="glass-card rounded-2xl shadow-2xl w-full max-w-3xl p-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1
+                class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                🔢 Session-Based Counter
+            </h1>
+            <p class="text-gray-600">Track your clicks across sessions</p>
+        </div>
+
+        <!-- Counter Display -->
+        <div class="text-center mb-12">
+            <div class="counter-display" id="counterDisplay">0</div>
+            <p class="text-gray-500 text-lg">Current Count</p>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="flex justify-center gap-8 mb-12">
+            <button onclick="decrement()" class="btn-control text-white shadow-lg" title="Decrease">
+                −
+            </button>
+            <button onclick="reset()" class="btn-control text-white shadow-lg bg-gradient-to-r from-red-500 to-pink-500"
+                title="Reset">
+                ↻
+            </button>
+            <button onclick="increment()" class="btn-control text-white shadow-lg" title="Increase">
+                +
+            </button>
+        </div>
+
+        <!-- Step Size Control -->
+        <div class="mb-8">
+            <label class="block text-center text-sm font-semibold text-gray-700 mb-3">
+                Step Size: <span id="stepDisplay" class="text-purple-600">1</span>
+            </label>
+            <input type="range" id="stepSize" min="1" max="10" value="1"
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                oninput="updateStepSize(this.value)">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                <span>1</span>
+                <span>10</span>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="stat-card p-4 rounded-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500 mb-1">Total Clicks</p>
+                        <p class="text-3xl font-bold text-gray-800" id="totalClicks">0</p>
+                    </div>
+                    <span class="text-4xl">👆</span>
+                </div>
+            </div>
+
+            <div class="stat-card p-4 rounded-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500 mb-1">Session Time</p>
+                        <p class="text-3xl font-bold text-gray-800" id="sessionTime">00:00:00</p>
+                    </div>
+                    <span class="text-4xl">⏱️</span>
+                </div>
+            </div>
+
+            <div class="stat-card p-4 rounded-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500 mb-1">Increments</p>
+                        <p class="text-3xl font-bold text-green-600" id="increments">0</p>
+                    </div>
+                    <span class="text-4xl">📈</span>
+                </div>
+            </div>
+
+            <div class="stat-card p-4 rounded-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500 mb-1">Decrements</p>
+                        <p class="text-3xl font-bold text-red-600" id="decrements">0</p>
+                    </div>
+                    <span class="text-4xl">📉</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session History -->
+        <div class="mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">📊 Session History</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-blue-50 p-4 rounded-lg text-center">
+                    <p class="text-sm text-blue-600 mb-1">Previous Session</p>
+                    <p class="text-2xl font-bold text-blue-700" id="prevSession">-</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg text-center">
+                    <p class="text-sm text-green-600 mb-1">Highest Count</p>
+                    <p class="text-2xl font-bold text-green-700" id="highestCount">0</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg text-center">
+                    <p class="text-sm text-purple-600 mb-1">Total Sessions</p>
+                    <p class="text-2xl font-bold text-purple-700" id="totalSessions">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4">
+            <button onclick="saveSession()"
+                class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition-all">
+                💾 Save Session
+            </button>
+            <button onclick="clearHistory()"
+                class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg transition-all">
+                🗑️ Clear History
+            </button>
+        </div>
+
+        <!-- Info Box -->
+        <div class="mt-8 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+            <div class="flex items-start">
+                <span class="text-2xl mr-3">ℹ️</span>
+                <div class="text-sm text-blue-700">
+                    <p class="font-semibold mb-1">How it works:</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Counter persists across page refreshes</li>
+                        <li>Session data is saved in localStorage</li>
+                        <li>Track statistics and session history</li>
+                        <li>Adjustable step size for faster counting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let counter = 0;
+        let stepSize = 1;
+        let totalClicks = 0;
+        let increments = 0;
+        let decrements = 0;
+        let sessionStartTime = Date.now();
+        let sessionTimerInterval;
+
+        // Load session data
+        function loadSession() {
+            const sessionData = JSON.parse(localStorage.getItem('counterSession')) || {};
+            counter = sessionData.counter || 0;
+            totalClicks = sessionData.totalClicks || 0;
+            increments = sessionData.increments || 0;
+            decrements = sessionData.decrements || 0;
+            sessionStartTime = sessionData.sessionStartTime || Date.now();
+
+            // Load history
+            const history = JSON.parse(localStorage.getItem('counterHistory')) || [];
+            if (history.length > 0) {
+                document.getElementById('prevSession').textContent = history[history.length - 1].counter;
+                document.getElementById('highestCount').textContent = Math.max(...history.map(h => h.counter), counter);
+                document.getElementById('totalSessions').textContent = history.length;
+            }
+
+            updateDisplay();
+            startSessionTimer();
+        }
+
+        function saveSessionData() {
+            const sessionData = {
+                counter,
+                totalClicks,
+                increments,
+                decrements,
+                sessionStartTime
+            };
+            localStorage.setItem('counterSession', JSON.stringify(sessionData));
+        }
+
+        function increment() {
+            counter += stepSize;
+            totalClicks++;
+            increments++;
+            updateDisplay();
+            animateCounter('increment');
+            saveSessionData();
+        }
+
+        function decrement() {
+            counter -= stepSize;
+            totalClicks++;
+            decrements++;
+            updateDisplay();
+            animateCounter('decrement');
+            saveSessionData();
+        }
+
+        function reset() {
+            if (confirm('Reset counter to 0?')) {
+                counter = 0;
+                updateDisplay();
+                saveSessionData();
+            }
+        }
+
+        function updateStepSize(value) {
+            stepSize = parseInt(value);
+            document.getElementById('stepDisplay').textContent = stepSize;
+        }
+
+        function updateDisplay() {
+            document.getElementById('counterDisplay').textContent = counter;
+            document.getElementById('totalClicks').textContent = totalClicks;
+            document.getElementById('increments').textContent = increments;
+            document.getElementById('decrements').textContent = decrements;
+        }
+
+        function animateCounter(type) {
+            const display = document.getElementById('counterDisplay');
+            display.classList.remove('increment-animation', 'decrement-animation');
+            void display.offsetWidth; // Trigger reflow
+            display.classList.add(type === 'increment' ? 'increment-animation' : 'decrement-animation');
+        }
+
+        function startSessionTimer() {
+            sessionTimerInterval = setInterval(() => {
+                const elapsed = Date.now() - sessionStartTime;
+                const hours = Math.floor(elapsed / 3600000);
+                const minutes = Math.floor((elapsed % 3600000) / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+
+                document.getElementById('sessionTime').textContent =
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function saveSession() {
+            const history = JSON.parse(localStorage.getItem('counterHistory')) || [];
+            const sessionData = {
+                counter,
+                totalClicks,
+                increments,
+                decrements,
+                duration: Date.now() - sessionStartTime,
+                timestamp: new Date().toLocaleString()
+            };
+
+            history.push(sessionData);
+            if (history.length > 10) history.shift(); // Keep only last 10 sessions
+
+            localStorage.setItem('counterHistory', JSON.stringify(history));
+
+            alert('✅ Session saved successfully!');
+
+            // Update history display
+            document.getElementById('prevSession').textContent = counter;
+            document.getElementById('highestCount').textContent = Math.max(...history.map(h => h.counter));
+            document.getElementById('totalSessions').textContent = history.length;
+        }
+
+        function clearHistory() {
+            if (confirm('Clear all session history and reset counter?')) {
+                localStorage.removeItem('counterSession');
+                localStorage.removeItem('counterHistory');
+                counter = 0;
+                totalClicks = 0;
+                increments = 0;
+                decrements = 0;
+                sessionStartTime = Date.now();
+
+                document.getElementById('prevSession').textContent = '-';
+                document.getElementById('highestCount').textContent = '0';
+                document.getElementById('totalSessions').textContent = '0';
+
+                updateDisplay();
+                saveSessionData();
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp' || e.key === '+') {
+                e.preventDefault();
+                increment();
+            } else if (e.key === 'ArrowDown' || e.key === '-') {
+                e.preventDefault();
+                decrement();
+            } else if (e.key === 'r' || e.key === 'R') {
+                reset();
+            }
+        });
+
+        // Initialize
+        loadSession();
+    </script>
+</body>
+
+</html>
