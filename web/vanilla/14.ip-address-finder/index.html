@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #00d4ff;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .btn-find {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+        }
+
+        .btn-find:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .ip-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .map-container {
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="glass-card rounded-2xl shadow-2xl w-full max-w-3xl p-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1
+                class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                🌐 IP Address Finder
+            </h1>
+            <p class="text-gray-600">Discover your IP address and location information</p>
+        </div>
+
+        <!-- Get IP Button -->
+        <div class="text-center mb-8">
+            <button onclick="getIPAddress()" class="btn-find text-white font-bold py-4 px-8 rounded-lg shadow-lg">
+                🔍 Find My IP Address
+            </button>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="hidden text-center mb-8">
+            <div class="loader mx-auto"></div>
+            <p class="text-gray-600 mt-4">Fetching IP information...</p>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="hidden fade-in">
+            <!-- IP Display -->
+            <div class="text-center mb-8 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
+                <p class="text-gray-600 mb-2">Your IP Address</p>
+                <div class="ip-display" id="ipAddress">-</div>
+            </div>
+
+            <!-- Information Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="info-card p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🌍</span>
+                        <div>
+                            <p class="text-sm text-gray-500">Country</p>
+                            <p class="font-semibold text-gray-800" id="country">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🏙️</span>
+                        <div>
+                            <p class="text-sm text-gray-500">City</p>
+                            <p class="font-semibold text-gray-800" id="city">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">📍</span>
+                        <div>
+                            <p class="text-sm text-gray-500">Region</p>
+                            <p class="font-semibold text-gray-800" id="region">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🕐</span>
+                        <div>
+                            <p class="text-sm text-gray-500">Timezone</p>
+                            <p class="font-semibold text-gray-800" id="timezone">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🗺️</span>
+                        <div>
+                            <p class="text-sm text-gray-500">Coordinates</p>
+                            <p class="font-semibold text-gray-800" id="coordinates">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🏢</span>
+                        <div>
+                            <p class="text-sm text-gray-500">ISP</p>
+                            <p class="font-semibold text-gray-800" id="isp">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-6">
+                <div class="flex items-start">
+                    <span class="text-2xl mr-3">ℹ️</span>
+                    <div>
+                        <p class="font-semibold text-blue-900 mb-1">Network Information</p>
+                        <p class="text-sm text-blue-700">
+                            <strong>Organization:</strong> <span id="org">-</span>
+                        </p>
+                        <p class="text-sm text-blue-700">
+                            <strong>Postal Code:</strong> <span id="postal">-</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copy IP Button -->
+            <div class="text-center">
+                <button onclick="copyIP()"
+                    class="bg-gray-700 hover:bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg transition-all">
+                    📋 Copy IP Address
+                </button>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="error" class="hidden bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
+            <div class="flex items-start">
+                <span class="text-2xl mr-3">⚠️</span>
+                <div>
+                    <p class="font-semibold text-red-900">Error</p>
+                    <p class="text-sm text-red-700" id="errorMessage"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentIP = '';
+
+        async function getIPAddress() {
+            // Hide previous results and errors
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('error').classList.add('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+
+            try {
+                // Using ip-api.com free API (no key required, CORS enabled)
+                const response = await fetch('http://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query');
+                console.log('this is response', response);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch IP information');
+                }
+
+                const data = await response.json();
+
+                // Store current IP
+                currentIP = data.query;
+
+                // Update UI with data
+                document.getElementById('ipAddress').textContent = data.query || '-';
+                document.getElementById('country').textContent = `${data.country || '-'} ${data.countryCode ? '(' + data.countryCode + ')' : ''}`;
+                document.getElementById('city').textContent = data.city || '-';
+                document.getElementById('region').textContent = data.regionName || '-';
+                document.getElementById('timezone').textContent = data.timezone || '-';
+                document.getElementById('coordinates').textContent = data.lat && data.lon
+                    ? `${data.lat}, ${data.lon}`
+                    : '-';
+                document.getElementById('isp').textContent = data.isp || '-';
+                document.getElementById('org').textContent = data.org || '-';
+                document.getElementById('postal').textContent = data.zip || '-';
+
+                // Hide loading and show results
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('results').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('error').classList.remove('hidden');
+                document.getElementById('errorMessage').textContent = error.message || 'Failed to fetch IP information. Please try again.';
+            }
+        }
+
+        function copyIP() {
+            if (currentIP) {
+                navigator.clipboard.writeText(currentIP).then(() => {
+                    // Show success feedback
+                    const btn = event.target;
+                    const originalText = btn.textContent;
+                    btn.textContent = '✅ Copied!';
+                    btn.classList.add('bg-green-600');
+
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.classList.remove('bg-green-600');
+                    }, 2000);
+                }).catch(err => {
+                    alert('Failed to copy IP address');
+                });
+            }
+        }
+
+        // Auto-load IP on page load
+        window.addEventListener('load', () => {
+            getIPAddress();
+        });
+    </script>
+</body>
+
+</html>
