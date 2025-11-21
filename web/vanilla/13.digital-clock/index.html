@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Digital Clock & Stopwatch</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --dark: #1a1a2e;
+            --darker: #0f0f1e;
+            --accent: #00d4ff;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--secondary);
+            bottom: -10%;
+            right: -10%;
+            animation-delay: 5s;
+        }
+
+        .circle-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            top: 40%;
+            right: -5%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 30px) scale(0.9);
+            }
+        }
+
+        .container-main {
+            position: relative;
+            z-index: 1;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Digital Clock Display */
+        .clock-display {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+            position: relative;
+        }
+
+        .clock-digit {
+            display: inline-block;
+            min-width: 1.2ch;
+            text-align: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .clock-separator {
+            animation: blink 1s ease-in-out infinite;
+            opacity: 1;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Date Display */
+        .date-display {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.125rem;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        /* Stopwatch Display */
+        .stopwatch-display {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #00d4ff;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            letter-spacing: 0.1em;
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Lap Time Display */
+        .lap-times {
+            max-height: 200px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(102, 126, 234, 0.5) transparent;
+        }
+
+        .lap-times::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .lap-times::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .lap-times::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 3px;
+        }
+
+        .lap-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--accent);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Mode Tabs */
+        .mode-tab {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .mode-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+
+        .mode-tab.active::after {
+            width: 80%;
+        }
+
+        .mode-tab.active {
+            color: var(--accent);
+        }
+
+        /* Fade Transitions */
+        .fade-enter {
+            animation: fadeInScale 0.4s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen p-4">
+    <!-- Animated Background -->
+    <div class="bg-animated">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container-main w-full max-w-4xl">
+        <!-- Mode Tabs -->
+        <div class="flex justify-center mb-8 gap-8">
+            <div class="mode-tab active text-2xl font-semibold text-white px-6 py-3" onclick="switchMode('clock')"
+                id="clockTab">
+                ⏰ Clock
+            </div>
+            <div class="mode-tab text-2xl font-semibold text-white px-6 py-3" onclick="switchMode('stopwatch')"
+                id="stopwatchTab">
+                ⏱️ Stopwatch
+            </div>
+        </div>
+
+        <!-- Clock Mode -->
+        <div id="clockMode" class="glass-card rounded-3xl p-12 text-center fade-enter">
+            <h1 class="text-3xl font-bold text-white mb-8 opacity-90">Current Time</h1>
+
+            <!-- Digital Clock -->
+            <div class="clock-display text-8xl mb-6" id="digitalClock">00:00:00</div>
+
+            <!-- Date Display -->
+            <div class="date-display mb-4" id="dateDisplay"></div>
+
+            <!-- Time Zone -->
+            <div class="text-sm text-gray-400" id="timezone"></div>
+        </div>
+
+        <!-- Stopwatch Mode -->
+        <div id="stopwatchMode" class="glass-card rounded-3xl p-12 text-center hidden">
+            <h1 class="text-3xl font-bold text-white mb-8 opacity-90">Stopwatch</h1>
+
+            <!-- Stopwatch Display -->
+            <div class="stopwatch-display text-7xl mb-10" id="stopwatchDisplay">00:00:00.000</div>
+
+            <!-- Control Buttons -->
+            <div class="flex justify-center gap-4 mb-8">
+                <button id="startStopwatch" class="btn-primary text-white font-semibold px-8 py-3 rounded-xl shadow-lg">
+                    ▶ Start
+                </button>
+                <button id="pauseStopwatch"
+                    class="btn-danger text-white font-semibold px-8 py-3 rounded-xl shadow-lg hidden">
+                    ⏸ Pause
+                </button>
+                <button id="lapStopwatch" class="btn-secondary font-semibold px-8 py-3 rounded-xl shadow-lg hidden">
+                    🏁 Lap
+                </button>
+                <button id="resetStopwatch" class="btn-secondary font-semibold px-8 py-3 rounded-xl shadow-lg">
+                    ↺ Reset
+                </button>
+            </div>
+
+            <!-- Lap Times -->
+            <div id="lapTimesContainer" class="hidden mt-8">
+                <h3 class="text-xl font-semibold text-white mb-4">Lap Times</h3>
+                <div class="lap-times space-y-2" id="lapTimes"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'clock';
+
+        // Switch between modes
+        function switchMode(mode) {
+            currentMode = mode;
+
+            // Update tabs
+            document.getElementById('clockTab').classList.toggle('active', mode === 'clock');
+            document.getElementById('stopwatchTab').classList.toggle('active', mode === 'stopwatch');
+
+            // Update visibility
+            document.getElementById('clockMode').classList.toggle('hidden', mode !== 'clock');
+            document.getElementById('stopwatchMode').classList.toggle('hidden', mode !== 'stopwatch');
+
+            // Add fade animation
+            if (mode === 'clock') {
+                document.getElementById('clockMode').classList.add('fade-enter');
+            } else {
+                document.getElementById('stopwatchMode').classList.add('fade-enter');
+            }
+        }
+
+        // Digital Clock
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('digitalClock').innerHTML = `
+                <span class="clock-digit">${hours[0]}</span><span class="clock-digit">${hours[1]}</span><span class="clock-separator">:</span><span class="clock-digit">${minutes[0]}</span><span class="clock-digit">${minutes[1]}</span><span class="clock-separator">:</span><span class="clock-digit">${seconds[0]}</span><span class="clock-digit">${seconds[1]}</span>
+            `;
+
+            // Update date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('dateDisplay').textContent = now.toLocaleDateString('en-US', options);
+
+            // Update timezone
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            document.getElementById('timezone').textContent = timezone;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Stopwatch
+        let stopwatchInterval;
+        let stopwatchTime = 0;
+        let isRunning = false;
+        let lapCounter = 0;
+
+        function formatTime(milliseconds) {
+            const totalSeconds = Math.floor(milliseconds / 1000);
+            const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+            const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+            const seconds = String(totalSeconds % 60).padStart(2, '0');
+            const ms = String(milliseconds % 1000).padStart(3, '0');
+            return `${hours}:${minutes}:${seconds}.${ms}`;
+        }
+
+        document.getElementById('startStopwatch').addEventListener('click', function () {
+            isRunning = true;
+            this.classList.add('hidden');
+            document.getElementById('pauseStopwatch').classList.remove('hidden');
+            document.getElementById('lapStopwatch').classList.remove('hidden');
+
+            const startTime = Date.now() - stopwatchTime;
+            stopwatchInterval = setInterval(() => {
+                stopwatchTime = Date.now() - startTime;
+                document.getElementById('stopwatchDisplay').textContent = formatTime(stopwatchTime);
+            }, 10);
+        });
+
+        document.getElementById('pauseStopwatch').addEventListener('click', function () {
+            isRunning = false;
+            clearInterval(stopwatchInterval);
+            this.classList.add('hidden');
+            document.getElementById('startStopwatch').classList.remove('hidden');
+            document.getElementById('lapStopwatch').classList.add('hidden');
+        });
+
+        document.getElementById('lapStopwatch').addEventListener('click', function () {
+            if (isRunning) {
+                lapCounter++;
+                const lapTime = formatTime(stopwatchTime);
+                const lapItem = document.createElement('div');
+                lapItem.className = 'lap-item p-3 rounded-lg mb-2';
+                lapItem.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-white font-semibold">Lap ${lapCounter}</span>
+                        <span class="text-cyan-400 font-mono">${lapTime}</span>
+                    </div>
+                `;
+                document.getElementById('lapTimes').insertBefore(lapItem, document.getElementById('lapTimes').firstChild);
+                document.getElementById('lapTimesContainer').classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('resetStopwatch').addEventListener('click', function () {
+            clearInterval(stopwatchInterval);
+            stopwatchTime = 0;
+            isRunning = false;
+            lapCounter = 0;
+            document.getElementById('stopwatchDisplay').textContent = '00:00:00.000';
+            document.getElementById('pauseStopwatch').classList.add('hidden');
+            document.getElementById('startStopwatch').classList.remove('hidden');
+            document.getElementById('lapStopwatch').classList.add('hidden');
+            document.getElementById('lapTimes').innerHTML = '';
+            document.getElementById('lapTimesContainer').classList.add('hidden');
+        });
+    </script>
+</body>
+
+</html>
