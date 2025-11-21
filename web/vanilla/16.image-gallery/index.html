@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            aspect-ratio: 1;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: white;
+        }
+
+        .upload-area {
+            border: 3px dashed rgba(102, 126, 234, 0.5);
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--secondary);
+            background: rgba(118, 75, 162, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="glass-header sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-6">
+            <h1
+                class="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent text-center">
+                🖼️ Image Gallery
+            </h1>
+            <p class="text-center text-gray-400 mt-2">Beautiful responsive image gallery with filters</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Upload Section -->
+        <div class="mb-8">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" multiple class="hidden">
+                <div class="text-white">
+                    <svg class="mx-auto h-16 w-16 text-purple-400 mb-4" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                        </path>
+                    </svg>
+                    <h3 class="text-xl font-semibold mb-2">Upload Images</h3>
+                    <p class="text-gray-400 mb-4">Click to browse or drag and drop</p>
+                    <p class="text-sm text-gray-500">Supports: JPG, PNG, GIF, WebP</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-3 justify-center mb-8">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="nature">Nature</button>
+            <button class="filter-btn" data-filter="architecture">Architecture</button>
+            <button class="filter-btn" data-filter="people">People</button>
+            <button class="filter-btn" data-filter="animals">Animals</button>
+            <button class="filter-btn" data-filter="uploaded">My Uploads</button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Images will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="imageModal">
+        <button onclick="closeModal()"
+            class="absolute top-4 right-4 text-white text-4xl hover:text-purple-400 transition-colors z-10">
+            ×
+        </button>
+        <button onclick="prevImage()"
+            class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-purple-400 transition-colors z-10">
+            ‹
+        </button>
+        <button onclick="nextImage()"
+            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-purple-400 transition-colors z-10">
+            ›
+        </button>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="">
+            <div class="text-center mt-4">
+                <h3 class="text-white text-xl font-semibold" id="modalTitle"></h3>
+                <p class="text-gray-400" id="modalCategory"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample gallery data with placeholder images
+        const sampleImages = [
+            { id: 1, title: 'Mountain Landscape', category: 'nature', url: 'https://picsum.photos/400/400?random=1' },
+            { id: 2, title: 'Modern Building', category: 'architecture', url: 'https://picsum.photos/400/400?random=2' },
+            { id: 3, title: 'Portrait', category: 'people', url: 'https://picsum.photos/400/400?random=3' },
+            { id: 4, title: 'Forest Path', category: 'nature', url: 'https://picsum.photos/400/400?random=4' },
+            { id: 5, title: 'City Skyline', category: 'architecture', url: 'https://picsum.photos/400/400?random=5' },
+            { id: 6, title: 'Wildlife', category: 'animals', url: 'https://picsum.photos/400/400?random=6' },
+            { id: 7, title: 'Ocean View', category: 'nature', url: 'https://picsum.photos/400/400?random=7' },
+            { id: 8, title: 'Street Photography', category: 'people', url: 'https://picsum.photos/400/400?random=8' },
+            { id: 9, title: 'Pet Cat', category: 'animals', url: 'https://picsum.photos/400/400?random=9' },
+            { id: 10, title: 'Bridge', category: 'architecture', url: 'https://picsum.photos/400/400?random=10' },
+            { id: 11, title: 'Sunset', category: 'nature', url: 'https://picsum.photos/400/400?random=11' },
+            { id: 12, title: 'Dog Playing', category: 'animals', url: 'https://picsum.photos/400/400?random=12' }
+        ];
+
+        let images = [...sampleImages];
+        let uploadedImages = JSON.parse(localStorage.getItem('uploadedImages')) || [];
+        images = [...images, ...uploadedImages];
+
+        let currentFilter = 'all';
+        let currentImageIndex = 0;
+        let filteredImages = [];
+
+        // Upload functionality
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const newImage = {
+                            id: Date.now() + Math.random(),
+                            title: file.name,
+                            category: 'uploaded',
+                            url: e.target.result
+                        };
+                        uploadedImages.push(newImage);
+                        images.push(newImage);
+                        localStorage.setItem('uploadedImages', JSON.stringify(uploadedImages));
+                        displayGallery();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                displayGallery();
+            });
+        });
+
+        function displayGallery() {
+            const grid = document.getElementById('galleryGrid');
+            filteredImages = currentFilter === 'all'
+                ? images
+                : images.filter(img => img.category === currentFilter);
+
+            if (filteredImages.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-16">
+                        <p class="text-gray-400 text-xl">No images in this category</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredImages.map((img, index) => `
+                <div class="gallery-item" onclick="openModal(${index})">
+                    <img src="${img.url}" alt="${img.title}" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="text-white font-semibold">${img.title}</h3>
+                        <p class="text-gray-300 text-sm capitalize">${img.category}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Modal functionality
+        function openModal(index) {
+            currentImageIndex = index;
+            updateModal();
+            document.getElementById('imageModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + filteredImages.length) % filteredImages.length;
+            updateModal();
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % filteredImages.length;
+            updateModal();
+        }
+
+        function updateModal() {
+            const img = filteredImages[currentImageIndex];
+            document.getElementById('modalImage').src = img.url;
+            document.getElementById('modalTitle').textContent = img.title;
+            document.getElementById('modalCategory').textContent = img.category.toUpperCase();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('imageModal').classList.contains('active')) {
+                if (e.key === 'Escape') closeModal();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'ArrowRight') nextImage();
+            }
+        });
+
+        // Click outside modal to close
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target.id === 'imageModal') closeModal();
+        });
+
+        // Initial display
+        displayGallery();
+    </script>
+</body>
+
+</html>
