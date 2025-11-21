@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Card Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .ecard-preview {
+            min-height: 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .template-card:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+
+        .template-card.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+    </style>
+</head>
+
+<body class="p-4 min-h-screen">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-5xl font-bold text-center text-white mb-2">💌 E-Card Generator</h1>
+        <p class="text-center text-white mb-8">Create beautiful greeting cards in seconds</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Panel: Customization -->
+            <div class="glass-card rounded-2xl p-6 shadow-2xl">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">✨ Customize Your Card</h2>
+
+                <!-- Templates -->
+                <div class="mb-6">
+                    <label class="block font-semibold text-gray-700 mb-3">Choose Template:</label>
+                    <div class="grid grid-cols-3 gap-3" id="templates">
+                        <div class="template-card active rounded-lg p-4 text-center bg-gradient-to-br from-pink-400 to-purple-500"
+                            data-template="birthday">
+                            <span class="text-4xl">🎂</span>
+                            <p class="text-xs text-white mt-1">Birthday</p>
+                        </div>
+                        <div class="template-card rounded-lg p-4 text-center bg-gradient-to-br from-red-400 to-pink-500"
+                            data-template="love">
+                            <span class="text-4xl">❤️</span>
+                            <p class="text-xs text-white mt-1">Love</p>
+                        </div>
+                        <div class="template-card rounded-lg p-4 text-center bg-gradient-to-br from-green-400 to-blue-500"
+                            data-template="thanks">
+                            <span class="text-4xl">🙏</span>
+                            <p class="text-xs text-white mt-1">Thanks</p>
+                        </div>
+                        <div class="template-card rounded-lg p-4 text-center bg-gradient-to-br from-yellow-400 to-orange-500"
+                            data-template="congrats">
+                            <span class="text-4xl">🎉</span>
+                            <p class="text-xs text-white mt-1">Congrats</p>
+                        </div>
+                        <div class="template-card rounded-lg p-4 text-center bg-gradient-to-br from-blue-400 to-purple-500"
+                            data-template="wedding">
+                            <span class="text-4xl">💍</span>
+                            <p class="text-xs text-white mt-1">Wedding</p>
+                        </div>
+                        <div class="template-card rounded-lg p-4 text-center bg-gradient-to-br from-teal-400 to-green-500"
+                            data-template="getwell">
+                            <span class="text-4xl">🌸</span>
+                            <p class="text-xs text-white mt-1">Get Well</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recipient Name -->
+                <div class="mb-4">
+                    <label class="block font-semibold text-gray-700 mb-2">To:</label>
+                    <input type="text" id="recipientName" placeholder="Recipient's Name"
+                        class="w-full p-3 border-2 rounded-lg focus:border-purple-500 outline-none">
+                </div>
+
+                <!-- Message -->
+                <div class="mb-4">
+                    <label class="block font-semibold text-gray-700 mb-2">Message:</label>
+                    <textarea id="message" rows="4" placeholder="Write your message here..."
+                        class="w-full p-3 border-2 rounded-lg focus:border-purple-500 outline-none"></textarea>
+                </div>
+
+                <!-- From -->
+                <div class="mb-4">
+                    <label class="block font-semibold text-gray-700 mb-2">From:</label>
+                    <input type="text" id="senderName" placeholder="Your Name"
+                        class="w-full p-3 border-2 rounded-lg focus:border-purple-500 outline-none">
+                </div>
+
+                <!-- Font Size -->
+                <div class="mb-6">
+                    <label class="block font-semibold text-gray-700 mb-2">Font Size:</label>
+                    <input type="range" id="fontSize" min="16" max="40" value="24" class="w-full">
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-3">
+                    <button onclick="downloadCard()"
+                        class="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 rounded-lg hover:shadow-lg transition-all">
+                        📥 Download
+                    </button>
+                    <button onclick="shareCard()"
+                        class="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold py-3 rounded-lg hover:shadow-lg transition-all">
+                        📤 Share
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Panel: Preview -->
+            <div class="glass-card rounded-2xl p-6 shadow-2xl">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">👁️ Preview</h2>
+                <div id="cardPreview"
+                    class="ecard-preview rounded-xl shadow-2xl bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center p-8">
+                    <div class="text-center text-white">
+                        <h2 class="text-4xl font-bold mb-4" id="previewTitle">Happy Birthday! 🎂</h2>
+                        <p class="text-xl mb-2" id="previewRecipient">Dear Friend,</p>
+                        <p class="text-lg mb-4" id="previewMessage">Wishing you a wonderful day filled with joy and
+                            happiness!</p>
+                        <p class="text-lg italic" id="previewSender">From: You</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const templates = {
+            birthday: { gradient: 'from-pink-400 to-purple-500', title: 'Happy Birthday! 🎂', defaultMsg: 'Wishing you a wonderful day filled with joy and happiness!' },
+            love: { gradient: 'from-red-400 to-pink-500', title: 'I Love You! ❤️', defaultMsg: 'You mean the world to me. Forever and always!' },
+            thanks: { gradient: 'from-green-400 to-blue-500', title: 'Thank You! 🙏', defaultMsg: 'Your kindness means so much to me!' },
+            congrats: { gradient: 'from-yellow-400 to-orange-500', title: 'Congratulations! 🎉', defaultMsg: 'So proud of your amazing achievement!' },
+            wedding: { gradient: 'from-blue-400 to-purple-500', title: 'Happy Wedding! 💍', defaultMsg: 'Wishing you a lifetime of love and happiness together!' },
+            getwell: { gradient: 'from-teal-400 to-green-500', title: 'Get Well Soon! 🌸', defaultMsg: 'Sending healing thoughts and warm wishes your way!' }
+        };
+
+        let currentTemplate = 'birthday';
+
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function () {
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                currentTemplate = this.dataset.template;
+                updatePreview();
+            });
+        });
+
+        document.getElementById('recipientName').addEventListener('input', updatePreview);
+        document.getElementById('message').addEventListener('input', updatePreview);
+        document.getElementById('senderName').addEventListener('input', updatePreview);
+        document.getElementById('fontSize').addEventListener('input', updatePreview);
+
+        function updatePreview() {
+            const template = templates[currentTemplate];
+            const recipient = document.getElementById('recipientName').value || 'Friend';
+            const message = document.getElementById('message').value || template.defaultMsg;
+            const sender = document.getElementById('senderName').value || 'You';
+            const fontSize = document.getElementById('fontSize').value;
+
+            const preview = document.getElementById('cardPreview');
+            preview.className = `ecard-preview rounded-xl shadow-2xl bg-gradient-to-br ${template.gradient} flex items-center justify-center p-8`;
+
+            document.getElementById('previewTitle').textContent = template.title;
+            document.getElementById('previewRecipient').textContent = `Dear ${recipient},`;
+            document.getElementById('previewMessage').textContent = message;
+            document.getElementById('previewSender').textContent = `From: ${sender}`;
+
+            document.getElementById('previewMessage').style.fontSize = fontSize + 'px';
+        }
+
+        function downloadCard() {
+            // Create a canvas element
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas dimensions
+            canvas.width = 800;
+            canvas.height = 600;
+
+            // Define gradient colors for each template
+            const gradientColors = {
+                birthday: ['#f472b6', '#a855f7'],
+                love: ['#f87171', '#ec4899'],
+                thanks: ['#4ade80', '#3b82f6'],
+                congrats: ['#facc15', '#f97316'],
+                wedding: ['#60a5fa', '#a855f7'],
+                getwell: ['#2dd4bf', '#22c55e']
+            };
+
+            // Draw the card background
+            const gradient = ctx.createLinearGradient(0, 0, 800, 600);
+            const colors = gradientColors[currentTemplate];
+            gradient.addColorStop(0, colors[0]);
+            gradient.addColorStop(1, colors[1]);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the text
+            const template = templates[currentTemplate];
+            const fontSize = document.getElementById('fontSize').value;
+
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+
+            ctx.font = 'bold 48px Segoe UI';
+            ctx.fillText(template.title, 400, 150);
+
+            ctx.font = 'bold 28px Segoe UI';
+            ctx.fillText(`Dear ${document.getElementById('recipientName').value || 'Friend'},`, 400, 220);
+
+            ctx.font = `${fontSize}px Segoe UI`;
+            const message = document.getElementById('message').value || template.defaultMsg;
+            wrapText(ctx, message, 400, 300, 700, parseInt(fontSize) + 10);
+
+            ctx.font = 'italic 24px Segoe UI';
+            ctx.fillText(`From: ${document.getElementById('senderName').value || 'You'}`, 400, 520);
+
+            // Convert canvas to image and trigger download
+            const link = document.createElement('a');
+            link.download = 'ecard.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, currentY);
+        }
+
+        function shareCard() {
+            const recipient = document.getElementById('recipientName').value || 'Friend';
+            const message = document.getElementById('message').value || 'Check out this e-card!';
+            const sender = document.getElementById('senderName').value || 'You';
+            const shareText = `E-Card from ${sender} to ${recipient}: ${message}`;
+            alert(`📤 Share options opened! \n${shareText}`);
+        }
+    </script>
+</body>
+
+</html>
