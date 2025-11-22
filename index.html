@@ -492,6 +492,15 @@
         </section>
 
         <nav class="navigation-grid">
+
+            <div class="nav-card web" onclick="showWebFiles()">
+                <span class="nav-icon">🌐</span>
+                <h3>Web Development</h3>
+                <p>Front-end development practice with HTML, CSS, and JavaScript. Includes components, experiments, and
+                    responsive design patterns.</p>
+                <div class="folder-path">./web/</div>
+            </div>
+
             <div class="nav-card fundamentals" onclick="showFundamentalsFiles()">
                 <span class="nav-icon">📚</span>
                 <h3>Fundamentals</h3>
@@ -516,13 +525,6 @@
                 <div class="folder-path">./competitive/</div>
             </div>
 
-            <div class="nav-card web" onclick="showWebFiles()">
-                <span class="nav-icon">🌐</span>
-                <h3>Web Development</h3>
-                <p>Front-end development practice with HTML, CSS, and JavaScript. Includes components, experiments, and
-                    responsive design patterns.</p>
-                <div class="folder-path">./web/</div>
-            </div>
 
             <div class="nav-card reallife" onclick="showRealLifeFiles()">
                 <span class="nav-icon">🛠️</span>
@@ -663,19 +665,65 @@
     <script>
         // Files data for each section
         const webFiles = [
+            // Mini Projects (01-25)
+            { name: '01. Calculator', path: 'web/vanilla/01.calculator/index.html', category: 'Mini Projects' },
+            { name: '02. Temperature Converter', path: 'web/vanilla/02.temperature-converter/index.html', category: 'Mini Projects' },
+            { name: '03. Currency Converter', path: 'web/vanilla/03.currency-converter/index.html', category: 'Mini Projects' },
+            { name: '04. Login & Signup', path: 'web/vanilla/04.login&singup/index.html', category: 'Mini Projects' },
+            { name: '05. Todo List', path: 'web/vanilla/05.todo-list/index.html', category: 'Mini Projects' },
+            { name: '06. Contact Form', path: 'web/vanilla/06.contactFE/index.html', category: 'Mini Projects' },
+            { name: '07. Simple Blog', path: 'web/vanilla/07.simple-blog/index.html', category: 'Mini Projects' },
+            { name: '08. Guestbook', path: 'web/vanilla/08.guestbook-application/index.html', category: 'Mini Projects' },
+            { name: '09. BMI Calculator', path: 'web/vanilla/09.bmi-calculator/index.html', category: 'Mini Projects' },
+            { name: '10. Survey System', path: 'web/vanilla/10.basic-survey-system/index.html', category: 'Mini Projects' },
+            { name: '11. Quote Generator', path: 'web/vanilla/11.random-quote-generator/index.html', category: 'Mini Projects' },
+            { name: '12. Age Calculator', path: 'web/vanilla/12.age-calculator/index.html', category: 'Mini Projects' },
+            { name: '13. Digital Clock', path: 'web/vanilla/13.digital-clock/index.html', category: 'Mini Projects' },
+            { name: '14. IP Address Finder', path: 'web/vanilla/14.ip-address-finder/index.html', category: 'Mini Projects' },
+            { name: '15. URL Shortener', path: 'web/vanilla/15.url-shortener/index.html', category: 'Mini Projects' },
+            { name: '16. Image Gallery', path: 'web/vanilla/16.image-gallery/index.html', category: 'Mini Projects' },
+            { name: '17. File Upload System', path: 'web/vanilla/17.file-upload-system/index.html', category: 'Mini Projects' },
+            { name: '18. Feedback Form', path: 'web/vanilla/18.feedback-form/index.html', category: 'Mini Projects' },
+            { name: '19. Session Counter', path: 'web/vanilla/19.session-based-counter/index.html', category: 'Mini Projects' },
+            { name: '20. E-Card Generator', path: 'web/vanilla/20.e-card-generator/index.html', category: 'Mini Projects' },
+            { name: '21. Weather App', path: 'web/vanilla/21.weather-app/index.html', category: 'Mini Projects' },
+            { name: '22. Password Generator', path: 'web/vanilla/22.password-generator/index.html', category: 'Mini Projects' },
+            { name: '23. Shopping Cart', path: 'web/vanilla/23.shopping-cart/index.html', category: 'Mini Projects' },
+            { name: '24. Expense Tracker', path: 'web/vanilla/24.expense-tracker/index.html', category: 'Mini Projects' },
+            { name: '25. Recipe Manager', path: 'web/vanilla/25.recipe-management-system/index.html', category: 'Mini Projects' },
+
+            // Experiments
             { name: 'Flex Layout', path: 'web/experiments/flex-layout/index.html', category: 'Experiments' },
             { name: 'Grid Layout', path: 'web/experiments/grid-layout/index.html', category: 'Experiments' },
+
+            // Components
             { name: 'Footer Component', path: 'web/components/footer.html', category: 'Components' },
             { name: 'Navbar Component', path: 'web/components/navbar.html', category: 'Components' },
+            { name: 'Drag Block', path: 'web/components/dragblock.html', category: 'Components' },
+            { name: 'Fullscreen', path: 'web/components/fullscreen.html', category: 'Components' },
+
+            // Snippets
             { name: 'Responsive Meta', path: 'web/snippets/responsive-meta.html', category: 'Snippets' },
-            { name: 'CSS Exercises', path: 'web/vanilla/css-exercises/index.html', category: 'Vanilla' },
-            { name: 'HTML Exercises', path: 'web/vanilla/exercises/index.html', category: 'Vanilla' },
-            { name: 'Landing Page', path: 'web/vanilla/landing-page/index.html', category: 'Vanilla' },
-            { name: 'Hero Section', path: 'web/vanilla/hero/index.html', category: 'Vanilla' },
-            { name: 'Old School', path: 'web/vanilla/old-school/index.html', category: 'Vanilla' },
+            { name: 'Dark Mode Toggle', path: 'web/snippets/dark-mode-toggle.js', category: 'Snippets' },
+
+            // Other Projects
+            { name: 'CSS Exercises', path: 'web/vanilla/css-exercises/index.html', category: 'Practice' },
+            { name: 'HTML Exercises', path: 'web/vanilla/exercises/index.html', category: 'Practice' },
+            { name: 'Landing Page', path: 'web/vanilla/landing-page/index.html', category: 'Practice' },
+            { name: 'Hero Section', path: 'web/vanilla/hero/index.html', category: 'Practice' },
+            { name: 'Old School', path: 'web/vanilla/old-school/index.html', category: 'Practice' },
+            { name: 'BD Map', path: 'web/vanilla/bdmap/index.html', category: 'Practice' },
+
+            // CSS Demos
             { name: 'Flexbox Demo', path: 'web/vanilla/css-exercises/demos/flexbox.html', category: 'CSS Demos' },
+            { name: 'Grid Demo', path: 'web/vanilla/css-exercises/demos/grid.html', category: 'CSS Demos' },
             { name: 'CSS Selectors', path: 'web/vanilla/css-exercises/demos/selectors.html', category: 'CSS Demos' },
             { name: 'CSS Day 1', path: 'web/vanilla/css-exercises/demos/cssday1.html', category: 'CSS Demos' },
+            { name: 'CSS Day 2', path: 'web/vanilla/css-exercises/demos/cssday2.html', category: 'CSS Demos' },
+            { name: 'CSS Day 3', path: 'web/vanilla/css-exercises/demos/cssday3.html', category: 'CSS Demos' },
+            { name: 'CSS Animations', path: 'web/vanilla/css-exercises/demos/animations.html', category: 'CSS Demos' },
+
+            // HTML Demos
             { name: 'HTML Tables', path: 'web/vanilla/exercises/demos/tables.html', category: 'HTML Demos' },
             { name: 'HTML Forms', path: 'web/vanilla/exercises/demos/forms.html', category: 'HTML Demos' },
             { name: 'Text Content', path: 'web/vanilla/exercises/demos/text-content.html', category: 'HTML Demos' },
@@ -845,14 +893,46 @@
 
         // Get appropriate icon for file type
         function getFileIcon(name, category) {
+            // Mini Projects - Specific icons
+            if (category === 'Mini Projects') {
+                if (name.includes('Calculator')) return '🧮';
+                if (name.includes('Temperature')) return '🌡️';
+                if (name.includes('Currency')) return '💱';
+                if (name.includes('Login') || name.includes('Signup')) return '🔐';
+                if (name.includes('Todo')) return '✅';
+                if (name.includes('Contact')) return '📧';
+                if (name.includes('Blog')) return '📝';
+                if (name.includes('Guestbook')) return '📖';
+                if (name.includes('BMI')) return '⚖️';
+                if (name.includes('Survey')) return '📊';
+                if (name.includes('Quote')) return '💬';
+                if (name.includes('Age')) return '🎂';
+                if (name.includes('Clock')) return '🕒';
+                if (name.includes('IP Address')) return '🌐';
+                if (name.includes('URL')) return '🔗';
+                if (name.includes('Gallery')) return '🖼️';
+                if (name.includes('Upload')) return '📤';
+                if (name.includes('Feedback')) return '⭐';
+                if (name.includes('Counter')) return '🔢';
+                if (name.includes('Card')) return '💌';
+                if (name.includes('Weather')) return '🌤️';
+                if (name.includes('Password')) return '🔑';
+                if (name.includes('Shopping')) return '🛒';
+                if (name.includes('Expense')) return '💰';
+                if (name.includes('Recipe')) return '🍳';
+                return '🚀'; // Default for mini projects
+            }
+
             // Web Development icons
             if (category === 'Components') return '🧩';
             if (category === 'Experiments') return '🧪';
             if (category === 'Snippets') return '✂️';
             if (category === 'CSS Demos') return '🎨';
             if (category === 'HTML Demos') return '📄';
+            if (category === 'Practice') return '💪';
             if (name.includes('Landing') || name.includes('Hero')) return '🏠';
             if (name.includes('Exercise')) return '💪';
+            if (name.includes('BD Map')) return '🗺️';
 
             // Programming Language icons
             if (category === 'C Language') return '⚡';
@@ -866,7 +946,7 @@
             if (category === 'Shell') return '🐚';
 
             // General categories
-            if (category === 'Documentation') return '�';
+            if (category === 'Documentation') return '📚';
             if (category === 'FTP Tools') return '🌐';
 
             // File type based icons
@@ -877,7 +957,7 @@
             if (name.toLowerCase().includes('loop')) return '🔄';
             if (name.toLowerCase().includes('array')) return '📋';
 
-            return '�📄';
+            return '📄';
         }
 
         // Close modal when clicking outside
