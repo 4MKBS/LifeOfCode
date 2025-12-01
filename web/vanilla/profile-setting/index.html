@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Profile Settings — LifeOfCode</title>
+		<!-- Tailwind Play CDN for quick prototyping -->
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style>
+			/* small customizations to better match the screenshot */
+			.glass-border { border: 1px solid rgba(0,0,0,0.08); }
+		</style>
+	</head>
+	<body class="min-h-screen bg-gray-50 text-gray-800 font-sans">
+		<div class="flex">
+			<!-- Left sidebar -->
+			<aside class="w-20 bg-white h-screen shadow-sm hidden md:flex flex-col items-center py-6">
+				<div class="w-11 h-11 rounded-lg bg-gradient-to-br from-sky-300 to-indigo-200 flex items-center justify-center mb-6">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/></svg>
+				</div>
+				<nav class="space-y-4 mt-4">
+					<button class="w-10 h-10 rounded-lg bg-transparent hover:bg-gray-100 flex items-center justify-center text-slate-400">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM7 11h10v2H7z"/></svg>
+					</button>
+					<button class="w-10 h-10 rounded-lg bg-transparent hover:bg-gray-100 flex items-center justify-center text-slate-400">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM8 10h8v2H8z"/></svg>
+					</button>
+				</nav>
+			</aside>
+
+			<!-- Main content -->
+			<main class="flex-1">
+				<!-- Top header -->
+				<header class="py-6 px-8 flex items-center justify-between bg-white shadow-sm">
+					<div>
+						<h1 class="text-2xl font-semibold">Welcome, Amanda</h1>
+						<p class="text-sm text-slate-400">Tue, 07 June 2022</p>
+					</div>
+
+					<div class="flex items-center gap-4">
+						<div class="relative">
+							<input type="search" placeholder="Search" class="w-64 pl-4 pr-10 py-2 rounded-lg bg-gray-100 text-sm outline-none" />
+							<svg xmlns="http://www.w3.org/2000/svg" class="absolute right-3 top-2.5 h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 110-16 8 8 0 010 16z"/></svg>
+						</div>
+						<button class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
+							<img src="https://i.pravatar.cc/40?img=32" alt="avatar" class="w-8 h-8 rounded-full" />
+						</button>
+					</div>
+				</header>
+
+				<!-- Gradient hero area and profile card -->
+				<section class="p-8">
+					<div class="bg-gradient-to-r from-sky-200 via-indigo-100 to-amber-100 rounded-lg h-28"></div>
+
+					<div class="mt-6">
+						<div class="bg-white glass-border rounded-lg shadow-sm p-8 -mt-16">
+							<div class="flex justify-between items-start">
+								<div class="flex items-center gap-4">
+									<div class="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-300 to-sky-300 p-1">
+										<img src="https://i.pravatar.cc/80?img=5" alt="avatar" class="w-full h-full rounded-full object-cover border-2 border-white" />
+									</div>
+									<div>
+										<h2 class="text-xl font-semibold">Alexa Rawles</h2>
+										<p class="text-sm text-slate-400">alexarawles@gmail.com</p>
+									</div>
+								</div>
+
+								<div>
+									<button class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow">Edit</button>
+								</div>
+							</div>
+
+							<form class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+								<div class="space-y-6">
+									<div>
+										<label class="block text-sm text-slate-600 mb-2">Full Name</label>
+										<input class="w-full rounded-md bg-gray-100 py-3 px-4 text-sm outline-none" placeholder="Your First Name" />
+									</div>
+
+									<div>
+										<label class="block text-sm text-slate-600 mb-2">Gender</label>
+										<div class="relative">
+											<select class="w-full appearance-none rounded-md bg-gray-100 py-3 px-4 text-sm">
+												<option>-- Select --</option>
+												<option>Female</option>
+												<option>Male</option>
+											</select>
+											<svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none absolute right-3 top-3 h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/></svg>
+										</div>
+									</div>
+
+									<div>
+										<label class="block text-sm text-slate-600 mb-2">Language</label>
+										<div class="relative">
+											<select class="w-full appearance-none rounded-md bg-gray-100 py-3 px-4 text-sm">
+												<option>English</option>
+												<option>Spanish</option>
+											</select>
+											<svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none absolute right-3 top-3 h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/></svg>
+										</div>
+									</div>
+								</div>
+
+								<div class="space-y-6">
+									<div>
+										<label class="block text-sm text-slate-600 mb-2">Nick Name</label>
+										<input class="w-full rounded-md bg-gray-100 py-3 px-4 text-sm outline-none" placeholder="Your First Name" />
+									</div>
+
+									<div>
+										<label class="block text-sm text-slate-600 mb-2">Country</label>
+										<div class="relative">
+											<select class="w-full appearance-none rounded-md bg-gray-100 py-3 px-4 text-sm">
+												<option>-- Select --</option>
+												<option>USA</option>
+												<option>Canada</option>
+											</select>
+											<svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none absolute right-3 top-3 h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/></svg>
+										</div>
+									</div>
+
+									<div>
+										<label class="block text-sm text-slate-600 mb-2">Time Zone</label>
+										<div class="relative">
+											<select class="w-full appearance-none rounded-md bg-gray-100 py-3 px-4 text-sm">
+												<option>GMT+0</option>
+												<option>GMT+6</option>
+											</select>
+											<svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none absolute right-3 top-3 h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/></svg>
+										</div>
+									</div>
+								</div>
+							</form>
+
+							<div class="mt-8">
+								<h3 class="text-sm font-semibold">My email Address</h3>
+								<div class="mt-4 bg-white">
+									<ul class="space-y-4">
+										<li class="flex items-center gap-3">
+											<div class="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center">
+												<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor"><path d="M2.94 6.94A2 2 0 014 6h12a2 2 0 011.06.94L10 11 2.94 6.94z"/><path d="M18 8.35V14a2 2 0 01-2 2H4a2 2 0 01-2-2V8.35l8 4 8-4z"/></svg>
+											</div>
+											<div>
+												<div class="text-sm font-medium">alexarawles@gmail.com</div>
+												<div class="text-xs text-slate-400">1 month ago</div>
+											</div>
+										</li>
+									</ul>
+
+									<div class="mt-6">
+										<button class="px-4 py-2 rounded-md bg-white border border-blue-100 text-blue-500">+Add Email Address</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</main>
+		</div>
+	</body>
+</html>
