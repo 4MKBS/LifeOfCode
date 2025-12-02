@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>User Profile — LifeOfCode</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .card-radius {
+            border-radius: 16px;
+        }
+
+        .soft-divider {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        /* Hide elements */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body
+    class="min-h-screen bg-gradient-to-br from-teal-600 via-teal-500 to-teal-600 flex items-center justify-center p-10 font-sans text-gray-700">
+
+    <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- LEFT COLUMN: Profile menu card -->
+        <div class="col-span-1 space-y-6">
+            <!-- Main profile card -->
+            <div class="bg-white card-radius shadow-xl p-6">
+                <!-- User info header -->
+                <div class="flex items-center gap-4 mb-6">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=faces"
+                        alt="avatar" class="w-16 h-16 rounded-full object-cover shadow-md" />
+                    <div>
+                        <div class="text-lg font-semibold text-gray-800">Your name</div>
+                        <div class="text-sm text-gray-400">yourname@gmail.com</div>
+                    </div>
+                </div>
+
+                <!-- Menu buttons -->
+                <div class="space-y-2">
+                    <button id="btnMyProfile" onclick="showMyProfile()"
+                        class="w-full flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-50 transition">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span class="text-sm font-medium text-gray-700">My Profile</span>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+
+                    <button id="btnSettings" onclick="showSettings()"
+                        class="w-full flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-50 transition">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="text-sm font-medium text-gray-700">Settings</span>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+
+                    <div class="relative">
+                        <button id="btnNotification" onclick="toggleNotificationPopup()"
+                            class="w-full flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                                <span class="text-sm font-medium text-gray-700">Notification</span>
+                            </div>
+                            <div class="text-xs text-gray-400 font-medium">Allow</div>
+                        </button>
+
+                        <!-- Notification Popup -->
+                        <div id="notificationPopup"
+                            class="hidden absolute right-0 top-full mt-2 bg-white card-radius shadow-xl p-4 w-40 z-10">
+                            <button onclick="setNotification('Allow')"
+                                class="w-full text-left py-2 px-3 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Allow</button>
+                            <button onclick="setNotification('Mute')"
+                                class="w-full text-left py-2 px-3 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Mute</button>
+                        </div>
+                    </div>
+
+                    <button class="w-full flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-gray-50 transition">
+                        <svg class="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        <span class="text-sm font-medium text-gray-700">Log Out</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Settings Card (shown when Settings is clicked) -->
+            <div id="settingsCard" class="hidden bg-white card-radius shadow-xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="text-lg font-semibold text-gray-800">Settings</div>
+                    <button onclick="closeSettingsCard()" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between py-3">
+                        <div class="text-sm text-gray-600">Theme</div>
+                        <div class="flex items-center gap-2">
+                            <div class="text-sm text-gray-400">Light</div>
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="soft-divider"></div>
+
+                    <div class="flex items-center justify-between py-3">
+                        <div class="text-sm text-gray-600">Language</div>
+                        <div class="flex items-center gap-2">
+                            <div class="text-sm text-gray-400">Eng</div>
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Profile Details (large card) -->
+        <div id="profileDetailsCard" class="md:col-span-2 hidden">
+            <div class="bg-white card-radius shadow-xl p-8 relative">
+                <!-- Close button -->
+                <button onclick="closeProfileDetails()"
+                    class="absolute top-6 right-6 text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <!-- Avatar and name header -->
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=240&h=240&fit=crop&crop=faces"
+                            alt="avatar" class="w-20 h-20 rounded-full object-cover shadow-md" />
+                        <button
+                            class="absolute -bottom-1 right-0 bg-white p-1.5 rounded-full shadow-md hover:shadow-lg">
+                            <svg class="w-4 h-4 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-semibold text-gray-800">Your name</div>
+                        <div class="text-sm text-gray-400">yourname@gmail.com</div>
+                    </div>
+                </div>
+
+                <div class="soft-divider mb-6"></div>
+
+                <!-- Editable fields -->
+                <div class="space-y-0">
+                    <div class="flex items-center justify-between py-5">
+                        <div class="text-sm text-gray-600 font-medium">Name</div>
+                        <input type="text" value="your name"
+                            class="text-sm text-gray-500 text-right bg-transparent border-none outline-none focus:text-gray-700" />
+                    </div>
+                    <div class="soft-divider"></div>
+
+                    <div class="flex items-center justify-between py-5">
+                        <div class="text-sm text-gray-600 font-medium">Email account</div>
+                        <input type="email" value="yourname@gmail.com"
+                            class="text-sm text-gray-500 text-right bg-transparent border-none outline-none focus:text-gray-700" />
+                    </div>
+                    <div class="soft-divider"></div>
+
+                    <div class="flex items-center justify-between py-5">
+                        <div class="text-sm text-gray-600 font-medium">Mobile number</div>
+                        <input type="tel" placeholder="Add number"
+                            class="text-sm text-gray-400 text-right bg-transparent border-none outline-none focus:text-gray-700" />
+                    </div>
+                    <div class="soft-divider"></div>
+
+                    <div class="flex items-center justify-between py-5">
+                        <div class="text-sm text-gray-600 font-medium">Location</div>
+                        <input type="text" value="USA"
+                            class="text-sm text-gray-500 text-right bg-transparent border-none outline-none focus:text-gray-700" />
+                    </div>
+                </div>
+
+                <!-- Save button -->
+                <div class="mt-8">
+                    <button
+                        class="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md hover:shadow-lg transition font-medium">
+                        Save Change
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let currentView = null;
+        let notificationStatus = 'Allow';
+
+        function showMyProfile() {
+            currentView = 'profile';
+            document.getElementById('settingsCard').classList.add('hidden');
+            document.getElementById('profileDetailsCard').classList.remove('hidden');
+        }
+
+        function showSettings() {
+            currentView = 'settings';
+            document.getElementById('profileDetailsCard').classList.add('hidden');
+            document.getElementById('settingsCard').classList.remove('hidden');
+        }
+
+        function closeSettingsCard() {
+            document.getElementById('settingsCard').classList.add('hidden');
+        }
+
+        function closeProfileDetails() {
+            document.getElementById('profileDetailsCard').classList.add('hidden');
+        }
+
+        function toggleNotificationPopup() {
+            const popup = document.getElementById('notificationPopup');
+            popup.classList.toggle('hidden');
+        }
+
+        function setNotification(status) {
+            notificationStatus = status;
+            const statusText = document.querySelector('#btnNotification .text-xs');
+            statusText.textContent = status;
+            document.getElementById('notificationPopup').classList.add('hidden');
+        }
+
+        // Close notification popup when clicking outside
+        document.addEventListener('click', function (event) {
+            const popup = document.getElementById('notificationPopup');
+            const button = document.getElementById('btnNotification');
+
+            if (!popup.contains(event.target) && !button.contains(event.target)) {
+                popup.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>
