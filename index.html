@@ -1,1015 +1,1366 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Life of Code - Learning Journey</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #667eea;
+        --primary-dark: #764ba2;
+        --secondary: #f093fb;
+        --dark: #1a1a2e;
+        --dark-light: #16213e;
+        --light: #eee;
+        --white: #ffffff;
+        --shadow: rgba(0, 0, 0, 0.1);
+        --shadow-dark: rgba(0, 0, 0, 0.3);
+        --gradient: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+        --gradient-secondary: linear-gradient(
+          135deg,
+          var(--secondary) 0%,
+          var(--primary) 100%
+        );
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: var(--dark);
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        animation: fadeInDown 1s ease-out;
+      }
+
+      .header h1 {
+        font-size: 3.5rem;
+        color: var(--white);
+        margin-bottom: 1rem;
+        text-shadow: 0 4px 8px var(--shadow-dark);
+        font-weight: 700;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      .navigation-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .nav-card {
+        background: var(--white);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px var(--shadow);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        animation: fadeInUp 0.8s ease-out;
+        animation-fill-mode: both;
+      }
+
+      .nav-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px var(--shadow-dark);
+      }
+
+      .nav-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient);
+        border-radius: 20px 20px 0 0;
+      }
+
+      .nav-card.fundamentals::before {
+        background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      }
+
+      .nav-card.dsa::before {
+        background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+      }
+
+      .nav-card.competitive::before {
+        background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
+      }
+
+      .nav-card.web::before {
+        background: linear-gradient(90deg, #a8edea 0%, #fed6e3 100%);
+      }
+
+      .nav-card.utility::before {
+        background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%);
+      }
+
+      .nav-card.docs::before {
+        background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+      }
+
+      .nav-card.reallife::before {
+        background: linear-gradient(90deg, #ff8a80 0%, #ea80fc 100%);
+      }
+
+      .nav-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .nav-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
+        font-weight: 600;
+      }
+
+      .nav-card p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .nav-card .folder-path {
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+        color: var(--primary);
+        background: rgba(102, 126, 234, 0.1);
+        padding: 0.5rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+      }
+
+      .stats-section {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+        animation: fadeIn 1.2s ease-out;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .stat-item {
+        padding: 1rem;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--primary);
+        display: block;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .footer {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.8);
+        margin-top: 3rem;
+      }
+
+      .footer a {
+        color: var(--white);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Animations */
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
         }
 
-        :root {
-            --primary: #667eea;
-            --primary-dark: #764ba2;
-            --secondary: #f093fb;
-            --dark: #1a1a2e;
-            --dark-light: #16213e;
-            --light: #eee;
-            --white: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --shadow-dark: rgba(0, 0, 0, 0.3);
-            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: var(--dark);
-            overflow-x: hidden;
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
 
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Animation delays */
+      .nav-card:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+
+      .nav-card:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .nav-card:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+
+      .nav-card:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+
+      .nav-card:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+
+      .nav-card:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+
+      .nav-card:nth-child(7) {
+        animation-delay: 0.7s;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-            animation: fadeInDown 1s ease-out;
+          padding: 1rem;
         }
 
         .header h1 {
-            font-size: 3.5rem;
-            color: var(--white);
-            margin-bottom: 1rem;
-            text-shadow: 0 4px 8px var(--shadow-dark);
-            font-weight: 700;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
+          font-size: 2.5rem;
         }
 
         .navigation-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
         }
 
         .nav-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px var(--shadow);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            animation: fadeInUp 0.8s ease-out;
-            animation-fill-mode: both;
-        }
-
-        .nav-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px var(--shadow-dark);
-        }
-
-        .nav-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 20px 20px 0 0;
-        }
-
-        .nav-card.fundamentals::before {
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        .nav-card.dsa::before {
-            background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
-        }
-
-        .nav-card.competitive::before {
-            background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
-        }
-
-        .nav-card.web::before {
-            background: linear-gradient(90deg, #a8edea 0%, #fed6e3 100%);
-        }
-
-        .nav-card.utility::before {
-            background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%);
-        }
-
-        .nav-card.docs::before {
-            background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
-        }
-
-        .nav-card.reallife::before {
-            background: linear-gradient(90deg, #ff8a80 0%, #ea80fc 100%);
-        }
-
-        .nav-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .nav-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            font-weight: 600;
-        }
-
-        .nav-card p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .nav-card .folder-path {
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: var(--primary);
-            background: rgba(102, 126, 234, 0.1);
-            padding: 0.5rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-        }
-
-        .stats-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-            animation: fadeIn 1.2s ease-out;
+          padding: 1.5rem;
         }
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            text-align: center;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 2rem;
         }
 
-        .stat-item {
-            padding: 1rem;
+        .nav-icon {
+          font-size: 2.5rem;
+        }
+      }
+
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* File Sections */
+      .files-section {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 3rem;
+        backdrop-filter: blur(10px);
+        animation: fadeIn 0.8s ease-out;
+        scroll-margin-top: 2rem;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 3px solid var(--primary);
+      }
+
+      .section-header h2 {
+        margin: 0;
+        font-size: 2rem;
+        color: var(--primary);
+      }
+
+      .back-to-top {
+        background: var(--gradient);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px var(--shadow);
+      }
+
+      .back-to-top:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px var(--shadow-dark);
+      }
+
+      .file-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+
+      .file-card {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      .file-card:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .file-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .file-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      .file-path {
+        font-size: 0.8rem;
+        color: #666;
+        font-family: "Courier New", monospace;
+        background: rgba(102, 126, 234, 0.1);
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-30px);
+          opacity: 0;
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
-            display: block;
+        to {
+          transform: translateY(0);
+          opacity: 1;
         }
+      }
 
-        .stat-label {
-            color: #666;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+      /* Dark mode toggle (optional) */
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
 
-        .footer {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 3rem;
-        }
-
-        .footer a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Animation delays */
-        .nav-card:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .nav-card:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .nav-card:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .nav-card:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-
-        .nav-card:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-
-        .nav-card:nth-child(6) {
-            animation-delay: 0.6s;
-        }
-
-        .nav-card:nth-child(7) {
-            animation-delay: 0.7s;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .navigation-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .nav-card {
-                padding: 1.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .nav-icon {
-                font-size: 2.5rem;
-            }
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .modal-content {
-            background: white;
-            margin: 5% auto;
-            padding: 0;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            padding: 2rem;
-            color: white;
-            text-align: center;
-            position: relative;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 2rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        .modal-body {
-            padding: 2rem;
-            max-height: 50vh;
-            overflow-y: auto;
-        }
-
-        .file-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .file-card {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 10px;
-            padding: 1rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .file-card:hover {
-            background: #e9ecef;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .file-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .file-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        .file-path {
-            font-size: 0.8rem;
-            color: #666;
-            font-family: 'Courier New', monospace;
-            background: rgba(102, 126, 234, 0.1);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-30px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Dark mode toggle (optional) */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
+      .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+  <body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+      🌙
+    </button>
 
     <div class="container">
-        <header class="header">
-            <h1>🚀 Life of Code</h1>
-            <p>Welcome to my coding journey! Explore different sections of my programming learning adventure, from
-                fundamental concepts to advanced algorithms and practical applications.</p>
-        </header>
+      <header class="header">
+        <h1>🚀 Life of Code</h1>
+        <p>
+          Welcome to my coding journey! Explore different sections of my
+          programming learning adventure, from fundamental concepts to advanced
+          algorithms and practical applications.
+        </p>
+      </header>
 
-        <section class="stats-section">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number">7</span>
-                    <span class="stat-label">Sections</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">8+</span>
-                    <span class="stat-label">Languages</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">∞</span>
-                    <span class="stat-label">Learning</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Passion</span>
-                </div>
-            </div>
-        </section>
-
-        <nav class="navigation-grid">
-
-            <div class="nav-card web" onclick="showWebFiles()">
-                <span class="nav-icon">🌐</span>
-                <h3>Web Development</h3>
-                <p>Front-end development practice with HTML, CSS, and JavaScript. Includes components, experiments, and
-                    responsive design patterns.</p>
-                <div class="folder-path">./web/</div>
-            </div>
-
-            <div class="nav-card fundamentals" onclick="showFundamentalsFiles()">
-                <span class="nav-icon">📚</span>
-                <h3>Fundamentals</h3>
-                <p>Programming language basics, syntax examples, and core concepts across multiple languages including
-                    C, C++, Java, JavaScript, Python, Go, Rust, and PHP.</p>
-                <div class="folder-path">./fundamentals/</div>
-            </div>
-
-            <div class="nav-card dsa" onclick="showDSAFiles()">
-                <span class="nav-icon">🧩</span>
-                <h3>Data Structures & Algorithms</h3>
-                <p>Implementation of essential data structures and algorithms. From arrays and linked lists to advanced
-                    graph algorithms and dynamic programming.</p>
-                <div class="folder-path">./dsa/</div>
-            </div>
-
-            <div class="nav-card competitive" onclick="showCompetitiveFiles()">
-                <span class="nav-icon">🏆</span>
-                <h3>Competitive Programming</h3>
-                <p>Solutions to competitive programming problems from platforms like Codeforces, LeetCode, HackerRank,
-                    and other online judges.</p>
-                <div class="folder-path">./competitive/</div>
-            </div>
-
-
-            <div class="nav-card reallife" onclick="showRealLifeFiles()">
-                <span class="nav-icon">🛠️</span>
-                <h3>Real-Life Projects</h3>
-                <p>Practical applications and real-world projects including calculators, expense trackers, games, and
-                    other useful tools.</p>
-                <div class="folder-path">./real-life/</div>
-            </div>
-
-            <div class="nav-card utility" onclick="showUtilityFiles()">
-                <span class="nav-icon">⚙️</span>
-                <h3>Utilities & Tools</h3>
-                <p>Helper scripts, automation tools, and utilities for development workflow. Includes formatters,
-                    runners, and system scripts.</p>
-                <div class="folder-path">./utility/</div>
-            </div>
-
-            <div class="nav-card docs" onclick="showDocsFiles()">
-                <span class="nav-icon">📖</span>
-                <h3>Documentation</h3>
-                <p>Learning notes, guides, references, and documentation for various programming concepts, best
-                    practices, and project standards.</p>
-                <div class="folder-path">./docs/</div>
-            </div>
-        </nav>
-
-        <!-- Web Files Modal -->
-        <div id="webModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>🌐 Web Development Files</h2>
-                    <button class="close-btn" onclick="closeModal('webModal')">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="file-grid" id="webFileGrid">
-                        <!-- Files will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
+      <section class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">7</span>
+            <span class="stat-label">Sections</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">8+</span>
+            <span class="stat-label">Languages</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">∞</span>
+            <span class="stat-label">Learning</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Passion</span>
+          </div>
         </div>
+      </section>
 
-        <!-- Fundamentals Files Modal -->
-        <div id="fundamentalsModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>📚 Fundamentals Files</h2>
-                    <button class="close-btn" onclick="closeModal('fundamentalsModal')">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="file-grid" id="fundamentalsFileGrid">
-                        <!-- Files will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
+      <nav class="navigation-grid">
+        <a href="#web" class="nav-card web">
+          <span class="nav-icon">🌐</span>
+          <h3>Web Development</h3>
+          <p>
+            Front-end development practice with HTML, CSS, and JavaScript.
+            Includes components, experiments, and responsive design patterns.
+          </p>
+          <div class="folder-path">./web/</div>
+        </a>
+
+        <a href="#fundamentals" class="nav-card fundamentals">
+          <span class="nav-icon">📚</span>
+          <h3>Fundamentals</h3>
+          <p>
+            Programming language basics, syntax examples, and core concepts
+            across multiple languages including C, C++, Java, JavaScript,
+            Python, Go, Rust, and PHP.
+          </p>
+          <div class="folder-path">./fundamentals/</div>
+        </a>
+
+        <a href="#dsa" class="nav-card dsa">
+          <span class="nav-icon">🧩</span>
+          <h3>Data Structures & Algorithms</h3>
+          <p>
+            Implementation of essential data structures and algorithms. From
+            arrays and linked lists to advanced graph algorithms and dynamic
+            programming.
+          </p>
+          <div class="folder-path">./dsa/</div>
+        </a>
+
+        <a href="#competitive" class="nav-card competitive">
+          <span class="nav-icon">🏆</span>
+          <h3>Competitive Programming</h3>
+          <p>
+            Solutions to competitive programming problems from platforms like
+            Codeforces, LeetCode, HackerRank, and other online judges.
+          </p>
+          <div class="folder-path">./competitive/</div>
+        </a>
+
+        <a href="#reallife" class="nav-card reallife">
+          <span class="nav-icon">🛠️</span>
+          <h3>Real-Life Projects</h3>
+          <p>
+            Practical applications and real-world projects including
+            calculators, expense trackers, games, and other useful tools.
+          </p>
+          <div class="folder-path">./real-life/</div>
+        </a>
+
+        <a href="#utility" class="nav-card utility">
+          <span class="nav-icon">⚙️</span>
+          <h3>Utilities & Tools</h3>
+          <p>
+            Helper scripts, automation tools, and utilities for development
+            workflow. Includes formatters, runners, and system scripts.
+          </p>
+          <div class="folder-path">./utility/</div>
+        </a>
+
+        <a href="#docs" class="nav-card docs">
+          <span class="nav-icon">📖</span>
+          <h3>Documentation</h3>
+          <p>
+            Learning notes, guides, references, and documentation for various
+            programming concepts, best practices, and project standards.
+          </p>
+          <div class="folder-path">./docs/</div>
+        </a>
+      </nav>
+
+      <!-- File Sections -->
+      <section id="web" class="files-section">
+        <div class="section-header">
+          <h2>🌐 Web Development Files</h2>
+          <a href="#" class="back-to-top">↑ Back to Top</a>
         </div>
-
-        <!-- DSA Files Modal -->
-        <div id="dsaModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>🧩 Data Structures & Algorithms Files</h2>
-                    <button class="close-btn" onclick="closeModal('dsaModal')">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="file-grid" id="dsaFileGrid">
-                        <!-- Files will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
+        <div class="file-grid" id="webFileGrid">
+          <!-- Files will be populated by JavaScript -->
         </div>
+      </section>
 
-        <!-- Competitive Programming Files Modal -->
-        <div id="competitiveModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>🏆 Competitive Programming Files</h2>
-                    <button class="close-btn" onclick="closeModal('competitiveModal')">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="file-grid" id="competitiveFileGrid">
-                        <!-- Files will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
+      <section id="fundamentals" class="files-section">
+        <div class="section-header">
+          <h2>📚 Fundamentals Files</h2>
+          <a href="#" class="back-to-top">↑ Back to Top</a>
         </div>
-
-        <!-- Real-Life Projects Files Modal -->
-        <div id="reallifeModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>🛠️ Real-Life Projects Files</h2>
-                    <button class="close-btn" onclick="closeModal('reallifeModal')">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="file-grid" id="reallifeFileGrid">
-                        <!-- Files will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
+        <div class="file-grid" id="fundamentalsFileGrid">
+          <!-- Files will be populated by JavaScript -->
         </div>
+      </section>
 
-        <!-- Utility Files Modal -->
-        <div id="utilityModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>⚙️ Utilities & Tools Files</h2>
-                    <button class="close-btn" onclick="closeModal('utilityModal')">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="file-grid" id="utilityFileGrid">
-                        <!-- Files will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
+      <section id="dsa" class="files-section">
+        <div class="section-header">
+          <h2>🧩 Data Structures & Algorithms Files</h2>
+          <a href="#" class="back-to-top">↑ Back to Top</a>
         </div>
-
-        <!-- Documentation Files Modal -->
-        <div id="docsModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>📖 Documentation Files</h2>
-                    <button class="close-btn" onclick="closeModal('docsModal')">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="file-grid" id="docsFileGrid">
-                        <!-- Files will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
+        <div class="file-grid" id="dsaFileGrid">
+          <!-- Files will be populated by JavaScript -->
         </div>
+      </section>
 
-        <footer class="footer">
-            <p>Built with ❤️ for learning • <a href="https://github.com">View on GitHub</a></p>
-            <p>Keep coding, keep growing! 🌱</p>
-        </footer>
+      <section id="competitive" class="files-section">
+        <div class="section-header">
+          <h2>🏆 Competitive Programming Files</h2>
+          <a href="#" class="back-to-top">↑ Back to Top</a>
+        </div>
+        <div class="file-grid" id="competitiveFileGrid">
+          <!-- Files will be populated by JavaScript -->
+        </div>
+      </section>
+
+      <section id="reallife" class="files-section">
+        <div class="section-header">
+          <h2>🛠️ Real-Life Projects Files</h2>
+          <a href="#" class="back-to-top">↑ Back to Top</a>
+        </div>
+        <div class="file-grid" id="reallifeFileGrid">
+          <!-- Files will be populated by JavaScript -->
+        </div>
+      </section>
+
+      <section id="utility" class="files-section">
+        <div class="section-header">
+          <h2>⚙️ Utilities & Tools Files</h2>
+          <a href="#" class="back-to-top">↑ Back to Top</a>
+        </div>
+        <div class="file-grid" id="utilityFileGrid">
+          <!-- Files will be populated by JavaScript -->
+        </div>
+      </section>
+
+      <section id="docs" class="files-section">
+        <div class="section-header">
+          <h2>📖 Documentation Files</h2>
+          <a href="#" class="back-to-top">↑ Back to Top</a>
+        </div>
+        <div class="file-grid" id="docsFileGrid">
+          <!-- Files will be populated by JavaScript -->
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          Built with ❤️ for learning •
+          <a href="https://github.com">View on GitHub</a>
+        </p>
+        <p>Keep coding, keep growing! 🌱</p>
+      </footer>
     </div>
 
     <script>
-        // Files data for each section
-        const webFiles = [
-            // Mini Projects (01-25)
-            { name: '01. Calculator', path: 'web/vanilla/01.calculator/index.html', category: 'Mini Projects' },
-            { name: '02. Temperature Converter', path: 'web/vanilla/02.temperature-converter/index.html', category: 'Mini Projects' },
-            { name: '03. Currency Converter', path: 'web/vanilla/03.currency-converter/index.html', category: 'Mini Projects' },
-            { name: '04. Login & Signup', path: 'web/vanilla/04.login&singup/index.html', category: 'Mini Projects' },
-            { name: '05. Todo List', path: 'web/vanilla/05.todo-list/index.html', category: 'Mini Projects' },
-            { name: '06. Contact Form', path: 'web/vanilla/06.contactFE/index.html', category: 'Mini Projects' },
-            { name: '07. Simple Blog', path: 'web/vanilla/07.simple-blog/index.html', category: 'Mini Projects' },
-            { name: '08. Guestbook', path: 'web/vanilla/08.guestbook-application/index.html', category: 'Mini Projects' },
-            { name: '09. BMI Calculator', path: 'web/vanilla/09.bmi-calculator/index.html', category: 'Mini Projects' },
-            { name: '10. Survey System', path: 'web/vanilla/10.basic-survey-system/index.html', category: 'Mini Projects' },
-            { name: '11. Quote Generator', path: 'web/vanilla/11.random-quote-generator/index.html', category: 'Mini Projects' },
-            { name: '12. Age Calculator', path: 'web/vanilla/12.age-calculator/index.html', category: 'Mini Projects' },
-            { name: '13. Digital Clock', path: 'web/vanilla/13.digital-clock/index.html', category: 'Mini Projects' },
-            { name: '14. IP Address Finder', path: 'web/vanilla/14.ip-address-finder/index.html', category: 'Mini Projects' },
-            { name: '15. URL Shortener', path: 'web/vanilla/15.url-shortener/index.html', category: 'Mini Projects' },
-            { name: '16. Image Gallery', path: 'web/vanilla/16.image-gallery/index.html', category: 'Mini Projects' },
-            { name: '17. File Upload System', path: 'web/vanilla/17.file-upload-system/index.html', category: 'Mini Projects' },
-            { name: '18. Feedback Form', path: 'web/vanilla/18.feedback-form/index.html', category: 'Mini Projects' },
-            { name: '19. Session Counter', path: 'web/vanilla/19.session-based-counter/index.html', category: 'Mini Projects' },
-            { name: '20. E-Card Generator', path: 'web/vanilla/20.e-card-generator/index.html', category: 'Mini Projects' },
-            { name: '21. Weather App', path: 'web/vanilla/21.weather-app/index.html', category: 'Mini Projects' },
-            { name: '22. Password Generator', path: 'web/vanilla/22.password-generator/index.html', category: 'Mini Projects' },
-            { name: '23. Shopping Cart', path: 'web/vanilla/23.shopping-cart/index.html', category: 'Mini Projects' },
-            { name: '24. Expense Tracker', path: 'web/vanilla/24.expense-tracker/index.html', category: 'Mini Projects' },
-            { name: '25. Recipe Manager', path: 'web/vanilla/25.recipe-management-system/index.html', category: 'Mini Projects' },
+      // Files data for each section
+      const webFiles = [
+        // Mini Projects (01-25)
+        {
+          name: "01. Calculator",
+          path: "web/vanilla/01.calculator/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "02. Temperature Converter",
+          path: "web/vanilla/02.temperature-converter/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "03. Currency Converter",
+          path: "web/vanilla/03.currency-converter/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "04. Login & Signup",
+          path: "web/vanilla/04.login&singup/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "05. Todo List",
+          path: "web/vanilla/05.todo-list/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "06. Contact Form",
+          path: "web/vanilla/06.contactFE/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "07. Simple Blog",
+          path: "web/vanilla/07.simple-blog/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "08. Guestbook",
+          path: "web/vanilla/08.guestbook-application/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "09. BMI Calculator",
+          path: "web/vanilla/09.bmi-calculator/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "10. Survey System",
+          path: "web/vanilla/10.basic-survey-system/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "11. Quote Generator",
+          path: "web/vanilla/11.random-quote-generator/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "12. Age Calculator",
+          path: "web/vanilla/12.age-calculator/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "13. Digital Clock",
+          path: "web/vanilla/13.digital-clock/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "14. IP Address Finder",
+          path: "web/vanilla/14.ip-address-finder/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "15. URL Shortener",
+          path: "web/vanilla/15.url-shortener/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "16. Image Gallery",
+          path: "web/vanilla/16.image-gallery/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "17. File Upload System",
+          path: "web/vanilla/17.file-upload-system/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "18. Feedback Form",
+          path: "web/vanilla/18.feedback-form/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "19. Session Counter",
+          path: "web/vanilla/19.session-based-counter/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "20. E-Card Generator",
+          path: "web/vanilla/20.e-card-generator/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "21. Weather App",
+          path: "web/vanilla/21.weather-app/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "22. Password Generator",
+          path: "web/vanilla/22.password-generator/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "23. Shopping Cart",
+          path: "web/vanilla/23.shopping-cart/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "24. Expense Tracker",
+          path: "web/vanilla/24.expense-tracker/index.html",
+          category: "Mini Projects",
+        },
+        {
+          name: "25. Recipe Manager",
+          path: "web/vanilla/25.recipe-management-system/index.html",
+          category: "Mini Projects",
+        },
 
-            // Experiments
-            { name: 'Flex Layout', path: 'web/experiments/flex-layout/index.html', category: 'Experiments' },
-            { name: 'Grid Layout', path: 'web/experiments/grid-layout/index.html', category: 'Experiments' },
+        // Experiments
+        {
+          name: "Flex Layout",
+          path: "web/experiments/flex-layout/index.html",
+          category: "Experiments",
+        },
+        {
+          name: "Grid Layout",
+          path: "web/experiments/grid-layout/index.html",
+          category: "Experiments",
+        },
 
-            // Components
-            { name: 'Footer Component', path: 'web/components/footer.html', category: 'Components' },
-            { name: 'Navbar Component', path: 'web/components/navbar.html', category: 'Components' },
-            { name: 'Drag Block', path: 'web/components/dragblock.html', category: 'Components' },
-            { name: 'Fullscreen', path: 'web/components/fullscreen.html', category: 'Components' },
+        // Components
+        {
+          name: "Footer Component",
+          path: "web/components/footer.html",
+          category: "Components",
+        },
+        {
+          name: "Navbar Component",
+          path: "web/components/navbar.html",
+          category: "Components",
+        },
+        {
+          name: "Drag Block",
+          path: "web/components/dragblock.html",
+          category: "Components",
+        },
+        {
+          name: "Fullscreen",
+          path: "web/components/fullscreen.html",
+          category: "Components",
+        },
 
-            // Snippets
-            { name: 'Responsive Meta', path: 'web/snippets/responsive-meta.html', category: 'Snippets' },
-            { name: 'Dark Mode Toggle', path: 'web/snippets/dark-mode-toggle.js', category: 'Snippets' },
+        // Snippets
+        {
+          name: "Responsive Meta",
+          path: "web/snippets/responsive-meta.html",
+          category: "Snippets",
+        },
+        {
+          name: "Dark Mode Toggle",
+          path: "web/snippets/dark-mode-toggle.js",
+          category: "Snippets",
+        },
 
-            // Other Projects
-            { name: 'CSS Exercises', path: 'web/vanilla/css-exercises/index.html', category: 'Practice' },
-            { name: 'HTML Exercises', path: 'web/vanilla/exercises/index.html', category: 'Practice' },
-            { name: 'Landing Page', path: 'web/vanilla/landing-page/index.html', category: 'Practice' },
-            { name: 'Hero Section', path: 'web/vanilla/hero/index.html', category: 'Practice' },
-            { name: 'Old School', path: 'web/vanilla/old-school/index.html', category: 'Practice' },
-            { name: 'BD Map', path: 'web/vanilla/bdmap/index.html', category: 'Practice' },
+        // Other Projects
+        {
+          name: "CSS Exercises",
+          path: "web/vanilla/css-exercises/index.html",
+          category: "Practice",
+        },
+        {
+          name: "HTML Exercises",
+          path: "web/vanilla/exercises/index.html",
+          category: "Practice",
+        },
+        {
+          name: "Landing Page",
+          path: "web/vanilla/landing-page/index.html",
+          category: "Practice",
+        },
+        {
+          name: "Hero Section",
+          path: "web/vanilla/hero/index.html",
+          category: "Practice",
+        },
+        {
+          name: "Old School",
+          path: "web/vanilla/old-school/index.html",
+          category: "Practice",
+        },
+        {
+          name: "BD Map",
+          path: "web/vanilla/bdmap/index.html",
+          category: "Practice",
+        },
 
-            // CSS Demos
-            { name: 'Flexbox Demo', path: 'web/vanilla/css-exercises/demos/flexbox.html', category: 'CSS Demos' },
-            { name: 'Grid Demo', path: 'web/vanilla/css-exercises/demos/grid.html', category: 'CSS Demos' },
-            { name: 'CSS Selectors', path: 'web/vanilla/css-exercises/demos/selectors.html', category: 'CSS Demos' },
-            { name: 'CSS Day 1', path: 'web/vanilla/css-exercises/demos/cssday1.html', category: 'CSS Demos' },
-            { name: 'CSS Day 2', path: 'web/vanilla/css-exercises/demos/cssday2.html', category: 'CSS Demos' },
-            { name: 'CSS Day 3', path: 'web/vanilla/css-exercises/demos/cssday3.html', category: 'CSS Demos' },
-            { name: 'CSS Animations', path: 'web/vanilla/css-exercises/demos/animations.html', category: 'CSS Demos' },
+        // CSS Demos
+        {
+          name: "Flexbox Demo",
+          path: "web/vanilla/css-exercises/demos/flexbox.html",
+          category: "CSS Demos",
+        },
+        {
+          name: "Grid Demo",
+          path: "web/vanilla/css-exercises/demos/grid.html",
+          category: "CSS Demos",
+        },
+        {
+          name: "CSS Selectors",
+          path: "web/vanilla/css-exercises/demos/selectors.html",
+          category: "CSS Demos",
+        },
+        {
+          name: "CSS Day 1",
+          path: "web/vanilla/css-exercises/demos/cssday1.html",
+          category: "CSS Demos",
+        },
+        {
+          name: "CSS Day 2",
+          path: "web/vanilla/css-exercises/demos/cssday2.html",
+          category: "CSS Demos",
+        },
+        {
+          name: "CSS Day 3",
+          path: "web/vanilla/css-exercises/demos/cssday3.html",
+          category: "CSS Demos",
+        },
+        {
+          name: "CSS Animations",
+          path: "web/vanilla/css-exercises/demos/animations.html",
+          category: "CSS Demos",
+        },
 
-            // HTML Demos
-            { name: 'HTML Tables', path: 'web/vanilla/exercises/demos/tables.html', category: 'HTML Demos' },
-            { name: 'HTML Forms', path: 'web/vanilla/exercises/demos/forms.html', category: 'HTML Demos' },
-            { name: 'Text Content', path: 'web/vanilla/exercises/demos/text-content.html', category: 'HTML Demos' },
-            { name: 'Lists', path: 'web/vanilla/exercises/demos/lists.html', category: 'HTML Demos' },
-            { name: 'Media Elements', path: 'web/vanilla/exercises/demos/media.html', category: 'HTML Demos' },
-            { name: 'Document Structure', path: 'web/vanilla/exercises/demos/document-structure.html', category: 'HTML Demos' },
-            { name: 'Links', path: 'web/vanilla/exercises/demos/links.html', category: 'HTML Demos' }
-        ];
+        // HTML Demos
+        {
+          name: "HTML Tables",
+          path: "web/vanilla/exercises/demos/tables.html",
+          category: "HTML Demos",
+        },
+        {
+          name: "HTML Forms",
+          path: "web/vanilla/exercises/demos/forms.html",
+          category: "HTML Demos",
+        },
+        {
+          name: "Text Content",
+          path: "web/vanilla/exercises/demos/text-content.html",
+          category: "HTML Demos",
+        },
+        {
+          name: "Lists",
+          path: "web/vanilla/exercises/demos/lists.html",
+          category: "HTML Demos",
+        },
+        {
+          name: "Media Elements",
+          path: "web/vanilla/exercises/demos/media.html",
+          category: "HTML Demos",
+        },
+        {
+          name: "Document Structure",
+          path: "web/vanilla/exercises/demos/document-structure.html",
+          category: "HTML Demos",
+        },
+        {
+          name: "Links",
+          path: "web/vanilla/exercises/demos/links.html",
+          category: "HTML Demos",
+        },
+      ];
 
-        const fundamentalsFiles = [
-            { name: 'Hello World (C)', path: 'fundamentals/c/hello.c', category: 'C Language' },
-            { name: 'Variables (C)', path: 'fundamentals/c/variable.c', category: 'C Language' },
-            { name: 'Boilerplate', path: 'fundamentals/cpp/boilerplate.cpp', category: 'C++' },
-            { name: 'Hello World (C++)', path: 'fundamentals/cpp/hello.cpp', category: 'C++' },
-            { name: 'Check Prime', path: 'fundamentals/cpp/checkprime.cpp', category: 'C++' },
-            { name: 'Data Types', path: 'fundamentals/cpp/datatype.cpp', category: 'C++' },
-            { name: 'Functions', path: 'fundamentals/cpp/function.cpp', category: 'C++' },
-            { name: 'If-Else', path: 'fundamentals/cpp/ifelse.cpp', category: 'C++' },
-            { name: 'Loops - For', path: 'fundamentals/cpp/forloop.cpp', category: 'C++' },
-            { name: 'Loops - While', path: 'fundamentals/cpp/whileloop.cpp', category: 'C++' },
-            { name: 'Loops - Do-While', path: 'fundamentals/cpp/dowhile.cpp', category: 'C++' },
-            { name: 'Operators', path: 'fundamentals/cpp/operator.cpp', category: 'C++' },
-            { name: 'Pointers', path: 'fundamentals/cpp/pointer.cpp', category: 'C++' },
-            { name: 'Patterns', path: 'fundamentals/cpp/patterns.cpp', category: 'C++' },
-            { name: 'Calculator', path: 'fundamentals/cpp/simplecalculator.cpp', category: 'C++' },
-            { name: 'Hello World (Java)', path: 'fundamentals/java/Hello.java', category: 'Java' },
-            { name: 'Sum Program', path: 'fundamentals/java/sum.java', category: 'Java' },
-            { name: 'Hello World (JS)', path: 'fundamentals/JS/hello.js', category: 'JavaScript' },
-            { name: 'Variables (JS)', path: 'fundamentals/JS/variable.js', category: 'JavaScript' },
-            { name: 'Data Types (JS)', path: 'fundamentals/JS/datatype.js', category: 'JavaScript' },
-            { name: 'Functions (JS)', path: 'fundamentals/JS/function.js', category: 'JavaScript' },
-            { name: 'Arrays (JS)', path: 'fundamentals/JS/array.js', category: 'JavaScript' },
-            { name: 'Objects (JS)', path: 'fundamentals/JS/object.js', category: 'JavaScript' },
-            { name: 'Let, Var, Const', path: 'fundamentals/JS/letVarConst.js', category: 'JavaScript' },
-            { name: 'Hello World (Python)', path: 'fundamentals/python/hello.py', category: 'Python' },
-            { name: 'Variables (Python)', path: 'fundamentals/python/variable.py', category: 'Python' },
-            { name: 'Data Types (Python)', path: 'fundamentals/python/dataType.py', category: 'Python' },
-            { name: 'Functions (Python)', path: 'fundamentals/python/function.py', category: 'Python' },
-            { name: 'Lists (Python)', path: 'fundamentals/python/list.py', category: 'Python' },
-            { name: 'Dictionaries (Python)', path: 'fundamentals/python/dictionary.py', category: 'Python' },
-            { name: 'Classes & Objects', path: 'fundamentals/python/class&obj.py', category: 'Python' },
-            { name: 'Loops (Python)', path: 'fundamentals/python/loop.py', category: 'Python' },
-            { name: 'Hello World (Go)', path: 'fundamentals/go/hello.go', category: 'Go' },
-            { name: 'Variables (Go)', path: 'fundamentals/go/variable.go', category: 'Go' },
-            { name: 'Hello World (Rust)', path: 'fundamentals/rust/hello.rs', category: 'Rust' },
-            { name: 'Variables (Rust)', path: 'fundamentals/rust/variable.rs', category: 'Rust' },
-            { name: 'Hello World (PHP)', path: 'fundamentals/php/hello.php', category: 'PHP' },
-            { name: 'Variables (PHP)', path: 'fundamentals/php/variable.php', category: 'PHP' },
-            { name: 'Arrays (PHP)', path: 'fundamentals/php/array.php', category: 'PHP' },
-            { name: 'Functions (PHP)', path: 'fundamentals/php/function.php', category: 'PHP' },
-            { name: 'OOP Classes', path: 'fundamentals/php/oopClass&Obj.php', category: 'PHP' },
-            { name: 'OOP 4 Pillars', path: 'fundamentals/php/oop4pillar.php', category: 'PHP' },
-            { name: 'Shell Hello', path: 'fundamentals/shell/hello.sh', category: 'Shell' },
-            { name: 'Shell Variables', path: 'fundamentals/shell/variable.sh', category: 'Shell' },
-            { name: 'Shell Arrays', path: 'fundamentals/shell/array.sh', category: 'Shell' },
-            { name: 'Shell Functions', path: 'fundamentals/shell/functions.sh', category: 'Shell' }
-        ];
+      const fundamentalsFiles = [
+        {
+          name: "Hello World (C)",
+          path: "fundamentals/c/hello.c",
+          category: "C Language",
+        },
+        {
+          name: "Variables (C)",
+          path: "fundamentals/c/variable.c",
+          category: "C Language",
+        },
+        {
+          name: "Boilerplate",
+          path: "fundamentals/cpp/boilerplate.cpp",
+          category: "C++",
+        },
+        {
+          name: "Hello World (C++)",
+          path: "fundamentals/cpp/hello.cpp",
+          category: "C++",
+        },
+        {
+          name: "Check Prime",
+          path: "fundamentals/cpp/checkprime.cpp",
+          category: "C++",
+        },
+        {
+          name: "Data Types",
+          path: "fundamentals/cpp/datatype.cpp",
+          category: "C++",
+        },
+        {
+          name: "Functions",
+          path: "fundamentals/cpp/function.cpp",
+          category: "C++",
+        },
+        {
+          name: "If-Else",
+          path: "fundamentals/cpp/ifelse.cpp",
+          category: "C++",
+        },
+        {
+          name: "Loops - For",
+          path: "fundamentals/cpp/forloop.cpp",
+          category: "C++",
+        },
+        {
+          name: "Loops - While",
+          path: "fundamentals/cpp/whileloop.cpp",
+          category: "C++",
+        },
+        {
+          name: "Loops - Do-While",
+          path: "fundamentals/cpp/dowhile.cpp",
+          category: "C++",
+        },
+        {
+          name: "Operators",
+          path: "fundamentals/cpp/operator.cpp",
+          category: "C++",
+        },
+        {
+          name: "Pointers",
+          path: "fundamentals/cpp/pointer.cpp",
+          category: "C++",
+        },
+        {
+          name: "Patterns",
+          path: "fundamentals/cpp/patterns.cpp",
+          category: "C++",
+        },
+        {
+          name: "Calculator",
+          path: "fundamentals/cpp/simplecalculator.cpp",
+          category: "C++",
+        },
+        {
+          name: "Hello World (Java)",
+          path: "fundamentals/java/Hello.java",
+          category: "Java",
+        },
+        {
+          name: "Sum Program",
+          path: "fundamentals/java/sum.java",
+          category: "Java",
+        },
+        {
+          name: "Hello World (JS)",
+          path: "fundamentals/JS/hello.js",
+          category: "JavaScript",
+        },
+        {
+          name: "Variables (JS)",
+          path: "fundamentals/JS/variable.js",
+          category: "JavaScript",
+        },
+        {
+          name: "Data Types (JS)",
+          path: "fundamentals/JS/datatype.js",
+          category: "JavaScript",
+        },
+        {
+          name: "Functions (JS)",
+          path: "fundamentals/JS/function.js",
+          category: "JavaScript",
+        },
+        {
+          name: "Arrays (JS)",
+          path: "fundamentals/JS/array.js",
+          category: "JavaScript",
+        },
+        {
+          name: "Objects (JS)",
+          path: "fundamentals/JS/object.js",
+          category: "JavaScript",
+        },
+        {
+          name: "Let, Var, Const",
+          path: "fundamentals/JS/letVarConst.js",
+          category: "JavaScript",
+        },
+        {
+          name: "Hello World (Python)",
+          path: "fundamentals/python/hello.py",
+          category: "Python",
+        },
+        {
+          name: "Variables (Python)",
+          path: "fundamentals/python/variable.py",
+          category: "Python",
+        },
+        {
+          name: "Data Types (Python)",
+          path: "fundamentals/python/dataType.py",
+          category: "Python",
+        },
+        {
+          name: "Functions (Python)",
+          path: "fundamentals/python/function.py",
+          category: "Python",
+        },
+        {
+          name: "Lists (Python)",
+          path: "fundamentals/python/list.py",
+          category: "Python",
+        },
+        {
+          name: "Dictionaries (Python)",
+          path: "fundamentals/python/dictionary.py",
+          category: "Python",
+        },
+        {
+          name: "Classes & Objects",
+          path: "fundamentals/python/class&obj.py",
+          category: "Python",
+        },
+        {
+          name: "Loops (Python)",
+          path: "fundamentals/python/loop.py",
+          category: "Python",
+        },
+        {
+          name: "Hello World (Go)",
+          path: "fundamentals/go/hello.go",
+          category: "Go",
+        },
+        {
+          name: "Variables (Go)",
+          path: "fundamentals/go/variable.go",
+          category: "Go",
+        },
+        {
+          name: "Hello World (Rust)",
+          path: "fundamentals/rust/hello.rs",
+          category: "Rust",
+        },
+        {
+          name: "Variables (Rust)",
+          path: "fundamentals/rust/variable.rs",
+          category: "Rust",
+        },
+        {
+          name: "Hello World (PHP)",
+          path: "fundamentals/php/hello.php",
+          category: "PHP",
+        },
+        {
+          name: "Variables (PHP)",
+          path: "fundamentals/php/variable.php",
+          category: "PHP",
+        },
+        {
+          name: "Arrays (PHP)",
+          path: "fundamentals/php/array.php",
+          category: "PHP",
+        },
+        {
+          name: "Functions (PHP)",
+          path: "fundamentals/php/function.php",
+          category: "PHP",
+        },
+        {
+          name: "OOP Classes",
+          path: "fundamentals/php/oopClass&Obj.php",
+          category: "PHP",
+        },
+        {
+          name: "OOP 4 Pillars",
+          path: "fundamentals/php/oop4pillar.php",
+          category: "PHP",
+        },
+        {
+          name: "Shell Hello",
+          path: "fundamentals/shell/hello.sh",
+          category: "Shell",
+        },
+        {
+          name: "Shell Variables",
+          path: "fundamentals/shell/variable.sh",
+          category: "Shell",
+        },
+        {
+          name: "Shell Arrays",
+          path: "fundamentals/shell/array.sh",
+          category: "Shell",
+        },
+        {
+          name: "Shell Functions",
+          path: "fundamentals/shell/functions.sh",
+          category: "Shell",
+        },
+      ];
 
-        const dsaFiles = [
-            { name: 'README', path: 'dsa/README.md', category: 'Documentation' }
-        ];
+      const dsaFiles = [
+        { name: "README", path: "dsa/README.md", category: "Documentation" },
+      ];
 
-        const competitiveFiles = [
-            { name: 'README', path: 'competitive/README.md', category: 'Documentation' }
-        ];
+      const competitiveFiles = [
+        {
+          name: "README",
+          path: "competitive/README.md",
+          category: "Documentation",
+        },
+      ];
 
-        const reallifeFiles = [
-            { name: 'README', path: 'real-life/README.md', category: 'Documentation' }
-        ];
+      const reallifeFiles = [
+        {
+          name: "README",
+          path: "real-life/README.md",
+          category: "Documentation",
+        },
+      ];
 
-        const utilityFiles = [
-            { name: 'README', path: 'utility/README.md', category: 'Documentation' },
-            { name: 'FTP Checker Script', path: 'utility/ftp-check/check_urls.sh', category: 'FTP Tools' },
-            { name: 'FTP Links', path: 'utility/ftp-check/ftplinks.txt', category: 'FTP Tools' },
-            { name: 'FTP Check README', path: 'utility/ftp-check/README.md', category: 'FTP Tools' }
-        ];
+      const utilityFiles = [
+        {
+          name: "README",
+          path: "utility/README.md",
+          category: "Documentation",
+        },
+        {
+          name: "FTP Checker Script",
+          path: "utility/ftp-check/check_urls.sh",
+          category: "FTP Tools",
+        },
+        {
+          name: "FTP Links",
+          path: "utility/ftp-check/ftplinks.txt",
+          category: "FTP Tools",
+        },
+        {
+          name: "FTP Check README",
+          path: "utility/ftp-check/README.md",
+          category: "FTP Tools",
+        },
+      ];
 
-        const docsFiles = [
-            { name: 'README', path: 'docs/README.md', category: 'Documentation' }
-        ];
+      const docsFiles = [
+        { name: "README", path: "docs/README.md", category: "Documentation" },
+      ];
 
-        // Generic function to show files modal
-        function showFilesModal(modalId, fileGridId, files) {
-            const modal = document.getElementById(modalId);
-            const fileGrid = document.getElementById(fileGridId);
+      // Function to populate file grid
+      function populateFileGrid(fileGridId, files) {
+        const fileGrid = document.getElementById(fileGridId);
 
-            // Clear existing content
-            fileGrid.innerHTML = '';
+        // Clear existing content
+        fileGrid.innerHTML = "";
 
-            if (files.length === 0) {
-                fileGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">No files available yet. Coming soon! 🚧</div>';
-            } else {
-                // Group files by category
-                const categories = {};
-                files.forEach(file => {
-                    if (!categories[file.category]) {
-                        categories[file.category] = [];
-                    }
-                    categories[file.category].push(file);
-                });
+        if (files.length === 0) {
+          fileGrid.innerHTML =
+            '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">No files available yet. Coming soon! 🚧</div>';
+        } else {
+          // Group files by category
+          const categories = {};
+          files.forEach((file) => {
+            if (!categories[file.category]) {
+              categories[file.category] = [];
+            }
+            categories[file.category].push(file);
+          });
 
-                // Create file cards grouped by category
-                Object.keys(categories).forEach(category => {
-                    const categorySection = document.createElement('div');
-                    categorySection.style.gridColumn = '1 / -1';
-                    categorySection.innerHTML = `<h3 style="margin: 1rem 0 0.5rem 0; color: var(--primary); font-size: 1.2rem;">${category}</h3>`;
-                    fileGrid.appendChild(categorySection);
+          // Create file cards grouped by category
+          Object.keys(categories).forEach((category) => {
+            const categorySection = document.createElement("div");
+            categorySection.style.gridColumn = "1 / -1";
+            categorySection.innerHTML = `<h3 style="margin: 1rem 0 0.5rem 0; color: var(--primary); font-size: 1.2rem;">${category}</h3>`;
+            fileGrid.appendChild(categorySection);
 
-                    categories[category].forEach(file => {
-                        const fileCard = document.createElement('a');
-                        fileCard.className = 'file-card';
-                        fileCard.href = file.path;
-                        fileCard.target = '_blank';
+            categories[category].forEach((file) => {
+              const fileCard = document.createElement("a");
+              fileCard.className = "file-card";
+              fileCard.href = file.path;
+              fileCard.target = "_blank";
 
-                        const icon = getFileIcon(file.name, file.category);
+              const icon = getFileIcon(file.name, file.category);
 
-                        fileCard.innerHTML = `
+              fileCard.innerHTML = `
                             <span class="file-icon">${icon}</span>
                             <div class="file-name">${file.name}</div>
                             <div class="file-path">${file.path}</div>
                         `;
 
-                        fileGrid.appendChild(fileCard);
-                    });
-                });
-            }
-
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Specific modal functions
-        function showWebFiles() {
-            showFilesModal('webModal', 'webFileGrid', webFiles);
-        }
-
-        function showFundamentalsFiles() {
-            showFilesModal('fundamentalsModal', 'fundamentalsFileGrid', fundamentalsFiles);
-        }
-
-        function showDSAFiles() {
-            showFilesModal('dsaModal', 'dsaFileGrid', dsaFiles);
-        }
-
-        function showCompetitiveFiles() {
-            showFilesModal('competitiveModal', 'competitiveFileGrid', competitiveFiles);
-        }
-
-        function showRealLifeFiles() {
-            showFilesModal('reallifeModal', 'reallifeFileGrid', reallifeFiles);
-        }
-
-        function showUtilityFiles() {
-            showFilesModal('utilityModal', 'utilityFileGrid', utilityFiles);
-        }
-
-        function showDocsFiles() {
-            showFilesModal('docsModal', 'docsFileGrid', docsFiles);
-        }
-
-        // Generic close modal function
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Get appropriate icon for file type
-        function getFileIcon(name, category) {
-            // Mini Projects - Specific icons
-            if (category === 'Mini Projects') {
-                if (name.includes('Calculator')) return '🧮';
-                if (name.includes('Temperature')) return '🌡️';
-                if (name.includes('Currency')) return '💱';
-                if (name.includes('Login') || name.includes('Signup')) return '🔐';
-                if (name.includes('Todo')) return '✅';
-                if (name.includes('Contact')) return '📧';
-                if (name.includes('Blog')) return '📝';
-                if (name.includes('Guestbook')) return '📖';
-                if (name.includes('BMI')) return '⚖️';
-                if (name.includes('Survey')) return '📊';
-                if (name.includes('Quote')) return '💬';
-                if (name.includes('Age')) return '🎂';
-                if (name.includes('Clock')) return '🕒';
-                if (name.includes('IP Address')) return '🌐';
-                if (name.includes('URL')) return '🔗';
-                if (name.includes('Gallery')) return '🖼️';
-                if (name.includes('Upload')) return '📤';
-                if (name.includes('Feedback')) return '⭐';
-                if (name.includes('Counter')) return '🔢';
-                if (name.includes('Card')) return '💌';
-                if (name.includes('Weather')) return '🌤️';
-                if (name.includes('Password')) return '🔑';
-                if (name.includes('Shopping')) return '🛒';
-                if (name.includes('Expense')) return '💰';
-                if (name.includes('Recipe')) return '🍳';
-                return '🚀'; // Default for mini projects
-            }
-
-            // Web Development icons
-            if (category === 'Components') return '🧩';
-            if (category === 'Experiments') return '🧪';
-            if (category === 'Snippets') return '✂️';
-            if (category === 'CSS Demos') return '🎨';
-            if (category === 'HTML Demos') return '📄';
-            if (category === 'Practice') return '💪';
-            if (name.includes('Landing') || name.includes('Hero')) return '🏠';
-            if (name.includes('Exercise')) return '💪';
-            if (name.includes('BD Map')) return '🗺️';
-
-            // Programming Language icons
-            if (category === 'C Language') return '⚡';
-            if (category === 'C++') return '🔥';
-            if (category === 'Java') return '☕';
-            if (category === 'JavaScript') return '🟨';
-            if (category === 'Python') return '🐍';
-            if (category === 'Go') return '🐹';
-            if (category === 'Rust') return '🦀';
-            if (category === 'PHP') return '🐘';
-            if (category === 'Shell') return '🐚';
-
-            // General categories
-            if (category === 'Documentation') return '📚';
-            if (category === 'FTP Tools') return '🌐';
-
-            // File type based icons
-            if (name.toLowerCase().includes('hello')) return '👋';
-            if (name.toLowerCase().includes('variable')) return '📦';
-            if (name.toLowerCase().includes('function')) return '⚙️';
-            if (name.toLowerCase().includes('class')) return '🏗️';
-            if (name.toLowerCase().includes('loop')) return '🔄';
-            if (name.toLowerCase().includes('array')) return '📋';
-
-            return '📄';
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function (event) {
-            const modals = ['webModal', 'fundamentalsModal', 'dsaModal', 'competitiveModal', 'reallifeModal', 'utilityModal', 'docsModal'];
-            modals.forEach(modalId => {
-                const modal = document.getElementById(modalId);
-                if (event.target === modal) {
-                    closeModal(modalId);
-                }
+              fileGrid.appendChild(fileCard);
             });
+          });
+        }
+      }
+
+      // Populate all sections on page load
+      function initializeFileSections() {
+        populateFileGrid("webFileGrid", webFiles);
+        populateFileGrid("fundamentalsFileGrid", fundamentalsFiles);
+        populateFileGrid("dsaFileGrid", dsaFiles);
+        populateFileGrid("competitiveFileGrid", competitiveFiles);
+        populateFileGrid("reallifeFileGrid", reallifeFiles);
+        populateFileGrid("utilityFileGrid", utilityFiles);
+        populateFileGrid("docsFileGrid", docsFiles);
+      }
+
+      // Get appropriate icon for file type
+      function getFileIcon(name, category) {
+        // Mini Projects - Specific icons
+        if (category === "Mini Projects") {
+          if (name.includes("Calculator")) return "🧮";
+          if (name.includes("Temperature")) return "🌡️";
+          if (name.includes("Currency")) return "💱";
+          if (name.includes("Login") || name.includes("Signup")) return "🔐";
+          if (name.includes("Todo")) return "✅";
+          if (name.includes("Contact")) return "📧";
+          if (name.includes("Blog")) return "📝";
+          if (name.includes("Guestbook")) return "📖";
+          if (name.includes("BMI")) return "⚖️";
+          if (name.includes("Survey")) return "📊";
+          if (name.includes("Quote")) return "💬";
+          if (name.includes("Age")) return "🎂";
+          if (name.includes("Clock")) return "🕒";
+          if (name.includes("IP Address")) return "🌐";
+          if (name.includes("URL")) return "🔗";
+          if (name.includes("Gallery")) return "🖼️";
+          if (name.includes("Upload")) return "📤";
+          if (name.includes("Feedback")) return "⭐";
+          if (name.includes("Counter")) return "🔢";
+          if (name.includes("Card")) return "💌";
+          if (name.includes("Weather")) return "🌤️";
+          if (name.includes("Password")) return "🔑";
+          if (name.includes("Shopping")) return "🛒";
+          if (name.includes("Expense")) return "💰";
+          if (name.includes("Recipe")) return "🍳";
+          return "🚀"; // Default for mini projects
         }
 
-        // Simple theme toggle functionality
-        function toggleTheme() {
-            const body = document.body;
-            const button = document.querySelector('.theme-toggle');
+        // Web Development icons
+        if (category === "Components") return "🧩";
+        if (category === "Experiments") return "🧪";
+        if (category === "Snippets") return "✂️";
+        if (category === "CSS Demos") return "🎨";
+        if (category === "HTML Demos") return "📄";
+        if (category === "Practice") return "💪";
+        if (name.includes("Landing") || name.includes("Hero")) return "🏠";
+        if (name.includes("Exercise")) return "💪";
+        if (name.includes("BD Map")) return "🗺️";
 
-            if (body.style.filter === 'invert(1) hue-rotate(180deg)') {
-                body.style.filter = '';
-                button.textContent = '🌙';
-            } else {
-                body.style.filter = 'invert(1) hue-rotate(180deg)';
-                button.textContent = '☀️';
-            }
+        // Programming Language icons
+        if (category === "C Language") return "⚡";
+        if (category === "C++") return "🔥";
+        if (category === "Java") return "☕";
+        if (category === "JavaScript") return "🟨";
+        if (category === "Python") return "🐍";
+        if (category === "Go") return "🐹";
+        if (category === "Rust") return "🦀";
+        if (category === "PHP") return "🐘";
+        if (category === "Shell") return "🐚";
+
+        // General categories
+        if (category === "Documentation") return "📚";
+        if (category === "FTP Tools") return "🌐";
+
+        // File type based icons
+        if (name.toLowerCase().includes("hello")) return "👋";
+        if (name.toLowerCase().includes("variable")) return "📦";
+        if (name.toLowerCase().includes("function")) return "⚙️";
+        if (name.toLowerCase().includes("class")) return "🏗️";
+        if (name.toLowerCase().includes("loop")) return "🔄";
+        if (name.toLowerCase().includes("array")) return "📋";
+
+        return "📄";
+      }
+
+      // Simple theme toggle functionality
+      function toggleTheme() {
+        const body = document.body;
+        const button = document.querySelector(".theme-toggle");
+
+        if (body.style.filter === "invert(1) hue-rotate(180deg)") {
+          body.style.filter = "";
+          button.textContent = "🌙";
+        } else {
+          body.style.filter = "invert(1) hue-rotate(180deg)";
+          button.textContent = "☀️";
         }
+      }
 
-        // Add some interactive effects
-        document.addEventListener('DOMContentLoaded', function () {
-            const cards = document.querySelectorAll('.nav-card');
+      // Add some interactive effects
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize all file sections
+        initializeFileSections();
 
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function () {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
-                });
+        const cards = document.querySelectorAll(".nav-card");
 
-                card.addEventListener('mouseleave', function () {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
+        cards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-10px) scale(1.02)";
+          });
 
-            // Add click effect
-            cards.forEach(card => {
-                card.addEventListener('click', function (e) {
-                    // Create ripple effect
-                    const ripple = document.createElement('div');
-                    const rect = this.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
+          card.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0) scale(1)";
+          });
+        });
 
-                    ripple.style.cssText = `
+        // Add click effect
+        cards.forEach((card) => {
+          card.addEventListener("click", function (e) {
+            // Create ripple effect
+            const ripple = document.createElement("div");
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.cssText = `
                         position: absolute;
                         width: ${size}px;
                         height: ${size}px;
@@ -1022,17 +1373,17 @@
                         pointer-events: none;
                     `;
 
-                    this.style.position = 'relative';
-                    this.appendChild(ripple);
+            this.style.position = "relative";
+            this.appendChild(ripple);
 
-                    setTimeout(() => ripple.remove(), 600);
-                });
-            });
+            setTimeout(() => ripple.remove(), 600);
+          });
         });
+      });
 
-        // Add CSS for ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
+      // Add CSS for ripple animation
+      const style = document.createElement("style");
+      style.textContent = `
             @keyframes ripple {
                 to {
                     transform: scale(2);
@@ -1040,8 +1391,7 @@
                 }
             }
         `;
-        document.head.appendChild(style);
+      document.head.appendChild(style);
     </script>
-</body>
-
+  </body>
 </html>
