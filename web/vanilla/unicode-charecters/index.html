@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Unicode Characters</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 16px;
+      }
+      .controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      label {
+        font-size: 13px;
+        color: #333;
+      }
+      input[type="number"] {
+        width: 120px;
+        padding: 6px;
+        font-size: 13px;
+      }
+      button {
+        padding: 6px 10px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .categories {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .cat {
+        border: 1px solid #ddd;
+        padding: 6px;
+        min-width: 120px;
+        cursor: pointer;
+        background: #fafafa;
+      }
+      .cat .title {
+        font-weight: 600;
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+      .cat .sample {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .char {
+        display: inline-block;
+        width: 60px;
+        padding: 6px;
+        margin: 2px;
+        text-align: center;
+        border: 1px solid #ddd;
+        font-size: 24px;
+        user-select: none;
+        background: #fff;
+        border-radius: 4px;
+      }
+      .symbol {
+        font-size: 24px;
+      }
+      .code {
+        font-size: 10px;
+        color: #666;
+      }
+      #output {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        max-height: 60vh;
+        overflow: auto;
+        padding: 6px;
+        border: 1px solid #eee;
+        background: #fff;
+      }
+      .toast {
+        position: fixed;
+        right: 16px;
+        top: 16px;
+        background: #222;
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 6px;
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+        font-size: 13px;
+      }
+      .toast.show {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Unicode Characters</h2>
+
+    <div class="controls">
+      <label
+        >Start <input id="start" type="number" min="0" max="1114111" value="0"
+      /></label>
+      <label
+        >End
+        <input id="end" type="number" min="0" max="1114111" value="1114111"
+      /></label>
+      <button id="apply">Apply</button>
+      <button id="reset">Reset</button>
+      <label style="margin-left: 8px"
+        >Chunk size
+        <input
+          id="chunk"
+          type="number"
+          min="1"
+          max="10000"
+          value="500"
+          style="width: 90px"
+        />
+      </label>
+    </div>
+
+    <div class="categories" id="categories"></div>
+
+    <div id="output"></div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+      const MAX_CODE = 0x10ffff;
+      const startInput = document.getElementById("start");
+      const endInput = document.getElementById("end");
+      const applyBtn = document.getElementById("apply");
+      const resetBtn = document.getElementById("reset");
+      const chunkInput = document.getElementById("chunk");
+      const categoriesEl = document.getElementById("categories");
+      const output = document.getElementById("output");
+      const toast = document.getElementById("toast");
+
+      const categories = [
+        { name: "Basic Latin", start: 0x0020, end: 0x007f },
+        { name: "Numbers", start: 0x0030, end: 0x0039 },
+        { name: "Greek", start: 0x0370, end: 0x03ff },
+        { name: "Cyrillic", start: 0x0400, end: 0x04ff },
+        { name: "Punctuation", start: 0x2000, end: 0x206f },
+        { name: "Math", start: 0x2200, end: 0x22ff },
+        { name: "Bengali", start: 0x0980, end: 0x09ff },
+        { name: "Arrows", start: 0x2190, end: 0x21ff },
+        { name: "Currency", start: 0x20a0, end: 0x20cf },
+        { name: "Emoticons", start: 0x1f600, end: 0x1f64f },
+        { name: "Misc Symbols & Pictographs", start: 0x1f300, end: 0x1f5ff },
+        { name: "Arabic", start: 0x0600, end: 0x06ff },
+        { name: "Hebrew", start: 0x0590, end: 0x05ff },
+        { name: "Latin Extended", start: 0x0100, end: 0x017f },
+        { name: "Box Drawing", start: 0x2500, end: 0x257f },
+        { name: "Block Elements", start: 0x2580, end: 0x259f },
+        { name: "Geometric Shapes", start: 0x25a0, end: 0x25ff },
+        { name: "Dingbats", start: 0x2700, end: 0x27bf },
+        { name: "Braille", start: 0x2800, end: 0x28ff },
+      ];
+
+      // Build category buttons with small sample
+      categories.forEach((cat) => {
+        const el = document.createElement("div");
+        el.className = "cat";
+        el.tabIndex = 0;
+        el.innerHTML = `<div class="title">${cat.name}</div><div class="sample"></div>`;
+        const sampleEl = el.querySelector(".sample");
+        const sampleCount = 8;
+        for (
+          let i = 0, code = cat.start;
+          i < sampleCount && code <= cat.end;
+          i++, code++
+        ) {
+          sampleEl.appendChild(
+            Object.assign(document.createElement("span"), {
+              textContent: String.fromCodePoint(code),
+              style: "display:inline-block;width:20px;text-align:center",
+            })
+          );
+        }
+        el.addEventListener("click", () => {
+          startInput.value = cat.start;
+          endInput.value = cat.end;
+          renderRange();
+        });
+        categoriesEl.appendChild(el);
+      });
+
+      function clamp(n) {
+        n = Number(n) || 0;
+        if (n < 0) return 0;
+        if (n > MAX_CODE) return MAX_CODE;
+        return Math.floor(n);
+      }
+
+      applyBtn.addEventListener("click", renderRange);
+      resetBtn.addEventListener("click", () => {
+        startInput.value = 0;
+        endInput.value = MAX_CODE;
+        chunkInput.value = 500;
+        renderRange();
+      });
+
+      let current = 0;
+      let END = MAX_CODE;
+      let CHUNK_SIZE = 500;
+      let rafId = null;
+
+      function clearRendering() {
+        if (rafId) cancelAnimationFrame(rafId);
+        output.innerHTML = "";
+      }
+
+      function renderRange() {
+        clearRendering();
+        const s = clamp(startInput.value);
+        const e = clamp(endInput.value);
+        current = Math.min(s, e);
+        END = Math.max(s, e);
+        CHUNK_SIZE = Math.max(
+          1,
+          Math.min(10000, Number(chunkInput.value) || 500)
+        );
+        renderChunk();
+      }
+
+      function renderChunk() {
+        const fragment = document.createDocumentFragment();
+        for (let i = 0; i < CHUNK_SIZE && current <= END; i++, current++) {
+          const span = document.createElement("div");
+          span.className = "char";
+          const sym = document.createElement("div");
+          sym.className = "symbol";
+          // use fromCodePoint to handle astral planes
+          sym.textContent = String.fromCodePoint(current);
+          const code = document.createElement("div");
+          code.className = "code";
+          code.textContent = current;
+          span.appendChild(sym);
+          span.appendChild(code);
+
+          // long-press copy logic
+          let pressTimer = null;
+          const LONGPRESS = 600;
+          function clearPress() {
+            if (pressTimer) {
+              clearTimeout(pressTimer);
+              pressTimer = null;
+            }
+          }
+          span.addEventListener("pointerdown", (ev) => {
+            ev.preventDefault();
+            pressTimer = setTimeout(() => {
+              copyToClipboard(sym.textContent);
+              showToast(`Copied: ${sym.textContent}`);
+              // brief highlight
+              span.style.background = "#def7e0";
+              setTimeout(() => (span.style.background = ""), 400);
+            }, LONGPRESS);
+          });
+          span.addEventListener("pointerup", clearPress);
+          span.addEventListener("pointercancel", clearPress);
+          span.addEventListener("pointerleave", clearPress);
+
+          fragment.appendChild(span);
+        }
+        output.appendChild(fragment);
+        if (current <= END) {
+          rafId = requestAnimationFrame(renderChunk);
+        }
+      }
+
+      function copyToClipboard(text) {
+        if (!navigator.clipboard) {
+          // fallback
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+          } catch (e) {}
+          ta.remove();
+          return;
+        }
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+
+      let toastTimer = null;
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add("show");
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 1200);
+      }
+
+      // initial render
+      renderRange();
+    </script>
+  </body>
+</html>
