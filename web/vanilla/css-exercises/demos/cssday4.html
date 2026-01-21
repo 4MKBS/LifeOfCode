@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CSS 100 Day Challenge — Day 4</title>
+<style>
+    :root{
+        --bg1:#0f1724;
+        --bg2:#071029;
+        --card: rgba(255,255,255,0.06);
+        --glass: rgba(255,255,255,0.06);
+        --accent: #7c5cff;
+        --accent-2: #00d4ff;
+        --glass-border: rgba(255,255,255,0.08);
+        --glass-glow: 0 6px 30px rgba(124,92,255,0.12);
+        --glass-radius: 18px;
+        --text: #e6eef8;
+        --muted: #95a3bf;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+        margin:0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        background: radial-gradient(1200px 800px at 10% 10%, rgba(124,92,255,0.12), transparent 12%),
+                                radial-gradient(900px 600px at 90% 90%, rgba(0,212,255,0.06), transparent 12%),
+                                linear-gradient(180deg,var(--bg1),var(--bg2));
+        color:var(--text);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:48px;
+        -webkit-font-smoothing:antialiased;
+    }
+
+    /* floating decorative blobs */
+    .blob{
+        position:fixed;
+        border-radius:50%;
+        filter: blur(40px) saturate(120%);
+        opacity:0.9;
+        mix-blend-mode:screen;
+        animation:float 8s ease-in-out infinite;
+        pointer-events:none;
+    }
+    .blob.b1{width:420px;height:420px;left:-120px;top:-80px;background:linear-gradient(135deg,var(--accent),#b08bff); animation-duration:12s}
+    .blob.b2{width:300px;height:300px;right:-100px;bottom:-120px;background:linear-gradient(135deg,var(--accent-2),#58f3ff); animation-duration:10s; animation-delay:2s}
+    @keyframes float{
+        0%{transform:translateY(0) scale(1)}
+        50%{transform:translateY(-20px) scale(1.02)}
+        100%{transform:translateY(0) scale(1)}
+    }
+
+    /* main card */
+    .card{
+        width:min(1100px,94vw);
+        background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+        border:1px solid var(--glass-border);
+        box-shadow:var(--glass-glow);
+        border-radius:var(--glass-radius);
+        padding:32px;
+        display:grid;
+        grid-template-columns:260px 1fr;
+        gap:28px;
+        align-items:center;
+        position:relative;
+        overflow:hidden;
+        backdrop-filter: blur(8px) saturate(120%);
+    }
+
+    .left{
+        display:flex;
+        flex-direction:column;
+        gap:18px;
+        align-items:center;
+        text-align:center;
+    }
+
+    .badge{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding:8px 14px;
+        background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+        border-radius:999px;
+        border:1px solid rgba(255,255,255,0.03);
+        font-weight:600;
+        color:var(--muted);
+        font-size:13px;
+        letter-spacing:0.6px;
+    }
+
+    .ring{
+        --size:150px;
+        width:var(--size);
+        height:var(--size);
+        border-radius:50%;
+        display:grid;
+        place-items:center;
+        background:
+            conic-gradient(var(--accent) calc(var(--p) * 1%), rgba(255,255,255,0.06) 0);
+        box-shadow: inset 0 6px 18px rgba(0,0,0,0.35), 0 10px 30px rgba(0,0,0,0.45);
+        position:relative;
+    }
+    .ring::after{
+        content:"";
+        position:absolute;
+        inset:10%;
+        border-radius:50%;
+        background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
+        transform:translateZ(0);
+        display:block;
+    }
+    .ring .num{
+        position:relative;
+        z-index:2;
+        color:var(--text);
+        font-weight:700;
+        font-size:28px;
+    }
+    .day{
+        color:var(--text);
+        font-weight:700;
+        font-size:18px;
+        opacity:0.95;
+    }
+    .muted{color:var(--muted);font-size:13px;margin-top:6px}
+
+    .right{
+        padding:12px 6px;
+    }
+    h1{
+        margin:0 0 8px 0;
+        font-size:26px;
+        letter-spacing:-0.2px;
+    }
+    p.lead{margin:0;color:var(--muted);font-size:15px}
+    .tasks{
+        margin-top:18px;
+        display:grid;
+        gap:12px;
+    }
+    .task{
+        display:flex;
+        gap:12px;
+        align-items:flex-start;
+        padding:14px;
+        border-radius:12px;
+        background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        border:1px solid rgba(255,255,255,0.03);
+    }
+    .task .dot{
+        width:14px;height:14px;border-radius:4px;background:linear-gradient(180deg,var(--accent),var(--accent-2));
+        box-shadow:0 6px 14px rgba(124,92,255,0.12);
+        flex:0 0 14px;margin-top:6px;
+    }
+    .task div{font-size:14px;color:var(--text)}
+    .task small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+
+    .actions{
+        margin-top:18px;display:flex;gap:12px;align-items:center;
+    }
+    .btn{
+        background:linear-gradient(90deg,var(--accent),var(--accent-2));
+        color:white;padding:10px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer;
+        box-shadow:0 8px 30px rgba(124,92,255,0.14);
+    }
+    .btn.ghost{
+        background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);
+        box-shadow:none;
+    }
+    .tag{
+        margin-left:auto;color:var(--muted);font-size:13px;padding:8px 12px;border-radius:999px;border:1px dashed rgba(255,255,255,0.03);
+    }
+
+    /* subtle animated underline for title */
+    h1::after{
+        content:"";
+        display:block;height:3px;width:60px;border-radius:3px;margin-top:10px;
+        background:linear-gradient(90deg,var(--accent),var(--accent-2));
+        box-shadow:0 6px 18px rgba(0,0,0,0.35);
+        transform-origin:left;
+        animation:reveal 2s ease forwards;
+        opacity:0;
+    }
+    @keyframes reveal{to{opacity:1;transform:scaleX(1)}}
+
+    /* Responsive */
+    @media (max-width:820px){
+        .card{grid-template-columns:1fr;gap:20px;padding:22px}
+        .left{flex-direction:row;justify-content:space-between;text-align:left}
+        .ring{--size:110px}
+        .tag{margin-left:0}
+    }
+
+    /* small bouncing micro-interaction on btn */
+    .btn:active{transform:translateY(2px)}
+</style>
+</head>
+<body>
+    <div class="blob b1" aria-hidden="true"></div>
+    <div class="blob b2" aria-hidden="true"></div>
+
+    <main class="card" role="main" aria-labelledby="title">
+        <aside class="left" aria-hidden="false">
+            <span class="badge">CSS 100 Days • Day 4</span>
+
+            <div class="ring" style="--p:4">
+                <div class="num">4%</div>
+            </div>
+
+            <div>
+                <div class="day">Progress</div>
+                <div class="muted">Small wins every day</div>
+            </div>
+        </aside>
+
+        <section class="right" aria-labelledby="title">
+            <h1 id="title">Day 4 — Modern Layout & Visuals</h1>
+            <p class="lead">Build a modern challenge card using gradients, glassmorphism, and CSS-only progress visuals. Focus: composition and subtle motion.</p>
+
+            <div class="tasks" aria-hidden="false">
+                <div class="task">
+                    <span class="dot" aria-hidden="true"></span>
+                    <div>
+                        Create a responsive glass card
+                        <small>Use backdrop-filter, soft borders, and rounded corners.</small>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <span class="dot" aria-hidden="true"></span>
+                    <div>
+                        Add floating decorative shapes and subtle animations
+                        <small>Move with keyframes to add life without distraction.</small>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <span class="dot" aria-hidden="true"></span>
+                    <div>
+                        Show a CSS-only progress ring
+                        <small>Use conic-gradient and a CSS variable for progress.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn" onclick="alert('Congrats — Day 4 complete!')">Mark Complete</button>
+                <button class="btn ghost" onclick="location.reload()">Reset</button>
+                <div class="tag">Difficulty: •••</div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Small enhancement: set ring percentage for day out of 100
+        (function(){
+            const day = 4;
+            const ring = document.querySelector('.ring');
+            if(ring) ring.style.setProperty('--p', String(day));
+            // animate progress by toggling background a tad
+            ring.animate([{opacity:0.6},{opacity:1}],{duration:900,fill:'forwards'});
+        })();
+    </script>
+</body>
+</html>
