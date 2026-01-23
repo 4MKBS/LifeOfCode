@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Day 5 - Maki's Story</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Georgia", serif;
+        overflow: hidden;
+        background: #000;
+        color: #fff;
+      }
+
+      .scene {
+        width: 100vw;
+        height: 100vh;
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        animation: fadeIn 1s ease-in;
+      }
+
+      .scene.active {
+        display: flex;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(1.1);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .scene-1 {
+        background: radial-gradient(
+          ellipse at center,
+          #1a1a2e 0%,
+          #0a0a15 50%,
+          #000 100%
+        );
+      }
+
+      .scene-2 {
+        background: radial-gradient(
+          ellipse at center,
+          #8b0000 0%,
+          #330000 50%,
+          #000 100%
+        );
+      }
+
+      .scene-3 {
+        background: radial-gradient(
+          ellipse at center,
+          #4a0000 0%,
+          #1a0000 50%,
+          #000 100%
+        );
+      }
+
+      .scene-4 {
+        background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 100%);
+      }
+
+      /* Rain effect */
+      .rain-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .rain-drop {
+        position: absolute;
+        width: 2px;
+        height: 20px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(174, 194, 224, 0.5)
+        );
+        animation: rainFall linear infinite;
+      }
+
+      @keyframes rainFall {
+        0% {
+          transform: translateY(-100px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh);
+          opacity: 0.3;
+        }
+      }
+
+      /* Lightning effect */
+      .lightning {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0);
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      .lightning.flash {
+        animation: lightningFlash 0.2s ease-out;
+      }
+
+      @keyframes lightningFlash {
+        0%,
+        100% {
+          background: rgba(255, 255, 255, 0);
+        }
+        10%,
+        30% {
+          background: rgba(255, 255, 255, 0.9);
+        }
+        20%,
+        40% {
+          background: rgba(255, 255, 255, 0);
+        }
+        50% {
+          background: rgba(200, 200, 255, 0.5);
+        }
+      }
+
+      /* Realistic Sword */
+      .sword-container {
+        position: relative;
+        width: 300px;
+        height: 400px;
+        animation: swordEntrance 1.5s ease-out;
+      }
+
+      @keyframes swordEntrance {
+        0% {
+          transform: translateY(-200px) rotate(-45deg);
+          opacity: 0;
+        }
+        50% {
+          transform: translateY(20px) rotate(5deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+      }
+
+      .sword {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: swordFloat 3s ease-in-out infinite;
+      }
+
+      @keyframes swordFloat {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0) rotate(0deg);
+          filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+        }
+        25% {
+          transform: translateX(-50%) translateY(-15px) rotate(3deg);
+          filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.8));
+        }
+        75% {
+          transform: translateX(-50%) translateY(-8px) rotate(-3deg);
+          filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+        }
+      }
+
+      .blade {
+        width: 14px;
+        height: 220px;
+        background: linear-gradient(
+          90deg,
+          #1a1a1a 0%,
+          #555 10%,
+          #e0e0e0 20%,
+          #fff 50%,
+          #e0e0e0 80%,
+          #555 90%,
+          #1a1a1a 100%
+        );
+        position: relative;
+        margin: 0 auto;
+        clip-path: polygon(0 0, 100% 0, 60% 100%, 40% 100%);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.4),
+          inset 0 0 15px rgba(255, 255, 255, 0.6);
+        animation: bladeGlow 2s ease-in-out infinite;
+      }
+
+      @keyframes bladeGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 30px rgba(255, 255, 255, 0.4),
+            inset 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+        50% {
+          box-shadow: 0 0 50px rgba(255, 100, 100, 0.6),
+            inset 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+      }
+
+      .blade::before {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 200px;
+        background: linear-gradient(to bottom, #fff, transparent);
+        left: 50%;
+        transform: translateX(-50%);
+        top: 10px;
+      }
+
+      .blade::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 0, 0, 0.4) 0%,
+          transparent 40%
+        );
+        animation: bloodDrip 2s ease-in-out infinite;
+      }
+
+      @keyframes bloodDrip {
+        0%,
+        100% {
+          opacity: 0.5;
+          transform: translateY(0);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(5px);
+        }
+      }
+
+      .guard {
+        width: 90px;
+        height: 18px;
+        background: linear-gradient(to bottom, #9a5c28, #6b4423, #4a3219);
+        margin: 0 auto;
+        border-radius: 4px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+        position: relative;
+      }
+
+      .guard::before,
+      .guard::after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .guard::before {
+        left: 5px;
+      }
+      .guard::after {
+        right: 5px;
+      }
+
+      .handle {
+        width: 16px;
+        height: 70px;
+        background: repeating-linear-gradient(
+          0deg,
+          #1a0f0a 0px,
+          #1a0f0a 6px,
+          #8b4513 6px,
+          #8b4513 12px
+        );
+        margin: 0 auto;
+        border-radius: 3px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+
+      .pommel {
+        width: 30px;
+        height: 30px;
+        background: radial-gradient(
+          circle at 30% 30%,
+          #ffd700,
+          #b8860b,
+          #8b6914
+        );
+        margin: 0 auto;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6),
+          inset 0 -4px 6px rgba(0, 0, 0, 0.4);
+        position: relative;
+      }
+
+      .pommel::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: radial-gradient(circle at 30% 30%, #ff0000, #8b0000);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+      }
+
+      /* Slash Animation */
+      .slash-effect {
+        position: absolute;
+        width: 500px;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.4) 20%,
+          #fff 50%,
+          rgba(255, 255, 255, 0.4) 80%,
+          transparent 100%
+        );
+        box-shadow: 0 0 30px #fff, 0 0 60px rgba(255, 0, 0, 0.6);
+        animation: slashMove 0.15s ease-out forwards;
+        transform-origin: center;
+      }
+
+      @keyframes slashMove {
+        0% {
+          transform: scaleX(0) rotate(var(--rotation, 0deg));
+          opacity: 1;
+        }
+        100% {
+          transform: scaleX(1) rotate(var(--rotation, 0deg));
+          opacity: 0;
+        }
+      }
+
+      /* Blood Effects */
+      .blood {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: radial-gradient(
+          circle,
+          #ff0000 0%,
+          #cc0000 30%,
+          #8b0000 60%,
+          transparent 100%
+        );
+        border-radius: 50%;
+        animation: bloodSplat 0.5s ease-out forwards;
+        filter: blur(3px);
+      }
+
+      @keyframes bloodSplat {
+        0% {
+          transform: scale(0);
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.9;
+        }
+        100% {
+          transform: scale(2.5);
+          opacity: 0;
+        }
+      }
+
+      .blood-drop {
+        position: absolute;
+        width: 10px;
+        height: 18px;
+        background: linear-gradient(to bottom, #ff0000, #8b0000);
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        animation: dropFall 0.8s ease-in forwards;
+      }
+
+      @keyframes dropFall {
+        0% {
+          transform: translateY(0) rotate(0deg) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(250px) rotate(60deg) scale(0.5);
+          opacity: 0;
+        }
+      }
+
+      /* Particles */
+      .particle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: #ff4444;
+        border-radius: 50%;
+        animation: particleFloat 1.5s ease-out forwards;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+      }
+
+      @keyframes particleFloat {
+        0% {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--tx), var(--ty)) scale(0);
+          opacity: 0;
+        }
+      }
+
+      /* Spark particles */
+      .spark {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: #fff;
+        border-radius: 50%;
+        animation: sparkFly 0.5s ease-out forwards;
+        box-shadow: 0 0 8px #ffd700, 0 0 15px #ff6600;
+      }
+
+      @keyframes sparkFly {
+        0% {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--sx), var(--sy)) scale(0);
+          opacity: 0;
+        }
+      }
+
+      /* Sword Attack Animation */
+      .sword-attack {
+        animation: swordSwing 0.2s ease-out;
+      }
+
+      @keyframes swordSwing {
+        0% {
+          transform: translateX(-50%) rotate(-60deg) scale(1.1);
+        }
+        50% {
+          transform: translateX(-50%) rotate(60deg) scale(1.1);
+        }
+        100% {
+          transform: translateX(-50%) rotate(0deg) scale(1);
+        }
+      }
+
+      /* Screen shake */
+      .shake {
+        animation: screenShake 0.2s ease-out;
+      }
+
+      @keyframes screenShake {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        20% {
+          transform: translate(-8px, 8px);
+        }
+        40% {
+          transform: translate(8px, -8px);
+        }
+        60% {
+          transform: translate(-6px, -6px);
+        }
+        80% {
+          transform: translate(6px, 6px);
+        }
+      }
+
+      /* Vignette effect */
+      .scene::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 30%,
+          rgba(0, 0, 0, 0.85) 100%
+        );
+        pointer-events: none;
+      }
+
+      /* Smoke effect */
+      .smoke {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background: radial-gradient(
+          circle,
+          rgba(100, 100, 100, 0.3),
+          transparent
+        );
+        border-radius: 50%;
+        animation: smokeRise 2s ease-out forwards;
+        filter: blur(10px);
+      }
+
+      @keyframes smokeRise {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 0.5;
+        }
+        100% {
+          transform: translateY(-150px) scale(3);
+          opacity: 0;
+        }
+      }
+
+      /* Floating debris */
+      .debris {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: #333;
+        animation: debrisFall 1s ease-in forwards;
+      }
+
+      @keyframes debrisFall {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(300px) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      /* Pulse effect for scene transitions */
+      .pulse-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: pulseExpand 1s ease-out forwards;
+        pointer-events: none;
+      }
+
+      @keyframes pulseExpand {
+        0% {
+          width: 10px;
+          height: 10px;
+          opacity: 1;
+        }
+        100% {
+          width: 200vw;
+          height: 200vw;
+          opacity: 0;
+        }
+      }
+
+      /* Silhouette enemy */
+      .enemy-silhouette {
+        position: absolute;
+        width: 60px;
+        height: 120px;
+        background: linear-gradient(to bottom, #111 0%, #000 100%);
+        clip-path: polygon(
+          50% 0%,
+          65% 15%,
+          70% 40%,
+          90% 100%,
+          10% 100%,
+          30% 40%,
+          35% 15%
+        );
+        animation: enemyAppear 0.3s ease-out forwards;
+        filter: blur(1px);
+      }
+
+      @keyframes enemyAppear {
+        0% {
+          transform: scale(0) rotate(-10deg);
+          opacity: 0;
+        }
+        70% {
+          transform: scale(1.1) rotate(5deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+        }
+      }
+
+      .enemy-silhouette.defeated {
+        animation: enemyDefeat 0.4s ease-out forwards;
+      }
+
+      @keyframes enemyDefeat {
+        0% {
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.2) rotate(15deg);
+          opacity: 0.8;
+          filter: blur(2px) brightness(2);
+        }
+        100% {
+          transform: scale(0.5) rotate(90deg) translateY(100px);
+          opacity: 0;
+          filter: blur(5px);
+        }
+      }
+
+      /* Counter styling */
+      .counter {
+        font-size: 5rem;
+        color: #ff0000;
+        margin-top: 1rem;
+        text-shadow: 0 0 30px rgba(255, 0, 0, 0.9),
+          0 0 60px rgba(255, 0, 0, 0.5);
+        font-weight: bold;
+        animation: counterPulse 0.5s ease-in-out infinite;
+      }
+
+      @keyframes counterPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      /* Heartbeat effect for scene 4 */
+      .heartbeat {
+        animation: heartbeat 1.5s ease-in-out infinite;
+      }
+
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+        14% {
+          transform: scale(1.05);
+          filter: brightness(1.2);
+        }
+        28% {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+        42% {
+          transform: scale(1.08);
+          filter: brightness(1.3);
+        }
+        56% {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+      }
+
+      /* Fallen sword for final scene */
+      .sword-fallen {
+        transform: translateX(-50%) rotate(75deg) !important;
+        animation: none !important;
+        filter: grayscale(0.5) brightness(0.7);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="lightning" id="lightning"></div>
+
+    <div class="scene scene-1 active">
+      <div class="rain-container" id="rain1"></div>
+      <div class="sword-container">
+        <div class="sword">
+          <div class="blade"></div>
+          <div class="guard"></div>
+          <div class="handle"></div>
+          <div class="pommel"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene scene-2">
+      <div class="rain-container" id="rain2"></div>
+      <div class="sword-container">
+        <div class="sword">
+          <div class="blade"></div>
+          <div class="guard"></div>
+          <div class="handle"></div>
+          <div class="pommel"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene scene-3">
+      <div class="rain-container" id="rain3"></div>
+      <div class="sword-container">
+        <div class="sword" id="attackSword">
+          <div class="blade"></div>
+          <div class="guard"></div>
+          <div class="handle"></div>
+          <div class="pommel"></div>
+        </div>
+      </div>
+      <div class="counter"><span id="count">0</span></div>
+    </div>
+
+    <div class="scene scene-4">
+      <div class="rain-container" id="rain4"></div>
+      <div class="sword-container heartbeat">
+        <div class="sword sword-fallen">
+          <div class="blade"></div>
+          <div class="guard"></div>
+          <div class="handle"></div>
+          <div class="pommel"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Audio Context for sound effects
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioCtx = new AudioContext();
+
+      function playSlashSound() {
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        oscillator.type = "sawtooth";
+        oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(
+          100,
+          audioCtx.currentTime + 0.1
+        );
+
+        gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          audioCtx.currentTime + 0.1
+        );
+
+        oscillator.start(audioCtx.currentTime);
+        oscillator.stop(audioCtx.currentTime + 0.1);
+      }
+
+      function playImpactSound() {
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        oscillator.type = "square";
+        oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(
+          50,
+          audioCtx.currentTime + 0.15
+        );
+
+        gainNode.gain.setValueAtTime(0.4, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          audioCtx.currentTime + 0.15
+        );
+
+        oscillator.start(audioCtx.currentTime);
+        oscillator.stop(audioCtx.currentTime + 0.15);
+      }
+
+      function playThunderSound() {
+        const bufferSize = audioCtx.sampleRate * 0.5;
+        const buffer = audioCtx.createBuffer(
+          1,
+          bufferSize,
+          audioCtx.sampleRate
+        );
+        const data = buffer.getChannelData(0);
+
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3));
+        }
+
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.value = 500;
+
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          audioCtx.currentTime + 0.5
+        );
+
+        noise.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        noise.start();
+      }
+
+      function playSadAmbience() {
+        const oscillator1 = audioCtx.createOscillator();
+        const oscillator2 = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator1.connect(gainNode);
+        oscillator2.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        oscillator1.type = "sine";
+        oscillator1.frequency.value = 110;
+
+        oscillator2.type = "sine";
+        oscillator2.frequency.value = 165;
+
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 1);
+        gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 3);
+        gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 5);
+
+        oscillator1.start(audioCtx.currentTime);
+        oscillator2.start(audioCtx.currentTime);
+        oscillator1.stop(audioCtx.currentTime + 5);
+        oscillator2.stop(audioCtx.currentTime + 5);
+      }
+
+      function playWarDrum() {
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(60, audioCtx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(
+          40,
+          audioCtx.currentTime + 0.2
+        );
+
+        gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          audioCtx.currentTime + 0.3
+        );
+
+        oscillator.start(audioCtx.currentTime);
+        oscillator.stop(audioCtx.currentTime + 0.3);
+      }
+
+      // Create rain for all scenes
+      function createRain(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        for (let i = 0; i < 100; i++) {
+          const drop = document.createElement("div");
+          drop.className = "rain-drop";
+          drop.style.left = Math.random() * 100 + "%";
+          drop.style.animationDuration = 0.5 + Math.random() * 0.5 + "s";
+          drop.style.animationDelay = Math.random() * 2 + "s";
+          container.appendChild(drop);
+        }
+      }
+
+      createRain("rain1");
+      createRain("rain2");
+      createRain("rain3");
+      createRain("rain4");
+
+      const scenes = document.querySelectorAll(".scene");
+      const lightning = document.getElementById("lightning");
+      let currentScene = 0;
+      let enemyCount = 0;
+
+      function triggerLightning() {
+        lightning.classList.add("flash");
+        playThunderSound();
+        setTimeout(() => lightning.classList.remove("flash"), 200);
+      }
+
+      function createSlashEffect(scene) {
+        const slash = document.createElement("div");
+        slash.className = "slash-effect";
+        slash.style.top = 20 + Math.random() * 60 + "%";
+        slash.style.left = "50%";
+        slash.style.transform = "translateX(-50%)";
+        slash.style.setProperty("--rotation", Math.random() * 90 - 45 + "deg");
+        scene.appendChild(slash);
+        playSlashSound();
+        setTimeout(() => slash.remove(), 150);
+      }
+
+      function createBlood(scene) {
+        const blood = document.createElement("div");
+        blood.className = "blood";
+        blood.style.left = 15 + Math.random() * 70 + "%";
+        blood.style.top = 15 + Math.random() * 70 + "%";
+        scene.appendChild(blood);
+        setTimeout(() => blood.remove(), 500);
+
+        for (let i = 0; i < 8; i++) {
+          const drop = document.createElement("div");
+          drop.className = "blood-drop";
+          drop.style.left = 15 + Math.random() * 70 + "%";
+          drop.style.top = 15 + Math.random() * 50 + "%";
+          scene.appendChild(drop);
+          setTimeout(() => drop.remove(), 800);
+        }
+      }
+
+      function createParticles(scene) {
+        for (let i = 0; i < 15; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+          particle.style.left = "50%";
+          particle.style.top = "50%";
+          particle.style.setProperty("--tx", Math.random() * 300 - 150 + "px");
+          particle.style.setProperty("--ty", Math.random() * 300 - 150 + "px");
+          scene.appendChild(particle);
+          setTimeout(() => particle.remove(), 1500);
+        }
+      }
+
+      function createSparks(scene, x, y) {
+        for (let i = 0; i < 20; i++) {
+          const spark = document.createElement("div");
+          spark.className = "spark";
+          spark.style.left = x + "%";
+          spark.style.top = y + "%";
+          spark.style.setProperty("--sx", Math.random() * 150 - 75 + "px");
+          spark.style.setProperty("--sy", Math.random() * 150 - 75 + "px");
+          scene.appendChild(spark);
+          setTimeout(() => spark.remove(), 500);
+        }
+      }
+
+      function createSmoke(scene) {
+        const smoke = document.createElement("div");
+        smoke.className = "smoke";
+        smoke.style.left = 20 + Math.random() * 60 + "%";
+        smoke.style.top = 50 + Math.random() * 30 + "%";
+        scene.appendChild(smoke);
+        setTimeout(() => smoke.remove(), 2000);
+      }
+
+      function createEnemy(scene) {
+        const enemy = document.createElement("div");
+        enemy.className = "enemy-silhouette";
+        enemy.style.left = 10 + Math.random() * 80 + "%";
+        enemy.style.top = 30 + Math.random() * 40 + "%";
+        scene.appendChild(enemy);
+
+        setTimeout(() => {
+          enemy.classList.add("defeated");
+          playImpactSound();
+          setTimeout(() => enemy.remove(), 400);
+        }, 150);
+      }
+
+      function createPulse(scene) {
+        const pulse = document.createElement("div");
+        pulse.className = "pulse-overlay";
+        scene.appendChild(pulse);
+        setTimeout(() => pulse.remove(), 1000);
+      }
+
+      function triggerAttack() {
+        const sword = document.getElementById("attackSword");
+        if (sword) {
+          sword.classList.add("sword-attack");
+          setTimeout(() => sword.classList.remove("sword-attack"), 200);
+        }
+        scenes[currentScene].classList.add("shake");
+        setTimeout(() => scenes[currentScene].classList.remove("shake"), 200);
+      }
+
+      function switchScene() {
+        scenes[currentScene].classList.remove("active");
+        currentScene = (currentScene + 1) % scenes.length;
+        scenes[currentScene].classList.add("active");
+
+        createPulse(scenes[currentScene]);
+
+        if (currentScene === 0) {
+          playWarDrum();
+          setTimeout(triggerLightning, 500);
+        }
+
+        if (currentScene === 1) {
+          playWarDrum();
+          setTimeout(triggerLightning, 1000);
+          setTimeout(triggerLightning, 2500);
+        }
+
+        if (currentScene === 2) {
+          enemyCount = 0;
+          let attackCount = 0;
+          const maxAttacks = 50;
+
+          const interval = setInterval(() => {
+            if (attackCount < maxAttacks) {
+              attackCount++;
+              enemyCount++;
+              document.getElementById("count").textContent = enemyCount;
+              createSlashEffect(scenes[2]);
+              createBlood(scenes[2]);
+              createParticles(scenes[2]);
+              createSparks(scenes[2], 50, 50);
+              createEnemy(scenes[2]);
+              triggerAttack();
+
+              if (attackCount % 10 === 0) {
+                triggerLightning();
+                createSmoke(scenes[2]);
+              }
+
+              if (attackCount % 5 === 0) {
+                playWarDrum();
+              }
+            }
+          }, 80);
+
+          setTimeout(() => clearInterval(interval), 4500);
+        }
+
+        if (currentScene === 3) {
+          playSadAmbience();
+          setTimeout(triggerLightning, 2000);
+        }
+      }
+
+      // Start with user interaction to enable audio
+      document.body.addEventListener(
+        "click",
+        () => {
+          if (audioCtx.state === "suspended") {
+            audioCtx.resume();
+          }
+        },
+        { once: true }
+      );
+
+      // Random lightning during all scenes
+      setInterval(() => {
+        if (Math.random() > 0.7) {
+          triggerLightning();
+        }
+      }, 3000);
+
+      setInterval(switchScene, 5000);
+    </script>
+  </body>
+</html>
