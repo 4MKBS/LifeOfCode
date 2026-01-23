@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ocean Night Scene</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(
+          to bottom,
+          #050510 0%,
+          #0a0a1a 15%,
+          #0f1525 30%,
+          #162035 45%,
+          #1a3050 60%,
+          #1e4060 75%,
+          #224570 100%
+        );
+        position: relative;
+      }
+
+      .stars {
+        position: absolute;
+        width: 100%;
+        height: 55%;
+        pointer-events: none;
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle 3s infinite;
+      }
+
+      .star.bright {
+        box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.5);
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.2;
+          transform: scale(0.8);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
+
+      .moon {
+        position: absolute;
+        top: 40px;
+        right: 120px;
+        width: 90px;
+        height: 90px;
+        background: radial-gradient(
+          circle at 35% 35%,
+          #fffef5 0%,
+          #f8f5e0 30%,
+          #e8e4c8 60%,
+          #d8d4b8 100%
+        );
+        border-radius: 50%;
+        box-shadow: 0 0 40px 15px rgba(255, 250, 220, 0.4),
+          0 0 80px 30px rgba(255, 250, 220, 0.25),
+          0 0 150px 50px rgba(255, 250, 220, 0.15),
+          0 0 300px 100px rgba(255, 250, 220, 0.05),
+          inset -10px -10px 20px rgba(200, 195, 170, 0.3);
+        animation: moonGlow 6s ease-in-out infinite;
+      }
+
+      .moon::before {
+        content: "";
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background: rgba(180, 175, 150, 0.3);
+        border-radius: 50%;
+        top: 20px;
+        left: 25px;
+      }
+
+      .moon::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: rgba(180, 175, 150, 0.25);
+        border-radius: 50%;
+        top: 45px;
+        left: 50px;
+      }
+
+      @keyframes moonGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 40px 15px rgba(255, 250, 220, 0.4),
+            0 0 80px 30px rgba(255, 250, 220, 0.25),
+            0 0 150px 50px rgba(255, 250, 220, 0.15),
+            0 0 300px 100px rgba(255, 250, 220, 0.05),
+            inset -10px -10px 20px rgba(200, 195, 170, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 50px 20px rgba(255, 250, 220, 0.5),
+            0 0 100px 40px rgba(255, 250, 220, 0.3),
+            0 0 180px 60px rgba(255, 250, 220, 0.18),
+            0 0 350px 120px rgba(255, 250, 220, 0.08),
+            inset -10px -10px 20px rgba(200, 195, 170, 0.3);
+        }
+      }
+
+      .moon-halo {
+        position: absolute;
+        top: -30px;
+        right: 30px;
+        width: 210px;
+        height: 210px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 250, 220, 0.08) 0%,
+          rgba(255, 250, 220, 0.03) 40%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      .ocean {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 48%;
+        overflow: hidden;
+      }
+
+      .ocean-base {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          #1a3a5a 0%,
+          #152d48 20%,
+          #102438 40%,
+          #0c1c2c 60%,
+          #081420 80%,
+          #040c14 100%
+        );
+      }
+
+      .wave-layer {
+        position: absolute;
+        width: 300%;
+        height: 100%;
+        left: -100%;
+      }
+
+      .wave-svg {
+        position: absolute;
+        width: 100%;
+        left: 0;
+      }
+
+      .wave1 {
+        animation: waveFlow1 12s linear infinite;
+      }
+
+      .wave2 {
+        animation: waveFlow2 15s linear infinite;
+      }
+
+      .wave3 {
+        animation: waveFlow3 18s linear infinite;
+      }
+
+      .wave4 {
+        animation: waveFlow4 20s linear infinite;
+      }
+
+      @keyframes waveFlow1 {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(33.33%);
+        }
+      }
+
+      @keyframes waveFlow2 {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-33.33%);
+        }
+      }
+
+      @keyframes waveFlow3 {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(33.33%);
+        }
+      }
+
+      @keyframes waveFlow4 {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-33.33%);
+        }
+      }
+
+      .foam {
+        position: absolute;
+        width: 100%;
+        height: 8px;
+        top: 0;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.05) 10%,
+          rgba(255, 255, 255, 0.15) 20%,
+          rgba(255, 255, 255, 0.08) 30%,
+          transparent 40%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 255, 255, 0.2) 60%,
+          rgba(255, 255, 255, 0.1) 70%,
+          transparent 80%,
+          rgba(255, 255, 255, 0.08) 90%,
+          transparent 100%
+        );
+        animation: foamMove 8s linear infinite;
+        filter: blur(2px);
+      }
+
+      @keyframes foamMove {
+        0% {
+          transform: translateX(-20%);
+        }
+        100% {
+          transform: translateX(20%);
+        }
+      }
+
+      .moon-reflection {
+        position: absolute;
+        top: 0;
+        right: 80px;
+        width: 140px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 250, 220, 0.35) 0%,
+          rgba(255, 250, 220, 0.2) 15%,
+          rgba(255, 250, 220, 0.1) 30%,
+          rgba(255, 250, 220, 0.05) 50%,
+          transparent 80%
+        );
+        filter: blur(8px);
+        animation: reflectionShimmer 4s ease-in-out infinite;
+        clip-path: polygon(
+          30% 0%,
+          70% 0%,
+          80% 10%,
+          60% 20%,
+          75% 30%,
+          55% 40%,
+          70% 50%,
+          50% 60%,
+          65% 70%,
+          45% 80%,
+          60% 90%,
+          40% 100%,
+          20% 100%,
+          35% 90%,
+          25% 80%,
+          40% 70%,
+          30% 60%,
+          45% 50%,
+          25% 40%,
+          40% 30%,
+          20% 20%,
+          35% 10%
+        );
+      }
+
+      .moon-reflection-shimmer {
+        position: absolute;
+        top: 0;
+        right: 60px;
+        width: 180px;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .shimmer-line {
+        position: absolute;
+        width: 3px;
+        height: 15px;
+        background: rgba(255, 250, 220, 0.6);
+        border-radius: 50%;
+        filter: blur(1px);
+        animation: shimmerFloat 3s ease-in-out infinite;
+      }
+
+      @keyframes shimmerFloat {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: translateY(0) scaleY(1);
+        }
+        50% {
+          opacity: 0.8;
+          transform: translateY(-5px) scaleY(1.5);
+        }
+      }
+
+      @keyframes reflectionShimmer {
+        0%,
+        100% {
+          transform: scaleX(0.9) scaleY(1);
+          opacity: 0.6;
+        }
+        25% {
+          transform: scaleX(1.1) scaleY(0.98);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scaleX(1) scaleY(1.02);
+          opacity: 0.8;
+        }
+        75% {
+          transform: scaleX(1.15) scaleY(0.99);
+          opacity: 0.65;
+        }
+      }
+
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        animation: rippleExpand 5s ease-out infinite;
+        transform-style: preserve-3d;
+        transform: perspective(500px) rotateX(60deg);
+      }
+
+      @keyframes rippleExpand {
+        0% {
+          transform: perspective(500px) rotateX(60deg) scale(0);
+          opacity: 0.4;
+        }
+        100% {
+          transform: perspective(500px) rotateX(60deg) scale(4);
+          opacity: 0;
+        }
+      }
+
+      .horizon {
+        position: absolute;
+        top: 52%;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(
+          to bottom,
+          rgba(30, 60, 90, 0.8) 0%,
+          rgba(25, 50, 75, 0.5) 50%,
+          transparent 100%
+        );
+        filter: blur(2px);
+      }
+
+      .horizon-glow {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(40, 70, 100, 0.15) 40%,
+          rgba(30, 55, 80, 0.1) 60%,
+          transparent 100%
+        );
+        transform: translateY(-50%);
+      }
+
+      .sparkle {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.9) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        animation: sparkle 3s ease-in-out infinite;
+      }
+
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0);
+        }
+        30% {
+          opacity: 0.8;
+          transform: scale(1.2);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        70% {
+          opacity: 0.6;
+          transform: scale(0.8);
+        }
+      }
+
+      .leaves {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 120px;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .leaf-cluster {
+        position: absolute;
+        bottom: 0;
+      }
+
+      .leaf {
+        position: absolute;
+        width: 35px;
+        height: 12px;
+        background: linear-gradient(
+          135deg,
+          #0d2d0d 0%,
+          #1a4a1a 30%,
+          #2d5a2d 50%,
+          #1a3d1a 70%,
+          #0d250d 100%
+        );
+        border-radius: 0 80% 0 80%;
+        transform-origin: left center;
+        animation: leafSway 4s ease-in-out infinite;
+        box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      .leaf::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(60, 100, 60, 0.6), transparent);
+        top: 50%;
+        left: 5px;
+      }
+
+      @keyframes leafSway {
+        0%,
+        100% {
+          transform: rotate(-8deg);
+        }
+        50% {
+          transform: rotate(8deg);
+        }
+      }
+
+      .grass {
+        position: absolute;
+        width: 3px;
+        height: 40px;
+        background: linear-gradient(
+          to top,
+          #0d200d 0%,
+          #1a3a1a 50%,
+          #0d2d0d 100%
+        );
+        border-radius: 50% 50% 0 0;
+        transform-origin: bottom center;
+        animation: grassSway 3s ease-in-out infinite;
+      }
+
+      @keyframes grassSway {
+        0%,
+        100% {
+          transform: rotate(-3deg) skewX(-2deg);
+        }
+        50% {
+          transform: rotate(3deg) skewX(2deg);
+        }
+      }
+
+      .click-prompt {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(255, 255, 255, 0.4);
+        font-family: "Georgia", serif;
+        font-size: 14px;
+        letter-spacing: 2px;
+        animation: fadePrompt 3s ease-in-out infinite;
+      }
+
+      @keyframes fadePrompt {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 0.6;
+        }
+      }
+
+      .ambient-light {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          ellipse at 75% 10%,
+          rgba(255, 250, 220, 0.03) 0%,
+          transparent 50%
+        );
+        pointer-events: none;
+      }
+
+      .depth-fog {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30%;
+        background: linear-gradient(
+          to top,
+          rgba(5, 15, 25, 0.4) 0%,
+          transparent 100%
+        );
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ambient-light"></div>
+    <div class="stars" id="stars"></div>
+    <div class="moon-halo"></div>
+    <div class="moon"></div>
+    <div class="horizon-glow"></div>
+    <div class="horizon"></div>
+    <div class="ocean" id="ocean">
+      <div class="ocean-base"></div>
+
+      <!-- SVG Wave layers -->
+      <svg
+        class="wave-svg wave1"
+        style="top: 0"
+        viewBox="0 0 1200 50"
+        preserveAspectRatio="none"
+      >
+        <path
+          fill="rgba(30, 60, 90, 0.4)"
+          d="M0,25 Q150,10 300,25 T600,25 T900,25 T1200,25 L1200,50 L0,50 Z"
+        >
+          <animate
+            attributeName="d"
+            dur="8s"
+            repeatCount="indefinite"
+            values="M0,25 Q150,10 300,25 T600,25 T900,25 T1200,25 L1200,50 L0,50 Z;
+                                        M0,25 Q150,40 300,25 T600,25 T900,25 T1200,25 L1200,50 L0,50 Z;
+                                        M0,25 Q150,10 300,25 T600,25 T900,25 T1200,25 L1200,50 L0,50 Z"
+          />
+        </path>
+      </svg>
+
+      <svg
+        class="wave-svg wave2"
+        style="top: 15px"
+        viewBox="0 0 1200 50"
+        preserveAspectRatio="none"
+      >
+        <path
+          fill="rgba(25, 50, 75, 0.5)"
+          d="M0,30 Q200,15 400,30 T800,30 T1200,30 L1200,50 L0,50 Z"
+        >
+          <animate
+            attributeName="d"
+            dur="10s"
+            repeatCount="indefinite"
+            values="M0,30 Q200,15 400,30 T800,30 T1200,30 L1200,50 L0,50 Z;
+                                        M0,30 Q200,45 400,30 T800,30 T1200,30 L1200,50 L0,50 Z;
+                                        M0,30 Q200,15 400,30 T800,30 T1200,30 L1200,50 L0,50 Z"
+          />
+        </path>
+      </svg>
+
+      <svg
+        class="wave-svg wave3"
+        style="top: 35px"
+        viewBox="0 0 1200 50"
+        preserveAspectRatio="none"
+      >
+        <path
+          fill="rgba(20, 40, 60, 0.6)"
+          d="M0,20 Q100,35 200,20 T400,20 T600,20 T800,20 T1000,20 T1200,20 L1200,50 L0,50 Z"
+        >
+          <animate
+            attributeName="d"
+            dur="7s"
+            repeatCount="indefinite"
+            values="M0,20 Q100,35 200,20 T400,20 T600,20 T800,20 T1000,20 T1200,20 L1200,50 L0,50 Z;
+                                        M0,20 Q100,5 200,20 T400,20 T600,20 T800,20 T1000,20 T1200,20 L1200,50 L0,50 Z;
+                                        M0,20 Q100,35 200,20 T400,20 T600,20 T800,20 T1000,20 T1200,20 L1200,50 L0,50 Z"
+          />
+        </path>
+      </svg>
+
+      <div class="foam"></div>
+      <div class="moon-reflection"></div>
+      <div class="moon-reflection-shimmer" id="shimmer"></div>
+    </div>
+    <div class="depth-fog"></div>
+    <div class="leaves" id="leaves"></div>
+    <div class="click-prompt" id="prompt">
+      Click anywhere for ambient sounds
+    </div>
+
+    <script>
+      // Generate stars with varying sizes and brightness
+      const starsContainer = document.getElementById("stars");
+      for (let i = 0; i < 300; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        if (Math.random() > 0.9) star.classList.add("bright");
+        star.style.left = Math.random() * 100 + "%";
+        star.style.top = Math.random() * 100 + "%";
+        star.style.animationDelay = Math.random() * 3 + "s";
+        star.style.animationDuration = 2 + Math.random() * 4 + "s";
+        const size = Math.random() * 2 + 0.5;
+        star.style.width = size + "px";
+        star.style.height = size + "px";
+        star.style.opacity = 0.3 + Math.random() * 0.7;
+        starsContainer.appendChild(star);
+      }
+
+      // Generate moon reflection shimmer lines
+      const shimmerContainer = document.getElementById("shimmer");
+      for (let i = 0; i < 25; i++) {
+        const shimmer = document.createElement("div");
+        shimmer.className = "shimmer-line";
+        shimmer.style.left = 40 + Math.random() * 100 + "px";
+        shimmer.style.top = i * 4 + Math.random() * 10 + "%";
+        shimmer.style.animationDelay = Math.random() * 3 + "s";
+        shimmer.style.animationDuration = 2 + Math.random() * 2 + "s";
+        shimmer.style.width = 2 + Math.random() * 4 + "px";
+        shimmer.style.height = 8 + Math.random() * 15 + "px";
+        shimmerContainer.appendChild(shimmer);
+      }
+
+      // Generate ripples
+      const ocean = document.getElementById("ocean");
+      for (let i = 0; i < 20; i++) {
+        const ripple = document.createElement("div");
+        ripple.className = "ripple";
+        ripple.style.left = Math.random() * 100 + "%";
+        ripple.style.top = 10 + Math.random() * 60 + "%";
+        const size = 15 + Math.random() * 25;
+        ripple.style.width = size + "px";
+        ripple.style.height = size * 0.4 + "px";
+        ripple.style.animationDelay = Math.random() * 5 + "s";
+        ripple.style.animationDuration = 4 + Math.random() * 3 + "s";
+        ocean.appendChild(ripple);
+      }
+
+      // Generate sparkles on water
+      for (let i = 0; i < 50; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.style.left = Math.random() * 100 + "%";
+        sparkle.style.top = Math.random() * 80 + "%";
+        sparkle.style.animationDelay = Math.random() * 3 + "s";
+        sparkle.style.animationDuration = 2 + Math.random() * 3 + "s";
+        ocean.appendChild(sparkle);
+      }
+
+      // Generate leaves and grass
+      const leavesContainer = document.getElementById("leaves");
+      for (let cluster = 0; cluster < 6; cluster++) {
+        const leafCluster = document.createElement("div");
+        leafCluster.className = "leaf-cluster";
+        leafCluster.style.left = cluster * 18 + Math.random() * 8 + "%";
+
+        // Add grass blades
+        for (let g = 0; g < 12; g++) {
+          const grass = document.createElement("div");
+          grass.className = "grass";
+          grass.style.bottom = "0px";
+          grass.style.left = Math.random() * 80 + "px";
+          grass.style.height = 25 + Math.random() * 35 + "px";
+          grass.style.animationDelay = Math.random() * 3 + "s";
+          grass.style.animationDuration = 2.5 + Math.random() * 2 + "s";
+          leafCluster.appendChild(grass);
+        }
+
+        // Add leaves
+        for (let i = 0; i < 10; i++) {
+          const leaf = document.createElement("div");
+          leaf.className = "leaf";
+          leaf.style.bottom = 10 + Math.random() * 70 + "px";
+          leaf.style.left = Math.random() * 60 + "px";
+          leaf.style.width = 25 + Math.random() * 20 + "px";
+          leaf.style.height = 8 + Math.random() * 8 + "px";
+          leaf.style.animationDelay = Math.random() * 4 + "s";
+          leaf.style.animationDuration = 3 + Math.random() * 3 + "s";
+          leafCluster.appendChild(leaf);
+        }
+        leavesContainer.appendChild(leafCluster);
+      }
+
+      // Enhanced Audio System
+      let audioStarted = false;
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
+
+      // Create master compressor for better mixing
+      const masterCompressor = audioContext.createDynamicsCompressor();
+      masterCompressor.threshold.value = -24;
+      masterCompressor.knee.value = 30;
+      masterCompressor.ratio.value = 12;
+      masterCompressor.attack.value = 0.003;
+      masterCompressor.release.value = 0.25;
+      masterCompressor.connect(audioContext.destination);
+
+      // Realistic ocean waves with multiple layers
+      function createRealisticOcean() {
+        // Deep ocean rumble
+        const deepBufferSize = audioContext.sampleRate * 6;
+        const deepBuffer = audioContext.createBuffer(
+          2,
+          deepBufferSize,
+          audioContext.sampleRate
+        );
+        for (let channel = 0; channel < 2; channel++) {
+          const data = deepBuffer.getChannelData(channel);
+          for (let i = 0; i < deepBufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * 0.5;
+          }
+        }
+
+        const deepNoise = audioContext.createBufferSource();
+        deepNoise.buffer = deepBuffer;
+        deepNoise.loop = true;
+
+        const deepLowpass = audioContext.createBiquadFilter();
+        deepLowpass.type = "lowpass";
+        deepLowpass.frequency.value = 150;
+        deepLowpass.Q.value = 1;
+
+        const deepGain = audioContext.createGain();
+        deepGain.gain.value = 0.15;
+
+        // Deep wave LFO
+        const deepLfo = audioContext.createOscillator();
+        const deepLfoGain = audioContext.createGain();
+        deepLfo.type = "sine";
+        deepLfo.frequency.value = 0.05;
+        deepLfoGain.gain.value = 0.08;
+        deepLfo.connect(deepLfoGain);
+        deepLfoGain.connect(deepGain.gain);
+
+        deepNoise.connect(deepLowpass);
+        deepLowpass.connect(deepGain);
+        deepGain.connect(masterCompressor);
+        deepNoise.start();
+        deepLfo.start();
+
+        // Mid-frequency wave wash
+        const midBufferSize = audioContext.sampleRate * 4;
+        const midBuffer = audioContext.createBuffer(
+          2,
+          midBufferSize,
+          audioContext.sampleRate
+        );
+        for (let channel = 0; channel < 2; channel++) {
+          const data = midBuffer.getChannelData(channel);
+          for (let i = 0; i < midBufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+          }
+        }
+
+        const midNoise = audioContext.createBufferSource();
+        midNoise.buffer = midBuffer;
+        midNoise.loop = true;
+
+        const midBandpass = audioContext.createBiquadFilter();
+        midBandpass.type = "bandpass";
+        midBandpass.frequency.value = 400;
+        midBandpass.Q.value = 0.5;
+
+        const midGain = audioContext.createGain();
+        midGain.gain.value = 0.06;
+
+        // Wave rhythm modulation
+        const waveLfo1 = audioContext.createOscillator();
+        const waveLfo1Gain = audioContext.createGain();
+        waveLfo1.type = "sine";
+        waveLfo1.frequency.value = 0.08;
+        waveLfo1Gain.gain.value = 0.04;
+        waveLfo1.connect(waveLfo1Gain);
+        waveLfo1Gain.connect(midGain.gain);
+
+        const waveLfo2 = audioContext.createOscillator();
+        const waveLfo2Gain = audioContext.createGain();
+        waveLfo2.type = "sine";
+        waveLfo2.frequency.value = 0.12;
+        waveLfo2Gain.gain.value = 0.02;
+        waveLfo2.connect(waveLfo2Gain);
+        waveLfo2Gain.connect(midGain.gain);
+
+        midNoise.connect(midBandpass);
+        midBandpass.connect(midGain);
+        midGain.connect(masterCompressor);
+        midNoise.start();
+        waveLfo1.start();
+        waveLfo2.start();
+
+        // High frequency foam/spray
+        const highBufferSize = audioContext.sampleRate * 3;
+        const highBuffer = audioContext.createBuffer(
+          2,
+          highBufferSize,
+          audioContext.sampleRate
+        );
+        for (let channel = 0; channel < 2; channel++) {
+          const data = highBuffer.getChannelData(channel);
+          for (let i = 0; i < highBufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+          }
+        }
+
+        const highNoise = audioContext.createBufferSource();
+        highNoise.buffer = highBuffer;
+        highNoise.loop = true;
+
+        const highHighpass = audioContext.createBiquadFilter();
+        highHighpass.type = "highpass";
+        highHighpass.frequency.value = 2000;
+
+        const highLowpass = audioContext.createBiquadFilter();
+        highLowpass.type = "lowpass";
+        highLowpass.frequency.value = 6000;
+
+        const highGain = audioContext.createGain();
+        highGain.gain.value = 0.02;
+
+        // Foam modulation
+        const foamLfo = audioContext.createOscillator();
+        const foamLfoGain = audioContext.createGain();
+        foamLfo.type = "sine";
+        foamLfo.frequency.value = 0.15;
+        foamLfoGain.gain.value = 0.015;
+        foamLfo.connect(foamLfoGain);
+        foamLfoGain.connect(highGain.gain);
+
+        highNoise.connect(highHighpass);
+        highHighpass.connect(highLowpass);
+        highLowpass.connect(highGain);
+        highGain.connect(masterCompressor);
+        highNoise.start();
+        foamLfo.start();
+
+        // Occasional wave crash
+        function createWaveCrash() {
+          const crashBuffer = audioContext.createBuffer(
+            1,
+            audioContext.sampleRate * 2,
+            audioContext.sampleRate
+          );
+          const crashData = crashBuffer.getChannelData(0);
+          for (let i = 0; i < crashBuffer.length; i++) {
+            const envelope = Math.exp(-i / (audioContext.sampleRate * 0.8));
+            crashData[i] = (Math.random() * 2 - 1) * envelope;
+          }
+
+          const crash = audioContext.createBufferSource();
+          crash.buffer = crashBuffer;
+
+          const crashFilter = audioContext.createBiquadFilter();
+          crashFilter.type = "lowpass";
+          crashFilter.frequency.value = 800;
+
+          const crashGain = audioContext.createGain();
+          crashGain.gain.value = 0.03 + Math.random() * 0.02;
+
+          crash.connect(crashFilter);
+          crashFilter.connect(crashGain);
+          crashGain.connect(masterCompressor);
+          crash.start();
+
+          setTimeout(createWaveCrash, 8000 + Math.random() * 12000);
+        }
+        setTimeout(createWaveCrash, 3000);
+      }
+
+      // Realistic leaf/wind rustling
+      function createRealisticRustle() {
+        const rustleBufferSize = audioContext.sampleRate * 3;
+        const rustleBuffer = audioContext.createBuffer(
+          2,
+          rustleBufferSize,
+          audioContext.sampleRate
+        );
+
+        for (let channel = 0; channel < 2; channel++) {
+          const data = rustleBuffer.getChannelData(channel);
+          let lastValue = 0;
+          for (let i = 0; i < rustleBufferSize; i++) {
+            // Brown noise for more natural sound
+            const white = Math.random() * 2 - 1;
+            lastValue = (lastValue + 0.02 * white) / 1.02;
+            data[i] = lastValue * 3.5;
+          }
+        }
+
+        const rustle = audioContext.createBufferSource();
+        rustle.buffer = rustleBuffer;
+        rustle.loop = true;
+
+        const rustleHighpass = audioContext.createBiquadFilter();
+        rustleHighpass.type = "highpass";
+        rustleHighpass.frequency.value = 1500;
+
+        const rustleLowpass = audioContext.createBiquadFilter();
+        rustleLowpass.type = "lowpass";
+        rustleLowpass.frequency.value = 4000;
+
+        const rustleGain = audioContext.createGain();
+        rustleGain.gain.value = 0.025;
+
+        // Wind gusts modulation
+        const gustLfo1 = audioContext.createOscillator();
+        const gustLfo1Gain = audioContext.createGain();
+        gustLfo1.type = "sine";
+        gustLfo1.frequency.value = 0.3;
+        gustLfo1Gain.gain.value = 0.015;
+        gustLfo1.connect(gustLfo1Gain);
+        gustLfo1Gain.connect(rustleGain.gain);
+
+        const gustLfo2 = audioContext.createOscillator();
+        const gustLfo2Gain = audioContext.createGain();
+        gustLfo2.type = "sine";
+        gustLfo2.frequency.value = 0.7;
+        gustLfo2Gain.gain.value = 0.008;
+        gustLfo2.connect(gustLfo2Gain);
+        gustLfo2Gain.connect(rustleGain.gain);
+
+        rustle.connect(rustleHighpass);
+        rustleHighpass.connect(rustleLowpass);
+        rustleLowpass.connect(rustleGain);
+        rustleGain.connect(masterCompressor);
+        rustle.start();
+        gustLfo1.start();
+        gustLfo2.start();
+
+        // Occasional stronger gust
+        function createGust() {
+          const gustBuffer = audioContext.createBuffer(
+            1,
+            audioContext.sampleRate * 1.5,
+            audioContext.sampleRate
+          );
+          const gustData = gustBuffer.getChannelData(0);
+          let lastVal = 0;
+          for (let i = 0; i < gustBuffer.length; i++) {
+            const envelope = Math.sin((i / gustBuffer.length) * Math.PI);
+            const white = Math.random() * 2 - 1;
+            lastVal = (lastVal + 0.02 * white) / 1.02;
+            gustData[i] = lastVal * envelope * 4;
+          }
+
+          const gust = audioContext.createBufferSource();
+          gust.buffer = gustBuffer;
+
+          const gustFilter = audioContext.createBiquadFilter();
+          gustFilter.type = "bandpass";
+          gustFilter.frequency.value = 2500;
+          gustFilter.Q.value = 0.5;
+
+          const gustGain = audioContext.createGain();
+          gustGain.gain.value = 0.02;
+
+          gust.connect(gustFilter);
+          gustFilter.connect(gustGain);
+          gustGain.connect(masterCompressor);
+          gust.start();
+
+          setTimeout(createGust, 5000 + Math.random() * 10000);
+        }
+        setTimeout(createGust, 2000);
+      }
+
+      // Night ambience (distant sounds, crickets hint)
+      function createNightAmbience() {
+        // Very subtle high-frequency shimmer
+        const ambienceBuffer = audioContext.createBuffer(
+          2,
+          audioContext.sampleRate * 4,
+          audioContext.sampleRate
+        );
+        for (let channel = 0; channel < 2; channel++) {
+          const data = ambienceBuffer.getChannelData(channel);
+          for (let i = 0; i < ambienceBuffer.length; i++) {
+            data[i] = Math.random() * 2 - 1;
+          }
+        }
+
+        const ambience = audioContext.createBufferSource();
+        ambience.buffer = ambienceBuffer;
+        ambience.loop = true;
+
+        const ambienceFilter = audioContext.createBiquadFilter();
+        ambienceFilter.type = "bandpass";
+        ambienceFilter.frequency.value = 3500;
+        ambienceFilter.Q.value = 2;
+
+        const ambienceGain = audioContext.createGain();
+        ambienceGain.gain.value = 0.008;
+
+        ambience.connect(ambienceFilter);
+        ambienceFilter.connect(ambienceGain);
+        ambienceGain.connect(masterCompressor);
+        ambience.start();
+      }
+
+      // Start sounds on click
+      document.body.addEventListener(
+        "click",
+        () => {
+          if (!audioStarted) {
+            if (audioContext.state === "suspended") {
+              audioContext.resume();
+            }
+            createRealisticOcean();
+            createRealisticRustle();
+            createNightAmbience();
+            audioStarted = true;
+            document.getElementById("prompt").style.display = "none";
+          }
+        },
+        { once: true }
+      );
+
+      // Auto-start if allowed
+      if (audioContext.state === "running" && !audioStarted) {
+        createRealisticOcean();
+        createRealisticRustle();
+        createNightAmbience();
+        audioStarted = true;
+        document.getElementById("prompt").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
