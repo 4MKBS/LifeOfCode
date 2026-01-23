@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Doll in the Woods</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #8b0000;
+            text-shadow: 2px 2px 10px rgba(139, 0, 0, 0.5);
+            margin-bottom: 2rem;
+            animation: flicker 3s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+            52% { opacity: 1; }
+            54% { opacity: 0.6; }
+            56% { opacity: 1; }
+        }
+
+        .scene {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: shimmer 5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .woods {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tree {
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 80px solid #1a472a;
+            position: relative;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        .tree:nth-child(odd) {
+            animation-delay: -2s;
+        }
+
+        .tree::after {
+            content: '';
+            position: absolute;
+            top: 75px;
+            left: -5px;
+            width: 10px;
+            height: 30px;
+            background: #4a3728;
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .doll-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .doll {
+            width: 120px;
+            height: 200px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s, filter 0.5s;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .doll:hover {
+            transform: scale(1.1);
+        }
+
+        .doll.revealed {
+            filter: brightness(1.5) saturate(1.2);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .doll-head {
+            width: 60px;
+            height: 70px;
+            background: linear-gradient(145deg, #f5deb3, #d4a574);
+            border-radius: 50% 50% 45% 45%;
+            margin: 0 auto;
+            position: relative;
+            border: 2px solid #8b7355;
+        }
+
+        .doll-eye {
+            width: 12px;
+            height: 12px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            position: absolute;
+            top: 25px;
+            animation: blink 4s infinite;
+        }
+
+        .doll-eye.left { left: 12px; }
+        .doll-eye.right { right: 12px; }
+
+        .doll-eye::after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 96%, 100% { transform: scaleY(1); }
+            98% { transform: scaleY(0.1); }
+        }
+
+        .doll-mouth {
+            width: 15px;
+            height: 8px;
+            border: 2px solid #8b0000;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .doll-hair {
+            position: absolute;
+            top: -10px;
+            left: -5px;
+            width: 70px;
+            height: 40px;
+            background: #2c1810;
+            border-radius: 50% 50% 0 0;
+            z-index: -1;
+        }
+
+        .doll-body {
+            width: 50px;
+            height: 80px;
+            background: linear-gradient(145deg, #8b4513, #654321);
+            margin: 5px auto 0;
+            border-radius: 10px 10px 5px 5px;
+            position: relative;
+            border: 2px solid #4a3728;
+        }
+
+        .doll-dress {
+            position: absolute;
+            bottom: -20px;
+            left: -15px;
+            width: 80px;
+            height: 40px;
+            background: linear-gradient(145deg, #800020, #4a0012);
+            border-radius: 0 0 50% 50%;
+            border: 2px solid #2d0008;
+        }
+
+        .doll-arm {
+            width: 12px;
+            height: 50px;
+            background: linear-gradient(145deg, #f5deb3, #d4a574);
+            position: absolute;
+            top: 10px;
+            border-radius: 5px;
+            border: 1px solid #8b7355;
+        }
+
+        .doll-arm.left { left: -14px; transform: rotate(15deg); }
+        .doll-arm.right { right: -14px; transform: rotate(-15deg); }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .story-text:nth-child(1) { animation-delay: 0.5s; }
+        .story-text:nth-child(2) { animation-delay: 1s; }
+        .story-text:nth-child(3) { animation-delay: 1.5s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal-btn {
+            display: block;
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background: linear-gradient(145deg, #8b0000, #5c0000);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.6);
+        }
+
+        .message {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-top: 1rem;
+            opacity: 0;
+            transition: opacity 0.5s;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .message.visible {
+            opacity: 1;
+        }
+
+        .fog {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 150px;
+            background: linear-gradient(to top, rgba(100, 100, 120, 0.3), transparent);
+            animation: fogMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fogMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="fog"></div>
+    
+    <div class="container">
+        <h1>🌲 The Doll in the Woods 🌲</h1>
+        
+        <div class="scene">
+            <p class="story-text">
+                Deep in the misty woods, where shadows dance between ancient trees, 
+                a young girl named Lily vanished without a trace...
+            </p>
+            <p class="story-text">
+                Her desperate parents searched for days, calling her name into the endless fog. 
+                Until one evening, they found something in a clearing—a decrepit, weathered doll 
+                sitting alone on a moss-covered stone.
+            </p>
+            <p class="story-text">
+                The doll's eyes seemed to follow them. Its cracked porcelain face held an 
+                expression that was hauntingly familiar...
+            </p>
+        </div>
+
+        <div class="woods">
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+        </div>
+
+        <div class="doll-container">
+            <div class="doll" id="doll" title="Click me...">
+                <div class="doll-head">
+                    <div class="doll-hair"></div>
+                    <div class="doll-eye left"></div>
+                    <div class="doll-eye right"></div>
+                    <div class="doll-mouth"></div>
+                </div>
+                <div class="doll-body">
+                    <div class="doll-arm left"></div>
+                    <div class="doll-arm right"></div>
+                    <div class="doll-dress"></div>
+                </div>
+            </div>
+        </div>
+
+        <button class="reveal-btn" id="revealBtn">Discover the Truth</button>
+        
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Reveal story
+        const messages = [
+            "The doll's eyes glow... it's alive!",
+            "\"Mom... Dad... it's me, Lily...\"",
+            "She was cursed, but she never stopped waiting for them.",
+            "And now, the spell can finally be broken. 💫"
+        ];
+
+        let messageIndex = 0;
+        const doll = document.getElementById('doll');
+        const revealBtn = document.getElementById('revealBtn');
+        const messageEl = document.getElementById('message');
+
+        function revealNext() {
+            if (messageIndex < messages.length) {
+                messageEl.textContent = messages[messageIndex];
+                messageEl.classList.add('visible');
+                
+                if (messageIndex === 0) {
+                    doll.classList.add('revealed');
+                }
+                
+                messageIndex++;
+                revealBtn.textContent = messageIndex < messages.length ? 'Continue...' : '🌟 The End 🌟';
+            }
+        }
+
+        revealBtn.addEventListener('click', revealNext);
+        doll.addEventListener('click', revealNext);
+    </script>
+</body>
+</html>
