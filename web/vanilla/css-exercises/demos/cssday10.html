@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box Model Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #1a1a2e;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 40px;
+        }
+
+        .box-model-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .margin-box {
+            background: #ff6b6b;
+            padding: 30px;
+            animation: pulse-margin 2s ease-in-out infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .border-box {
+            background: #4ecdc4;
+            border: 15px solid #45b7aa;
+            padding: 30px;
+            animation: pulse-border 2s ease-in-out infinite 0.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .padding-box {
+            background: #ffe66d;
+            padding: 30px;
+            animation: pulse-padding 2s ease-in-out infinite 1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content-box {
+            background: #95e1d3;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #1a1a2e;
+            animation: pulse-content 2s ease-in-out infinite 1.5s;
+        }
+
+        @keyframes pulse-margin {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-width: 15px; }
+            50% { border-width: 25px; }
+        }
+
+        @keyframes pulse-padding {
+            0%, 100% { padding: 30px; }
+            50% { padding: 45px; }
+        }
+
+        @keyframes pulse-content {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .labels {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+
+        .label-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .margin-color { background: #ff6b6b; }
+        .border-color { background: #4ecdc4; }
+        .padding-color { background: #ffe66d; }
+        .content-color { background: #95e1d3; }
+    </style>
+</head>
+<body>
+    <h1>CSS Box Model Animation</h1>
+    
+    <div class="box-model-container">
+        <div class="margin-box">
+            <div class="border-box">
+                <div class="padding-box">
+                    <div class="content-box">
+                        Content
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="labels">
+        <div class="label">
+            <div class="label-color margin-color"></div>
+            <span>Margin</span>
+        </div>
+        <div class="label">
+            <div class="label-color border-color"></div>
+            <span>Border</span>
+        </div>
+        <div class="label">
+            <div class="label-color padding-color"></div>
+            <span>Padding</span>
+        </div>
+        <div class="label">
+            <div class="label-color content-color"></div>
+            <span>Content</span>
+        </div>
+    </div>
+</body>
+</html>
