@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+        <style>
+  .challenge-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .skill {
+    margin-bottom: 25px;
+  }
+
+  .skill-name {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 15px;
+    animation: fillAnimation 2s ease-out forwards;
+    position: relative;
+  }
+
+  .html-fill {
+    background: linear-gradient(90deg, #ff6b6b, #ff8787);
+    width: 90%;
+  }
+
+  .css-fill {
+    background: linear-gradient(90deg, #4ecdc4, #44a5a0);
+    width: 85%;
+  }
+
+  .js-fill {
+    background: linear-gradient(90deg, #ffd93d, #ffb703);
+    width: 75%;
+  }
+
+  .progress-percent {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+  }
+
+  @keyframes fillAnimation {
+    from {
+      width: 0%;
+    }
+  }
+</style>
+    </style>
+  </head>
+  <body>
+    <div class="challenge-container">
+      <h2>CSS Day 12: Animated Progress Bars</h2>
+      <div class="progress-section">
+        <div class="skill">
+          <span class="skill-name">HTML</span>
+          <div class="progress-bar">
+            <div class="progress-fill html-fill"></div>
+            <span class="progress-percent">90%</span>
+          </div>
+        </div>
+        <div class="skill">
+          <span class="skill-name">CSS</span>
+          <div class="progress-bar">
+            <div class="progress-fill css-fill"></div>
+            <span class="progress-percent">85%</span>
+          </div>
+        </div>
+        <div class="skill">
+          <span class="skill-name">JavaScript</span>
+          <div class="progress-bar">
+            <div class="progress-fill js-fill"></div>
+            <span class="progress-percent">75%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
