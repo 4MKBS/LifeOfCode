@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    
+</body>
+</html>
+<!-- Challenge: Build a responsive 3-card pricing table with hover effects -->
+<style>
+    :root { --bg: #0f172a; --card: #1e293b; --accent: #38bdf8; --text: #e2e8f0; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; }
+    main { width: min(1100px, 90vw); display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card { background: var(--card); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 20px 60px rgba(0,0,0,0.35); transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+    .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 28px 70px rgba(56, 189, 248, 0.2); }
+    .plan { font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(226,232,240,0.7); }
+    .price { font-size: 2.4rem; font-weight: 700; margin: 0.4rem 0 1rem; }
+    ul { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: 0.5rem; }
+    li { display: flex; gap: 0.6rem; align-items: center; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    button { width: 100%; border: 1px solid var(--accent); background: transparent; color: var(--accent); padding: 0.9rem 1rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: background 160ms ease, color 160ms ease; }
+    button:hover { background: var(--accent); color: #0f172a; }
+</style>
+
+<main>
+    <article class="card">
+        <div class="plan">Starter</div>
+        <div class="price">$12<span style="font-size:1rem;font-weight:500;">/mo</span></div>
+        <ul>
+            <li><span class="dot"></span>Basic analytics</li>
+            <li><span class="dot"></span>100 GB storage</li>
+            <li><span class="dot"></span>Email support</li>
+        </ul>
+        <button>Choose Plan</button>
+    </article>
+
+    <article class="card">
+        <div class="plan">Pro</div>
+        <div class="price">$24<span style="font-size:1rem;font-weight:500;">/mo</span></div>
+        <ul>
+            <li><span class="dot"></span>Advanced analytics</li>
+            <li><span class="dot"></span>1 TB storage</li>
+            <li><span class="dot"></span>Priority support</li>
+        </ul>
+        <button>Choose Plan</button>
+    </article>
+
+    <article class="card">
+        <div class="plan">Enterprise</div>
+        <div class="price">Custom</div>
+        <ul>
+            <li><span class="dot"></span>Unlimited projects</li>
+            <li><span class="dot"></span>Custom SLAs</li>
+            <li><span class="dot"></span>Dedicated manager</li>
+        </ul>
+        <button>Contact Sales</button>
+    </article>
+</main>
