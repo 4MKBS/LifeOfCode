@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker 🔥</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            opacity: 0.9;
+        }
+
+        .add-habit-form {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-habit-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .add-habit-form input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .add-habit-form button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .add-habit-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .habits-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .habit-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .habit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .habit-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .habit-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .habit-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .streak-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .streak-badge.animate {
+            animation: streakPop 0.5s ease;
+        }
+
+        @keyframes streakPop {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .check-today {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .check-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .check-btn:hover {
+            border-color: #4CAF50;
+            background: #f0fff0;
+        }
+
+        .check-btn.done {
+            background: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+            animation: checkPop 0.4s ease;
+        }
+
+        @keyframes checkPop {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.3); }
+            60% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+
+        .check-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .heatmap {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .heatmap-day {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+
+        .heatmap-day.done {
+            background: #4CAF50;
+        }
+
+        .heatmap-day.missed {
+            background: #ffcdd2;
+        }
+
+        .heatmap-day.today {
+            border: 2px solid #667eea;
+        }
+
+        .heatmap-day:hover {
+            transform: scale(1.3);
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+
+        .delete-btn:hover {
+            color: #f44336;
+        }
+
+        .habit-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #666;
+        }
+
+        .fire-particles {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .particle {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
+        .heatmap-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 Habit Tracker</h1>
+            <p>Build streaks, build habits, build yourself</p>
+        </header>
+
+        <form class="add-habit-form" id="addHabitForm">
+            <input type="text" id="habitInput" placeholder="Enter a new habit..." required>
+            <button type="submit">+ Add Habit</button>
+        </form>
+
+        <div class="habits-list" id="habitsList"></div>
+    </div>
+
+    <div class="fire-particles" id="fireParticles"></div>
+
+    <script>
+        const habitIcons = ['💪', '📚', '🏃', '💧', '🧘', '✍️', '🎯', '🌱', '💤', '🥗'];
+        
+        function getHabits() {
+            return JSON.parse(localStorage.getItem('habits')) || [];
+        }
+
+        function saveHabits(habits) {
+            localStorage.setItem('habits', JSON.stringify(habits));
+        }
+
+        function getDateString(date = new Date()) {
+            return date.toISOString().split('T')[0];
+        }
+
+        function getDaysArray(days = 30) {
+            const arr = [];
+            for (let i = days - 1; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                arr.push(getDateString(date));
+            }
+            return arr;
+        }
+
+        function calculateStreak(completedDates) {
+            const today = getDateString();
+            const yesterday = getDateString(new Date(Date.now() - 86400000));
+            let streak = 0;
+            let checkDate = new Date();
+
+            // Check if today is done
+            if (completedDates.includes(today)) {
+                streak = 1;
+                checkDate.setDate(checkDate.getDate() - 1);
+            } else if (completedDates.includes(yesterday)) {
+                // If today not done but yesterday was, start from yesterday
+                checkDate.setDate(checkDate.getDate() - 1);
+            } else {
+                return 0;
+            }
+
+            // Count backwards
+            while (completedDates.includes(getDateString(checkDate))) {
+                streak++;
+                checkDate.setDate(checkDate.getDate() - 1);
+            }
+
+            return streak;
+        }
+
+        function createFireParticles(x, y) {
+            const container = document.getElementById('fireParticles');
+            const emojis = ['🔥', '⭐', '✨', '💥'];
+            
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('span');
+                particle.className = 'particle';
+                particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = (x + (Math.random() - 0.5) * 50) + 'px';
+                particle.style.top = y + 'px';
+                container.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        function renderHabits() {
+            const habits = getHabits();
+            const habitsList = document.getElementById('habitsList');
+            const today = getDateString();
+            const days = getDaysArray(30);
+
+            if (habits.length === 0) {
+                habitsList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🎯</div>
+                        <h3>No habits yet!</h3>
+                        <p>Add your first habit to start tracking</p>
+                    </div>
+                `;
+                return;
+            }
+
+            habitsList.innerHTML = habits.map((habit, index) => {
+                const streak = calculateStreak(habit.completed);
+                const isDoneToday = habit.completed.includes(today);
+
+                return `
+                    <div class="habit-card" data-index="${index}">
+                        <div class="habit-header">
+                            <div class="habit-info">
+                                <div class="habit-icon">${habit.icon}</div>
+                                <span class="habit-name">${habit.name}</span>
+                            </div>
+                            <div class="habit-actions">
+                                <div class="streak-badge">
+                                    🔥 ${streak} day${streak !== 1 ? 's' : ''}
+                                </div>
+                                <button class="delete-btn" onclick="deleteHabit(${index})">🗑️</button>
+                            </div>
+                        </div>
+                        <div class="check-today">
+                            <button class="check-btn ${isDoneToday ? 'done' : ''}" onclick="toggleToday(${index}, event)">
+                                ${isDoneToday ? '✓' : ''}
+                            </button>
+                            <span class="check-label">${isDoneToday ? 'Done for today! 🎉' : 'Mark as done for today'}</span>
+                        </div>
+                        <div class="heatmap-label">Last 30 days</div>
+                        <div class="heatmap">
+                            ${days.map(day => {
+                                const isDone = habit.completed.includes(day);
+                                const isToday = day === today;
+                                const isPast = day < today;
+                                let className = 'heatmap-day';
+                                if (isToday) className += ' today';
+                                if (isDone) className += ' done';
+                                else if (isPast) className += ' missed';
+                                return `<div class="${className}" title="${day}"></div>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addHabit(name) {
+            const habits = getHabits();
+            habits.push({
+                name,
+                icon: habitIcons[Math.floor(Math.random() * habitIcons.length)],
+                completed: [],
+                createdAt: getDateString()
+            });
+            saveHabits(habits);
+            renderHabits();
+        }
+
+        function deleteHabit(index) {
+            if (confirm('Delete this habit?')) {
+                const habits = getHabits();
+                habits.splice(index, 1);
+                saveHabits(habits);
+                renderHabits();
+            }
+        }
+
+        function toggleToday(index, event) {
+            const habits = getHabits();
+            const today = getDateString();
+            const habit = habits[index];
+            const wasCompleted = habit.completed.includes(today);
+            const oldStreak = calculateStreak(habit.completed);
+
+            if (wasCompleted) {
+                habit.completed = habit.completed.filter(d => d !== today);
+            } else {
+                habit.completed.push(today);
+            }
+
+            saveHabits(habits);
+            
+            const newStreak = calculateStreak(habit.completed);
+            
+            if (!wasCompleted && newStreak > oldStreak) {
+                const rect = event.target.getBoundingClientRect();
+                createFireParticles(rect.left + rect.width / 2, rect.top);
+            }
+
+            renderHabits();
+
+            if (!wasCompleted) {
+                const card = document.querySelector(`[data-index="${index}"]`);
+                const badge = card.querySelector('.streak-badge');
+                badge.classList.add('animate');
+            }
+        }
+
+        document.getElementById('addHabitForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('habitInput');
+            if (input.value.trim()) {
+                addHabit(input.value.trim());
+                input.value = '';
+            }
+        });
+
+        renderHabits();
+    </script>
+</body>
+</html>
