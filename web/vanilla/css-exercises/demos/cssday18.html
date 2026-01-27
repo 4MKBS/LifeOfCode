@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morphing Liquid Glass Cards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a1a2e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            perspective: 1000px;
+        }
+
+        .liquid-card {
+            width: 280px;
+            height: 380px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .liquid-card:hover {
+            transform: rotateY(15deg) rotateX(5deg) translateZ(30px);
+        }
+
+        .card-blob {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 107, 107, 0.15),
+                rgba(78, 205, 196, 0.15),
+                rgba(255, 230, 109, 0.15)
+            );
+            backdrop-filter: blur(20px);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morphBlob 8s ease-in-out infinite;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 80px rgba(255, 255, 255, 0.05);
+        }
+
+        .liquid-card:nth-child(1) .card-blob {
+            animation-delay: 0s;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 128, 0.2),
+                rgba(128, 0, 255, 0.2)
+            );
+        }
+
+        .liquid-card:nth-child(2) .card-blob {
+            animation-delay: -2s;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 212, 255, 0.2),
+                rgba(0, 255, 136, 0.2)
+            );
+        }
+
+        .liquid-card:nth-child(3) .card-blob {
+            animation-delay: -4s;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 165, 0, 0.2),
+                rgba(255, 0, 80, 0.2)
+            );
+        }
+
+        @keyframes morphBlob {
+            0%, 100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            25% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+            50% {
+                border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%;
+            }
+            75% {
+                border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%;
+            }
+        }
+
+        .card-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .floating-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+            animation: floatIcon 3s ease-in-out infinite;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .liquid-card:nth-child(2) .floating-icon {
+            animation-delay: -1s;
+        }
+
+        .liquid-card:nth-child(3) .floating-icon {
+            animation-delay: -2s;
+        }
+
+        .card-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-description {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .ripple-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: ripple 4s linear infinite;
+            pointer-events: none;
+        }
+
+        .ripple-ring:nth-child(2) {
+            animation-delay: -1.3s;
+        }
+
+        .ripple-ring:nth-child(3) {
+            animation-delay: -2.6s;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: particle 6s linear infinite;
+        }
+
+        .particle:nth-child(1) { left: 20%; top: 30%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 70%; top: 20%; animation-delay: -1s; }
+        .particle:nth-child(3) { left: 40%; top: 80%; animation-delay: -2s; }
+        .particle:nth-child(4) { left: 80%; top: 60%; animation-delay: -3s; }
+        .particle:nth-child(5) { left: 10%; top: 70%; animation-delay: -4s; }
+
+        @keyframes particle {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50px) scale(1.5);
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 1;
+            }
+        }
+
+        /* Background floating orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: orbitFloat 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .bg-orb:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: #ff006e;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-orb:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            background: #00d4ff;
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        .bg-orb:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            background: #8b00ff;
+            top: 50%;
+            left: 50%;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbitFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(50px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-30px, 50px) scale(0.9);
+            }
+            75% {
+                transform: translate(-50px, -20px) scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+
+    <div class="container">
+        <div class="liquid-card">
+            <div class="card-blob"></div>
+            <div class="ripple-ring"></div>
+            <div class="ripple-ring"></div>
+            <div class="ripple-ring"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="card-content">
+                <div class="floating-icon">🌸</div>
+                <h3 class="card-title">Quantum Bloom</h3>
+                <p class="card-description">Experience reality shifting interfaces that adapt to your consciousness flow</p>
+            </div>
+        </div>
+
+        <div class="liquid-card">
+            <div class="card-blob"></div>
+            <div class="ripple-ring"></div>
+            <div class="ripple-ring"></div>
+            <div class="ripple-ring"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="card-content">
+                <div class="floating-icon">💎</div>
+                <h3 class="card-title">Neural Crystal</h3>
+                <p class="card-description">Organic glass morphology that breathes with your interaction patterns</p>
+            </div>
+        </div>
+
+        <div class="liquid-card">
+            <div class="card-blob"></div>
+            <div class="ripple-ring"></div>
+            <div class="ripple-ring"></div>
+            <div class="ripple-ring"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="card-content">
+                <div class="floating-icon">🔥</div>
+                <h3 class="card-title">Plasma Drift</h3>
+                <p class="card-description">Fluid boundaries dissolve the gap between digital and ethereal realms</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
