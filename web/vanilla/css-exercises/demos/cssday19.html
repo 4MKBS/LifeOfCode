@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uncommon Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0a0a0a;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            height: 100vh;
+            gap: 3px;
+            padding: 3px;
+            transform: perspective(1000px) rotateX(5deg);
+        }
+
+        .cell {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid #0f3460;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cell::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, #e94560, transparent 30%);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .cell:hover::before {
+            opacity: 1;
+        }
+
+        .cell::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: #1a1a2e;
+            z-index: 1;
+        }
+
+        .cell:hover {
+            transform: scale(1.5) rotate(5deg);
+            z-index: 100;
+            box-shadow: 0 0 50px #e94560;
+        }
+
+        .cell span {
+            z-index: 2;
+            color: #e94560;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .cell:hover span {
+            opacity: 1;
+        }
+
+        .cell:nth-child(odd) {
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        .cell:nth-child(even) {
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .cell:nth-child(3n) {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .cell:nth-child(5n) {
+            animation: glitch 3s steps(1) infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.5); }
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-5px, 2px); }
+            94% { transform: translate(5px, -2px); }
+            96% { transform: translate(-3px, -3px); }
+            98% { transform: translate(3px, 3px); }
+        }
+
+        .floating-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: transparent;
+            -webkit-text-stroke: 1px #e94560;
+            text-transform: uppercase;
+            letter-spacing: 1rem;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(-5deg); }
+            50% { transform: translate(-50%, -60%) rotate(5deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cell"><span>01</span></div>
+        <div class="cell"><span>02</span></div>
+        <div class="cell"><span>03</span></div>
+        <div class="cell"><span>04</span></div>
+        <div class="cell"><span>05</span></div>
+        <div class="cell"><span>06</span></div>
+        <div class="cell"><span>07</span></div>
+        <div class="cell"><span>08</span></div>
+        <div class="cell"><span>09</span></div>
+        <div class="cell"><span>10</span></div>
+        <div class="cell"><span>11</span></div>
+        <div class="cell"><span>12</span></div>
+        <div class="cell"><span>13</span></div>
+        <div class="cell"><span>14</span></div>
+        <div class="cell"><span>15</span></div>
+        <div class="cell"><span>16</span></div>
+        <div class="cell"><span>17</span></div>
+        <div class="cell"><span>18</span></div>
+        <div class="cell"><span>19</span></div>
+        <div class="cell"><span>20</span></div>
+        <div class="cell"><span>21</span></div>
+        <div class="cell"><span>22</span></div>
+        <div class="cell"><span>23</span></div>
+        <div class="cell"><span>24</span></div>
+        <div class="cell"><span>25</span></div>
+    </div>
+    <div class="floating-text">Chaos</div>
+</body>
+</html>
