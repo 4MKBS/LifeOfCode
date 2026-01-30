@@ -2,96 +2,112 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>day 21</title>
+    <title>CSS Loading Spinner Variations</title>
     <style>
         body {
-            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            min-height: 100vh;
-        }
-        main {
-            max-width: 500px;
-            margin: 60px auto;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-            padding: 32px 24px;
-        }
-        h1 {
-            text-align: center;
-            color: #f76d6d;
-            margin-bottom: 32px;
-            font-size: 2rem;
-            letter-spacing: 1px;
-        }
-        .card {
-            background: #f9fafc;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            padding: 24px;
-            margin-bottom: 18px;
+            background: #f8f9fa;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 18px;
-            transition: box-shadow 0.2s;
+            gap: 40px;
+            min-height: 100vh;
+            justify-content: center;
+            font-family: sans-serif;
         }
-        .card:hover {
-            box-shadow: 0 6px 24px rgba(247,109,109,0.15);
+
+        .spinner {
+            display: inline-block;
+            margin: 20px;
         }
-        .card-icon {
-            background: #f76d6d;
-            color: #fff;
-            border-radius: 50%;
+
+        /* Spinner 1: Classic rotating border */
+        .spinner1 {
             width: 48px;
             height: 48px;
+            border: 6px solid #eee;
+            border-top: 6px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Spinner 2: Dots bouncing */
+        .spinner2 {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.7rem;
+            width: 60px;
+            height: 24px;
+            gap: 8px;
         }
-        .card-content {
-            flex: 1;
+        .spinner2-dot {
+            width: 12px;
+            height: 12px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: bounce 0.6s infinite alternate;
         }
-        .card-title {
-            font-weight: bold;
-            margin: 0 0 6px 0;
-            color: #333;
+        .spinner2-dot:nth-child(2) { animation-delay: 0.2s; }
+        .spinner2-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        /* Spinner 3: Growing bars */
+        .spinner3 {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            width: 40px;
+            height: 32px;
         }
-        .card-desc {
-            margin: 0;
-            color: #666;
-            font-size: 0.97rem;
+        .spinner3-bar {
+            width: 6px;
+            height: 12px;
+            background: #fd7e14;
+            border-radius: 3px;
+            animation: grow 0.8s infinite;
+        }
+        .spinner3-bar:nth-child(2) { animation-delay: 0.2s; }
+        .spinner3-bar:nth-child(3) { animation-delay: 0.4s; }
+        .spinner3-bar:nth-child(4) { animation-delay: 0.6s; }
+
+        /* Spinner 4: Dual ring */
+        .spinner4 {
+            width: 48px;
+            height: 48px;
+            border: 6px solid #20c997;
+            border-radius: 50%;
+            border-color: #20c997 transparent #20c997 transparent;
+            animation: spin 1.2s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes bounce {
+            to { transform: translateY(-12px); opacity: 0.7; }
+        }
+
+        @keyframes grow {
+            0%, 100% { height: 12px; }
+            50% { height: 28px; }
         }
     </style>
 </head>
 <body>
-    <main>
-        <h1>CSS Day 21 - Exercise Demo</h1>
-        <div>
-            <div class="card">
-                <div class="card-icon">🎨</div>
-                <div class="card-content">
-                    <div class="card-title">Modern UI</div>
-                    <div class="card-desc">Clean, soft cards with subtle shadows and gradients.</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-icon">⚡</div>
-                <div class="card-content">
-                    <div class="card-title">Responsive</div>
-                    <div class="card-desc">Looks great on all devices and screen sizes.</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-icon">💡</div>
-                <div class="card-content">
-                    <div class="card-title">Easy to Customize</div>
-                    <div class="card-desc">Simple structure for quick modifications.</div>
-                </div>
-            </div>
+    <h2>CSS Loading Spinner Variations</h2>
+    <div>
+        <div class="spinner spinner1"></div>
+        <div class="spinner spinner2">
+            <div class="spinner2-dot"></div>
+            <div class="spinner2-dot"></div>
+            <div class="spinner2-dot"></div>
         </div>
-    </main>
+        <div class="spinner spinner3">
+            <div class="spinner3-bar"></div>
+            <div class="spinner3-bar"></div>
+            <div class="spinner3-bar"></div>
+            <div class="spinner3-bar"></div>
+        </div>
+        <div class="spinner spinner4"></div>
+    </div>
 </body>
 </html>
