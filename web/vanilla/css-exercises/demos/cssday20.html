@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unique CSS Day 20 Design</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .orbit-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .center-dot {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #fff 60%, #f7b42c 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 40px 10px #f7b42c88;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+        .orbit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px dashed rgba(255,255,255,0.2);
+            animation: rotate 12s linear infinite;
+        }
+        .orbit2 {
+            width: 300px;
+            height: 300px;
+            left: 50px;
+            top: 50px;
+            animation-duration: 8s;
+            border-style: solid;
+            border-color: rgba(247,180,44,0.2);
+        }
+        .orbit3 {
+            width: 200px;
+            height: 200px;
+            left: 100px;
+            top: 100px;
+            animation-duration: 5s;
+            border-style: dotted;
+            border-color: rgba(255,255,255,0.3);
+        }
+        @keyframes rotate {
+            100% { transform: rotate(360deg);}
+        }
+        .planet {
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #f7b42c 0%, #fc575e 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px 5px #fc575e88;
+            transform: translate(-50%, -50%);
+            animation: planet-move 12s linear infinite;
+        }
+        .planet2 {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            box-shadow: 0 0 10px 3px #43cea288;
+            left: 100%;
+            animation: planet-move2 8s linear infinite;
+        }
+        .planet3 {
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #ffaf7b 0%, #d76d77 100%);
+            box-shadow: 0 0 8px 2px #d76d7788;
+            left: 100%;
+            animation: planet-move3 5s linear infinite;
+        }
+        @keyframes planet-move {
+            0% { transform: rotate(0deg) translateX(200px) rotate(0deg);}
+            100% { transform: rotate(360deg) translateX(200px) rotate(-360deg);}
+        }
+        @keyframes planet-move2 {
+            0% { transform: rotate(0deg) translateX(150px) rotate(0deg);}
+            100% { transform: rotate(360deg) translateX(150px) rotate(-360deg);}
+        }
+        @keyframes planet-move3 {
+            0% { transform: rotate(0deg) translateX(100px) rotate(0deg);}
+            100% { transform: rotate(360deg) translateX(100px) rotate(-360deg);}
+        }
+        .label {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            text-shadow: 0 2px 8px #0008;
+        }
+    </style>
+</head>
+<body>
+    <div class="orbit-container">
+        <div class="center-dot"></div>
+        <div class="orbit">
+            <div class="planet"></div>
+        </div>
+        <div class="orbit orbit2">
+            <div class="planet planet2"></div>
+        </div>
+        <div class="orbit orbit3">
+            <div class="planet planet3"></div>
+        </div>
+        <div class="label">CSS Day 20: Orbiting Planets</div>
+    </div>
+</body>
+</html>
