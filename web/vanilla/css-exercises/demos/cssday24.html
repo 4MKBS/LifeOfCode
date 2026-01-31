@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bouncing Dots Loader</title>
+    <style>
+      .loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50vh;
+        background: rgba(7, 78, 64, 0.585);
+      }
+      .dot {
+        width: 16px;
+        height: 16px;
+        margin: 0 6px;
+        border-radius: 50%;
+        background: #fff;
+        animation: bounce 0.6s infinite alternate;
+      }
+      .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes bounce {
+        to {
+          transform: translateY(-30px);
+          opacity: 0.7;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </body>
+</html>
+<!-- Variation 1: Different colors -->
+<div class="loader" style="background: #333">
+  <div class="dot" style="background: #e74c3c"></div>
+  <div class="dot" style="background: #f1c40f"></div>
+  <div class="dot" style="background: #2ecc71"></div>
+</div>
+
+<!-- Variation 2: More dots -->
+<div class="loader" style="background: #222">
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+<style>
+  .loader:nth-of-type(3) .dot:nth-child(4) {
+    animation-delay: 0.6s;
+  }
+  .loader:nth-of-type(3) .dot:nth-child(5) {
+    animation-delay: 0.8s;
+  }
+</style>
+
+<!-- Variation 3: Horizontal scaling instead of bouncing -->
+<div class="loader" style="background: #222">
+  <div class="dot scale"></div>
+  <div class="dot scale"></div>
+  <div class="dot scale"></div>
+</div>
+<style>
+  .dot.scale {
+    animation: scaleDot 0.6s infinite alternate;
+  }
+  .dot.scale:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot.scale:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes scaleDot {
+    to {
+      transform: scaleX(1.8);
+      opacity: 0.7;
+    }
+  }
+</style>
+
+<!-- Variation 4: Growing dots -->
+<div class="loader" style="background: #222">
+  <div class="dot grow"></div>
+  <div class="dot grow"></div>
+  <div class="dot grow"></div>
+</div>
+<style>
+  .dot.grow {
+    animation: growDot 0.6s infinite alternate;
+  }
+  .dot.grow:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot.grow:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes growDot {
+    to {
+      transform: scale(1.5);
+      opacity: 0.7;
+    }
+  }
+</style>
+
+<!-- Variation 5: Shrinking dots -->
+<div class="loader" style="background: #222">
+  <div class="dot shrink"></div>
+  <div class="dot shrink"></div>
+  <div class="dot shrink"></div>
+</div>
+<style>
+  .dot.shrink {
+    animation: shrinkDot 0.6s infinite alternate;
+  }
+  .dot.shrink:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot.shrink:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes shrinkDot {
+    to {
+      transform: scale(0.5);
+      opacity: 0.7;
+    }
+  }
+</style>
+
+<!-- Variation 6: Fading dots -->
+<div class="loader" style="background: #222">
+  <div class="dot fade"></div>
+  <div class="dot fade"></div>
+  <div class="dot fade"></div>
+</div>
+<style>
+  .dot.fade {
+    animation: fadeDot 0.6s infinite alternate;
+  }
+  .dot.fade:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot.fade:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes fadeDot {
+    to {
+      opacity: 0.2;
+    }
+  }
+</style>
+
+<!-- Variation 7: Dots moving left and right -->
+<div class="loader" style="background: #222">
+  <div class="dot move"></div>
+  <div class="dot move"></div>
+  <div class="dot move"></div>
+</div>
+<style>
+  .dot.move {
+    animation: moveDot 0.6s infinite alternate;
+  }
+  .dot.move:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot.move:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes moveDot {
+    to {
+      transform: translateX(20px);
+      opacity: 0.7;
+    }
+  }
+</style>
+
+<!-- Variation 8: Dots with shadow -->
+<div class="loader" style="background: #222">
+  <div class="dot shadow"></div>
+  <div class="dot shadow"></div>
+  <div class="dot shadow"></div>
+</div>
+<style>
+  .dot.shadow {
+    box-shadow: 0 8px 16px #fff3;
+    animation: bounce 0.6s infinite alternate;
+  }
+  .dot.shadow:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot.shadow:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+</style>
+
+<!-- Variation 9: Dots with border -->
+<div class="loader" style="background: #222">
+  <div class="dot border"></div>
+  <div class="dot border"></div>
+  <div class="dot border"></div>
+</div>
+<style>
+  .dot.border {
+    background: transparent;
+    border: 3px solid #fff;
+    animation: bounce 0.6s infinite alternate;
+  }
+  .dot.border:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot.border:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+</style>
+
+<!-- Variation 10: Dots with rainbow gradient -->
+<div class="loader" style="background: #222">
+  <div class="dot rainbow"></div>
+  <div class="dot rainbow"></div>
+  <div class="dot rainbow"></div>
+</div>
+<style>
+  .dot.rainbow {
+    background: linear-gradient(
+      135deg,
+      #e74c3c,
+      #f1c40f,
+      #2ecc71,
+      #3498db,
+      #9b59b6
+    );
+    animation: bounce 0.6s infinite alternate;
+  }
+  .dot.rainbow:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot.rainbow:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+</style>

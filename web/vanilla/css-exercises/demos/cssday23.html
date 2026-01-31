@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Text Typing Animation Variations</title>
+    <style>
+      body {
+        font-family: monospace;
+        background: #f9f9f9;
+        padding: 2rem;
+      }
+      .typing,
+      .typing2,
+      .typing3 {
+        font-size: 2rem;
+        white-space: nowrap;
+        border-right: 2px solid #333;
+        width: fit-content;
+        overflow: hidden;
+        margin-bottom: 2rem;
+      }
+      /* Variation 1: Simple CSS Typing */
+      .typing {
+        animation: typing 3s steps(30, end), blink-caret 0.7s step-end infinite;
+      }
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 34ch;
+        }
+      }
+      @keyframes blink-caret {
+        0%,
+        100% {
+          border-color: #333;
+        }
+        50% {
+          border-color: transparent;
+        }
+      }
+
+      /* Variation 2: Slower Typing with Pause */
+      .typing2 {
+        animation: typing2 5s steps(34, end), blink-caret 0.7s step-end infinite;
+      }
+      @keyframes typing2 {
+        from {
+          width: 0;
+        }
+        90% {
+          width: 34ch;
+        }
+        to {
+          width: 34ch;
+        }
+      }
+
+      /* Variation 3: Typing and Backspacing (JS) */
+      .typing3 {
+        border-right: 2px solid #333;
+        min-height: 2.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="typing">Hello, welcome to CSS typing animation!</div>
+    <div class="typing2">This is a slower typing animation with a pause.</div>
+    <div class="typing3" id="typewriter"></div>
+
+    <script>
+      // Variation 3: Typing and Backspacing with JS
+      const texts = [
+        "Typing and deleting effect!",
+        "You can cycle through multiple messages.",
+        "Backspace animation included.",
+      ];
+      const el = document.getElementById("typewriter");
+      let textIdx = 0,
+        charIdx = 0,
+        isDeleting = false;
+
+      function type() {
+        const current = texts[textIdx];
+        if (isDeleting) {
+          el.textContent = current.substring(0, charIdx--);
+          if (charIdx < 0) {
+            isDeleting = false;
+            textIdx = (textIdx + 1) % texts.length;
+            setTimeout(type, 700);
+          } else {
+            setTimeout(type, 50);
+          }
+        } else {
+          el.textContent = current.substring(0, charIdx++);
+          if (charIdx > current.length) {
+            isDeleting = true;
+            setTimeout(type, 1200);
+          } else {
+            setTimeout(type, 80);
+          }
+        }
+      }
+      type();
+    </script>
+  </body>
+</html>

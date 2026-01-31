@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pulse Animation Demo</title>
+    <style>
+      .pulse {
+        width: 100px;
+        height: 100px;
+        background: #3498db;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 100px auto 0 auto;
+        animation: pulse 1.2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.15);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      @keyframes pulse-shadow {
+        0% {
+          box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 20px rgba(241, 196, 15, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(241, 196, 15, 0);
+        }
+      }
+      @keyframes pulse-border {
+        0% {
+          border: 4px solid #fff;
+        }
+        50% {
+          border: 8px solid #fff;
+        }
+        100% {
+          border: 4px solid #fff;
+        }
+      }
+      @keyframes pulse-rotate {
+        0% {
+          transform: scale(1) rotate(0deg);
+        }
+        50% {
+          transform: scale(1.15) rotate(180deg);
+        }
+        100% {
+          transform: scale(1) rotate(360deg);
+        }
+      }
+      @keyframes pulse-skew {
+        0% {
+          transform: scale(1) skew(0deg, 0deg);
+        }
+        50% {
+          transform: scale(1.15) skew(10deg, 10deg);
+        }
+        100% {
+          transform: scale(1) skew(0deg, 0deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pulse"></div>
+    <hr />
+    <h2>Pulse Animation Variations</h2>
+    <div
+      style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap"
+    >
+      <!-- 1. Faster pulse, red color -->
+      <div
+        class="pulse"
+        style="background: #e74c3c; animation-duration: 0.7s"
+      ></div>
+
+      <!-- 2. Slower pulse, green color, larger size -->
+      <div
+        class="pulse"
+        style="
+          background: #27ae60;
+          width: 130px;
+          height: 130px;
+          animation-duration: 2s;
+        "
+      ></div>
+
+      <!-- 3. Double pulse effect (two animations) -->
+      <div
+        class="pulse"
+        style="
+          background: #f1c40f;
+          box-shadow: 0 0 0 0 #f1c40f;
+          animation: pulse 1.2s infinite, pulse-shadow 1.2s infinite;
+        "
+      ></div>
+
+      <!-- 4. Square pulse -->
+      <div class="pulse" style="background: #9b59b6; border-radius: 20px"></div>
+
+      <!-- 5. Small, fast, faded pulse -->
+      <div
+        class="pulse"
+        style="
+          background: #34495e;
+          width: 60px;
+          height: 60px;
+          opacity: 0.8;
+          animation-duration: 0.5s;
+        "
+      ></div>
+
+      <!-- 6. Pulse with white border animation -->
+      <div
+        class="pulse"
+        style="
+          background: #2ecc71;
+          border: 4px solid #fff;
+          animation: pulse 1.2s infinite, pulse-border 1.2s infinite;
+        "
+      ></div>
+
+      <!-- 7. Elliptical pulse -->
+      <div
+        class="pulse"
+        style="
+          background: #e67e22;
+          width: 120px;
+          height: 70px;
+          border-radius: 60px/35px;
+        "
+      ></div>
+
+      <!-- 8. Pulse with shadow only -->
+      <div
+        class="pulse"
+        style="
+          background: #1abc9c;
+          box-shadow: 0 0 0 0 #1abc9c;
+          animation: pulse-shadow 1.2s infinite;
+        "
+      ></div>
+
+      <!-- 9. Rotating pulse -->
+      <div
+        class="pulse"
+        style="background: #8e44ad; animation: pulse-rotate 1.2s infinite"
+      ></div>
+
+      <!-- 10. Skewed pulse -->
+      <div
+        class="pulse"
+        style="background: #c0392b; animation: pulse-skew 1.2s infinite"
+      ></div>
+    </div>
+  </body>
+</html>
