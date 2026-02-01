@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shake Animation Variants</title>
+    <style>
+      .shake1 {
+        animation: shake1 0.5s;
+      }
+      .shake2 {
+        animation: shake2 0.5s;
+      }
+      .shake3 {
+        animation: shake3 0.5s;
+      }
+      .shake4 {
+        animation: shake4 0.5s;
+      }
+      .shake5 {
+        animation: shake5 0.5s;
+      }
+      .shake6 {
+        animation: shake6 0.5s;
+      }
+      .shake7 {
+        animation: shake7 0.5s;
+      }
+      .shake8 {
+        animation: shake8 0.5s;
+      }
+      .shake9 {
+        animation: shake9 0.5s;
+      }
+      .shake10 {
+        animation: shake10 0.5s;
+      }
+
+      @keyframes shake1 {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20%,
+        60% {
+          transform: translateX(-10px);
+        }
+        40%,
+        80% {
+          transform: translateX(10px);
+        }
+      }
+      @keyframes shake2 {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        20%,
+        60% {
+          transform: translateY(-10px);
+        }
+        40%,
+        80% {
+          transform: translateY(10px);
+        }
+      }
+      @keyframes shake3 {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        20%,
+        60% {
+          transform: rotate(-5deg);
+        }
+        40%,
+        80% {
+          transform: rotate(5deg);
+        }
+      }
+      @keyframes shake4 {
+        0%,
+        100% {
+          transform: translate(-2px, 0);
+        }
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+          transform: translate(2px, 0);
+        }
+        20%,
+        40%,
+        60%,
+        80% {
+          transform: translate(-2px, 0);
+        }
+      }
+      @keyframes shake5 {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        25%,
+        75% {
+          transform: scale(1.05);
+        }
+        50% {
+          transform: scale(0.95);
+        }
+      }
+      @keyframes shake6 {
+        0%,
+        100% {
+          transform: skewX(0deg);
+        }
+        20%,
+        60% {
+          transform: skewX(-10deg);
+        }
+        40%,
+        80% {
+          transform: skewX(10deg);
+        }
+      }
+      @keyframes shake7 {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+          transform: translateY(-5px);
+        }
+        20%,
+        40%,
+        60%,
+        80% {
+          transform: translateY(5px);
+        }
+      }
+      @keyframes shake8 {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        20%,
+        60% {
+          transform: translate(-8px, 8px);
+        }
+        40%,
+        80% {
+          transform: translate(8px, -8px);
+        }
+      }
+      @keyframes shake9 {
+        0%,
+        100% {
+          transform: rotate(0deg) scale(1);
+        }
+        25%,
+        75% {
+          transform: rotate(-3deg) scale(1.05);
+        }
+        50% {
+          transform: rotate(3deg) scale(0.95);
+        }
+      }
+      @keyframes shake10 {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        10% {
+          transform: translateX(-2px);
+        }
+        20% {
+          transform: translateX(4px);
+        }
+        30% {
+          transform: translateX(-8px);
+        }
+        40% {
+          transform: translateX(8px);
+        }
+        50% {
+          transform: translateX(-8px);
+        }
+        60% {
+          transform: translateX(8px);
+        }
+        70% {
+          transform: translateX(-4px);
+        }
+        80% {
+          transform: translateX(4px);
+        }
+        90% {
+          transform: translateX(-2px);
+        }
+      }
+
+      .demo {
+        display: inline-block;
+        margin: 10px;
+        padding: 20px 40px;
+        background: #f44336;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        user-select: none;
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Shake Animation Variants</h2>
+    <div>
+      <div class="demo" onclick="shake(this, 1)">Shake 1</div>
+      <div class="demo" onclick="shake(this, 2)">Shake 2</div>
+      <div class="demo" onclick="shake(this, 3)">Shake 3</div>
+      <div class="demo" onclick="shake(this, 4)">Shake 4</div>
+      <div class="demo" onclick="shake(this, 5)">Shake 5</div>
+      <div class="demo" onclick="shake(this, 6)">Shake 6</div>
+      <div class="demo" onclick="shake(this, 7)">Shake 7</div>
+      <div class="demo" onclick="shake(this, 8)">Shake 8</div>
+      <div class="demo" onclick="shake(this, 9)">Shake 9</div>
+      <div class="demo" onclick="shake(this, 10)">Shake 10</div>
+    </div>
+    <script>
+      function shake(el, n) {
+        el.classList.remove("shake" + n);
+        void el.offsetWidth; // trigger reflow
+        el.classList.add("shake" + n);
+        setTimeout(() => el.classList.remove("shake" + n), 500);
+      }
+    </script>
+  </body>
+</html>
