@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Bar Animation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .progress-item {
+            margin-bottom: 30px;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .fill {
+            height: 100%;
+            border-radius: 5px;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 100%; }
+        }
+
+        .fill-1 { background: #3498db; animation-delay: 0s; }
+        .fill-2 { background: #e74c3c; animation-delay: 0.15s; }
+        .fill-3 { background: #2ecc71; animation-delay: 0.3s; }
+        .fill-4 { background: #f39c12; animation-delay: 0.45s; }
+        .fill-5 { background: #9b59b6; animation-delay: 0.6s; }
+        .fill-6 { background: #1abc9c; animation-delay: 0.75s; }
+        .fill-7 { background: #34495e; animation-delay: 0.9s; }
+        .fill-8 { background: #e67e22; animation-delay: 1.05s; }
+        .fill-9 { background: #16a085; animation-delay: 1.2s; }
+        .fill-10 { background: #c0392b; animation-delay: 1.35s; }
+        .fill-11 { background: #8e44ad; animation-delay: 1.5s; }
+        .fill-12 { background: #27ae60; animation-delay: 1.65s; }
+        .fill-13 { background: #2980b9; animation-delay: 1.8s; }
+        .fill-14 { background: #d35400; animation-delay: 1.95s; }
+        .fill-15 { background: #29b6f6; animation-delay: 2.1s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Progress Bar Animation Variants</h1>
+        
+        <div class="progress-item">
+            <div class="label">Variant 1</div>
+            <div class="progress-bar"><div class="fill fill-1"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 2</div>
+            <div class="progress-bar"><div class="fill fill-2"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 3</div>
+            <div class="progress-bar"><div class="fill fill-3"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 4</div>
+            <div class="progress-bar"><div class="fill fill-4"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 5</div>
+            <div class="progress-bar"><div class="fill fill-5"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 6</div>
+            <div class="progress-bar"><div class="fill fill-6"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 7</div>
+            <div class="progress-bar"><div class="fill fill-7"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 8</div>
+            <div class="progress-bar"><div class="fill fill-8"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 9</div>
+            <div class="progress-bar"><div class="fill fill-9"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 10</div>
+            <div class="progress-bar"><div class="fill fill-10"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 11</div>
+            <div class="progress-bar"><div class="fill fill-11"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 12</div>
+            <div class="progress-bar"><div class="fill fill-12"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 13</div>
+            <div class="progress-bar"><div class="fill fill-13"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 14</div>
+            <div class="progress-bar"><div class="fill fill-14"></div></div>
+        </div>
+
+        <div class="progress-item">
+            <div class="label">Variant 15</div>
+            <div class="progress-bar"><div class="fill fill-15"></div></div>
+        </div>
+    </div>
+</body>
+</html>
