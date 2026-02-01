@@ -126,6 +126,38 @@ const webFiles = [
     path: "web/vanilla/25.recipe-management-system/index.html",
     category: "Mini Projects",
   },
+  {
+    name: "26. Skeleton Loading",
+    path: "web/vanilla/26.skeleton-loading-permissions/index.html",
+    category: "Mini Projects",
+  },
+
+  // Additional Projects
+  {
+    name: "Dashboard UI",
+    path: "web/vanilla/dashboard-ui-lm/index.html",
+    category: "Practice",
+  },
+  {
+    name: "Profile Settings",
+    path: "web/vanilla/profile-setting/index.html",
+    category: "Practice",
+  },
+  {
+    name: "Timeleaf",
+    path: "web/vanilla/timeleaf/index.html",
+    category: "Practice",
+  },
+  {
+    name: "Unicode Characters",
+    path: "web/vanilla/unicode-charecters/index.html",
+    category: "Practice",
+  },
+  {
+    name: "User Profile",
+    path: "web/vanilla/user-profile/index.html",
+    category: "Practice",
+  },
 
   // Experiments
   {
@@ -234,6 +266,491 @@ const webFiles = [
   {
     name: "CSS Day 3",
     path: "web/vanilla/css-exercises/demos/cssday3.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 4",
+    path: "web/vanilla/css-exercises/demos/cssday4.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 5",
+    path: "web/vanilla/css-exercises/demos/cssday5.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 6",
+    path: "web/vanilla/css-exercises/demos/cssday6.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 7",
+    path: "web/vanilla/css-exercises/demos/cssday7.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 8",
+    path: "web/vanilla/css-exercises/demos/cssday8.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 9",
+    path: "web/vanilla/css-exercises/demos/cssday9.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 10",
+    path: "web/vanilla/css-exercises/demos/cssday10.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 11",
+    path: "web/vanilla/css-exercises/demos/cssday11.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 12",
+    path: "web/vanilla/css-exercises/demos/cssday12.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 13",
+    path: "web/vanilla/css-exercises/demos/cssday13.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 14",
+    path: "web/vanilla/css-exercises/demos/cssday14.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 15",
+    path: "web/vanilla/css-exercises/demos/cssday15.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 16",
+    path: "web/vanilla/css-exercises/demos/cssday16.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 17",
+    path: "web/vanilla/css-exercises/demos/cssday17.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 18",
+    path: "web/vanilla/css-exercises/demos/cssday18.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 19",
+    path: "web/vanilla/css-exercises/demos/cssday19.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 20",
+    path: "web/vanilla/css-exercises/demos/cssday20.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 21",
+    path: "web/vanilla/css-exercises/demos/cssday21.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 22",
+    path: "web/vanilla/css-exercises/demos/cssday22.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 23",
+    path: "web/vanilla/css-exercises/demos/cssday23.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 24",
+    path: "web/vanilla/css-exercises/demos/cssday24.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 25",
+    path: "web/vanilla/css-exercises/demos/cssday25.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 26",
+    path: "web/vanilla/css-exercises/demos/cssday26.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 27",
+    path: "web/vanilla/css-exercises/demos/cssday27.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 28",
+    path: "web/vanilla/css-exercises/demos/cssday28.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 29",
+    path: "web/vanilla/css-exercises/demos/cssday29.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 30",
+    path: "web/vanilla/css-exercises/demos/cssday30.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 31",
+    path: "web/vanilla/css-exercises/demos/cssday31.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 32",
+    path: "web/vanilla/css-exercises/demos/cssday32.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 33",
+    path: "web/vanilla/css-exercises/demos/cssday33.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 34",
+    path: "web/vanilla/css-exercises/demos/cssday34.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 35",
+    path: "web/vanilla/css-exercises/demos/cssday35.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 36",
+    path: "web/vanilla/css-exercises/demos/cssday36.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 37",
+    path: "web/vanilla/css-exercises/demos/cssday37.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 38",
+    path: "web/vanilla/css-exercises/demos/cssday38.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 39",
+    path: "web/vanilla/css-exercises/demos/cssday39.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 40",
+    path: "web/vanilla/css-exercises/demos/cssday40.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 41",
+    path: "web/vanilla/css-exercises/demos/cssday41.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 42",
+    path: "web/vanilla/css-exercises/demos/cssday42.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 43",
+    path: "web/vanilla/css-exercises/demos/cssday43.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 44",
+    path: "web/vanilla/css-exercises/demos/cssday44.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 45",
+    path: "web/vanilla/css-exercises/demos/cssday45.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 46",
+    path: "web/vanilla/css-exercises/demos/cssday46.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 47",
+    path: "web/vanilla/css-exercises/demos/cssday47.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 48",
+    path: "web/vanilla/css-exercises/demos/cssday48.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 49",
+    path: "web/vanilla/css-exercises/demos/cssday49.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 50",
+    path: "web/vanilla/css-exercises/demos/cssday50.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 51",
+    path: "web/vanilla/css-exercises/demos/cssday51.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 52",
+    path: "web/vanilla/css-exercises/demos/cssday52.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 53",
+    path: "web/vanilla/css-exercises/demos/cssday53.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 54",
+    path: "web/vanilla/css-exercises/demos/cssday54.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 55",
+    path: "web/vanilla/css-exercises/demos/cssday55.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 56",
+    path: "web/vanilla/css-exercises/demos/cssday56.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 57",
+    path: "web/vanilla/css-exercises/demos/cssday57.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 58",
+    path: "web/vanilla/css-exercises/demos/cssday58.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 59",
+    path: "web/vanilla/css-exercises/demos/cssday59.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 60",
+    path: "web/vanilla/css-exercises/demos/cssday60.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 61",
+    path: "web/vanilla/css-exercises/demos/cssday61.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 62",
+    path: "web/vanilla/css-exercises/demos/cssday62.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 63",
+    path: "web/vanilla/css-exercises/demos/cssday63.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 64",
+    path: "web/vanilla/css-exercises/demos/cssday64.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 65",
+    path: "web/vanilla/css-exercises/demos/cssday65.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 66",
+    path: "web/vanilla/css-exercises/demos/cssday66.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 67",
+    path: "web/vanilla/css-exercises/demos/cssday67.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 68",
+    path: "web/vanilla/css-exercises/demos/cssday68.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 69",
+    path: "web/vanilla/css-exercises/demos/cssday69.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 70",
+    path: "web/vanilla/css-exercises/demos/cssday70.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 71",
+    path: "web/vanilla/css-exercises/demos/cssday71.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 72",
+    path: "web/vanilla/css-exercises/demos/cssday72.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 73",
+    path: "web/vanilla/css-exercises/demos/cssday73.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 74",
+    path: "web/vanilla/css-exercises/demos/cssday74.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 75",
+    path: "web/vanilla/css-exercises/demos/cssday75.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 76",
+    path: "web/vanilla/css-exercises/demos/cssday76.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 77",
+    path: "web/vanilla/css-exercises/demos/cssday77.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 78",
+    path: "web/vanilla/css-exercises/demos/cssday78.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 79",
+    path: "web/vanilla/css-exercises/demos/cssday79.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 80",
+    path: "web/vanilla/css-exercises/demos/cssday80.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 81",
+    path: "web/vanilla/css-exercises/demos/cssday81.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 82",
+    path: "web/vanilla/css-exercises/demos/cssday82.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 83",
+    path: "web/vanilla/css-exercises/demos/cssday83.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 84",
+    path: "web/vanilla/css-exercises/demos/cssday84.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 85",
+    path: "web/vanilla/css-exercises/demos/cssday85.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 86",
+    path: "web/vanilla/css-exercises/demos/cssday86.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 87",
+    path: "web/vanilla/css-exercises/demos/cssday87.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 88",
+    path: "web/vanilla/css-exercises/demos/cssday88.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 89",
+    path: "web/vanilla/css-exercises/demos/cssday89.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 90",
+    path: "web/vanilla/css-exercises/demos/cssday90.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 91",
+    path: "web/vanilla/css-exercises/demos/cssday91.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 92",
+    path: "web/vanilla/css-exercises/demos/cssday92.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 93",
+    path: "web/vanilla/css-exercises/demos/cssday93.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 94",
+    path: "web/vanilla/css-exercises/demos/cssday94.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 95",
+    path: "web/vanilla/css-exercises/demos/cssday95.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 96",
+    path: "web/vanilla/css-exercises/demos/cssday96.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 97",
+    path: "web/vanilla/css-exercises/demos/cssday97.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 98",
+    path: "web/vanilla/css-exercises/demos/cssday98.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 99",
+    path: "web/vanilla/css-exercises/demos/cssday99.html",
+    category: "CSS Demos",
+  },
+  {
+    name: "CSS Day 100",
+    path: "web/vanilla/css-exercises/demos/cssday100.html",
     category: "CSS Demos",
   },
   {

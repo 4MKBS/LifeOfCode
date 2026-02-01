@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infinite Background Gradient</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: grid;
+            place-items: center;
+            font-family: system-ui, sans-serif;
+            color: white;
+            background: linear-gradient(120deg, #ff6b6b, #5f27cd, #48dbfb, #1dd1a1);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+        h1 {
+            font-size: clamp(2rem, 4vw, 4rem);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Infinite Background Gradient</h1>
+</body>
+</html>
