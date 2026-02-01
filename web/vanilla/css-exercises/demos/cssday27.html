@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Elements Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .element1 {
+            width: 80px;
+            height: 80px;
+            background: #ff6b6b;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .element2 {
+            width: 60px;
+            height: 60px;
+            background: #4ecdc4;
+            top: 60%;
+            left: 80%;
+            animation-delay: 1s;
+        }
+
+        .element3 {
+            width: 100px;
+            height: 100px;
+            background: #ffe66d;
+            top: 40%;
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        .element4 {
+            width: 70px;
+            height: 70px;
+            background: #95e1d3;
+            top: 70%;
+            left: 20%;
+            animation-delay: 1.5s;
+        }
+
+        .element5 {
+            width: 90px;
+            height: 90px;
+            background: #f38181;
+            top: 10%;
+            left: 70%;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-30px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(-60px) rotate(-5deg);
+            }
+            75% {
+                transform: translateY(-30px) rotate(3deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="floating-element element1"></div>
+        <div class="floating-element element2"></div>
+        <div class="floating-element element3"></div>
+        <div class="floating-element element4"></div>
+        <div class="floating-element element5"></div>
+    </div>
+</body>
+</html>
