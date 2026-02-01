@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS Wave Animation</title>
+    <style>
+      body {
+        margin: 0;
+        background: linear-gradient(135deg, #0e2a47 0%, #1a4d6d 100%);
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      .wave {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 200%;
+        height: 150px;
+        background: url('data:image/svg+xml;utf8,<svg width="1920" height="150" xmlns="http://www.w3.org/2000/svg"><path fill="%23ffffff" fill-opacity="0.8" d="M0,75 Q480,25 960,75 T1920,75 L1920,150 L0,150 Z"></path></svg>');
+        background-size: 50% 100%;
+        animation: waveMove 10s linear infinite;
+      }
+      .wave2 {
+        bottom: 10px;
+        background: url('data:image/svg+xml;utf8,<svg width="1920" height="150" xmlns="http://www.w3.org/2000/svg"><path fill="%2300bfff" fill-opacity="0.5" d="M0,100 Q480,50 960,100 T1920,100 L1920,150 L0,150 Z"></path></svg>');
+        animation: waveMove 15s linear infinite reverse;
+      }
+      .wave3 {
+        bottom: 20px;
+        height: 120px;
+        background: url('data:image/svg+xml;utf8,<svg width="1920" height="120" xmlns="http://www.w3.org/2000/svg"><path fill="%231e90ff" fill-opacity="0.3" d="M0,60 Q480,20 960,60 T1920,60 L1920,120 L0,120 Z"></path></svg>');
+        animation: waveMove 20s linear infinite;
+      }
+      @keyframes waveMove {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wave"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+  </body>
+</html>
