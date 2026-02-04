@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your AI Copilot</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #6366f1;
+        --secondary: #8b5cf6;
+        --accent: #a78bfa;
+        --bg-dark: #0a0a0f;
+        --bg-light: #1a1a2e;
+        --card-bg: rgba(26, 26, 46, 0.85);
+        --border-radius: 18px;
+        --transition: 0.3s cubic-bezier(0.4, 2, 0.3, 1);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        color: #fff;
+        background: linear-gradient(
+          120deg,
+          var(--bg-dark) 0%,
+          var(--bg-light) 100%
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background: linear-gradient(
+          135deg,
+          var(--bg-dark) 0%,
+          var(--bg-light) 100%
+        );
+        overflow: hidden;
+      }
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.5;
+        z-index: 0;
+      }
+      .hero::before {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, var(--primary) 0%, transparent 80%);
+        top: -250px;
+        left: -200px;
+        animation: pulse 5s infinite alternate;
+      }
+      .hero::after {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          var(--secondary) 0%,
+          transparent 80%
+        );
+        bottom: -150px;
+        right: -120px;
+        animation: pulse 6s infinite alternate-reverse;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(1.15);
+          opacity: 0.7;
+        }
+      }
+      .hero-content {
+        text-align: center;
+        z-index: 1;
+        max-width: 900px;
+        padding: 40px 24px;
+        background: rgba(26, 26, 46, 0.7);
+        border-radius: var(--border-radius);
+        box-shadow: 0 8px 32px rgba(99, 102, 241, 0.12);
+      }
+      .hero h1 {
+        font-size: 3.5em;
+        font-weight: 700;
+        margin-bottom: 24px;
+        background: linear-gradient(90deg, #fff 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero p {
+        font-size: 1.5em;
+        color: #d1d5db;
+        margin-bottom: 40px;
+      }
+      .cta-button {
+        display: inline-block;
+        padding: 18px 48px;
+        font-size: 1.2em;
+        font-weight: 700;
+        color: #fff;
+        background: linear-gradient(
+          90deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 24px rgba(99, 102, 241, 0.18);
+        transition: transform var(--transition), box-shadow var(--transition),
+          background var(--transition);
+        text-decoration: none;
+        letter-spacing: 0.03em;
+      }
+      .cta-button:hover {
+        transform: translateY(-4px) scale(1.04);
+        box-shadow: 0 12px 40px rgba(99, 102, 241, 0.28);
+        background: linear-gradient(
+          90deg,
+          var(--secondary) 0%,
+          var(--primary) 100%
+        );
+      }
+      /* Section Titles */
+      .section-title {
+        text-align: center;
+        font-size: 2.7em;
+        margin-bottom: 60px;
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+      }
+      /* What It Does Section */
+      .what-it-does {
+        padding: 100px 20px;
+        background: linear-gradient(120deg, #18182a 0%, #23234a 100%);
+      }
+      .examples {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 36px;
+      }
+      .example-card {
+        background: var(--card-bg);
+        border: 1.5px solid rgba(99, 102, 241, 0.18);
+        border-radius: var(--border-radius);
+        padding: 36px 28px;
+        box-shadow: 0 2px 16px rgba(99, 102, 241, 0.08);
+        transition: transform var(--transition), border-color var(--transition),
+          box-shadow var(--transition);
+        position: relative;
+      }
+      .example-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        border-color: var(--primary);
+        box-shadow: 0 8px 32px rgba(99, 102, 241, 0.18);
+      }
+      .example-card h3 {
+        color: var(--accent);
+        margin-bottom: 18px;
+        font-size: 1.35em;
+        font-weight: 700;
+      }
+      .flow {
+        margin: 18px 0;
+        padding: 18px;
+        background: rgba(0, 0, 0, 0.22);
+        border-radius: 10px;
+        font-family: "Courier New", monospace;
+        font-size: 1em;
+        color: #d1d5db;
+        border-left: 4px solid var(--primary);
+      }
+      /* Privacy Section */
+      .privacy {
+        padding: 80px 20px;
+        background: linear-gradient(
+          135deg,
+          var(--bg-light) 0%,
+          var(--bg-dark) 100%
+        );
+        text-align: center;
+      }
+      .privacy-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .privacy-content p {
+        font-size: 1.25em;
+        color: #d1d5db;
+        margin-bottom: 28px;
+      }
+      .security-badges {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+      }
+      .badge {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.15em;
+        color: var(--accent);
+        background: rgba(99, 102, 241, 0.08);
+        padding: 12px 28px;
+        border-radius: 8px;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+      }
+      /* Use Cases Section */
+      .use-cases {
+        padding: 100px 20px;
+        background: linear-gradient(120deg, #18182a 0%, #23234a 100%);
+      }
+      .roles {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 32px;
+      }
+      .role-card {
+        background: rgba(99, 102, 241, 0.13);
+        padding: 36px 28px;
+        border-radius: 14px;
+        border-left: 5px solid var(--primary);
+        box-shadow: 0 2px 16px rgba(99, 102, 241, 0.08);
+        transition: box-shadow var(--transition), border-color var(--transition);
+      }
+      .role-card:hover {
+        box-shadow: 0 8px 32px rgba(99, 102, 241, 0.18);
+        border-color: var(--secondary);
+      }
+      .role-card h3 {
+        color: var(--accent);
+        margin-bottom: 12px;
+        font-weight: 700;
+      }
+      .role-card ul {
+        list-style: none;
+        color: #d1d5db;
+        font-size: 1.08em;
+      }
+      .role-card li {
+        margin-bottom: 8px;
+        padding-left: 2px;
+      }
+      .role-card li::before {
+        content: "→ ";
+        color: var(--primary);
+        font-weight: bold;
+      }
+      /* Final CTA */
+      .final-cta {
+        padding: 100px 20px;
+        background: linear-gradient(
+          90deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        text-align: center;
+      }
+      .final-cta h2 {
+        font-size: 2.7em;
+        margin-bottom: 36px;
+        color: #fff;
+        font-weight: 700;
+      }
+      .final-cta .cta-button {
+        background: #fff;
+        color: var(--primary);
+        box-shadow: 0 4px 24px rgba(99, 102, 241, 0.18);
+      }
+      .final-cta .cta-button:hover {
+        background: var(--accent);
+        color: #fff;
+      }
+      /* Responsive */
+      @media (max-width: 900px) {
+        .hero h1 {
+          font-size: 2.2em;
+        }
+        .section-title {
+          font-size: 2em;
+        }
+        .final-cta h2 {
+          font-size: 2em;
+        }
+        .hero-content {
+          padding: 24px 8px;
+        }
+      }
+      @media (max-width: 600px) {
+        .hero {
+          min-height: 80vh;
+        }
+        .hero-content {
+          padding: 16px 2px;
+        }
+        .examples,
+        .roles {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .security-badges {
+          gap: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Your AI Copilot for Everything</h1>
+        <p>Automate the boring stuff. Focus on what matters.</p>
+        <button class="cta-button">Try the Demo</button>
+      </div>
+    </section>
+    <!-- What It Does -->
+    <section class="what-it-does">
+      <h2 class="section-title">What it does in 10 seconds</h2>
+      <div class="examples">
+        <div class="example-card">
+          <h3>Data Processing</h3>
+          <div class="flow">
+            Input: Raw CSV file<br />↓<br />Output: Clean, analyzed report
+          </div>
+        </div>
+        <div class="example-card">
+          <h3>Content Creation</h3>
+          <div class="flow">
+            Input: "Write blog about AI"<br />↓<br />Output: SEO-optimized
+            article
+          </div>
+        </div>
+        <div class="example-card">
+          <h3>Code Generation</h3>
+          <div class="flow">
+            Input: "API endpoint for users"<br />↓<br />Output: Production-ready
+            code
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Privacy Section -->
+    <section class="privacy">
+      <div class="privacy-content">
+        <h2 class="section-title">Your Data, Secured</h2>
+        <p>
+          End-to-end encryption. Zero data retention. Full compliance with
+          global standards.
+        </p>
+        <div class="security-badges">
+          <div class="badge">🔒 Encrypted</div>
+          <div class="badge">🛡️ SOC 2 Certified</div>
+          <div class="badge">✓ GDPR Compliant</div>
+        </div>
+      </div>
+    </section>
+    <!-- Use Cases -->
+    <section class="use-cases">
+      <h2 class="section-title">Built for Every Role</h2>
+      <div class="roles">
+        <div class="role-card">
+          <h3>Developers</h3>
+          <ul>
+            <li>Generate boilerplate code</li>
+            <li>Debug faster</li>
+            <li>Automate testing</li>
+          </ul>
+        </div>
+        <div class="role-card">
+          <h3>Marketers</h3>
+          <ul>
+            <li>Create campaigns instantly</li>
+            <li>Analyze metrics</li>
+            <li>Personalize at scale</li>
+          </ul>
+        </div>
+        <div class="role-card">
+          <h3>Designers</h3>
+          <ul>
+            <li>Prototype ideas</li>
+            <li>Generate variations</li>
+            <li>Streamline feedback</li>
+          </ul>
+        </div>
+        <div class="role-card">
+          <h3>Executives</h3>
+          <ul>
+            <li>Instant insights</li>
+            <li>Automate reports</li>
+            <li>Strategic recommendations</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Final CTA -->
+    <section class="final-cta">
+      <h2>Ready to 10x Your Productivity?</h2>
+      <button class="cta-button">Get Early Access</button>
+    </section>
+  </body>
+</html>
