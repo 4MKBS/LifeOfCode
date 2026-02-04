@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Build & Ship - Split-Screen Hero</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", "Segoe UI", Arial, sans-serif;
+        background: #111;
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      .hero-container {
+        display: flex;
+        width: 90vw;
+        max-width: 1600px;
+        aspect-ratio: 16/9;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+        border-radius: 2rem;
+        overflow: hidden;
+      }
+      .hero-left,
+      .hero-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        padding: 3rem 2.5rem;
+      }
+      .hero-left {
+        background: linear-gradient(135deg, #181c24 80%, #23272f 100%);
+        color: #e5ffe5;
+        font-family: "Fira Mono", "Menlo", "Consolas", monospace;
+        box-shadow: inset 0 0 64px 0 rgba(0, 255, 128, 0.08);
+        overflow: hidden;
+      }
+      .blur-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 0;
+        filter: blur(18px) brightness(1.2);
+        opacity: 0.18;
+        background: radial-gradient(
+          circle at 60% 40%,
+          #00ff99 0%,
+          transparent 70%
+        );
+      }
+      .hero-left-content {
+        position: relative;
+        z-index: 1;
+      }
+      .hero-headline {
+        font-size: 2.8rem;
+        font-weight: 800;
+        letter-spacing: -2px;
+        margin-bottom: 2.2rem;
+        color: #00ff99;
+        text-shadow: 0 2px 16px #003f2f44;
+      }
+      .code-editor {
+        background: #23272f;
+        border-radius: 1rem;
+        box-shadow: 0 2px 16px #003f2f44;
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        min-height: 220px;
+        width: 100%;
+        max-width: 420px;
+        margin-bottom: 1.2rem;
+        position: relative;
+        overflow: hidden;
+        animation: blurMotion 3s infinite alternate;
+      }
+      @keyframes blurMotion {
+        0% {
+          filter: blur(0.5px);
+        }
+        100% {
+          filter: blur(2px);
+        }
+      }
+      /* Syntax highlighting */
+      .token-keyword {
+        color: #00ff99;
+        font-weight: bold;
+      }
+      .token-string {
+        color: #fff;
+      }
+      .token-function {
+        color: #7fffd4;
+      }
+      .token-variable {
+        color: #b3ffb3;
+      }
+      .token-comment {
+        color: #5c7a6c;
+        font-style: italic;
+      }
+      .token-number {
+        color: #e5ffe5;
+      }
+      .terminal-bar {
+        height: 18px;
+        background: #181c24;
+        border-radius: 0.5rem 0.5rem 0 0;
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding-left: 8px;
+      }
+      .terminal-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 2px;
+      }
+      .dot-red {
+        background: #ff5f56;
+      }
+      .dot-yellow {
+        background: #ffbd2e;
+      }
+      .dot-green {
+        background: #27c93f;
+      }
+      /* Right side */
+      .hero-right {
+        background: linear-gradient(135deg, #f8fafc 80%, #eaf1fb 100%);
+        color: #222;
+        font-family: "Inter", "Segoe UI", Arial, sans-serif;
+        box-shadow: inset 0 0 64px 0 #eaf1fb44;
+        overflow: hidden;
+      }
+      .hero-right-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .hero-headline-right {
+        font-size: 2.8rem;
+        font-weight: 800;
+        letter-spacing: -2px;
+        margin-bottom: 2.2rem;
+        color: #1a7cff;
+        text-shadow: 0 2px 16px #eaf1fb44;
+      }
+      .dashboard {
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 2px 16px #eaf1fb44;
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        min-height: 220px;
+        width: 100%;
+        max-width: 420px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1.2rem;
+        font-size: 1rem;
+      }
+      .chart,
+      .metric {
+        background: #f4f8ff;
+        border-radius: 0.7rem;
+        padding: 1rem;
+        box-shadow: 0 1px 8px #eaf1fb22;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        min-height: 70px;
+      }
+      .chart-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1a7cff;
+        margin-bottom: 0.5rem;
+      }
+      .metric-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #222;
+      }
+      .growth-bar {
+        width: 100%;
+        height: 8px;
+        border-radius: 4px;
+        background: linear-gradient(90deg, #1a7cff 60%, #00ff99 100%);
+        margin-top: 0.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .growth-bar-fill {
+        height: 100%;
+        border-radius: 4px;
+        background: #00ff99;
+        width: 70%;
+        animation: growBar 2s infinite alternate;
+      }
+      @keyframes growBar {
+        0% {
+          width: 60%;
+        }
+        100% {
+          width: 90%;
+        }
+      }
+      /* Responsive */
+      @media (max-width: 900px) {
+        .hero-container {
+          flex-direction: column;
+          aspect-ratio: unset;
+          height: 100vh;
+          min-height: 600px;
+        }
+        .hero-left,
+        .hero-right {
+          padding: 2rem 1rem;
+        }
+        .code-editor,
+        .dashboard {
+          max-width: 100%;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&family=Inter:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="hero-container">
+      <!-- Left: Terminal / Editor -->
+      <div class="hero-left">
+        <div class="blur-bg"></div>
+        <div class="hero-left-content">
+          <div class="hero-headline">Build</div>
+          <div class="code-editor">
+            <div class="terminal-bar">
+              <span class="terminal-dot dot-red"></span>
+              <span class="terminal-dot dot-yellow"></span>
+              <span class="terminal-dot dot-green"></span>
+            </div>
+            <pre>
+<span class="token-comment">// Next-gen SaaS API</span>
+<span class="token-keyword">const</span> <span class="token-variable">client</span> = <span class="token-keyword">new</span> <span class="token-function">ApiClient</span>(<span class="token-string">'YOUR_KEY'</span>);
+<span class="token-keyword">await</span> <span class="token-variable">client</span>.<span class="token-function">deploy</span>({
+    <span class="token-variable">service</span>: <span class="token-string">'analytics'</span>,
+    <span class="token-variable">region</span>: <span class="token-string">'us-east-1'</span>
+});
+<span class="token-comment">// 🚀 Ship code, scale fast.</span>
+                    </pre>
+          </div>
+          <div style="font-size: 1.1rem; color: #b3ffb3; opacity: 0.7">
+            Technical. Fast. Secure.
+            <span style="color: #00ff99">Hacker vibes.</span>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Dashboard / Analytics -->
+      <div class="hero-right">
+        <div class="hero-right-content">
+          <div class="hero-headline-right">Ship</div>
+          <div class="dashboard">
+            <div class="chart">
+              <div class="chart-title">User Growth</div>
+              <div class="growth-bar">
+                <div class="growth-bar-fill"></div>
+              </div>
+              <div
+                style="font-size: 0.9rem; color: #1a7cff; margin-top: 0.5rem"
+              >
+                +2,340 this week
+              </div>
+            </div>
+            <div class="metric">
+              <div class="chart-title">Uptime</div>
+              <div class="metric-value">99.99%</div>
+              <div style="font-size: 0.9rem; color: #00ff99">
+                All systems operational
+              </div>
+            </div>
+            <div class="chart">
+              <div class="chart-title">Active Sessions</div>
+              <svg width="100%" height="32" viewBox="0 0 100 32">
+                <polyline
+                  points="0,28 20,18 40,22 60,10 80,16 100,8"
+                  fill="none"
+                  stroke="#1a7cff"
+                  stroke-width="3"
+                />
+                <polyline
+                  points="0,32 20,24 40,28 60,18 80,22 100,14"
+                  fill="none"
+                  stroke="#00ff99"
+                  stroke-width="2"
+                />
+              </svg>
+              <div style="font-size: 0.9rem; color: #1a7cff">Live: 1,204</div>
+            </div>
+            <div class="metric">
+              <div class="chart-title">API Requests</div>
+              <div class="metric-value">1.2M</div>
+              <div style="font-size: 0.9rem; color: #00ff99">Today</div>
+            </div>
+          </div>
+          <div
+            style="
+              font-size: 1.1rem;
+              color: #1a7cff;
+              opacity: 0.7;
+              margin-top: 1rem;
+            "
+          >
+            Ship faster. Grow smarter.
+            <span style="color: #00ff99">Business ready.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
