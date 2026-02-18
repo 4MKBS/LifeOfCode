@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parallax Scrolling Effect</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        color: #fff;
+        background: #111;
+        overflow-x: hidden;
+      }
+
+      .section {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 2rem;
+        position: relative;
+      }
+
+      .content {
+        max-width: 700px;
+        z-index: 2;
+      }
+
+      h1,
+      h2 {
+        margin-bottom: 0.8rem;
+        letter-spacing: 1px;
+      }
+
+      p {
+        line-height: 1.6;
+        opacity: 0.95;
+      }
+
+      /* Parallax sections */
+      .parallax {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: relative;
+      }
+
+      .parallax::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 1;
+      }
+
+      .p1 {
+        background-image: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80");
+      }
+
+      .p2 {
+        background-image: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80");
+      }
+
+      .p3 {
+        background-image: url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=80");
+      }
+
+      .p4 {
+        background-image: url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80");
+      }
+
+      .normal {
+        background: linear-gradient(135deg, #1f2937, #111827);
+      }
+
+      @media (max-width: 768px) {
+        .parallax {
+          background-attachment: scroll;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="section parallax p1">
+      <div class="content">
+        <h1>Parallax Scrolling</h1>
+        <p>
+          Scroll down to see background layers move differently from content.
+        </p>
+      </div>
+    </section>
+
+    <section class="section normal">
+      <div class="content">
+        <h2>Regular Content Section</h2>
+        <p>
+          This block scrolls normally while parallax sections create depth using
+          fixed background images.
+        </p>
+      </div>
+    </section>
+
+    <section class="section parallax p2">
+      <div class="content">
+        <h2>Depth Effect</h2>
+        <p>Simple CSS-only parallax with a clean, full-screen layout.</p>
+      </div>
+    </section>
+
+    <section class="section normal">
+      <div class="content">
+        <h2>Nature Story</h2>
+        <p>
+          Add descriptive blocks between parallax images to improve readability
+          and visual rhythm.
+        </p>
+      </div>
+    </section>
+
+    <section class="section parallax p3">
+      <div class="content">
+        <h2>Mountain View</h2>
+        <p>
+          Large scenic backgrounds work best with short, focused text overlays.
+        </p>
+      </div>
+    </section>
+
+    <section class="section normal">
+      <div class="content">
+        <h2>More Content</h2>
+        <p>
+          You can keep adding alternating sections for a longer landing page
+          experience.
+        </p>
+      </div>
+    </section>
+
+    <section class="section parallax p4">
+      <div class="content">
+        <h2>Forest Scene</h2>
+        <p>
+          Combine darker overlays and bright text to keep content readable on
+          complex images.
+        </p>
+      </div>
+    </section>
+
+    <section class="section normal">
+      <div class="content">
+        <h2>End</h2>
+        <p>
+          Adjust images, overlay opacity, and section heights to customize the
+          effect.
+        </p>
+      </div>
+    </section>
+  </body>
+</html>
