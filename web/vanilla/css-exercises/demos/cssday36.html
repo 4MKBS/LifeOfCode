@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeline Layout</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        color: white;
+        margin-bottom: 50px;
+        font-size: 2.5em;
+      }
+
+      .timeline {
+        position: relative;
+        padding: 20px 0;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .timeline-item {
+        margin-bottom: 50px;
+        position: relative;
+      }
+
+      .timeline-item:nth-child(odd) .content {
+        margin-left: 0;
+        margin-right: 52%;
+        text-align: right;
+      }
+
+      .timeline-item:nth-child(even) .content {
+        margin-left: 52%;
+        margin-right: 0;
+        text-align: left;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 20px;
+        background: #667eea;
+        border: 4px solid white;
+        border-radius: 50%;
+        top: 25px;
+        z-index: 1;
+        transition: all 0.3s ease;
+      }
+
+      .timeline-item:hover::before {
+        width: 30px;
+        height: 30px;
+        background: #764ba2;
+        box-shadow: 0 0 20px rgba(118, 75, 162, 0.8);
+      }
+
+      .content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .content:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .date {
+        font-weight: bold;
+        color: #667eea;
+        font-size: 0.9em;
+        margin-bottom: 8px;
+      }
+
+      .title {
+        font-size: 1.3em;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .description {
+        color: #666;
+        font-size: 0.95em;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 768px) {
+        .timeline::before {
+          left: 20px;
+        }
+
+        .timeline-item::before {
+          left: 20px;
+        }
+
+        .timeline-item:nth-child(odd) .content,
+        .timeline-item:nth-child(even) .content {
+          margin-left: 60px;
+          margin-right: 0;
+          text-align: left;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Journey Timeline</h1>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="content">
+            <div class="date">January 2020</div>
+            <div class="title">Project Started</div>
+            <div class="description">
+              Kicked off an amazing journey with an incredible team.
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="content">
+            <div class="date">June 2020</div>
+            <div class="title">First Milestone</div>
+            <div class="description">
+              Reached our first major milestone and celebrated with the team.
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="content">
+            <div class="date">December 2020</div>
+            <div class="title">Public Launch</div>
+            <div class="description">
+              Successfully launched to the public with great reception.
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="content">
+            <div class="date">September 2021</div>
+            <div class="title">Expansion</div>
+            <div class="description">
+              Expanded our reach to new markets and audiences.
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="content">
+            <div class="date">Present</div>
+            <div class="title">Continuous Growth</div>
+            <div class="description">
+              Still growing and improving every single day.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

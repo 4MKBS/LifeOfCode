@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Centered Hero Section</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .hero {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .hero-content {
+        max-width: 700px;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.1);
+        color: #e94560;
+        border: 1px solid #e94560;
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        color: #ffffff;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero h1 span {
+        color: #e94560;
+      }
+
+      .hero p {
+        font-size: 1.15rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.8;
+        margin-bottom: 2.5rem;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 0.85rem 2rem;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: #e94560;
+        color: #fff;
+        border: 2px solid #e94560;
+      }
+
+      .btn-primary:hover {
+        background: transparent;
+        color: #e94560;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+      }
+
+      .btn-secondary:hover {
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 4rem;
+        flex-wrap: wrap;
+      }
+
+      .stat {
+        color: #fff;
+      }
+
+      .stat h3 {
+        font-size: 2rem;
+        color: #e94560;
+      }
+
+      .stat p {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">✨ Welcome to the future</div>
+        <h1>Build Something <span>Amazing</span> Today</h1>
+        <p>
+          A modern, centered hero section built with pure CSS. Designed to
+          inspire and engage your audience from the very first glance.
+        </p>
+        <div class="hero-buttons">
+          <a href="#" class="btn btn-primary">Get Started</a>
+          <a href="#" class="btn btn-secondary">Learn More</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <h3>10K+</h3>
+            <p>Users</p>
+          </div>
+          <div class="stat">
+            <h3>500+</h3>
+            <p>Projects</p>
+          </div>
+          <div class="stat">
+            <h3>99%</h3>
+            <p>Satisfaction</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

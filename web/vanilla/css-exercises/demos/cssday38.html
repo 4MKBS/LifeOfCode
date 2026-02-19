@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card-Based Blog Layout</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f2f5;
+        color: #333;
+      }
+
+      header {
+        background-color: #1a1a2e;
+        color: #fff;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+      }
+
+      nav a {
+        color: #ccc;
+        text-decoration: none;
+        margin-left: 20px;
+        font-size: 0.95rem;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: #e94560;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        color: white;
+        text-align: center;
+        padding: 60px 20px;
+      }
+
+      .hero h2 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+        color: #aaa;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 24px;
+        color: #1a1a2e;
+        border-left: 4px solid #e94560;
+        padding-left: 12px;
+      }
+
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 28px;
+      }
+
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .card-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .card-badge {
+        display: inline-block;
+        background-color: #e94560;
+        color: white;
+        font-size: 0.7rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 4px 10px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+
+      .card-body {
+        padding: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-body h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: #1a1a2e;
+        line-height: 1.4;
+      }
+
+      .card-body p {
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.6;
+        flex: 1;
+      }
+
+      .card-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+        font-size: 0.8rem;
+        color: #999;
+      }
+
+      .card-meta .author {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .read-more {
+        display: inline-block;
+        margin-top: 14px;
+        padding: 8px 16px;
+        background-color: #1a1a2e;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        transition: background-color 0.3s;
+        text-align: center;
+      }
+
+      .read-more:hover {
+        background-color: #e94560;
+      }
+
+      .featured {
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .featured .card-img {
+        height: 100%;
+        min-height: 250px;
+      }
+
+      @media (max-width: 768px) {
+        .featured {
+          grid-column: span 1;
+          grid-template-columns: 1fr;
+        }
+
+        .featured .card-img {
+          height: 200px;
+        }
+
+        .hero h2 {
+          font-size: 1.8rem;
+        }
+      }
+
+      footer {
+        background-color: #1a1a2e;
+        color: #aaa;
+        text-align: center;
+        padding: 24px;
+        margin-top: 60px;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>✍️ DevBlog</h1>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Articles</a>
+        <a href="#">Categories</a>
+        <a href="#">About</a>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <h2>Thoughts, Tutorials & Ideas</h2>
+      <p>Explore articles on web development, design, and technology</p>
+    </div>
+
+    <div class="container">
+      <h2 class="section-title">Latest Posts</h2>
+      <div class="blog-grid">
+        <!-- Featured Card -->
+        <div class="card featured">
+          <img
+            class="card-img"
+            src="https://picsum.photos/seed/featured/700/400"
+            alt="Featured Post"
+          />
+          <div class="card-body">
+            <span class="card-badge">Featured</span>
+            <h3>Mastering CSS Grid: Build Complex Layouts with Ease</h3>
+            <p>
+              CSS Grid has revolutionized how we design web layouts. In this
+              comprehensive guide, we'll walk through everything from basic grid
+              setup to advanced template areas and responsive techniques.
+            </p>
+            <div class="card-meta">
+              <div class="author">
+                <img
+                  class="avatar"
+                  src="https://i.pravatar.cc/40?img=1"
+                  alt="Author"
+                />
+                <span>Sarah Ahmed</span>
+              </div>
+              <span>June 10, 2025</span>
+            </div>
+            <a href="#" class="read-more">Read Article →</a>
+          </div>
+        </div>
+
+        <!-- Card 1 -->
+        <div class="card">
+          <img
+            class="card-img"
+            src="https://picsum.photos/seed/js/400/250"
+            alt="JavaScript"
+          />
+          <div class="card-body">
+            <span class="card-badge">JavaScript</span>
+            <h3>Understanding Async/Await in Modern JavaScript</h3>
+            <p>
+              Asynchronous programming can be tricky. Learn how async/await
+              simplifies promise-based code and makes it readable.
+            </p>
+            <div class="card-meta">
+              <div class="author">
+                <img
+                  class="avatar"
+                  src="https://i.pravatar.cc/40?img=3"
+                  alt="Author"
+                />
+                <span>Ali Hassan</span>
+              </div>
+              <span>June 5, 2025</span>
+            </div>
+            <a href="#" class="read-more">Read Article →</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+          <img
+            class="card-img"
+            src="https://picsum.photos/seed/design/400/250"
+            alt="Design"
+          />
+          <div class="card-body">
+            <span class="card-badge">Design</span>
+            <h3>10 UI Principles Every Developer Should Know</h3>
+            <p>
+              Good design isn't just for designers. Discover the key UI
+              principles that will make your web apps more intuitive and
+              beautiful.
+            </p>
+            <div class="card-meta">
+              <div class="author">
+                <img
+                  class="avatar"
+                  src="https://i.pravatar.cc/40?img=5"
+                  alt="Author"
+                />
+                <span>Mia Chen</span>
+              </div>
+              <span>May 28, 2025</span>
+            </div>
+            <a href="#" class="read-more">Read Article →</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+          <img
+            class="card-img"
+            src="https://picsum.photos/seed/react/400/250"
+            alt="React"
+          />
+          <div class="card-body">
+            <span class="card-badge">React</span>
+            <h3>React Hooks: useState and useEffect Explained</h3>
+            <p>
+              Hooks transformed the way we write React components. This guide
+              breaks down the two most essential hooks with real-world examples.
+            </p>
+            <div class="card-meta">
+              <div class="author">
+                <img
+                  class="avatar"
+                  src="https://i.pravatar.cc/40?img=7"
+                  alt="Author"
+                />
+                <span>James Park</span>
+              </div>
+              <span>May 20, 2025</span>
+            </div>
+            <a href="#" class="read-more">Read Article →</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+          <img
+            class="card-img"
+            src="https://picsum.photos/seed/tools/400/250"
+            alt="Tools"
+          />
+          <div class="card-body">
+            <span class="card-badge">Tools</span>
+            <h3>Top Developer Tools to Boost Your Productivity in 2025</h3>
+            <p>
+              From VS Code extensions to terminal tricks, here are the best
+              tools that every modern developer should have in their toolkit.
+            </p>
+            <div class="card-meta">
+              <div class="author">
+                <img
+                  class="avatar"
+                  src="https://i.pravatar.cc/40?img=9"
+                  alt="Author"
+                />
+                <span>Lena Müller</span>
+              </div>
+              <span>May 15, 2025</span>
+            </div>
+            <a href="#" class="read-more">Read Article →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; <script>document.write(new Date().getFullYear());</script> DevBlog. Made with ❤️ using HTML & CSS.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Footer Design</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        background: #f0f2f5;
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #555;
+      }
+
+      footer {
+        background: #1a1a2e;
+        color: #ccc;
+      }
+
+      .footer-top {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        padding: 3rem 5%;
+      }
+
+      .footer-brand .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #e94560;
+        margin-bottom: 1rem;
+      }
+
+      .footer-brand p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        color: #aaa;
+      }
+
+      .footer-brand .social-links {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+
+      .social-links a {
+        width: 38px;
+        height: 38px;
+        background: #16213e;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.85rem;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      .social-links a:hover {
+        background: #e94560;
+        color: #fff;
+      }
+
+      .footer-column h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 1.25rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      .footer-column h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 30px;
+        height: 2px;
+        background: #e94560;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 0.6rem;
+      }
+
+      .footer-column ul li a {
+        color: #aaa;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s, padding-left 0.3s;
+        display: inline-block;
+      }
+
+      .footer-column ul li a:hover {
+        color: #e94560;
+        padding-left: 5px;
+      }
+
+      .footer-column .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        margin-bottom: 0.85rem;
+        font-size: 0.9rem;
+        color: #aaa;
+      }
+
+      .contact-item .icon {
+        color: #e94560;
+        font-style: normal;
+        min-width: 16px;
+        margin-top: 2px;
+      }
+
+      .footer-newsletter input {
+        width: 100%;
+        padding: 0.65rem 1rem;
+        border: none;
+        border-radius: 4px;
+        background: #16213e;
+        color: #fff;
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem;
+        outline: none;
+        border: 1px solid #2a2a4a;
+        transition: border-color 0.3s;
+      }
+
+      .footer-newsletter input:focus {
+        border-color: #e94560;
+      }
+
+      .footer-newsletter input::placeholder {
+        color: #666;
+      }
+
+      .footer-newsletter button {
+        width: 100%;
+        padding: 0.65rem;
+        background: #e94560;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .footer-newsletter button:hover {
+        background: #c73652;
+      }
+
+      .footer-bottom {
+        background: #16213e;
+        padding: 1.25rem 5%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        font-size: 0.85rem;
+        color: #888;
+      }
+
+      .footer-bottom-links {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-bottom-links a {
+        color: #888;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-bottom-links a:hover {
+        color: #e94560;
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .footer-top {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .footer-top {
+          grid-template-columns: 1fr;
+          padding: 2rem 5%;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .footer-bottom-links {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>Page Content Goes Here</main>
+
+    <footer>
+      <div class="footer-top">
+        <!-- Brand -->
+        <div class="footer-brand footer-column">
+          <div class="logo">&#9670; LifeOfCode</div>
+          <p>
+            Building beautiful web experiences one line of code at a time. Join
+            our community of passionate developers.
+          </p>
+          <div class="social-links">
+            <a href="#" title="Twitter">&#x1D54F;</a>
+            <a href="#" title="GitHub">&#9913;</a>
+            <a href="#" title="LinkedIn">in</a>
+            <a href="#" title="YouTube">&#9654;</a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-column">
+          <h3>Contact</h3>
+          <div class="contact-item">
+            <i class="icon">&#128205;</i>
+            <span>123 Dev Street, Dhaka, Bangladesh</span>
+          </div>
+          <div class="contact-item">
+            <i class="icon">&#128222;</i>
+            <span>+880 1234 567890</span>
+          </div>
+          <div class="contact-item">
+            <i class="icon">&#9993;</i>
+            <span>hello@lifeofcode.dev</span>
+          </div>
+          <div class="contact-item">
+            <i class="icon">&#128336;</i>
+            <span>Mon - Fri: 9am - 6pm</span>
+          </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="footer-column">
+          <h3>Newsletter</h3>
+          <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 1rem">
+            Subscribe to get the latest tutorials and CSS challenges delivered
+            to your inbox.
+          </p>
+          <div class="footer-newsletter">
+            <input type="email" placeholder="Your email address" />
+            <button type="submit">Subscribe Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 LifeOfCode. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

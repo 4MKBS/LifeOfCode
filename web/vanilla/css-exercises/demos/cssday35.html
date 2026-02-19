@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sticky Header + Footer</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: #1a1a2e;
+        color: #fff;
+        padding: 16px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      header .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      header nav a {
+        color: #e0e0e0;
+        text-decoration: none;
+        margin-left: 24px;
+        font-size: 0.95rem;
+        transition: color 0.3s;
+      }
+
+      header nav a:hover {
+        color: #e94560;
+      }
+
+      main {
+        flex: 1;
+        padding: 40px 32px;
+        max-width: 900px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      main h1 {
+        margin-bottom: 20px;
+        color: #1a1a2e;
+      }
+
+      main section {
+        margin-bottom: 32px;
+      }
+
+      main section h2 {
+        margin-bottom: 12px;
+        color: #16213e;
+      }
+
+      main section p {
+        line-height: 1.7;
+        color: #444;
+        margin-bottom: 12px;
+      }
+
+      footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 1000;
+        background-color: #1a1a2e;
+        color: #ccc;
+        text-align: center;
+        padding: 16px 32px;
+        font-size: 0.9rem;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      footer a {
+        color: #e94560;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">LifeOfCode</div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Sticky Header &amp; Footer Demo</h1>
+
+      <section>
+        <h2>What is a Sticky Header?</h2>
+        <p>
+          A sticky header stays fixed at the top of the viewport as you scroll
+          down the page. It uses <code>position: sticky; top: 0;</code> to
+          remain visible, providing easy access to navigation at all times.
+        </p>
+      </section>
+
+      <section>
+        <h2>What is a Sticky Footer?</h2>
+        <p>
+          A sticky footer stays fixed at the bottom of the viewport as you
+          scroll. It uses <code>position: sticky; bottom: 0;</code> so that
+          important information or links are always accessible.
+        </p>
+      </section>
+
+      <section>
+        <h2>How It Works</h2>
+        <p>
+          The layout uses a flexbox column on the body with
+          <code>min-height: 100vh</code>. The main content area has
+          <code>flex: 1</code> so it expands to fill available space. Both the
+          header and footer use <code>position: sticky</code> to stay pinned to
+          their respective edges.
+        </p>
+      </section>
+
+      <section>
+        <h2>Lorem Ipsum Content</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </p>
+        <p>
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+          proident, sunt in culpa qui officia deserunt mollit anim id est
+          laborum.
+        </p>
+      </section>
+
+      <section>
+        <h2>More Content to Scroll</h2>
+        <p>
+          Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam
+          varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus
+          magna felis sollicitudin mauris. Integer in mauris eu nibh euismod
+          gravida.
+        </p>
+        <p>
+          Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a
+          elit. Etiam tempor. Ut ullamcorper, ligula ut dictum pharetra, nisi
+          nunc fringilla magna, in commodo elit erat nec turpis. Ut pharetra
+          augue nec augue.
+        </p>
+      </section>
+
+      <section>
+        <h2>Even More Content</h2>
+        <p>
+          Pellentesque habitant morbi tristique senectus et netus et malesuada
+          fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
+          ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
+          egestas semper.
+        </p>
+        <p>
+          Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque
+          sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi,
+          condimentum sed, commodo vitae, ornare sit amet, wisi.
+        </p>
+        <p>
+          Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet
+          nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer
+          ante arcu, accumsan a, consectetuer eget, posuere ut, mauris.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        &copy; 2024 LifeOfCode. Built with ❤️ using pure CSS.
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+  </body>
+</html>
