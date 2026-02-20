@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Gradient Background</title>
+    <style>
+      :root {
+        --c1: #0f172a;
+        --c2: #1d4ed8;
+        --c3: #06b6d4;
+        --c4: #a855f7;
+        --c5: #f43f5e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background: linear-gradient(
+          -45deg,
+          var(--c1),
+          var(--c2),
+          var(--c3),
+          var(--c4),
+          var(--c5)
+        );
+        background-size: 400% 400%;
+        animation: gradientShift 12s ease infinite;
+      }
+
+      .card {
+        padding: 1.25rem 1.75rem;
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.2rem, 2vw + 1rem, 2rem);
+        letter-spacing: 0.04em;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Animated Gradient Background</h1>
+    </div>
+  </body>
+</html>
