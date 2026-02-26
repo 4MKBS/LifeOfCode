@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Background Video Overlay</title>
+    <style>
+      :root {
+        --overlay: rgba(8, 12, 24, 0.62);
+        --panel: rgba(255, 255, 255, 0.1);
+        --text: #f5f7ff;
+        --accent: #7dd3fc;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+        overflow: hidden;
+        background: #050816;
+      }
+
+      .hero {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        isolation: isolate;
+      }
+
+      .hero video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            rgba(10, 18, 40, 0.72),
+            rgba(7, 10, 18, 0.45)
+          ),
+          var(--overlay);
+        z-index: -1;
+      }
+
+      .content {
+        width: min(92vw, 760px);
+        padding: 2.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: var(--panel);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-radius: 24px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        text-align: center;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        border: 1px solid rgba(125, 211, 252, 0.35);
+        background: rgba(125, 211, 252, 0.12);
+        color: var(--accent);
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        margin: 0 0 0.9rem;
+        font-size: clamp(2.1rem, 5vw, 4.6rem);
+        line-height: 1.05;
+      }
+
+      p {
+        margin: 0 auto 1.6rem;
+        max-width: 56ch;
+        font-size: clamp(1rem, 2vw, 1.1rem);
+        line-height: 1.65;
+        color: rgba(245, 247, 255, 0.86);
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.9rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 0.95rem 1.35rem;
+        font: inherit;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn.primary {
+        background: var(--accent);
+        color: #07111f;
+      }
+
+      .btn.secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      @media (max-width: 640px) {
+        .content {
+          padding: 1.5rem;
+          border-radius: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <video autoplay muted loop playsinline>
+        <!-- <source
+          src="https://www.w3schools.com/howto/rain.mp4"
+          https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+          https://www.w3schools.com/html/mov_bbb.mp4"
+          type="video/mp4"
+        /> -->
+        <source
+          src="https://www.w3schools.com/howto/rain.mp4"
+          type="video/mp4"
+        />
+      </video>
+
+      <div class="content">
+        <div class="eyebrow">Background Video Overlay</div>
+        <h1>Clean glass overlay on a full-screen video.</h1>
+        <p>
+          This layout uses a muted looping video, a dark gradient overlay, and a
+          blurred content card for readable foreground text.
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="#">Primary Action</a>
+          <a class="btn secondary" href="#">Secondary Action</a>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
