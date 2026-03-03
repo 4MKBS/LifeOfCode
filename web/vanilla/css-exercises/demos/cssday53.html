@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Text Glow</title>
+    <style>
+      :root {
+        --bg: #05070d;
+        --neon: #00f7ff;
+        --neon-soft: #7ffbff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(
+            circle at 50% 20%,
+            #0b1630 0%,
+            transparent 45%
+          ),
+          var(--bg);
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+
+      .neon {
+        font-size: clamp(2rem, 8vw, 6rem);
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--neon-soft);
+        text-shadow: 0 0 4px #fff, 0 0 10px var(--neon), 0 0 20px var(--neon),
+          0 0 40px var(--neon), 0 0 80px var(--neon);
+        animation: flicker 2.8s infinite alternate;
+      }
+
+      @keyframes flicker {
+        0%,
+        18%,
+        22%,
+        25%,
+        53%,
+        57%,
+        100% {
+          opacity: 1;
+          filter: brightness(1);
+        }
+        20%,
+        24%,
+        55% {
+          opacity: 0.82;
+          filter: brightness(0.85);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="neon">Neon Glow</h1>
+  </body>
+</html>
