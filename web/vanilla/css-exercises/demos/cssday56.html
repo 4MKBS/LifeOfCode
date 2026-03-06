@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll-based Text Reveal</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(255, 255, 255, 0.06);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.62);
+        --accent: #8b5cf6;
+        --accent-2: #22d3ee;
+        --border: rgba(255, 255, 255, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: radial-gradient(
+            circle at top,
+            rgba(139, 92, 246, 0.16),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at 80% 15%,
+            rgba(34, 211, 238, 0.12),
+            transparent 30%
+          ),
+          var(--bg);
+        color: var(--text);
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        overflow-x: hidden;
+      }
+
+      .progress {
+        position: fixed;
+        inset: 0 auto auto 0;
+        width: 100%;
+        height: 4px;
+        z-index: 50;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .progress > span {
+        display: block;
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        box-shadow: 0 0 20px rgba(34, 211, 238, 0.35);
+      }
+
+      .wrap {
+        width: min(980px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 72px 0 120px;
+      }
+
+      .hero {
+        min-height: 100svh;
+        display: grid;
+        align-content: center;
+        padding: 48px 0 96px;
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        width: fit-content;
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-bottom: 22px;
+        backdrop-filter: blur(14px);
+      }
+
+      .kicker::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        box-shadow: 0 0 18px rgba(139, 92, 246, 0.7);
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 10ch;
+        font-size: clamp(3.2rem, 10vw, 7.5rem);
+        line-height: 0.92;
+        letter-spacing: -0.06em;
+      }
+
+      .lead {
+        max-width: 60ch;
+        margin: 28px 0 0;
+        font-size: clamp(1.05rem, 2vw, 1.35rem);
+        line-height: 1.8;
+        color: var(--muted);
+      }
+
+      .hint {
+        margin-top: 28px;
+        color: rgba(255, 255, 255, 0.46);
+        font-size: 0.95rem;
+      }
+
+      .story {
+        display: grid;
+        gap: 22px;
+        margin-top: 36px;
+      }
+
+      .panel {
+        padding: clamp(26px, 4vw, 42px);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        background: var(--panel);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 20px 80px rgba(0, 0, 0, 0.24);
+      }
+
+      .reveal {
+        font-size: clamp(1.25rem, 2.8vw, 2rem);
+        line-height: 1.7;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0;
+      }
+
+      .reveal .word {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(0.8em);
+        filter: blur(10px);
+        transition: opacity 0.65s ease, transform 0.65s ease, filter 0.65s ease;
+        will-change: opacity, transform, filter;
+      }
+
+      .reveal.is-visible .word {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+
+      .meta {
+        margin-top: 14px;
+        font-size: 0.92rem;
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.02em;
+      }
+
+      .spacer {
+        height: 26vh;
+      }
+
+      .accent {
+        color: #d7ccff;
+      }
+
+      .accent-strong {
+        color: #9bf0ff;
+      }
+
+      @media (max-width: 640px) {
+        .wrap {
+          width: min(100% - 24px, 980px);
+        }
+
+        .hero {
+          min-height: 92svh;
+        }
+
+        .panel {
+          border-radius: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress" aria-hidden="true"><span></span></div>
+
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <div class="kicker">Scroll Reveal Demo</div>
+          <h1>Words appear as the page moves.</h1>
+          <p class="lead">
+            This page reveals text one word at a time when each block enters the
+            viewport. The effect is driven by scroll position and
+            IntersectionObserver.
+          </p>
+          <p class="hint">Scroll down to trigger the reveal.</p>
+        </div>
+      </section>
+
+      <section class="story">
+        <article class="panel">
+          <p class="reveal" data-reveal>
+            The first line stays hidden until it is close enough to the
+            viewport, then each word fades, lifts, and clears into view with a
+            subtle delay.
+          </p>
+          <div class="meta">Fade + lift reveal</div>
+        </article>
+
+        <div class="spacer"></div>
+
+        <article class="panel">
+          <p class="reveal" data-reveal>
+            A good scroll effect should feel responsive, restrained, and
+            readable. Motion helps guide attention without taking over the
+            content.
+          </p>
+          <div class="meta">Readable motion</div>
+        </article>
+
+        <div class="spacer"></div>
+
+        <article class="panel">
+          <p class="reveal" data-reveal>
+            Use the accent colors sparingly, keep the contrast high, and let the
+            timing do the work. The result is a clean text reveal that feels
+            smooth on every scroll.
+          </p>
+          <div class="meta">Smooth and lightweight</div>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const progress = document.querySelector(".progress > span");
+      const revealElements = document.querySelectorAll("[data-reveal]");
+
+      function wrapWords(el) {
+        const text = el.textContent.trim().replace(/\s+/g, " ");
+        el.textContent = "";
+
+        text.split(" ").forEach((word, index) => {
+          const span = document.createElement("span");
+          span.className = "word";
+          span.textContent = word;
+          span.style.transitionDelay = `${index * 45}ms`;
+          el.appendChild(span);
+          el.appendChild(document.createTextNode(" "));
+        });
+      }
+
+      revealElements.forEach(wrapWords);
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.35,
+          rootMargin: "0px 0px -10% 0px",
+        }
+      );
+
+      revealElements.forEach((el) => observer.observe(el));
+
+      function updateProgress() {
+        const scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop;
+        const maxScroll =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const pct = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+        progress.style.width = `${pct}%`;
+      }
+
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      window.addEventListener("resize", updateProgress);
+      updateProgress();
+    </script>
+  </body>
+</html>
