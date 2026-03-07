@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letter Spacing Animation</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 3rem;
+        color: white;
+        margin: 0;
+        animation: letterSpacing 2s ease-in-out infinite;
+        letter-spacing: 2px;
+      }
+
+      @keyframes letterSpacing {
+        0%,
+        100% {
+          letter-spacing: 2px;
+        }
+        50% {
+          letter-spacing: 15px;
+        }
+      }
+
+      p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ANIMATE</h1>
+      <p>Letter spacing animation in action</p>
+    </div>
+  </body>
+</html>
