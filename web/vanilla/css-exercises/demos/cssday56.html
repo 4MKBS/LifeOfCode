@@ -1,295 +1,735 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scroll-based Text Reveal</title>
-    <style>
-      :root {
-        --bg: #0b1020;
-        --panel: rgba(255, 255, 255, 0.06);
-        --text: rgba(255, 255, 255, 0.92);
-        --muted: rgba(255, 255, 255, 0.62);
-        --accent: #8b5cf6;
-        --accent-2: #22d3ee;
-        --border: rgba(255, 255, 255, 0.12);
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Scroll-based text reveal animation using CSS and JavaScript">
+  <title>Scroll-Based Text Reveal | CSS Day 56</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --text-revealed: #f0ece2;
+      --text-hidden: rgba(240, 236, 226, 0.06);
+      --accent-1: #c084fc;
+      --accent-2: #818cf8;
+      --accent-3: #22d3ee;
+      --gradient-glow: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-revealed);
+      overflow-x: hidden;
+    }
+
+    /* ── Scroll Progress Bar ── */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--gradient-glow);
+      z-index: 100;
+      transition: width 0.05s linear;
+      box-shadow: 0 0 12px var(--accent-1), 0 0 30px var(--accent-2);
+    }
+
+    /* ── Hero Section ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(192, 132, 252, 0.12) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: heroPulse 6s ease-in-out infinite;
+    }
+
+    @keyframes heroPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+      50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border: 1px solid rgba(192, 132, 252, 0.3);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-1);
+      margin-bottom: 32px;
+      backdrop-filter: blur(10px);
+      background: rgba(192, 132, 252, 0.05);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-1);
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; box-shadow: 0 0 8px var(--accent-1); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.05;
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, var(--text-revealed) 30%, var(--accent-1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 300;
+      color: rgba(240, 236, 226, 0.5);
+      margin-top: 24px;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      animation: scrollBounce 2.5s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .scroll-cue span {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240, 236, 226, 0.35);
+    }
+
+    .scroll-cue .arrow {
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid rgba(240, 236, 226, 0.3);
+      border-bottom: 2px solid rgba(240, 236, 226, 0.3);
+      transform: rotate(45deg);
+    }
+
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(12px); opacity: 0.5; }
+    }
+
+    /* ── Text Reveal Sections ── */
+    .reveal-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+      position: relative;
+    }
+
+    .reveal-section:nth-child(even) {
+      background: var(--bg-secondary);
+    }
+
+    .reveal-content {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .section-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, rgba(192, 132, 252, 0.15), rgba(34, 211, 238, 0.08));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 28px;
+      padding: 6px 16px;
+      border: 1px solid rgba(129, 140, 248, 0.25);
+      border-radius: 4px;
+    }
+
+    /* ── Character-level reveal ── */
+    .reveal-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 32px;
+    }
+
+    .reveal-text .char {
+      display: inline-block;
+      color: var(--text-hidden);
+      transition: color 0.3s ease, text-shadow 0.4s ease;
+      will-change: color;
+    }
+
+    .reveal-text .char.revealed {
+      color: var(--text-revealed);
+      text-shadow: 0 0 30px rgba(192, 132, 252, 0.15);
+    }
+
+    .reveal-text .char.space {
+      width: 0.3em;
+    }
+
+    /* ── Word-level reveal ── */
+    .reveal-paragraph {
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      line-height: 1.85;
+      font-weight: 300;
+      color: rgba(240, 236, 226, 0.5);
+    }
+
+    .reveal-paragraph .word {
+      display: inline-block;
+      color: var(--text-hidden);
+      transition: color 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateY(4px);
+      will-change: color, transform;
+    }
+
+    .reveal-paragraph .word.revealed {
+      color: rgba(240, 236, 226, 0.7);
+      transform: translateY(0);
+    }
+
+    /* ── Accent line ── */
+    .accent-line {
+      width: 60px;
+      height: 3px;
+      background: var(--gradient-glow);
+      border-radius: 3px;
+      margin-bottom: 28px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .accent-line.revealed {
+      transform: scaleX(1);
+    }
+
+    /* ── Highlight Style ── */
+    .highlight {
+      position: relative;
+      display: inline;
+    }
+
+    .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: -2px;
+      right: -2px;
+      height: 35%;
+      background: linear-gradient(90deg, rgba(192, 132, 252, 0.3), rgba(34, 211, 238, 0.2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: -1;
+      border-radius: 2px;
+    }
+
+    .highlight.revealed::after {
+      transform: scaleX(1);
+    }
+
+    /* ── Side Decoration ── */
+    .reveal-section .side-glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+
+    .reveal-section:nth-child(3) .side-glow {
+      background: rgba(192, 132, 252, 0.08);
+      top: 20%;
+      right: -100px;
+    }
+
+    .reveal-section:nth-child(4) .side-glow {
+      background: rgba(129, 140, 248, 0.08);
+      bottom: 20%;
+      left: -100px;
+    }
+
+    .reveal-section:nth-child(5) .side-glow {
+      background: rgba(34, 211, 238, 0.06);
+      top: 30%;
+      right: -80px;
+    }
+
+    .reveal-section.in-view .side-glow {
+      opacity: 1;
+    }
+
+    /* ── Full-width reveal ── */
+    .full-reveal {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .full-reveal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 40% 50% at 20% 50%, rgba(192, 132, 252, 0.06) 0%, transparent 100%),
+        radial-gradient(ellipse 40% 50% at 80% 50%, rgba(34, 211, 238, 0.04) 0%, transparent 100%);
+    }
+
+    .mega-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 9rem);
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.1;
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mega-text .char {
+      display: inline-block;
+      color: var(--text-hidden);
+      transition: color 0.25s ease, transform 0.4s ease;
+      will-change: color, transform;
+    }
+
+    .mega-text .char.revealed {
+      color: var(--text-revealed);
+    }
+
+    .mega-text .char.space {
+      width: 0.3em;
+    }
+
+    /* ── Gradient text variant ── */
+    .gradient-reveal .char.revealed {
+      background: var(--gradient-glow);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Split line reveal ── */
+    .line-reveal-wrap {
+      overflow: hidden;
+    }
+
+    .line-reveal {
+      transform: translateY(110%);
+      transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+      display: block;
+    }
+
+    .line-reveal.revealed {
+      transform: translateY(0);
+    }
+
+    /* ── Final CTA section ── */
+    .final-section {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      position: relative;
+    }
+
+    .final-section::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .final-text {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+      font-weight: 300;
+      line-height: 2;
+      max-width: 500px;
+      color: rgba(240, 236, 226, 0.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    .final-text .word {
+      display: inline-block;
+      color: var(--text-hidden);
+      transition: color 0.5s ease;
+    }
+
+    .final-text .word.revealed {
+      color: rgba(240, 236, 226, 0.55);
+    }
+
+    .day-tag {
+      margin-top: 80px;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(240, 236, 226, 0.15);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .reveal-section {
+        padding: 60px 24px;
       }
 
-      * {
-        box-sizing: border-box;
+      .mega-text {
+        padding: 24px;
       }
+    }
+  </style>
+</head>
+<body>
 
-      html,
-      body {
-        margin: 0;
-        min-height: 100%;
-        background: radial-gradient(
-            circle at top,
-            rgba(139, 92, 246, 0.16),
-            transparent 35%
-          ),
-          radial-gradient(
-            circle at 80% 15%,
-            rgba(34, 211, 238, 0.12),
-            transparent 30%
-          ),
-          var(--bg);
-        color: var(--text);
-        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-        overflow-x: hidden;
-      }
+  <div class="scroll-progress" id="scrollProgress"></div>
 
-      .progress {
-        position: fixed;
-        inset: 0 auto auto 0;
-        width: 100%;
-        height: 4px;
-        z-index: 50;
-        background: rgba(255, 255, 255, 0.08);
-      }
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      CSS Day 56
+    </div>
+    <h1>Scroll to<br>Reveal</h1>
+    <p class="hero-subtitle">Text that comes alive as you scroll</p>
+    <div class="scroll-cue">
+      <span>Scroll Down</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
 
-      .progress > span {
-        display: block;
-        width: 0%;
-        height: 100%;
-        background: linear-gradient(90deg, var(--accent), var(--accent-2));
-        box-shadow: 0 0 20px rgba(34, 211, 238, 0.35);
-      }
+  <!-- Section 1: Character Reveal -->
+  <section class="reveal-section" id="section1">
+    <div class="reveal-content">
+      <span class="section-number">01</span>
+      <span class="section-label">Character Reveal</span>
+      <div class="accent-line" data-reveal="line"></div>
+      <h2 class="reveal-text" data-reveal="chars">
+        Every great design begins with an even better story.
+      </h2>
+      <p class="reveal-paragraph" data-reveal="words">
+        The art of visual storytelling goes beyond mere aesthetics. It weaves together purpose, emotion, and clarity into something that resonates deeply with those who experience it. Great design speaks without shouting.
+      </p>
+    </div>
+    <div class="side-glow"></div>
+  </section>
 
-      .wrap {
-        width: min(980px, calc(100% - 40px));
-        margin: 0 auto;
-        padding: 72px 0 120px;
-      }
+  <!-- Section 2: Word Reveal -->
+  <section class="reveal-section" id="section2">
+    <div class="reveal-content">
+      <span class="section-number">02</span>
+      <span class="section-label">Word Reveal</span>
+      <div class="accent-line" data-reveal="line"></div>
+      <h2 class="reveal-text" data-reveal="chars">
+        Motion creates meaning in the spaces between stillness.
+      </h2>
+      <p class="reveal-paragraph" data-reveal="words">
+        Animation is not decoration. When used with intention, movement guides the eye, establishes hierarchy, and builds a rhythm that transforms static layouts into living, breathing experiences that feel natural and intuitive.
+      </p>
+    </div>
+    <div class="side-glow"></div>
+  </section>
 
-      .hero {
-        min-height: 100svh;
-        display: grid;
-        align-content: center;
-        padding: 48px 0 96px;
-      }
+  <!-- Section 3: Mega Character Reveal -->
+  <section class="full-reveal" id="section3">
+    <h2 class="mega-text" data-reveal="chars">
+      Pixels with Purpose
+    </h2>
+  </section>
 
-      .kicker {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        width: fit-content;
-        padding: 10px 14px;
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.04);
-        color: var(--muted);
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        font-size: 12px;
-        margin-bottom: 22px;
-        backdrop-filter: blur(14px);
-      }
+  <!-- Section 4: Another section -->
+  <section class="reveal-section" id="section4">
+    <div class="reveal-content">
+      <span class="section-number">03</span>
+      <span class="section-label">Line Reveal</span>
+      <div class="accent-line" data-reveal="line"></div>
+      <h2 class="reveal-text" data-reveal="chars">
+        <span class="highlight" data-reveal="highlight">Simplicity</span> is the ultimate sophistication.
+      </h2>
+      <p class="reveal-paragraph" data-reveal="words">
+        Stripping away the unnecessary until only the essential remains. That is the hallmark of mastery. Complexity is easy. Simplicity requires courage, restraint, and a deep understanding of what truly matters to the people you are designing for.
+      </p>
+    </div>
+    <div class="side-glow"></div>
+  </section>
 
-      .kicker::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: linear-gradient(90deg, var(--accent), var(--accent-2));
-        box-shadow: 0 0 18px rgba(139, 92, 246, 0.7);
-      }
+  <!-- Section 5: Gradient Mega Reveal -->
+  <section class="full-reveal" id="section5">
+    <h2 class="mega-text gradient-reveal" data-reveal="chars">
+      Design is Intelligence Made Visible
+    </h2>
+  </section>
 
-      h1 {
-        margin: 0;
-        max-width: 10ch;
-        font-size: clamp(3.2rem, 10vw, 7.5rem);
-        line-height: 0.92;
-        letter-spacing: -0.06em;
-      }
+  <!-- Section 6 -->
+  <section class="reveal-section" id="section6">
+    <div class="reveal-content">
+      <span class="section-number">04</span>
+      <span class="section-label">Scroll Typography</span>
+      <div class="accent-line" data-reveal="line"></div>
+      <h2 class="reveal-text" data-reveal="chars">
+        The scroll becomes a canvas for temporal typography.
+      </h2>
+      <p class="reveal-paragraph" data-reveal="words">
+        As the user scrolls, each letter materializes from the void, creating a choreographed dance of revelation. The pace of discovery is in the reader's hands, turning passive viewing into an active, meditative experience.
+      </p>
+    </div>
+    <div class="side-glow"></div>
+  </section>
 
-      .lead {
-        max-width: 60ch;
-        margin: 28px 0 0;
-        font-size: clamp(1.05rem, 2vw, 1.35rem);
-        line-height: 1.8;
-        color: var(--muted);
-      }
+  <!-- Final Section -->
+  <section class="final-section" id="sectionFinal">
+    <p class="final-text" data-reveal="words">
+      This demo showcases scroll-driven text reveal effects built with vanilla CSS and JavaScript. Each section uses intersection observers and scroll position calculations to progressively reveal characters and words as you navigate through the page.
+    </p>
+    <p class="day-tag">CSS Day 56 — Scroll-Based Text Reveal</p>
+  </section>
 
-      .hint {
-        margin-top: 28px;
-        color: rgba(255, 255, 255, 0.46);
-        font-size: 0.95rem;
-      }
+  <script>
+    // ── Scroll Progress Bar ──
+    const scrollProgress = document.getElementById('scrollProgress');
 
-      .story {
-        display: grid;
-        gap: 22px;
-        margin-top: 36px;
-      }
+    function updateScrollProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      scrollProgress.style.width = progress + '%';
+    }
 
-      .panel {
-        padding: clamp(26px, 4vw, 42px);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        background: var(--panel);
-        backdrop-filter: blur(16px);
-        box-shadow: 0 20px 80px rgba(0, 0, 0, 0.24);
-      }
+    // ── Split text into characters ──
+    function splitIntoChars(element) {
+      const text = element.textContent;
+      element.innerHTML = '';
 
-      .reveal {
-        font-size: clamp(1.25rem, 2.8vw, 2rem);
-        line-height: 1.7;
-        letter-spacing: -0.02em;
-        color: var(--text);
-        margin: 0;
-      }
+      // Preserve child elements like .highlight
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = element.dataset.originalHtml || text;
 
-      .reveal .word {
-        display: inline-block;
-        opacity: 0;
-        transform: translateY(0.8em);
-        filter: blur(10px);
-        transition: opacity 0.65s ease, transform 0.65s ease, filter 0.65s ease;
-        will-change: opacity, transform, filter;
-      }
-
-      .reveal.is-visible .word {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-      }
-
-      .meta {
-        margin-top: 14px;
-        font-size: 0.92rem;
-        color: rgba(255, 255, 255, 0.5);
-        letter-spacing: 0.02em;
-      }
-
-      .spacer {
-        height: 26vh;
-      }
-
-      .accent {
-        color: #d7ccff;
-      }
-
-      .accent-strong {
-        color: #9bf0ff;
-      }
-
-      @media (max-width: 640px) {
-        .wrap {
-          width: min(100% - 24px, 980px);
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const span = document.createElement('span');
+        if (char === ' ') {
+          span.classList.add('char', 'space');
+          span.innerHTML = '&nbsp;';
+        } else {
+          span.classList.add('char');
+          span.textContent = char;
         }
-
-        .hero {
-          min-height: 92svh;
-        }
-
-        .panel {
-          border-radius: 20px;
-        }
+        element.appendChild(span);
       }
-    </style>
-  </head>
-  <body>
-    <div class="progress" aria-hidden="true"><span></span></div>
+    }
 
-    <main class="wrap">
-      <section class="hero">
-        <div>
-          <div class="kicker">Scroll Reveal Demo</div>
-          <h1>Words appear as the page moves.</h1>
-          <p class="lead">
-            This page reveals text one word at a time when each block enters the
-            viewport. The effect is driven by scroll position and
-            IntersectionObserver.
-          </p>
-          <p class="hint">Scroll down to trigger the reveal.</p>
-        </div>
-      </section>
+    // ── Split text into words ──
+    function splitIntoWords(element) {
+      const text = element.textContent.trim();
+      const words = text.split(/\s+/);
+      element.innerHTML = '';
 
-      <section class="story">
-        <article class="panel">
-          <p class="reveal" data-reveal>
-            The first line stays hidden until it is close enough to the
-            viewport, then each word fades, lifts, and clears into view with a
-            subtle delay.
-          </p>
-          <div class="meta">Fade + lift reveal</div>
-        </article>
+      words.forEach((word, i) => {
+        const span = document.createElement('span');
+        span.classList.add('word');
+        span.textContent = word;
+        element.appendChild(span);
 
-        <div class="spacer"></div>
+        if (i < words.length - 1) {
+          element.appendChild(document.createTextNode(' '));
+        }
+      });
+    }
 
-        <article class="panel">
-          <p class="reveal" data-reveal>
-            A good scroll effect should feel responsive, restrained, and
-            readable. Motion helps guide attention without taking over the
-            content.
-          </p>
-          <div class="meta">Readable motion</div>
-        </article>
+    // ── Initialize all reveal elements ──
+    const charElements = document.querySelectorAll('[data-reveal="chars"]');
+    const wordElements = document.querySelectorAll('[data-reveal="words"]');
+    const lineElements = document.querySelectorAll('[data-reveal="line"]');
+    const highlightElements = document.querySelectorAll('[data-reveal="highlight"]');
 
-        <div class="spacer"></div>
+    charElements.forEach(el => {
+      el.dataset.originalHtml = el.innerHTML;
+      splitIntoChars(el);
+    });
 
-        <article class="panel">
-          <p class="reveal" data-reveal>
-            Use the accent colors sparingly, keep the contrast high, and let the
-            timing do the work. The result is a clean text reveal that feels
-            smooth on every scroll.
-          </p>
-          <div class="meta">Smooth and lightweight</div>
-        </article>
-      </section>
-    </main>
+    wordElements.forEach(el => splitIntoWords(el));
 
-    <script>
-      const progress = document.querySelector(".progress > span");
-      const revealElements = document.querySelectorAll("[data-reveal]");
+    // ── Scroll-based reveal logic ──
+    function getRevealProgress(element, start = 0.85, end = 0.25) {
+      const rect = element.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const triggerTop = windowHeight * start;
+      const triggerBottom = windowHeight * end;
+      const elementCenter = rect.top + rect.height / 2;
 
-      function wrapWords(el) {
-        const text = el.textContent.trim().replace(/\s+/g, " ");
-        el.textContent = "";
+      if (elementCenter > triggerTop) return 0;
+      if (elementCenter < triggerBottom) return 1;
 
-        text.split(" ").forEach((word, index) => {
-          const span = document.createElement("span");
-          span.className = "word";
-          span.textContent = word;
-          span.style.transitionDelay = `${index * 45}ms`;
-          el.appendChild(span);
-          el.appendChild(document.createTextNode(" "));
+      return (triggerTop - elementCenter) / (triggerTop - triggerBottom);
+    }
+
+    function revealByScroll() {
+      // Character reveals
+      charElements.forEach(el => {
+        const progress = getRevealProgress(el, 0.9, 0.15);
+        const chars = el.querySelectorAll('.char');
+        const revealCount = Math.floor(progress * chars.length);
+
+        chars.forEach((char, i) => {
+          if (i < revealCount) {
+            char.classList.add('revealed');
+          } else {
+            char.classList.remove('revealed');
+          }
         });
-      }
+      });
 
-      revealElements.forEach(wrapWords);
+      // Word reveals
+      wordElements.forEach(el => {
+        const progress = getRevealProgress(el, 0.85, 0.1);
+        const words = el.querySelectorAll('.word');
+        const revealCount = Math.floor(progress * words.length);
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          threshold: 0.35,
-          rootMargin: "0px 0px -10% 0px",
+        words.forEach((word, i) => {
+          if (i < revealCount) {
+            word.classList.add('revealed');
+          } else {
+            word.classList.remove('revealed');
+          }
+        });
+      });
+
+      // Accent line reveals
+      lineElements.forEach(el => {
+        const progress = getRevealProgress(el, 0.8, 0.5);
+        if (progress > 0.1) {
+          el.classList.add('revealed');
+        } else {
+          el.classList.remove('revealed');
         }
-      );
+      });
 
-      revealElements.forEach((el) => observer.observe(el));
+      // Highlight reveals
+      highlightElements.forEach(el => {
+        const progress = getRevealProgress(el, 0.7, 0.3);
+        if (progress > 0.5) {
+          el.classList.add('revealed');
+        } else {
+          el.classList.remove('revealed');
+        }
+      });
 
-      function updateProgress() {
-        const scrollTop =
-          document.documentElement.scrollTop || document.body.scrollTop;
-        const maxScroll =
-          document.documentElement.scrollHeight - window.innerHeight;
-        const pct = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
-        progress.style.width = `${pct}%`;
+      // Section glow
+      document.querySelectorAll('.reveal-section').forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.7 && rect.bottom > window.innerHeight * 0.3) {
+          section.classList.add('in-view');
+        } else {
+          section.classList.remove('in-view');
+        }
+      });
+    }
+
+    // ── Smooth scroll handler with rAF ──
+    let ticking = false;
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateScrollProgress();
+          revealByScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
+    }
 
-      window.addEventListener("scroll", updateProgress, { passive: true });
-      window.addEventListener("resize", updateProgress);
-      updateProgress();
-    </script>
-  </body>
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Initial call
+    updateScrollProgress();
+    revealByScroll();
+  </script>
+</body>
 </html>
