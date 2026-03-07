@@ -1,53 +1,897 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Letter Spacing Animation</title>
-    <style>
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        font-family: Arial, sans-serif;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Letter spacing animation effects using CSS and JavaScript">
+  <title>Letter Spacing Animation | CSS Day 57</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-      .container {
-        text-align: center;
-      }
+    :root {
+      --bg: #08080c;
+      --surface: #0f0f16;
+      --surface-2: #16161f;
+      --text: #e8e4dc;
+      --text-dim: rgba(232, 228, 220, 0.35);
+      --amber: #f59e0b;
+      --amber-dim: rgba(245, 158, 11, 0.15);
+      --rose: #f43f5e;
+      --sky: #38bdf8;
+      --emerald: #34d399;
+      --violet: #a78bfa;
+    }
 
-      h1 {
-        font-size: 3rem;
-        color: white;
-        margin: 0;
-        animation: letterSpacing 2s ease-in-out infinite;
-        letter-spacing: 2px;
-      }
+    html { scroll-behavior: smooth; }
 
-      @keyframes letterSpacing {
-        0%,
-        100% {
-          letter-spacing: 2px;
-        }
-        50% {
-          letter-spacing: 15px;
-        }
-      }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-      p {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.1rem;
-        margin-top: 20px;
+    /* ═══════════════════════════════════
+       HERO
+    ═══════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 40px 24px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.06) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    /* Grid lines background */
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(232, 228, 220, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 228, 220, 0.02) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 100%);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 18px;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: var(--amber-dim);
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge .pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; box-shadow: none; }
+      50% { opacity: 1; box-shadow: 0 0 8px var(--amber); }
+    }
+
+    /* ── Hero Title: Breathe animation ── */
+    .hero-title {
+      font-size: clamp(3.2rem, 9vw, 8rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+      animation: heroSpacing 4s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+    }
+
+    .hero-title .letter {
+      display: inline-block;
+      animation: heroLetterGlow 4s ease-in-out infinite alternate;
+    }
+
+    .hero-title .letter:nth-child(odd) {
+      animation-delay: 0.15s;
+    }
+
+    @keyframes heroSpacing {
+      0% { letter-spacing: -0.02em; }
+      100% { letter-spacing: 0.35em; }
+    }
+
+    @keyframes heroLetterGlow {
+      0% { color: var(--text); }
+      100% { color: var(--amber); }
+    }
+
+    .hero-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+      font-weight: 300;
+      color: var(--text-dim);
+      margin-top: 28px;
+      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 1;
+      animation: subSpacing 4s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+    }
+
+    @keyframes subSpacing {
+      0% { letter-spacing: 0.04em; }
+      100% { letter-spacing: 0.25em; }
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 1;
+    }
+
+    .scroll-hint span {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .scroll-hint .line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ═══════════════════════════════════
+       SECTION BASE
+    ═══════════════════════════════════ */
+    .demo-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+      position: relative;
+    }
+
+    .demo-section:nth-child(even) {
+      background: var(--surface);
+    }
+
+    .demo-card {
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+      padding: 4px 14px;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .section-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(232, 228, 220, 0.4);
+      max-width: 480px;
+      margin: 0 auto 56px;
+      line-height: 1.7;
+    }
+
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--amber), transparent);
+      margin: 16px auto 24px;
+      border-radius: 2px;
+    }
+
+    /* ═══════════════════════════════════
+       DEMO 1: HOVER EXPAND
+    ═══════════════════════════════════ */
+    .hover-expand-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .hover-word {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: 0;
+      cursor: pointer;
+      transition: letter-spacing 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  color 0.4s ease;
+      position: relative;
+      user-select: none;
+    }
+
+    .hover-word::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      transform: translateX(-50%);
+      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background 0.4s ease;
+      border-radius: 2px;
+    }
+
+    .hover-word:nth-child(1) { color: var(--rose); }
+    .hover-word:nth-child(1)::after { background: var(--rose); }
+    .hover-word:nth-child(2) { color: var(--sky); }
+    .hover-word:nth-child(2)::after { background: var(--sky); }
+    .hover-word:nth-child(3) { color: var(--emerald); }
+    .hover-word:nth-child(3)::after { background: var(--emerald); }
+    .hover-word:nth-child(4) { color: var(--violet); }
+    .hover-word:nth-child(4)::after { background: var(--violet); }
+
+    .hover-word:hover {
+      letter-spacing: 0.5em;
+    }
+
+    .hover-word:hover::after {
+      width: 100%;
+    }
+
+    /* ═══════════════════════════════════
+       DEMO 2: TYPEWRITER SPACING
+    ═══════════════════════════════════ */
+    .typewriter-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .typewriter-line {
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      font-weight: 700;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .typewriter-line .char {
+      display: inline-block;
+      opacity: 0;
+      letter-spacing: 0.8em;
+      animation: typeIn 0.5s forwards;
+      animation-play-state: paused;
+    }
+
+    .typewriter-line.active .char {
+      animation-play-state: running;
+    }
+
+    @keyframes typeIn {
+      0% {
+        opacity: 0;
+        letter-spacing: 0.8em;
+        transform: translateY(8px);
       }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>ANIMATE</h1>
-      <p>Letter spacing animation in action</p>
+      60% {
+        opacity: 1;
+        letter-spacing: 0.15em;
+      }
+      100% {
+        opacity: 1;
+        letter-spacing: 0.05em;
+        transform: translateY(0);
+      }
+    }
+
+    .typewriter-line:nth-child(1) .char { color: var(--amber); }
+    .typewriter-line:nth-child(2) .char { color: var(--sky); }
+    .typewriter-line:nth-child(3) .char { color: var(--emerald); }
+
+    /* ═══════════════════════════════════
+       DEMO 3: WAVE SPACING
+    ═══════════════════════════════════ */
+    .wave-text {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+
+    .wave-text .letter {
+      display: inline-block;
+      animation: waveSpace 3s ease-in-out infinite;
+      color: var(--text);
+      transition: color 0.3s ease;
+    }
+
+    @keyframes waveSpace {
+      0%, 100% {
+        margin-right: 0;
+        transform: translateY(0);
+      }
+      25% {
+        margin-right: 0.15em;
+        transform: translateY(-12px);
+      }
+      50% {
+        margin-right: 0.3em;
+        transform: translateY(0);
+      }
+      75% {
+        margin-right: 0.15em;
+        transform: translateY(12px);
+      }
+    }
+
+    .wave-text .letter.space {
+      width: 0.35em;
+    }
+
+    /* ═══════════════════════════════════
+       DEMO 4: MAGNETIC CURSOR
+    ═══════════════════════════════════ */
+    .magnetic-stage {
+      position: relative;
+      padding: 60px 0;
+    }
+
+    .magnetic-text {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 800;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      cursor: crosshair;
+    }
+
+    .magnetic-text .letter {
+      display: inline-block;
+      transition: margin 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  color 0.3s ease,
+                  transform 0.3s ease;
+      will-change: margin, transform;
+    }
+
+    .magnetic-text .letter.space {
+      width: 0.3em;
+    }
+
+    .magnetic-hint {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 32px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ═══════════════════════════════════
+       DEMO 5: ELASTIC SNAP
+    ═══════════════════════════════════ */
+    .elastic-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .elastic-word {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: 0;
+      cursor: pointer;
+      transition: letter-spacing 0.1s ease;
+      user-select: none;
+      position: relative;
+    }
+
+    .elastic-word.active {
+      animation: elasticSnap 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes elasticSnap {
+      0% { letter-spacing: 0; }
+      15% { letter-spacing: 0.6em; }
+      30% { letter-spacing: -0.03em; }
+      45% { letter-spacing: 0.25em; }
+      60% { letter-spacing: 0.02em; }
+      75% { letter-spacing: 0.12em; }
+      90% { letter-spacing: 0.04em; }
+      100% { letter-spacing: 0.05em; }
+    }
+
+    .elastic-word:nth-child(1) { color: var(--rose); }
+    .elastic-word:nth-child(2) { color: var(--amber); }
+    .elastic-word:nth-child(3) { color: var(--sky); }
+
+    .click-hint {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-top: 16px;
+    }
+
+    /* ═══════════════════════════════════
+       DEMO 6: SCROLL SPACING
+    ═══════════════════════════════════ */
+    .scroll-spacing-text {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      text-align: center;
+      transition: letter-spacing 0.1s linear;
+      will-change: letter-spacing;
+    }
+
+    .scroll-spacing-text span {
+      display: inline-block;
+    }
+
+    .scroll-sub {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 24px;
+      font-weight: 300;
+    }
+
+    /* ═══════════════════════════════════
+       DEMO 7: STAGGER ENTRANCE
+    ═══════════════════════════════════ */
+    .stagger-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .stagger-line {
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 700;
+      overflow: hidden;
+    }
+
+    .stagger-line .letter {
+      display: inline-block;
+      opacity: 0;
+      letter-spacing: 1.5em;
+      transform: translateY(100%) rotateX(90deg);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stagger-line .letter.space {
+      width: 0.3em;
+    }
+
+    .stagger-line.visible .letter {
+      opacity: 1;
+      letter-spacing: 0.04em;
+      transform: translateY(0) rotateX(0deg);
+    }
+
+    .stagger-line:nth-child(1) .letter { color: var(--violet); }
+    .stagger-line:nth-child(2) .letter { color: var(--sky); }
+    .stagger-line:nth-child(3) .letter { color: var(--emerald); }
+
+    /* ═══════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════ */
+    .footer {
+      padding: 60px 40px;
+      text-align: center;
+      background: var(--surface);
+      border-top: 1px solid rgba(232, 228, 220, 0.04);
+    }
+
+    .footer-text {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(232, 228, 220, 0.15);
+    }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════ */
+    @media (max-width: 768px) {
+      .demo-section { padding: 60px 20px; }
+      .hover-word:hover { letter-spacing: 0.3em; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid-bg"></div>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="hero">
+    <div class="badge">
+      <span class="pulse"></span>
+      CSS Day 57
     </div>
-  </body>
+    <h1 class="hero-title" id="heroTitle"></h1>
+    <p class="hero-sub">The art of space between letters</p>
+    <div class="scroll-hint">
+      <span>Explore</span>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <!-- ── DEMO 1: Hover Expand ── -->
+  <section class="demo-section" id="demo1">
+    <div class="demo-card">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Hover Expand</span>
+      </div>
+      <div class="divider"></div>
+      <p class="section-desc">Hover over each word to watch the letters gracefully spread apart with a springy overshoot easing.</p>
+      <div class="hover-expand-stage">
+        <div class="hover-word">EXPLORE</div>
+        <div class="hover-word">IMAGINE</div>
+        <div class="hover-word">CREATE</div>
+        <div class="hover-word">INSPIRE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DEMO 2: Typewriter Spacing ── -->
+  <section class="demo-section" id="demo2">
+    <div class="demo-card">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Typewriter Spacing</span>
+      </div>
+      <div class="divider"></div>
+      <p class="section-desc">Each character arrives from wide spacing and snaps into position, creating a rhythmic typewriter feel.</p>
+      <div class="typewriter-stage">
+        <div class="typewriter-line" data-text="SPACING">
+          <span class="char" style="animation-delay:0.0s">S</span><span class="char" style="animation-delay:0.08s">P</span><span class="char" style="animation-delay:0.16s">A</span><span class="char" style="animation-delay:0.24s">C</span><span class="char" style="animation-delay:0.32s">I</span><span class="char" style="animation-delay:0.40s">N</span><span class="char" style="animation-delay:0.48s">G</span>
+        </div>
+        <div class="typewriter-line" data-text="MATTERS">
+          <span class="char" style="animation-delay:0.0s">M</span><span class="char" style="animation-delay:0.08s">A</span><span class="char" style="animation-delay:0.16s">T</span><span class="char" style="animation-delay:0.24s">T</span><span class="char" style="animation-delay:0.32s">E</span><span class="char" style="animation-delay:0.40s">R</span><span class="char" style="animation-delay:0.48s">S</span>
+        </div>
+        <div class="typewriter-line" data-text="ALWAYS">
+          <span class="char" style="animation-delay:0.0s">A</span><span class="char" style="animation-delay:0.08s">L</span><span class="char" style="animation-delay:0.16s">W</span><span class="char" style="animation-delay:0.24s">A</span><span class="char" style="animation-delay:0.32s">Y</span><span class="char" style="animation-delay:0.40s">S</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DEMO 3: Wave Spacing ── -->
+  <section class="demo-section" id="demo3">
+    <div class="demo-card">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">Wave Spacing</span>
+      </div>
+      <div class="divider"></div>
+      <p class="section-desc">Letters undulate independently, each offset in time to form a continuous wave of spacing and vertical motion.</p>
+      <div class="wave-text" id="waveText"></div>
+    </div>
+  </section>
+
+  <!-- ── DEMO 4: Magnetic Cursor ── -->
+  <section class="demo-section" id="demo4">
+    <div class="demo-card">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">Magnetic Cursor</span>
+      </div>
+      <div class="divider"></div>
+      <p class="section-desc">Letters repel away from your cursor. Move your mouse across the text to push letters apart dynamically.</p>
+      <div class="magnetic-stage">
+        <div class="magnetic-text" id="magneticText"></div>
+        <p class="magnetic-hint">Move your cursor over the text</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DEMO 5: Elastic Snap ── -->
+  <section class="demo-section" id="demo5">
+    <div class="demo-card">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title">Elastic Snap</span>
+      </div>
+      <div class="divider"></div>
+      <p class="section-desc">Click any word to trigger an elastic spring animation — letters bounce outward then settle into place.</p>
+      <div class="elastic-stage">
+        <div class="elastic-word" id="elastic1">BOUNCE</div>
+        <div class="elastic-word" id="elastic2">SPRING</div>
+        <div class="elastic-word" id="elastic3">ELASTIC</div>
+      </div>
+      <p class="click-hint">Click a word ↑</p>
+    </div>
+  </section>
+
+  <!-- ── DEMO 6: Scroll Spacing ── -->
+  <section class="demo-section" id="demo6">
+    <div class="demo-card">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <span class="section-title">Scroll Spacing</span>
+      </div>
+      <div class="divider"></div>
+      <p class="section-desc">Letter spacing expands and contracts based on scroll position — the further into view, the wider the spread.</p>
+      <div class="scroll-spacing-text" id="scrollText">
+        <span>T</span><span>Y</span><span>P</span><span>O</span><span>G</span><span>R</span><span>A</span><span>P</span><span>H</span><span>Y</span>
+      </div>
+      <p class="scroll-sub">Scroll to adjust spacing</p>
+    </div>
+  </section>
+
+  <!-- ── DEMO 7: Stagger Entrance ── -->
+  <section class="demo-section" id="demo7">
+    <div class="demo-card">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <span class="section-title">Stagger Entrance</span>
+      </div>
+      <div class="divider"></div>
+      <p class="section-desc">Letters enter from extreme spacing, each staggered in time, compressing into their final position as they arrive.</p>
+      <div class="stagger-stage">
+        <div class="stagger-line" id="stagger1"></div>
+        <div class="stagger-line" id="stagger2"></div>
+        <div class="stagger-line" id="stagger3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <p class="footer-text">CSS Day 57 — Letter Spacing Animation</p>
+  </footer>
+
+  <script>
+    // ── Utility: split text into letter spans ──
+    function splitLetters(container, text) {
+      container.innerHTML = '';
+      for (let i = 0; i < text.length; i++) {
+        const span = document.createElement('span');
+        if (text[i] === ' ') {
+          span.classList.add('letter', 'space');
+          span.innerHTML = '&nbsp;';
+        } else {
+          span.classList.add('letter');
+          span.textContent = text[i];
+        }
+        container.appendChild(span);
+      }
+    }
+
+    // ═══════════════════════════════════
+    // HERO: split title
+    // ═══════════════════════════════════
+    const heroTitle = document.getElementById('heroTitle');
+    splitLetters(heroTitle, 'SPACING');
+
+    // ═══════════════════════════════════
+    // DEMO 2: Typewriter — trigger on scroll
+    // ═══════════════════════════════════
+    const typewriterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.typewriter-line').forEach(line => {
+      typewriterObserver.observe(line);
+    });
+
+    // ═══════════════════════════════════
+    // DEMO 3: Wave text
+    // ═══════════════════════════════════
+    const waveContainer = document.getElementById('waveText');
+    const waveWord = 'WAVELENGTH';
+    splitLetters(waveContainer, waveWord);
+
+    const waveLetters = waveContainer.querySelectorAll('.letter');
+    waveLetters.forEach((letter, i) => {
+      letter.style.animationDelay = `${i * 0.18}s`;
+    });
+
+    // ═══════════════════════════════════
+    // DEMO 4: Magnetic cursor
+    // ═══════════════════════════════════
+    const magneticContainer = document.getElementById('magneticText');
+    splitLetters(magneticContainer, 'MAGNETIC');
+
+    const magneticLetters = magneticContainer.querySelectorAll('.letter:not(.space)');
+    const magnetRadius = 120;
+
+    magneticContainer.addEventListener('mousemove', (e) => {
+      const containerRect = magneticContainer.getBoundingClientRect();
+
+      magneticLetters.forEach(letter => {
+        const letterRect = letter.getBoundingClientRect();
+        const letterCenterX = letterRect.left + letterRect.width / 2;
+        const letterCenterY = letterRect.top + letterRect.height / 2;
+
+        const dx = e.clientX - letterCenterX;
+        const dy = e.clientY - letterCenterY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < magnetRadius) {
+          const force = (1 - dist / magnetRadius);
+          const pushX = -dx * force * 0.4;
+          const marginExpand = force * 20;
+
+          letter.style.marginLeft = `${marginExpand}px`;
+          letter.style.marginRight = `${marginExpand}px`;
+          letter.style.transform = `translateX(${pushX}px)`;
+          letter.style.color = `hsl(${40 + force * 160}, 90%, 65%)`;
+        } else {
+          letter.style.marginLeft = '0';
+          letter.style.marginRight = '0';
+          letter.style.transform = 'translateX(0)';
+          letter.style.color = '';
+        }
+      });
+    });
+
+    magneticContainer.addEventListener('mouseleave', () => {
+      magneticLetters.forEach(letter => {
+        letter.style.marginLeft = '0';
+        letter.style.marginRight = '0';
+        letter.style.transform = 'translateX(0)';
+        letter.style.color = '';
+      });
+    });
+
+    // ═══════════════════════════════════
+    // DEMO 5: Elastic snap on click
+    // ═══════════════════════════════════
+    document.querySelectorAll('.elastic-word').forEach(word => {
+      word.addEventListener('click', () => {
+        word.classList.remove('active');
+        // Force reflow to restart animation
+        void word.offsetWidth;
+        word.classList.add('active');
+
+        word.addEventListener('animationend', () => {
+          // Keep final state
+        }, { once: true });
+      });
+    });
+
+    // ═══════════════════════════════════
+    // DEMO 6: Scroll-driven spacing
+    // ═══════════════════════════════════
+    const scrollText = document.getElementById('scrollText');
+
+    function updateScrollSpacing() {
+      const rect = scrollText.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      const center = rect.top + rect.height / 2;
+      const progress = Math.max(0, Math.min(1, (windowH - center) / windowH));
+
+      // Map progress to letter-spacing: 0 → 0.6em at peak
+      const peak = 0.5;
+      const dist = Math.abs(progress - peak);
+      const spacing = Math.max(0, (1 - dist * 2.5)) * 0.6;
+
+      scrollText.style.letterSpacing = `${spacing}em`;
+
+      // Color shift
+      const hue = 30 + spacing * 200;
+      scrollText.style.color = `hsl(${hue}, 80%, 70%)`;
+    }
+
+    // ═══════════════════════════════════
+    // DEMO 7: Stagger entrance
+    // ═══════════════════════════════════
+    const staggerWords = ['LETTER', 'SPACING', 'MAGIC'];
+    const staggerContainers = [
+      document.getElementById('stagger1'),
+      document.getElementById('stagger2'),
+      document.getElementById('stagger3')
+    ];
+
+    staggerContainers.forEach((container, idx) => {
+      splitLetters(container, staggerWords[idx]);
+      const letters = container.querySelectorAll('.letter');
+      letters.forEach((letter, i) => {
+        letter.style.transitionDelay = `${i * 0.06 + idx * 0.15}s`;
+      });
+    });
+
+    const staggerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    staggerContainers.forEach(c => staggerObserver.observe(c));
+
+    // ═══════════════════════════════════
+    // Scroll handler
+    // ═══════════════════════════════════
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateScrollSpacing();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Initial run
+    updateScrollSpacing();
+  </script>
+</body>
 </html>
