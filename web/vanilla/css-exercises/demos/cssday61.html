@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Like Button Animation</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --card: #111827;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+        --accent: #ef4444;
+        --accent-soft: #fb7185;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(circle at top, #1e293b, var(--bg) 65%);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        color: var(--text);
+      }
+
+      .card {
+        background: color-mix(in srgb, var(--card) 90%, black);
+        border: 1px solid #1f2937;
+        border-radius: 18px;
+        padding: 22px 20px;
+        width: min(360px, 92vw);
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      .title {
+        margin: 0 0 12px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--muted);
+        letter-spacing: 0.2px;
+      }
+
+      .like-wrap {
+        position: relative;
+        width: max-content;
+        margin: 8px auto 0;
+      }
+
+      .like-btn {
+        width: 90px;
+        height: 90px;
+        border: 0;
+        border-radius: 999px;
+        background: #0b1222;
+        color: #9ca3af;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.3s ease, color 0.25s ease;
+        outline: none;
+        position: relative;
+        isolation: isolate;
+      }
+
+      .like-btn:hover {
+        transform: translateY(-1px);
+      }
+      .like-btn:active {
+        transform: scale(0.95);
+      }
+
+      .heart {
+        width: 40px;
+        height: 40px;
+        fill: currentColor;
+        transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.25, 1),
+          color 0.2s ease;
+        transform-origin: center;
+        z-index: 3;
+      }
+
+      .like-btn.liked {
+        background: #2a0f17;
+        color: var(--accent);
+      }
+
+      .like-btn.liked .heart {
+        animation: pop 0.5s cubic-bezier(0.2, 0.9, 0.25, 1);
+      }
+
+      .count {
+        margin-top: 10px;
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
+
+      .count strong {
+        color: var(--text);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .ring,
+      .burst {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0;
+      }
+
+      .like-btn.liked .ring {
+        animation: ring 0.45s ease-out;
+      }
+
+      .like-btn.liked .burst {
+        opacity: 1;
+      }
+
+      .dot {
+        --x: 0;
+        --y: 0;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+        transform: translate(-50%, -50%);
+        animation: fly 0.55s cubic-bezier(0.25, 0.8, 0.2, 1) forwards;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+      }
+
+      @keyframes pop {
+        0% {
+          transform: scale(0.7);
+        }
+        45% {
+          transform: scale(1.25);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes ring {
+        0% {
+          opacity: 0.55;
+          transform: scale(0.2);
+          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1.3);
+          box-shadow: 0 0 0 22px rgba(239, 68, 68, 0);
+        }
+      }
+
+      @keyframes fly {
+        0% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(0.6);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y)))
+            scale(1.1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="card">
+      <h1 class="title">Tap to like</h1>
+
+      <div class="like-wrap">
+        <button
+          class="like-btn"
+          id="likeBtn"
+          aria-label="Like"
+          aria-pressed="false"
+        >
+          <span class="ring"></span>
+
+          <svg class="heart" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 21s-6.716-4.35-9.429-8.318C.69 9.898 1.244 6.4 4.086 4.88c2.06-1.1 4.472-.58 5.914 1.117C11.442 4.3 13.854 3.78 15.914 4.88c2.842 1.52 3.397 5.018 1.514 7.802C18.716 16.65 12 21 12 21z"
+            />
+          </svg>
+
+          <div class="burst" id="burst"></div>
+        </button>
+
+        <div class="count"><strong id="count">128</strong> likes</div>
+      </div>
+    </section>
+
+    <script>
+      const likeBtn = document.getElementById("likeBtn");
+      const countEl = document.getElementById("count");
+      const burst = document.getElementById("burst");
+
+      let liked = false;
+      let count = Number(countEl.textContent);
+
+      function makeBurst() {
+        burst.innerHTML = "";
+        const particles = 10;
+        const radius = 36;
+
+        for (let i = 0; i < particles; i++) {
+          const angle = (Math.PI * 2 * i) / particles + Math.random() * 0.25;
+          const x = Math.cos(angle) * (radius + Math.random() * 8);
+          const y = Math.sin(angle) * (radius + Math.random() * 8);
+
+          const dot = document.createElement("span");
+          dot.className = "dot";
+          dot.style.setProperty("--x", `${x}px`);
+          dot.style.setProperty("--y", `${y}px`);
+          dot.style.animationDelay = `${Math.random() * 80}ms`;
+          burst.appendChild(dot);
+        }
+      }
+
+      likeBtn.addEventListener("click", () => {
+        liked = !liked;
+        likeBtn.classList.toggle("liked", liked);
+        likeBtn.setAttribute("aria-pressed", String(liked));
+
+        count += liked ? 1 : -1;
+        countEl.textContent = count;
+
+        if (liked) {
+          makeBurst();
+        } else {
+          burst.innerHTML = "";
+        }
+      });
+    </script>
+  </body>
+</html>
