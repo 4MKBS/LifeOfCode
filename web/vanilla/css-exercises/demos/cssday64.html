@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dropdown Menu Animation</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --panel: rgba(15, 23, 42, 0.72);
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+        --brand: #22d3ee;
+        --brand-2: #a78bfa;
+        --ring: rgba(34, 211, 238, 0.45);
+        --radius: 14px;
+        --shadow: 0 20px 45px rgba(2, 6, 23, 0.45);
+        --spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+        color: var(--text);
+        background: radial-gradient(
+            1200px 600px at 10% -10%,
+            #1e293b 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            1200px 600px at 110% 110%,
+            #312e81 0%,
+            transparent 55%
+          ),
+          var(--bg);
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .nav {
+        width: min(920px, 100%);
+        background: var(--panel);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow);
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .brand {
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          rgba(34, 211, 238, 0.16),
+          rgba(167, 139, 250, 0.18)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        user-select: none;
+      }
+
+      .menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: stretch;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .item {
+        position: relative;
+      }
+
+      .trigger {
+        appearance: none;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--text);
+        padding: 11px 14px;
+        border-radius: 12px;
+        font: inherit;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: 0.22s var(--spring);
+      }
+
+      .trigger:hover,
+      .item:focus-within > .trigger {
+        background: rgba(148, 163, 184, 0.14);
+        border-color: rgba(148, 163, 184, 0.28);
+      }
+
+      .chev {
+        width: 9px;
+        height: 9px;
+        border-right: 2px solid var(--muted);
+        border-bottom: 2px solid var(--muted);
+        transform: rotate(45deg) translateY(-1px);
+        transition: transform 0.22s var(--spring), border-color 0.22s ease;
+      }
+
+      .item.open > .trigger .chev {
+        transform: rotate(-135deg) translateY(-1px);
+        border-color: var(--brand);
+      }
+
+      .dropdown {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        min-width: 250px;
+        background: linear-gradient(
+          180deg,
+          rgba(15, 23, 42, 0.95),
+          rgba(15, 23, 42, 0.9)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 8px;
+        opacity: 0;
+        transform: translateY(6px) scale(0.98);
+        transform-origin: top;
+        pointer-events: none;
+        visibility: hidden;
+        transition: opacity 0.24s ease, transform 0.28s var(--spring),
+          visibility 0s linear 0.28s;
+      }
+
+      .item.open > .dropdown {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+        transition: opacity 0.24s ease, transform 0.28s var(--spring),
+          visibility 0s;
+      }
+
+      .dropdown a {
+        display: block;
+        color: var(--text);
+        text-decoration: none;
+        padding: 11px 12px;
+        border-radius: 10px;
+        transition: 0.18s ease;
+        border: 1px solid transparent;
+      }
+
+      .dropdown a:hover,
+      .dropdown a:focus-visible {
+        outline: none;
+        background: rgba(34, 211, 238, 0.14);
+        border-color: rgba(34, 211, 238, 0.35);
+        transform: translateX(2px);
+      }
+
+      .dropdown .muted {
+        color: var(--muted);
+        font-size: 0.84rem;
+        margin-left: 6px;
+      }
+
+      .cta {
+        margin-left: auto;
+        padding: 11px 14px;
+        border-radius: 12px;
+        color: #082f49;
+        font-weight: 700;
+        text-decoration: none;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        border: 0;
+        transition: transform 0.2s var(--spring), box-shadow 0.2s ease;
+        box-shadow: 0 10px 25px rgba(34, 211, 238, 0.28);
+      }
+
+      .cta:hover {
+        transform: translateY(-1px);
+      }
+
+      .trigger:focus-visible,
+      .cta:focus-visible,
+      .dropdown a:focus-visible {
+        box-shadow: 0 0 0 3px var(--ring);
+      }
+
+      @media (max-width: 720px) {
+        .nav {
+          padding: 8px;
+        }
+        .menu {
+          width: 100%;
+        }
+        .cta {
+          width: 100%;
+          text-align: center;
+          margin-top: 6px;
+        }
+        .item {
+          flex: 1 1 auto;
+        }
+        .dropdown {
+          min-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Main">
+      <div class="brand">LifeOfCode</div>
+
+      <ul class="menu">
+        <li class="item">
+          <button class="trigger" aria-expanded="false" aria-haspopup="true">
+            Products <span class="chev"></span>
+          </button>
+          <div class="dropdown" role="menu">
+            <a href="#">UI Components <span class="muted">New</span></a>
+            <a href="#">Templates</a>
+            <a href="#">API Access</a>
+            <a href="#">Integrations</a>
+          </div>
+        </li>
+
+        <li class="item">
+          <button class="trigger" aria-expanded="false" aria-haspopup="true">
+            Resources <span class="chev"></span>
+          </button>
+          <div class="dropdown" role="menu">
+            <a href="#">Documentation</a>
+            <a href="#">Guides</a>
+            <a href="#">Changelog</a>
+            <a href="#">Community</a>
+          </div>
+        </li>
+
+        <li class="item">
+          <button class="trigger" aria-expanded="false" aria-haspopup="true">
+            Company <span class="chev"></span>
+          </button>
+          <div class="dropdown" role="menu">
+            <a href="#">About</a>
+            <a href="#">Careers <span class="muted">6 open roles</span></a>
+            <a href="#">Contact</a>
+          </div>
+        </li>
+      </ul>
+
+      <a class="cta" href="#">Get Started</a>
+    </nav>
+
+    <script>
+      const items = [...document.querySelectorAll(".item")];
+
+      function closeAll(except = null) {
+        items.forEach((item) => {
+          if (item !== except) {
+            item.classList.remove("open");
+            item
+              .querySelector(".trigger")
+              .setAttribute("aria-expanded", "false");
+          }
+        });
+      }
+
+      items.forEach((item) => {
+        const button = item.querySelector(".trigger");
+
+        button.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const isOpen = item.classList.contains("open");
+          closeAll(item);
+          item.classList.toggle("open", !isOpen);
+          button.setAttribute("aria-expanded", String(!isOpen));
+        });
+
+        item.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            closeAll();
+            button.focus();
+          }
+        });
+      });
+
+      document.addEventListener("click", () => closeAll());
+    </script>
+  </body>
+</html>
