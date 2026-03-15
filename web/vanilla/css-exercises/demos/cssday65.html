@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Revolt Input Focus</title>
+    <style>
+      :root {
+        --bg-1: #08080f;
+        --bg-2: #12121d;
+        --card: rgba(18, 18, 29, 0.72);
+        --text: #f3f4f6;
+        --muted: #9ca3af;
+        --line: #3f3f5a;
+        --accent: #ff2e63;
+        --accent-2: #7c3aed;
+        --ok: #22c55e;
+        --bad: #ef4444;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(
+            1200px 600px at 20% -10%,
+            #2b1055 0%,
+            transparent 50%
+          ),
+          radial-gradient(900px 500px at 90% 110%, #7f1d1d 0%, transparent 45%),
+          linear-gradient(160deg, var(--bg-1), var(--bg-2));
+        color: var(--text);
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto,
+          sans-serif;
+        padding: 1rem;
+      }
+
+      .card {
+        width: min(94vw, 450px);
+        padding: 1.4rem 1.2rem 1.2rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        background: var(--card);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45),
+          0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+      }
+
+      h1 {
+        margin: 0 0 0.9rem;
+        font-size: 1.1rem;
+        letter-spacing: 0.3px;
+      }
+
+      .field {
+        position: relative;
+        margin-top: 0.9rem;
+      }
+
+      .field input {
+        width: 100%;
+        padding: 1rem 0.75rem 0.55rem;
+        border: 0;
+        border-bottom: 2px solid var(--line);
+        background: transparent;
+        color: var(--text);
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .field label {
+        position: absolute;
+        left: 0.75rem;
+        top: 0.9rem;
+        color: var(--muted);
+        pointer-events: none;
+        transform-origin: left center;
+        transition: transform 0.22s ease, color 0.22s ease;
+      }
+
+      .focus-line {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        transform: scaleX(0);
+        transform-origin: left;
+        background: linear-gradient(
+          90deg,
+          var(--accent),
+          var(--accent-2),
+          #60a5fa
+        );
+        transition: transform 0.28s ease;
+      }
+
+      .field:focus-within .focus-line {
+        transform: scaleX(1);
+      }
+
+      .field input:focus + label,
+      .field input:not(:placeholder-shown) + label {
+        transform: translateY(-0.65rem) scale(0.82);
+        color: var(--accent);
+      }
+
+      .field input:focus {
+        border-bottom-color: transparent;
+        box-shadow: 0 10px 30px rgba(255, 46, 99, 0.15);
+      }
+
+      .field input:valid:not(:placeholder-shown) {
+        border-bottom-color: var(--ok);
+      }
+
+      .field input:user-invalid:not(:placeholder-shown) {
+        border-bottom-color: var(--bad);
+      }
+
+      .hint {
+        margin: 0.75rem 0 0;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <form class="card" autocomplete="off" novalidate>
+      <h1>Revolt Input Focus</h1>
+
+      <div class="field">
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder=" "
+          inputmode="email"
+          required
+          aria-describedby="emailHint"
+        />
+        <label for="email">Email address</label>
+        <span class="focus-line" aria-hidden="true"></span>
+      </div>
+
+      <p class="hint" id="emailHint">
+        Type a valid email to see success state. Invalid format shows warning.
+      </p>
+    </form>
+  </body>
+</html>
