@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error Message Slide-In</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --card: #111827;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --error: #ef4444;
+        --error-bg: #7f1d1d;
+        --accent: #3b82f6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: linear-gradient(120deg, #020617, var(--bg));
+        color: var(--text);
+      }
+
+      .card {
+        width: min(92vw, 420px);
+        background: color-mix(in oklab, var(--card) 92%, black);
+        border: 1px solid #1f2937;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      h1 {
+        margin: 0 0 14px;
+        font-size: 1.2rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 13px;
+        border-radius: 10px;
+        border: 1px solid #374151;
+        background: #0b1220;
+        color: var(--text);
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+      }
+
+      button {
+        margin-top: 14px;
+        width: 100%;
+        border: 0;
+        border-radius: 10px;
+        background: var(--accent);
+        color: white;
+        padding: 11px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .error-wrap {
+        margin-top: 12px;
+        min-height: 44px;
+        overflow: hidden;
+      }
+
+      .error {
+        padding: 10px 12px;
+        border: 1px solid #b91c1c;
+        background: color-mix(in oklab, var(--error-bg) 65%, black);
+        color: #fecaca;
+        border-radius: 10px;
+        opacity: 0;
+        transform: translateX(-16px);
+        transition: transform 260ms ease, opacity 260ms ease;
+        pointer-events: none;
+      }
+
+      .error.show {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+      }
+
+      .ok {
+        color: #86efac;
+        font-size: 0.92rem;
+        margin-top: 10px;
+        min-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="card" id="demoForm" novalidate>
+      <h1>Newsletter Signup</h1>
+      <label for="email">Email address</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        placeholder="you@example.com"
+      />
+      <button type="submit">Submit</button>
+
+      <div class="error-wrap">
+        <div class="error" id="errorMsg" role="alert" aria-live="polite">
+          Please enter a valid email address.
+        </div>
+      </div>
+
+      <div class="ok" id="okMsg" aria-live="polite"></div>
+    </form>
+
+    <script>
+      const form = document.getElementById("demoForm");
+      const email = document.getElementById("email");
+      const errorMsg = document.getElementById("errorMsg");
+      const okMsg = document.getElementById("okMsg");
+
+      const showError = (text) => {
+        errorMsg.textContent = text;
+        errorMsg.classList.add("show");
+        okMsg.textContent = "";
+      };
+
+      const hideError = () => errorMsg.classList.remove("show");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const value = email.value.trim();
+        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+
+        if (!valid) {
+          showError("Please enter a valid email address.");
+          email.focus();
+          return;
+        }
+
+        hideError();
+        okMsg.textContent = "Submitted successfully.";
+        form.reset();
+      });
+
+      email.addEventListener("input", () => {
+        if (errorMsg.classList.contains("show")) hideError();
+      });
+    </script>
+  </body>
+</html>
