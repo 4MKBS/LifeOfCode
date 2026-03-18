@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hover-based Progress Indicator</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --card: #111827;
+        --track: #1f2937;
+        --fill: linear-gradient(90deg, #22d3ee, #6366f1);
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background: radial-gradient(
+          circle at 20% 10%,
+          #1e293b 0%,
+          var(--bg) 45%
+        );
+        color: var(--text);
+      }
+
+      .widget {
+        width: min(720px, 92vw);
+        background: rgba(17, 24, 39, 0.92);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 14px;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 1.1rem;
+        letter-spacing: 0.2px;
+      }
+
+      .percent {
+        font-weight: 700;
+        color: #67e8f9;
+        min-width: 3ch;
+        text-align: right;
+      }
+
+      .track {
+        position: relative;
+        height: 14px;
+        background: var(--track);
+        border-radius: 999px;
+        overflow: hidden;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
+      .fill {
+        height: 100%;
+        width: 0%;
+        background: var(--fill);
+        border-radius: inherit;
+        transition: width 0.35s ease;
+      }
+
+      .steps {
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+      }
+
+      .step {
+        background: #0b1220;
+        color: var(--muted);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 10px;
+        padding: 10px 8px;
+        text-align: center;
+        font-size: 0.86rem;
+        cursor: pointer;
+        transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        user-select: none;
+      }
+
+      .step:hover,
+      .step:focus-visible {
+        transform: translateY(-2px);
+        color: #fff;
+        border-color: rgba(103, 232, 249, 0.55);
+        outline: none;
+      }
+
+      .hint {
+        margin-top: 12px;
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="widget" aria-label="Hover-based progress indicator demo">
+      <div class="header">
+        <h1>Project Progress</h1>
+        <span class="percent" id="percent">0%</span>
+      </div>
+
+      <div
+        class="track"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        aria-label="Progress"
+      >
+        <div class="fill" id="fill"></div>
+      </div>
+
+      <ul class="steps" id="steps">
+        <li class="step" tabindex="0" data-progress="20">Plan</li>
+        <li class="step" tabindex="0" data-progress="40">Design</li>
+        <li class="step" tabindex="0" data-progress="60">Build</li>
+        <li class="step" tabindex="0" data-progress="80">Test</li>
+        <li class="step" tabindex="0" data-progress="100">Launch</li>
+      </ul>
+
+      <p class="hint">Hover (or focus) a stage to preview completion.</p>
+    </section>
+
+    <script>
+      const steps = document.getElementById("steps");
+      const fill = document.getElementById("fill");
+      const percent = document.getElementById("percent");
+      const bar = document.querySelector(".track");
+
+      function setProgress(value) {
+        fill.style.width = value + "%";
+        percent.textContent = value + "%";
+        bar.setAttribute("aria-valuenow", value);
+      }
+
+      steps.addEventListener("mouseover", (e) => {
+        const step = e.target.closest(".step");
+        if (!step) return;
+        setProgress(Number(step.dataset.progress));
+      });
+
+      steps.addEventListener("focusin", (e) => {
+        const step = e.target.closest(".step");
+        if (!step) return;
+        setProgress(Number(step.dataset.progress));
+      });
+
+      steps.addEventListener("mouseleave", () => setProgress(0));
+      steps.addEventListener("focusout", (e) => {
+        if (!steps.contains(e.relatedTarget)) setProgress(0);
+      });
+    </script>
+  </body>
+</html>
