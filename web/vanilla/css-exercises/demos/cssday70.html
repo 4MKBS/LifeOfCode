@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll-to-top button</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5f7fb;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --card: #ffffff;
+        --accent: #2563eb;
+        --accent-hover: #1d4ed8;
+        --shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.6;
+        color: var(--text);
+        background: radial-gradient(circle at top, #e0e7ff 0, transparent 30%),
+          var(--bg);
+      }
+
+      header {
+        padding: 72px 20px 36px;
+        text-align: center;
+      }
+
+      header h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.25rem);
+      }
+
+      header p {
+        margin: 0 auto;
+        max-width: 680px;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+
+      main {
+        width: min(900px, calc(100% - 32px));
+        margin: 0 auto;
+        padding-bottom: 120px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 28px;
+        margin: 18px 0;
+        border: 1px solid rgba(37, 99, 235, 0.08);
+      }
+
+      .card h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.35rem;
+      }
+
+      .card p {
+        margin: 0;
+        color: #374151;
+      }
+
+      .spacer {
+        height: 24px;
+      }
+
+      .to-top {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 52px;
+        height: 52px;
+        border: 0;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: var(--accent);
+        color: #fff;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(14px);
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+        z-index: 10;
+      }
+
+      .to-top:hover {
+        background: var(--accent-hover);
+      }
+
+      .to-top.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .to-top:focus-visible {
+        outline: 3px solid rgba(37, 99, 235, 0.35);
+        outline-offset: 4px;
+      }
+
+      .to-top svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 24px 20px 40px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="top">
+      <h1>Scroll-to-top button</h1>
+      <p>
+        Scroll down to reveal the floating button. It appears after the page is
+        scrolled and smoothly returns to the top.
+      </p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Section 1</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+          euismod, nisl eget consectetur sagittis, nisl nunc faucibus nisi,
+          vitae facilisis sem nisl a justo.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Section 2</h2>
+        <p>
+          Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci
+          luctus et ultrices posuere cubilia curae; Integer non est sed sem
+          bibendum luctus.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Section 3</h2>
+        <p>
+          Morbi vitae lacus eget justo elementum efficitur. Cras sed magna sit
+          amet arcu aliquet convallis. Sed consequat, lectus in finibus viverra,
+          velit massa varius lectus, vel luctus quam magna id odio.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Section 4</h2>
+        <p>
+          Praesent vitae sem a velit luctus pretium. Aenean non mauris non
+          mauris efficitur vulputate. Suspendisse potenti. Integer vel dolor
+          vitae purus ultricies luctus.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Section 5</h2>
+        <p>
+          Ut dapibus, nibh eget tincidunt imperdiet, tortor ipsum aliquet purus,
+          et lobortis justo erat sit amet odio. Duis at eros sit amet augue
+          aliquam tincidunt.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Section 6</h2>
+        <p>
+          Sed eu felis in nibh interdum accumsan. Pellentesque habitant morbi
+          tristique senectus et netus et malesuada fames ac turpis egestas.
+          Proin elementum metus et urna consectetur, ac sodales nunc egestas.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Section 7</h2>
+        <p>
+          Curabitur in leo vitae lorem vestibulum lacinia. Maecenas vel mi at
+          velit blandit accumsan. Donec efficitur enim sit amet nibh porttitor,
+          id tincidunt orci semper.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Section 8</h2>
+        <p>
+          Nam sed justo ac odio varius volutpat. Quisque eget sem at mauris
+          tristique tristique. Integer lacinia velit non urna dignissim, vel
+          facilisis mi pretium.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Section 9</h2>
+        <p>
+          Phasellus dictum ligula in massa faucibus, eget consequat risus
+          posuere. Vestibulum viverra, augue id interdum feugiat, risus ex
+          pretium mauris, in vestibulum nibh sem a leo.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Section 10</h2>
+        <p>
+          Integer id ipsum vitae lacus facilisis aliquet. Suspendisse a mi at
+          odio porta luctus. Pellentesque a libero nec lectus maximus pharetra.
+        </p>
+      </section>
+    </main>
+
+    <footer>End of content</footer>
+
+    <button
+      class="to-top"
+      id="toTop"
+      aria-label="Scroll to top"
+      title="Scroll to top"
+    >
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M12 5l-7 7m7-7 7 7M12 5v14"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <script>
+      const toTop = document.getElementById("toTop");
+
+      const toggleButton = () => {
+        if (window.scrollY > 300) {
+          toTop.classList.add("show");
+        } else {
+          toTop.classList.remove("show");
+        }
+      };
+
+      window.addEventListener("scroll", toggleButton);
+      toggleButton();
+
+      toTop.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    </script>
+  </body>
+</html>
