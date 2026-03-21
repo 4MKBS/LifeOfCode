@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS-only Clock</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --face: #e2e8f0;
+        --face-2: #cbd5e1;
+        --ink: #1e293b;
+        --accent: #ef4444;
+        --shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(
+          circle at top,
+          #1e293b 0%,
+          var(--bg) 55%,
+          #020617 100%
+        );
+        font-family: system-ui, sans-serif;
+      }
+
+      .clock {
+        width: min(78vw, 420px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        position: relative;
+        background: radial-gradient(
+            circle at center,
+            #f8fafc 0 58%,
+            transparent 59%
+          ),
+          radial-gradient(
+            circle at center,
+            rgba(255, 255, 255, 0.9) 0 70%,
+            #94a3b8 71% 73%,
+            transparent 74%
+          ),
+          conic-gradient(
+            from -90deg,
+            #0000 0 7.5deg,
+            rgba(15, 23, 42, 0.55) 7.5deg 8deg,
+            #0000 8deg 15deg,
+            rgba(15, 23, 42, 0.55) 15deg 15.5deg,
+            #0000 15.5deg 22.5deg,
+            rgba(15, 23, 42, 0.55) 22.5deg 23deg,
+            #0000 23deg 30deg,
+            rgba(15, 23, 42, 0.55) 30deg 30.5deg,
+            #0000 30.5deg 37.5deg,
+            rgba(15, 23, 42, 0.55) 37.5deg 38deg,
+            #0000 38deg 45deg,
+            rgba(15, 23, 42, 0.55) 45deg 45.5deg,
+            #0000 45.5deg 52.5deg,
+            rgba(15, 23, 42, 0.55) 52.5deg 53deg,
+            #0000 53deg 60deg,
+            rgba(15, 23, 42, 0.55) 60deg 60.5deg,
+            #0000 60.5deg 67.5deg,
+            rgba(15, 23, 42, 0.55) 67.5deg 68deg,
+            #0000 68deg 75deg,
+            rgba(15, 23, 42, 0.55) 75deg 75.5deg,
+            #0000 75.5deg 82.5deg,
+            rgba(15, 23, 42, 0.55) 82.5deg 83deg,
+            #0000 83deg 90deg,
+            rgba(15, 23, 42, 0.55) 90deg 90.5deg,
+            #0000 90.5deg 97.5deg,
+            rgba(15, 23, 42, 0.55) 97.5deg 98deg,
+            #0000 98deg 105deg,
+            rgba(15, 23, 42, 0.55) 105deg 105.5deg,
+            #0000 105.5deg 112.5deg,
+            rgba(15, 23, 42, 0.55) 112.5deg 113deg,
+            #0000 113deg 120deg,
+            rgba(15, 23, 42, 0.55) 120deg 120.5deg,
+            #0000 120.5deg 127.5deg,
+            rgba(15, 23, 42, 0.55) 127.5deg 128deg,
+            #0000 128deg 135deg,
+            rgba(15, 23, 42, 0.55) 135deg 135.5deg,
+            #0000 135.5deg 142.5deg,
+            rgba(15, 23, 42, 0.55) 142.5deg 143deg,
+            #0000 143deg 150deg,
+            rgba(15, 23, 42, 0.55) 150deg 150.5deg,
+            #0000 150.5deg 157.5deg,
+            rgba(15, 23, 42, 0.55) 157.5deg 158deg,
+            #0000 158deg 165deg,
+            rgba(15, 23, 42, 0.55) 165deg 165.5deg,
+            #0000 165.5deg 172.5deg,
+            rgba(15, 23, 42, 0.55) 172.5deg 173deg,
+            #0000 173deg 180deg,
+            rgba(15, 23, 42, 0.55) 180deg 180.5deg,
+            #0000 180.5deg 187.5deg,
+            rgba(15, 23, 42, 0.55) 187.5deg 188deg,
+            #0000 188deg 195deg,
+            rgba(15, 23, 42, 0.55) 195deg 195.5deg,
+            #0000 195.5deg 202.5deg,
+            rgba(15, 23, 42, 0.55) 202.5deg 203deg,
+            #0000 203deg 210deg,
+            rgba(15, 23, 42, 0.55) 210deg 210.5deg,
+            #0000 210.5deg 217.5deg,
+            rgba(15, 23, 42, 0.55) 217.5deg 218deg,
+            #0000 218deg 225deg,
+            rgba(15, 23, 42, 0.55) 225deg 225.5deg,
+            #0000 225.5deg 232.5deg,
+            rgba(15, 23, 42, 0.55) 232.5deg 233deg,
+            #0000 233deg 240deg,
+            rgba(15, 23, 42, 0.55) 240deg 240.5deg,
+            #0000 240.5deg 247.5deg,
+            rgba(15, 23, 42, 0.55) 247.5deg 248deg,
+            #0000 248deg 255deg,
+            rgba(15, 23, 42, 0.55) 255deg 255.5deg,
+            #0000 255.5deg 262.5deg,
+            rgba(15, 23, 42, 0.55) 262.5deg 263deg,
+            #0000 263deg 270deg,
+            rgba(15, 23, 42, 0.55) 270deg 270.5deg,
+            #0000 270.5deg 277.5deg,
+            rgba(15, 23, 42, 0.55) 277.5deg 278deg,
+            #0000 278deg 285deg,
+            rgba(15, 23, 42, 0.55) 285deg 285.5deg,
+            #0000 285.5deg 292.5deg,
+            rgba(15, 23, 42, 0.55) 292.5deg 293deg,
+            #0000 293deg 300deg,
+            rgba(15, 23, 42, 0.55) 300deg 300.5deg,
+            #0000 300.5deg 307.5deg,
+            rgba(15, 23, 42, 0.55) 307.5deg 308deg,
+            #0000 308deg 315deg,
+            rgba(15, 23, 42, 0.55) 315deg 315.5deg,
+            #0000 315.5deg 322.5deg,
+            rgba(15, 23, 42, 0.55) 322.5deg 323deg,
+            #0000 323deg 330deg,
+            rgba(15, 23, 42, 0.55) 330deg 330.5deg,
+            #0000 330.5deg 337.5deg,
+            rgba(15, 23, 42, 0.55) 337.5deg 338deg,
+            #0000 338deg 345deg,
+            rgba(15, 23, 42, 0.55) 345deg 345.5deg,
+            #0000 345.5deg 352.5deg,
+            rgba(15, 23, 42, 0.55) 352.5deg 353deg,
+            #0000 353deg 360deg
+          );
+        box-shadow: var(--shadow);
+        border: 14px solid #f8fafc;
+      }
+
+      .clock::before {
+        content: "";
+        position: absolute;
+        inset: 9%;
+        border-radius: 50%;
+        background: radial-gradient(
+            circle at center,
+            transparent 0 74%,
+            rgba(255, 255, 255, 0.75) 75% 100%
+          ),
+          linear-gradient(var(--face), var(--face-2));
+        box-shadow: inset 0 0 0 3px rgba(15, 23, 42, 0.06);
+      }
+
+      .number {
+        position: absolute;
+        inset: 0;
+        font-weight: 700;
+        color: var(--ink);
+        font-size: clamp(1rem, 3.8vw, 1.4rem);
+      }
+
+      .number span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: rotate(calc(var(--i) * 30deg))
+          translateY(calc(-1 * (min(78vw, 420px) * 0.36)))
+          rotate(calc(var(--i) * -30deg));
+        transform-origin: center;
+      }
+
+      .hand {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform-origin: 50% 100%;
+        border-radius: 999px;
+        transform: translate(-50%, -100%) rotate(var(--rotation, 0deg));
+        z-index: 3;
+      }
+
+      .hand.hour {
+        width: 12px;
+        height: 28%;
+        background: linear-gradient(var(--ink), #334155);
+      }
+
+      .hand.minute {
+        width: 8px;
+        height: 38%;
+        background: linear-gradient(#334155, var(--ink));
+      }
+
+      .hand.second {
+        width: 4px;
+        height: 44%;
+        background: var(--accent);
+        box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.25);
+      }
+
+      .hand.second::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 14%;
+        width: 10px;
+        height: 10px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .cap {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 18px;
+        height: 18px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: var(--ink);
+        z-index: 4;
+        box-shadow: 0 0 0 6px #f8fafc;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hand {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock" aria-label="Analog clock showing the current time">
+      <div class="number" aria-hidden="true">
+        <span style="--i: 0">12</span>
+        <span style="--i: 1">1</span>
+        <span style="--i: 2">2</span>
+        <span style="--i: 3">3</span>
+        <span style="--i: 4">4</span>
+        <span style="--i: 5">5</span>
+        <span style="--i: 6">6</span>
+        <span style="--i: 7">7</span>
+        <span style="--i: 8">8</span>
+        <span style="--i: 9">9</span>
+        <span style="--i: 10">10</span>
+        <span style="--i: 11">11</span>
+      </div>
+
+      <div class="hand hour"></div>
+      <div class="hand minute"></div>
+      <div class="hand second"></div>
+      <div class="cap"></div>
+    </div>
+
+    <script>
+      const hourHand = document.querySelector(".hand.hour");
+      const minuteHand = document.querySelector(".hand.minute");
+      const secondHand = document.querySelector(".hand.second");
+
+      function updateClock() {
+        const now = new Date();
+        const s = now.getSeconds() + now.getMilliseconds() / 1000;
+        const m = now.getMinutes() + s / 60;
+        const h = (now.getHours() % 12) + m / 60;
+
+        hourHand.style.setProperty("--rotation", `${h * 30}deg`);
+        minuteHand.style.setProperty("--rotation", `${m * 6}deg`);
+        secondHand.style.setProperty("--rotation", `${s * 6}deg`);
+      }
+
+      updateClock();
+      setInterval(updateClock, 1000);
+    </script>
+  </body>
+</html>
