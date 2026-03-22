@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS-Only Calendar</title>
+    <style>
+      :root {
+        --bg: #0f1222;
+        --card: #171a2b;
+        --text: #e9ecff;
+        --muted: #9aa3c7;
+        --accent: #7c9bff;
+        --accent-2: #9d7cff;
+        --today: #2a3157;
+        --ring: rgba(124, 155, 255, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background: radial-gradient(
+            1200px 700px at 20% 10%,
+            #1b2144 0%,
+            transparent 60%
+          ),
+          radial-gradient(900px 500px at 80% 90%, #2a1f4d 0%, transparent 60%),
+          var(--bg);
+        color: var(--text);
+        padding: 24px;
+      }
+
+      .calendar {
+        width: min(760px, 100%);
+        background: linear-gradient(180deg, #1b1f34, var(--card));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: linear-gradient(
+          90deg,
+          rgba(124, 155, 255, 0.12),
+          rgba(157, 124, 255, 0.12)
+        );
+      }
+
+      .month {
+        margin: 0;
+        font-size: 1.1rem;
+        letter-spacing: 0.4px;
+        font-weight: 700;
+      }
+
+      .year {
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .weekdays,
+      .days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px;
+        padding: 14px 14px 0;
+      }
+
+      .weekdays {
+        padding-top: 16px;
+      }
+
+      .weekdays div {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        padding: 6px 0;
+      }
+
+      .days {
+        padding-bottom: 14px;
+      }
+
+      .day {
+        min-height: 78px;
+        padding: 8px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.02);
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-end;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .day:hover {
+        border-color: var(--ring);
+        background: rgba(124, 155, 255, 0.08);
+      }
+
+      .muted {
+        color: #6f789a;
+        background: rgba(255, 255, 255, 0.01);
+      }
+
+      .today {
+        background: linear-gradient(
+          180deg,
+          var(--today),
+          rgba(42, 49, 87, 0.7)
+        );
+        border-color: var(--ring);
+        box-shadow: inset 0 0 0 1px rgba(124, 155, 255, 0.35);
+        position: relative;
+      }
+
+      .today::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--accent);
+        box-shadow: 0 0 0 5px rgba(124, 155, 255, 0.22);
+      }
+
+      @media (max-width: 560px) {
+        .day {
+          min-height: 62px;
+        }
+        .weekdays,
+        .days {
+          gap: 8px;
+          padding-inline: 10px;
+        }
+        .header {
+          padding: 14px 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="calendar" id="calendar" aria-label="Calendar">
+      <header class="header">
+        <h1 class="month" id="monthName"></h1>
+        <div class="year" id="yearName"></div>
+      </header>
+
+      <div class="weekdays" aria-hidden="true">
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+        <div>Sun</div>
+      </div>
+
+      <div class="days" id="days"></div>
+    </section>
+
+    <script>
+      const monthName = document.getElementById("monthName");
+      const yearName = document.getElementById("yearName");
+      const daysEl = document.getElementById("days");
+      const calendarEl = document.getElementById("calendar");
+
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+
+      const monthLabel = new Intl.DateTimeFormat("en-US", {
+        month: "long",
+      }).format(new Date(year, month, 1));
+
+      monthName.textContent = monthLabel;
+      yearName.textContent = year;
+
+      // Monday-first calendar
+      const firstDay = new Date(year, month, 1);
+      const startOffset = (firstDay.getDay() + 6) % 7; // 0 = Monday
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+      const totalCells = Math.ceil((startOffset + daysInMonth) / 7) * 7;
+      const prevMonthStart = daysInPrevMonth - startOffset + 1;
+
+      calendarEl.setAttribute(
+        "aria-label",
+        `Calendar for ${monthLabel} ${year}`
+      );
+
+      daysEl.innerHTML = "";
+
+      for (let i = 0; i < totalCells; i++) {
+        const cell = document.createElement("div");
+        cell.className = "day";
+
+        if (i < startOffset) {
+          cell.classList.add("muted");
+          cell.textContent = prevMonthStart + i;
+        } else if (i >= startOffset + daysInMonth) {
+          cell.classList.add("muted");
+          cell.textContent = i - (startOffset + daysInMonth) + 1;
+        } else {
+          const dayNum = i - startOffset + 1;
+          cell.textContent = dayNum;
+
+          if (
+            year === today.getFullYear() &&
+            month === today.getMonth() &&
+            dayNum === today.getDate()
+          ) {
+            cell.classList.add("today");
+          }
+        }
+
+        daysEl.appendChild(cell);
+      }
+    </script>
+  </body>
+</html>
