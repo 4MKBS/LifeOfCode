@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS-only Emoji</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --face: #ffd54a;
+        --shadow: #f4b400;
+        --eye: #1f2937;
+        --mouth: #7c2d12;
+        --cheek: rgba(255, 105, 97, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        background: radial-gradient(
+          circle at top,
+          #1e293b 0%,
+          var(--bg) 55%,
+          #020617 100%
+        );
+        overflow: hidden;
+        font-family: system-ui, sans-serif;
+      }
+
+      .emoji {
+        position: relative;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #fff7b0 0 10%,
+          var(--face) 22%,
+          #f6c93a 70%,
+          #e0a800 100%
+        );
+        box-shadow: inset -18px -22px 0 rgba(0, 0, 0, 0.08),
+          inset 10px 10px 0 rgba(255, 255, 255, 0.25),
+          0 28px 60px rgba(0, 0, 0, 0.35);
+        animation: float 3.6s ease-in-out infinite;
+      }
+
+      .emoji::before,
+      .emoji::after {
+        content: "";
+        position: absolute;
+        top: 88px;
+        width: 24px;
+        height: 24px;
+        background: var(--eye);
+        border-radius: 50%;
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.15);
+        animation: blink 5s infinite;
+      }
+
+      .emoji::before {
+        left: 72px;
+      }
+
+      .emoji::after {
+        right: 72px;
+      }
+
+      .mouth {
+        position: absolute;
+        left: 50%;
+        top: 132px;
+        width: 126px;
+        height: 76px;
+        transform: translateX(-50%);
+        border-bottom: 14px solid var(--mouth);
+        border-radius: 0 0 110px 110px;
+        filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.1));
+      }
+
+      .mouth::before,
+      .mouth::after {
+        content: "";
+        position: absolute;
+        top: 34px;
+        width: 18px;
+        height: 18px;
+        background: var(--cheek);
+        border-radius: 50%;
+        filter: blur(1px);
+      }
+
+      .mouth::before {
+        left: -28px;
+      }
+      .mouth::after {
+        right: -28px;
+      }
+
+      .shine {
+        position: absolute;
+        left: 48px;
+        top: 36px;
+        width: 52px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.42);
+        filter: blur(1px);
+        transform: rotate(-24deg);
+      }
+
+      .ring {
+        position: absolute;
+        inset: 18px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.06);
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-2deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(2deg);
+        }
+      }
+
+      @keyframes blink {
+        0%,
+        92%,
+        100% {
+          transform: scaleY(1);
+        }
+        94% {
+          transform: scaleY(0.12);
+        }
+        96% {
+          transform: scaleY(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="emoji" aria-label="Smiling emoji" role="img">
+      <div class="shine"></div>
+      <div class="ring"></div>
+      <div class="mouth"></div>
+    </div>
+  </body>
+</html>
