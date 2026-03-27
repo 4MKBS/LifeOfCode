@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Pixel Art - Real Life Scene</title>
+    <style>
+      :root {
+        --u: 8px; /* pixel unit */
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #1a1a1a;
+        font-family: monospace;
+      }
+
+      .scene {
+        position: relative;
+        width: calc(var(--u) * 80);
+        height: calc(var(--u) * 50);
+        overflow: hidden;
+        image-rendering: pixelated;
+        border: calc(var(--u) * 0.5) solid #0f0f0f;
+        box-shadow: 0 0 0 calc(var(--u) * 0.5) #333;
+        background: linear-gradient(#8fd3ff 0 65%, #7ecf68 65% 100%);
+      }
+
+      /* subtle pixel grid */
+      .scene::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: var(--u) var(--u), var(--u) var(--u);
+        pointer-events: none;
+      }
+
+      .sun {
+        position: absolute;
+        left: calc(var(--u) * 8);
+        top: calc(var(--u) * 5);
+        width: calc(var(--u) * 6);
+        height: calc(var(--u) * 6);
+        background: #ffd84d;
+        box-shadow: 0 0 0 var(--u) #ffca2c inset,
+          calc(var(--u) * -2) calc(var(--u) * 2) 0 0 #ffd84d,
+          calc(var(--u) * 8) calc(var(--u) * 2) 0 0 #ffd84d,
+          calc(var(--u) * 3) calc(var(--u) * -3) 0 0 #ffd84d,
+          calc(var(--u) * 3) calc(var(--u) * 9) 0 0 #ffd84d;
+      }
+
+      .cloud {
+        position: absolute;
+        height: calc(var(--u) * 2);
+        background: #f8fbff;
+      }
+
+      .cloud.c1 {
+        left: calc(var(--u) * 24);
+        top: calc(var(--u) * 8);
+        width: calc(var(--u) * 12);
+        box-shadow: calc(var(--u) * -2) calc(var(--u) * 1) 0 0 #f8fbff,
+          calc(var(--u) * 2) calc(var(--u) * -1) 0 0 #f8fbff,
+          calc(var(--u) * 6) calc(var(--u) * -1) 0 0 #f8fbff,
+          calc(var(--u) * 10) calc(var(--u) * 1) 0 0 #f8fbff;
+      }
+
+      .cloud.c2 {
+        left: calc(var(--u) * 53);
+        top: calc(var(--u) * 6);
+        width: calc(var(--u) * 10);
+        box-shadow: calc(var(--u) * -2) calc(var(--u) * 1) 0 0 #f8fbff,
+          calc(var(--u) * 2) calc(var(--u) * -1) 0 0 #f8fbff,
+          calc(var(--u) * 7) calc(var(--u) * 1) 0 0 #f8fbff;
+      }
+
+      .mountain {
+        position: absolute;
+        bottom: calc(var(--u) * 17);
+        width: 0;
+        height: 0;
+        border-left: calc(var(--u) * 10) solid transparent;
+        border-right: calc(var(--u) * 10) solid transparent;
+        border-bottom: calc(var(--u) * 14) solid #5f7f9d;
+        filter: saturate(0.9);
+      }
+
+      .m1 {
+        left: calc(var(--u) * 38);
+      }
+      .m2 {
+        left: calc(var(--u) * 52);
+        border-bottom-color: #55728d;
+        border-left-width: calc(var(--u) * 12);
+        border-right-width: calc(var(--u) * 12);
+        border-bottom-width: calc(var(--u) * 16);
+      }
+
+      .road {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: calc(var(--u) * 10);
+        background: #4b4b4b;
+      }
+
+      .road::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(var(--u) * 4.5);
+        height: var(--u);
+        background: repeating-linear-gradient(
+          90deg,
+          transparent 0 calc(var(--u) * 4),
+          #ffd34d calc(var(--u) * 4) calc(var(--u) * 7)
+        );
+      }
+
+      .house {
+        position: absolute;
+        left: calc(var(--u) * 18);
+        bottom: calc(var(--u) * 10);
+        width: calc(var(--u) * 20);
+        height: calc(var(--u) * 14);
+        background: #d47f59;
+        border: var(--u) solid #7e3f28;
+      }
+
+      .house::before {
+        content: "";
+        position: absolute;
+        left: calc(var(--u) * -2);
+        top: calc(var(--u) * -7);
+        width: calc(var(--u) * 22);
+        height: calc(var(--u) * 6);
+        background: #98393b;
+        clip-path: polygon(
+          0 100%,
+          10% 70%,
+          20% 60%,
+          30% 45%,
+          40% 30%,
+          50% 20%,
+          60% 30%,
+          70% 45%,
+          80% 60%,
+          90% 70%,
+          100% 100%
+        );
+        border: var(--u) solid #6c2226;
+        border-bottom: none;
+      }
+
+      .window,
+      .door {
+        position: absolute;
+        background: #a9e6ff;
+        border: var(--u) solid #2b5874;
+      }
+
+      .window.w1 {
+        left: calc(var(--u) * 2);
+        top: calc(var(--u) * 3);
+        width: calc(var(--u) * 4);
+        height: calc(var(--u) * 4);
+      }
+      .window.w2 {
+        right: calc(var(--u) * 2);
+        top: calc(var(--u) * 3);
+        width: calc(var(--u) * 4);
+        height: calc(var(--u) * 4);
+      }
+      .door {
+        left: calc(var(--u) * 8);
+        bottom: 0;
+        width: calc(var(--u) * 4);
+        height: calc(var(--u) * 7);
+        background: #6f4428;
+        border-color: #4b2b17;
+      }
+
+      .tree {
+        position: absolute;
+        right: calc(var(--u) * 14);
+        bottom: calc(var(--u) * 10);
+        width: calc(var(--u) * 4);
+        height: calc(var(--u) * 8);
+        background: #7a4b2a;
+        border: var(--u) solid #5c341b;
+      }
+
+      .tree::before {
+        content: "";
+        position: absolute;
+        left: calc(var(--u) * -4);
+        bottom: calc(var(--u) * 6);
+        width: calc(var(--u) * 12);
+        height: calc(var(--u) * 8);
+        background: #2e9e52;
+        box-shadow: calc(var(--u) * -2) calc(var(--u) * 2) 0 0 #2e9e52,
+          calc(var(--u) * 10) calc(var(--u) * 2) 0 0 #2e9e52,
+          calc(var(--u) * 2) calc(var(--u) * -2) 0 0 #35b45d,
+          calc(var(--u) * 6) calc(var(--u) * -2) 0 0 #35b45d;
+        border: var(--u) solid #1f6f3a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scene">
+      <div class="sun"></div>
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+
+      <div class="mountain m1"></div>
+      <div class="mountain m2"></div>
+
+      <div class="house">
+        <div class="window w1"></div>
+        <div class="window w2"></div>
+        <div class="door"></div>
+      </div>
+
+      <div class="tree"></div>
+      <div class="road"></div>
+    </div>
+  </body>
+</html>
