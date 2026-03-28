@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pure CSS Car Animation</title>
+    <style>
+      :root {
+        --sky-top: #7ec8ff;
+        --sky-bottom: #e8f7ff;
+        --road: #2f2f35;
+        --lane: #f6f6f6;
+        --car-body: #ff4d6d;
+        --car-roof: #ff758f;
+        --window: #bfe8ff;
+        --wheel: #1b1b1f;
+        --hub: #9ea3aa;
+        --ground: #4a8f40;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(var(--sky-top), var(--sky-bottom));
+        font-family: system-ui, sans-serif;
+        overflow: hidden;
+      }
+
+      .scene {
+        position: relative;
+        width: min(900px, 95vw);
+        height: min(420px, 80vh);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(#8ad0ff 0 65%, #6fb96a 65% 100%);
+      }
+
+      .sun {
+        position: absolute;
+        top: 40px;
+        right: 80px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #fff7b0, #ffd451 65%);
+        box-shadow: 0 0 35px #ffd451;
+        animation: sunPulse 2.8s ease-in-out infinite;
+      }
+
+      .clouds,
+      .clouds::before,
+      .clouds::after {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 999px;
+      }
+
+      .clouds {
+        top: 70px;
+        left: -240px;
+        width: 160px;
+        height: 46px;
+        animation: drift 22s linear infinite;
+        filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.08));
+      }
+
+      .clouds::before {
+        content: "";
+        width: 80px;
+        height: 80px;
+        left: 18px;
+        top: -34px;
+      }
+
+      .clouds::after {
+        content: "";
+        width: 100px;
+        height: 60px;
+        right: 14px;
+        top: -24px;
+      }
+
+      .clouds.c2 {
+        top: 130px;
+        scale: 0.8;
+        animation-duration: 28s;
+        animation-delay: -7s;
+        opacity: 0.85;
+      }
+
+      .road {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 130px;
+        background: var(--road);
+        overflow: hidden;
+      }
+
+      .road::before {
+        content: "";
+        position: absolute;
+        inset: 18px -200% auto -200%;
+        height: 8px;
+        background: repeating-linear-gradient(
+          90deg,
+          transparent 0 35px,
+          var(--lane) 35px 80px
+        );
+        animation: laneMove 0.9s linear infinite;
+      }
+
+      .car-wrap {
+        position: absolute;
+        left: 50%;
+        bottom: 76px;
+        transform: translateX(-50%);
+        animation: bounce 0.35s ease-in-out infinite alternate;
+      }
+
+      .car {
+        position: relative;
+        width: 280px;
+        height: 90px;
+        background: var(--car-body);
+        border-radius: 26px 34px 18px 18px;
+        box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.15);
+      }
+
+      .car::before {
+        content: "";
+        position: absolute;
+        left: 58px;
+        top: -48px;
+        width: 150px;
+        height: 58px;
+        background: var(--car-roof);
+        border-radius: 60px 70px 10px 10px;
+        box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.14);
+      }
+
+      .window {
+        position: absolute;
+        top: -36px;
+        width: 62px;
+        height: 36px;
+        background: var(--window);
+        border-radius: 10px;
+        border: 3px solid rgba(0, 0, 0, 0.13);
+      }
+
+      .window.w1 {
+        left: 70px;
+      }
+      .window.w2 {
+        left: 140px;
+      }
+
+      .light {
+        position: absolute;
+        top: 30px;
+        width: 14px;
+        height: 10px;
+        background: #fff6a1;
+        border-radius: 6px;
+        box-shadow: 0 0 14px #ffe97b;
+      }
+
+      .light.front {
+        right: -3px;
+      }
+      .light.back {
+        left: -3px;
+        background: #ffbdc8;
+        box-shadow: 0 0 10px #ff8ea4;
+      }
+
+      .wheel {
+        position: absolute;
+        bottom: -26px;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--hub) 0 10px, transparent 11px),
+          repeating-conic-gradient(#5f6670 0 14deg, #2b2f36 14deg 28deg);
+        border: 10px solid var(--wheel);
+        animation: spin 0.55s linear infinite;
+      }
+
+      .wheel.left {
+        left: 42px;
+      }
+      .wheel.right {
+        right: 42px;
+      }
+
+      .shadow {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: -38px;
+        height: 16px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.28);
+        filter: blur(1px);
+        animation: shadowPulse 0.35s ease-in-out infinite alternate;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes laneMove {
+        to {
+          transform: translateX(115px);
+        }
+      }
+
+      @keyframes bounce {
+        from {
+          transform: translateX(-50%) translateY(0);
+        }
+        to {
+          transform: translateX(-50%) translateY(-3px);
+        }
+      }
+
+      @keyframes shadowPulse {
+        from {
+          transform: scaleX(1);
+          opacity: 0.26;
+        }
+        to {
+          transform: scaleX(0.94);
+          opacity: 0.2;
+        }
+      }
+
+      @keyframes drift {
+        to {
+          transform: translateX(1250px);
+        }
+      }
+
+      @keyframes sunPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.06);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scene">
+      <div class="sun"></div>
+      <div class="clouds"></div>
+      <div class="clouds c2"></div>
+
+      <div class="car-wrap">
+        <div class="car">
+          <div class="window w1"></div>
+          <div class="window w2"></div>
+          <div class="light back"></div>
+          <div class="light front"></div>
+          <div class="wheel left"></div>
+          <div class="wheel right"></div>
+          <div class="shadow"></div>
+        </div>
+      </div>
+
+      <div class="road"></div>
+    </div>
+  </body>
+</html>
