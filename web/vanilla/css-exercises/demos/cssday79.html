@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS-only Toggle Game</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: #121a33;
+        --off: #33406b;
+        --on: #4ade80;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(circle at top, #1b2a57, var(--bg) 55%);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        color: var(--text);
+      }
+
+      .game {
+        width: min(92vw, 420px);
+        padding: 1.2rem;
+        border-radius: 16px;
+        background: linear-gradient(180deg, #1a2550, var(--panel));
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      h1 {
+        margin: 0 0 0.35rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .hint {
+        margin: 0 0 1rem;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.7rem;
+      }
+
+      .board input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .tile {
+        aspect-ratio: 1 / 1;
+        border-radius: 14px;
+        border: 2px solid #47527f;
+        background: linear-gradient(180deg, #2a3560, var(--off));
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.15s ease, background 0.2s ease,
+          box-shadow 0.2s ease;
+        box-shadow: inset 0 -8px 14px rgba(0, 0, 0, 0.25);
+        font-weight: 700;
+        color: #d6def8;
+      }
+
+      .tile:hover {
+        transform: translateY(-2px);
+      }
+
+      .board input:checked + .tile {
+        background: linear-gradient(180deg, #2fd572, var(--on));
+        border-color: #92f3b4;
+        color: #0a2b16;
+        box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.22),
+          inset 0 -6px 10px rgba(0, 0, 0, 0.18);
+      }
+
+      .status {
+        margin-top: 0.95rem;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.93rem;
+      }
+
+      .win {
+        margin-top: 0.95rem;
+        padding: 0.7rem 0.8rem;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 700;
+        background: #0f2f1c;
+        color: #b8ffd3;
+        border: 1px solid #2f9159;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: 0.2s ease;
+        pointer-events: none;
+        height: 0;
+        overflow: hidden;
+      }
+
+      /* Win condition: all 9 toggles are checked */
+      #t1:checked
+        ~ #t2:checked
+        ~ #t3:checked
+        ~ #t4:checked
+        ~ #t5:checked
+        ~ #t6:checked
+        ~ #t7:checked
+        ~ #t8:checked
+        ~ #t9:checked
+        ~ .status {
+        display: none;
+      }
+
+      #t1:checked
+        ~ #t2:checked
+        ~ #t3:checked
+        ~ #t4:checked
+        ~ #t5:checked
+        ~ #t6:checked
+        ~ #t7:checked
+        ~ #t8:checked
+        ~ #t9:checked
+        ~ .win {
+        opacity: 1;
+        transform: translateY(0);
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="game">
+      <h1>Toggle Grid</h1>
+      <p class="hint">Turn every tile ON to win.</p>
+
+      <div class="board">
+        <input id="t1" type="checkbox" /><label class="tile" for="t1">1</label>
+        <input id="t2" type="checkbox" /><label class="tile" for="t2">2</label>
+        <input id="t3" type="checkbox" /><label class="tile" for="t3">3</label>
+        <input id="t4" type="checkbox" /><label class="tile" for="t4">4</label>
+        <input id="t5" type="checkbox" /><label class="tile" for="t5">5</label>
+        <input id="t6" type="checkbox" /><label class="tile" for="t6">6</label>
+        <input id="t7" type="checkbox" /><label class="tile" for="t7">7</label>
+        <input id="t8" type="checkbox" /><label class="tile" for="t8">8</label>
+        <input id="t9" type="checkbox" /><label class="tile" for="t9">9</label>
+
+        <p class="status">Progress: click tiles to light them up.</p>
+        <p class="win">✅ Grid activated. You win!</p>
+      </div>
+    </section>
+  </body>
+</html>
