@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fluid Typography System (Upgraded)</title>
+    <style>
+      :root {
+        /* Viewport range */
+        --fluid-min-width: 320;
+        --fluid-max-width: 1200;
+
+        /* Scale ratios */
+        --ratio-min: 1.2;
+        --ratio-max: 1.333;
+
+        /* Base size range */
+        --step-0-min: 1rem; /* 16px */
+        --step-0-max: 1.125rem; /* 18px */
+
+        /* 0 → 1 interpolation factor (unitless, clamped) */
+        --fluid-bp: clamp(
+          0,
+          (100vw - (var(--fluid-min-width) * 1px)) /
+            ((var(--fluid-max-width) - var(--fluid-min-width)) * 1px),
+          1
+        );
+
+        /* Scale generation */
+        --step--2-min: calc(
+          var(--step-0-min) / var(--ratio-min) / var(--ratio-min)
+        );
+        --step--2-max: calc(
+          var(--step-0-max) / var(--ratio-max) / var(--ratio-max)
+        );
+
+        --step--1-min: calc(var(--step-0-min) / var(--ratio-min));
+        --step--1-max: calc(var(--step-0-max) / var(--ratio-max));
+
+        --step-1-min: calc(var(--step-0-min) * var(--ratio-min));
+        --step-1-max: calc(var(--step-0-max) * var(--ratio-max));
+
+        --step-2-min: calc(var(--step-1-min) * var(--ratio-min));
+        --step-2-max: calc(var(--step-1-max) * var(--ratio-max));
+
+        --step-3-min: calc(var(--step-2-min) * var(--ratio-min));
+        --step-3-max: calc(var(--step-2-max) * var(--ratio-max));
+
+        --step-4-min: calc(var(--step-3-min) * var(--ratio-min));
+        --step-4-max: calc(var(--step-3-max) * var(--ratio-max));
+
+        /* Clamped fluid steps */
+        --step--2: clamp(
+          var(--step--2-min),
+          calc(
+            var(--step--2-min) + (var(--step--2-max) - var(--step--2-min)) *
+              var(--fluid-bp)
+          ),
+          var(--step--2-max)
+        );
+        --step--1: clamp(
+          var(--step--1-min),
+          calc(
+            var(--step--1-min) + (var(--step--1-max) - var(--step--1-min)) *
+              var(--fluid-bp)
+          ),
+          var(--step--1-max)
+        );
+        --step-0: clamp(
+          var(--step-0-min),
+          calc(
+            var(--step-0-min) + (var(--step-0-max) - var(--step-0-min)) *
+              var(--fluid-bp)
+          ),
+          var(--step-0-max)
+        );
+        --step-1: clamp(
+          var(--step-1-min),
+          calc(
+            var(--step-1-min) + (var(--step-1-max) - var(--step-1-min)) *
+              var(--fluid-bp)
+          ),
+          var(--step-1-max)
+        );
+        --step-2: clamp(
+          var(--step-2-min),
+          calc(
+            var(--step-2-min) + (var(--step-2-max) - var(--step-2-min)) *
+              var(--fluid-bp)
+          ),
+          var(--step-2-max)
+        );
+        --step-3: clamp(
+          var(--step-3-min),
+          calc(
+            var(--step-3-min) + (var(--step-3-max) - var(--step-3-min)) *
+              var(--fluid-bp)
+          ),
+          var(--step-3-max)
+        );
+        --step-4: clamp(
+          var(--step-4-min),
+          calc(
+            var(--step-4-min) + (var(--step-4-max) - var(--step-4-min)) *
+              var(--fluid-bp)
+          ),
+          var(--step-4-max)
+        );
+
+        --space: clamp(1rem, 0.8rem + 1.2vw, 2rem);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Arial, sans-serif;
+        font-size: var(--step-0);
+        line-height: 1.6;
+        background: linear-gradient(180deg, #0f172a, #111827);
+        color: #e5e7eb;
+      }
+
+      .wrap {
+        width: min(70ch, 92%);
+        margin-inline: auto;
+        padding: calc(var(--space) * 2) 0;
+      }
+
+      h1 {
+        font-size: var(--step-4);
+        line-height: 1.1;
+        margin: 0 0 0.75em;
+        text-wrap: balance;
+      }
+
+      h2 {
+        font-size: var(--step-2);
+        line-height: 1.2;
+        margin: 2em 0 0.6em;
+        color: #cbd5e1;
+        text-wrap: balance;
+      }
+
+      p {
+        font-size: var(--step-0);
+        margin: 0 0 1.1em;
+        color: #d1d5db;
+      }
+
+      small {
+        display: block;
+        font-size: var(--step--1);
+        color: #94a3b8;
+      }
+
+      code {
+        font-size: var(--step--1);
+        background: #1f2937;
+        color: #93c5fd;
+        padding: 0.12em 0.35em;
+        border-radius: 0.35em;
+      }
+
+      .scale {
+        margin-top: 2rem;
+        padding: 1rem 1.25rem;
+        border: 1px solid #334155;
+        border-radius: 0.75rem;
+        background: #0b1220;
+      }
+
+      .scale p {
+        margin: 0.45em 0;
+      }
+
+      .s--2 {
+        font-size: var(--step--2);
+      }
+      .s--1 {
+        font-size: var(--step--1);
+      }
+      .s-0 {
+        font-size: var(--step-0);
+      }
+      .s-1 {
+        font-size: var(--step-1);
+      }
+      .s-2 {
+        font-size: var(--step-2);
+      }
+      .s-3 {
+        font-size: var(--step-3);
+      }
+      .s-4 {
+        font-size: var(--step-4);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Fluid Typography System</h1>
+      <p>
+        This page uses CSS custom properties to scale type smoothly between
+        <code>320px</code> and <code>1200px</code>.
+      </p>
+      <small>Resize the viewport to see all steps interpolate fluidly.</small>
+
+      <h2>Type Scale Preview</h2>
+      <section class="scale">
+        <p class="s--2">Step -2: Supporting micro text</p>
+        <p class="s--1">Step -1: Meta text / captions</p>
+        <p class="s-0">Step 0: Body text baseline</p>
+        <p class="s-1">Step 1: Intro paragraph size</p>
+        <p class="s-2">Step 2: Section heading size</p>
+        <p class="s-3">Step 3: Major heading size</p>
+        <p class="s-4">Step 4: Display heading size</p>
+      </section>
+    </main>
+  </body>
+</html>
