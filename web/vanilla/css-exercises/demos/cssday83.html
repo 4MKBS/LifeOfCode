@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Image Comparison Slider</title>
+    <style>
+      :root {
+        --position: 50%;
+        --handle-size: 44px;
+        --accent: #2563eb;
+        --bg: #0f172a;
+        --text: #e2e8f0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+          Arial, sans-serif;
+        background: radial-gradient(circle at top, #1e293b, var(--bg));
+        color: var(--text);
+        padding: 1rem;
+      }
+
+      .wrapper {
+        width: min(960px, 100%);
+      }
+
+      .title {
+        margin: 0 0 0.75rem;
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        font-weight: 600;
+        opacity: 0.95;
+      }
+
+      .comparison {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 20px 45px rgb(0 0 0 / 0.35);
+        isolation: isolate;
+        background: #020617;
+      }
+
+      .comparison img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      .comparison .after {
+        clip-path: inset(0 calc(100% - var(--position)) 0 0);
+        z-index: 2;
+      }
+
+      .divider {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: var(--position);
+        transform: translateX(-50%);
+        width: 2px;
+        background: #fff;
+        z-index: 3;
+        box-shadow: 0 0 0 1px rgb(0 0 0 / 0.2);
+      }
+
+      .handle {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: var(--handle-size);
+        height: var(--handle-size);
+        transform: translate(-50%, -50%);
+        border-radius: 999px;
+        background: #fff;
+        display: grid;
+        place-items: center;
+        color: var(--accent);
+        font-weight: 700;
+        box-shadow: 0 10px 20px rgb(0 0 0 / 0.25);
+      }
+
+      .handle::before {
+        content: "↔";
+        font-size: 1.1rem;
+        line-height: 1;
+      }
+
+      .slider {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        appearance: none;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background: transparent;
+        cursor: ew-resize;
+      }
+
+      .slider::-webkit-slider-thumb {
+        appearance: none;
+        width: var(--handle-size);
+        height: var(--handle-size);
+        background: transparent;
+        border: none;
+      }
+
+      .slider::-moz-range-thumb {
+        width: var(--handle-size);
+        height: var(--handle-size);
+        background: transparent;
+        border: none;
+        border-radius: 0;
+      }
+
+      .labels {
+        position: absolute;
+        inset: auto 0 0 0;
+        z-index: 5;
+        display: flex;
+        justify-content: space-between;
+        padding: 0.65rem 0.8rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        background: linear-gradient(to top, rgb(0 0 0 / 0.4), transparent);
+        pointer-events: none;
+      }
+
+      .labels span {
+        background: rgb(2 6 23 / 0.6);
+        border: 1px solid rgb(255 255 255 / 0.18);
+        border-radius: 999px;
+        padding: 0.22rem 0.56rem;
+        backdrop-filter: blur(4px);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrapper">
+      <h1 class="title">Responsive Image Comparison Slider</h1>
+
+      <section class="comparison" id="comparison">
+        <img
+          class="before"
+          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80"
+          alt="Before edit: mountain landscape"
+        />
+        <img
+          class="after"
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
+          alt="After edit: enhanced mountain landscape"
+        />
+
+        <div class="divider" aria-hidden="true">
+          <div class="handle" aria-hidden="true"></div>
+        </div>
+
+        <input
+          id="slider"
+          class="slider"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          aria-label="Image comparison slider"
+        />
+
+        <div class="labels" aria-hidden="true">
+          <span>Before</span>
+          <span>After</span>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const slider = document.getElementById("slider");
+      const comparison = document.getElementById("comparison");
+
+      const setPosition = (value) => {
+        comparison.style.setProperty("--position", `${value}%`);
+      };
+
+      setPosition(slider.value);
+      slider.addEventListener("input", (e) => setPosition(e.target.value));
+    </script>
+  </body>
+</html>
