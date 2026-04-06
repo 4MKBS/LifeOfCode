@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Tables</title>
+    <style>
+      :root {
+        --bg: #eef2f7;
+        --card: #ffffff;
+        --text: #111827;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --header: #0f172a;
+        --accent: #2563eb;
+        --accent-2: #10b981;
+        --accent-3: #f59e0b;
+        --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        --radius: 16px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+        color: var(--text);
+        padding: 24px;
+      }
+
+      .dashboard {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        gap: 20px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .topbar h1 {
+        font-size: 1.6rem;
+        margin-bottom: 6px;
+      }
+
+      .topbar p {
+        color: var(--muted);
+      }
+
+      .btn {
+        border: 0;
+        background: var(--header);
+        color: #fff;
+        padding: 12px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .stat {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 18px;
+      }
+
+      .stat .label {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+
+      .stat .value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .stat .trend {
+        font-size: 0.92rem;
+        color: var(--accent-2);
+        font-weight: 700;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 20px;
+      }
+
+      .panel {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .panel-header {
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .panel-header h2 {
+        font-size: 1.05rem;
+      }
+
+      .panel-header span {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 640px;
+      }
+
+      thead th {
+        background: var(--header);
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        position: sticky;
+        top: 0;
+      }
+
+      th,
+      td {
+        padding: 14px 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--line);
+      }
+
+      tbody tr:nth-child(even) {
+        background: #fafcff;
+      }
+
+      tbody tr:hover {
+        background: #f8fafc;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .ok {
+        background: rgba(16, 185, 129, 0.12);
+        color: #059669;
+      }
+
+      .warn {
+        background: rgba(245, 158, 11, 0.12);
+        color: #d97706;
+      }
+
+      .info {
+        background: rgba(37, 99, 235, 0.12);
+        color: #2563eb;
+      }
+
+      @media (max-width: 1024px) {
+        .stats,
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 12px;
+        }
+
+        .stats,
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+          min-width: 0;
+        }
+
+        thead {
+          display: none;
+        }
+
+        tr {
+          border-bottom: 1px solid var(--line);
+        }
+
+        td {
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          text-align: right;
+        }
+
+        td::before {
+          content: attr(data-label);
+          font-weight: 700;
+          color: var(--header);
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <div class="topbar">
+        <div>
+          <h1>Analytics Dashboard</h1>
+          <p>Overview of team activity, tasks, and performance.</p>
+        </div>
+        <button class="btn">Export Report</button>
+      </div>
+
+      <section class="stats">
+        <div class="stat">
+          <div class="label">Total Users</div>
+          <div class="value">1,248</div>
+          <div class="trend">+12% this week</div>
+        </div>
+        <div class="stat">
+          <div class="label">Open Tasks</div>
+          <div class="value">86</div>
+          <div class="trend">+8 pending</div>
+        </div>
+        <div class="stat">
+          <div class="label">Revenue</div>
+          <div class="value">$42,300</div>
+          <div class="trend">+18% this month</div>
+        </div>
+        <div class="stat">
+          <div class="label">Uptime</div>
+          <div class="value">99.9%</div>
+          <div class="trend">Stable</div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Team Overview</h2>
+            <span>Current team status</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Department</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Name">John Doe</td>
+                  <td data-label="Role">Developer</td>
+                  <td data-label="Department">Engineering</td>
+                  <td data-label="Status">
+                    <span class="badge ok">Active</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Name">Jane Smith</td>
+                  <td data-label="Role">Designer</td>
+                  <td data-label="Department">Product</td>
+                  <td data-label="Status">
+                    <span class="badge info">In Review</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Name">Mike Johnson</td>
+                  <td data-label="Role">Manager</td>
+                  <td data-label="Department">Operations</td>
+                  <td data-label="Status">
+                    <span class="badge warn">Pending</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Recent Tasks</h2>
+            <span>Latest project activity</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Task</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Due</th>
+                  <th scope="col">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Task">UI refresh</td>
+                  <td data-label="Owner">John</td>
+                  <td data-label="Due">Today</td>
+                  <td data-label="Priority">
+                    <span class="badge warn">High</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Task">Bug fixes</td>
+                  <td data-label="Owner">Jane</td>
+                  <td data-label="Due">Tomorrow</td>
+                  <td data-label="Priority">
+                    <span class="badge info">Medium</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Task">Deploy build</td>
+                  <td data-label="Owner">Mike</td>
+                  <td data-label="Due">Friday</td>
+                  <td data-label="Priority">
+                    <span class="badge ok">Low</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
