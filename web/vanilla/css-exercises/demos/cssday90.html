@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Motion-Aware UI Design</title>
+    <meta name="description" content="A calm, accessible UI that adapts gracefully for users who prefer reduced motion — featuring animated blobs, glassmorphism, and prefers-reduced-motion support." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #05091a;
+        --surface: rgba(10, 16, 38, 0.78);
+        --surface-2: rgba(18, 26, 58, 0.5);
+        --border: rgba(148, 163, 184, 0.1);
+        --border-hover: rgba(148, 163, 184, 0.2);
+        --text: #e2e8f0;
+        --text-secondary: #94a3b8;
+        --text-tertiary: #5a6a88;
+        --sky: #38bdf8;
+        --sky-soft: rgba(56, 189, 248, 0.1);
+        --violet: #a78bfa;
+        --violet-soft: rgba(167, 139, 250, 0.1);
+        --emerald: #34d399;
+        --shadow: 0 32px 80px rgba(2, 6, 23, 0.6);
+        --radius: 28px;
+        --font: "Inter", system-ui, sans-serif;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { height: 100%; }
+
+      body {
+        font-family: var(--font);
+        color: var(--text);
+        background: var(--bg);
+        display: grid;
+        place-items: center;
+        min-height: 100%;
+        padding: 32px 18px;
+        position: relative;
+        overflow: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ─── Background ─── */
+      .bg-mesh {
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 10% 10%, rgba(56, 189, 248, 0.16) 0%, transparent 40%),
+          radial-gradient(ellipse at 90% 85%, rgba(167, 139, 250, 0.14) 0%, transparent 40%),
+          radial-gradient(ellipse at 55% 50%, rgba(52, 211, 153, 0.05) 0%, transparent 40%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── Floating Blobs ─── */
+      .blob {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(55px);
+        pointer-events: none;
+        z-index: 0;
+        animation: float 14s ease-in-out infinite;
+      }
+
+      .blob.one {
+        width: 280px; height: 280px;
+        top: 5%; right: 10%;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.5), transparent 70%);
+      }
+
+      .blob.two {
+        width: 220px; height: 220px;
+        bottom: 8%; left: 8%;
+        background: radial-gradient(circle, rgba(167, 139, 250, 0.45), transparent 70%);
+        animation-duration: 18s;
+        animation-direction: reverse;
+      }
+
+      .blob.three {
+        width: 160px; height: 160px;
+        top: 55%; right: 15%;
+        background: radial-gradient(circle, rgba(52, 211, 153, 0.3), transparent 70%);
+        animation-duration: 22s;
+        animation-delay: -6s;
+      }
+
+      /* ─── Main Card ─── */
+      .card {
+        position: relative;
+        z-index: 1;
+        width: min(860px, 100%);
+        padding: clamp(28px, 5vw, 52px);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--surface);
+        backdrop-filter: blur(24px) saturate(1.4);
+        box-shadow: var(--shadow);
+        animation: fadeUp 0.7s ease-out both;
+        overflow: hidden;
+      }
+
+      /* Gradient top border */
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--sky), var(--violet), var(--emerald), var(--sky));
+        background-size: 200% 100%;
+        animation: gradShift 5s ease infinite;
+      }
+
+      /* ─── Eyebrow ─── */
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        background: var(--sky-soft);
+        color: #7dd3fc;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        border: 1px solid rgba(56, 189, 248, 0.12);
+      }
+
+      .eyebrow-dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: var(--sky);
+        box-shadow: 0 0 10px var(--sky);
+        animation: blink 2s ease-in-out infinite;
+      }
+
+      /* ─── Grid layout ─── */
+      .card-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: start;
+      }
+
+      /* ─── Left: Text ─── */
+      .card-text {}
+
+      h1 {
+        font-size: clamp(2rem, 4.5vw, 3.6rem);
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        background: linear-gradient(135deg, #fff 20%, var(--text-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 16px;
+      }
+
+      .lead {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        line-height: 1.75;
+        margin-bottom: 28px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .btn {
+        appearance: none;
+        border: none;
+        border-radius: 14px;
+        padding: 14px 22px;
+        font: 700 0.95rem var(--font);
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s;
+      }
+
+      .btn.primary {
+        background: linear-gradient(135deg, var(--sky), var(--violet));
+        color: #05091a;
+        box-shadow: 0 10px 28px rgba(56, 189, 248, 0.2);
+      }
+
+      .btn.primary:hover {
+        transform: translateY(-3px);
+        filter: brightness(1.08);
+      }
+
+      .btn.secondary {
+        background: var(--surface-2);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .btn.secondary:hover {
+        transform: translateY(-2px);
+        border-color: var(--border-hover);
+      }
+
+      .btn:focus-visible {
+        outline: 3px solid rgba(125, 211, 252, 0.8);
+        outline-offset: 3px;
+      }
+
+      /* Status strip */
+      .status-strip {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.84rem;
+        color: var(--text-secondary);
+      }
+
+      .pulse {
+        width: 10px; height: 10px;
+        border-radius: 50%;
+        background: var(--emerald);
+        flex-shrink: 0;
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4);
+        animation: pulseRing 2s ease-in-out infinite;
+      }
+
+      /* ─── Right: Feature Grid ─── */
+      .feature-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .feature {
+        padding: 18px 20px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        transition: border-color 0.25s, transform 0.25s;
+      }
+
+      .feature:hover {
+        border-color: var(--border-hover);
+        transform: translateX(4px);
+      }
+
+      .feature-icon {
+        width: 40px; height: 40px;
+        border-radius: 11px;
+        display: grid;
+        place-items: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+
+      .feature-icon.sky { background: var(--sky-soft); border: 1px solid rgba(56,189,248,.1); }
+      .feature-icon.violet { background: var(--violet-soft); border: 1px solid rgba(167,139,250,.1); }
+      .feature-icon.emerald { background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.1); }
+
+      .feature-text h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; }
+      .feature-text p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.55; }
+
+      /* ─── Motion Badge ─── */
+      .motion-badge {
+        margin-top: 28px;
+        padding: 14px 18px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: linear-gradient(135deg, rgba(56,189,248,.06), rgba(167,139,250,.06));
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        grid-column: 1 / -1;
+      }
+
+      .motion-badge strong { color: var(--text); }
+
+      /* ─── Animations ─── */
+      @keyframes float {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-18px) scale(1.04); }
+      }
+
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(22px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes gradShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.25; }
+      }
+
+      @keyframes pulseRing {
+        0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45); }
+        70% { box-shadow: 0 0 0 12px rgba(52, 211, 153, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+      }
+
+      /* ─── Reduced Motion ─── */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        .blob, .pulse, .eyebrow-dot { animation: none !important; }
+        .card::before { animation: none; background: var(--sky); }
+        .btn:hover, .feature:hover { transform: none; }
+        .card { backdrop-filter: none; }
+      }
+
+      /* ─── Responsive ─── */
+      @media (max-width: 700px) {
+        .card-inner { grid-template-columns: 1fr; gap: 28px; }
+        .actions { flex-direction: column; }
+        .btn { width: 100%; text-align: center; }
+        .blob { display: none; }
+      }
+
+      @media (max-width: 480px) {
+        body { padding: 18px 12px; }
+        .card { border-radius: 22px; padding: 24px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-mesh" aria-hidden="true"></div>
+    <div class="blob one" aria-hidden="true"></div>
+    <div class="blob two" aria-hidden="true"></div>
+    <div class="blob three" aria-hidden="true"></div>
+
+    <main>
+      <section class="card" aria-labelledby="card-title">
+        <div class="eyebrow">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          prefers-reduced-motion
+        </div>
+
+        <div class="card-inner">
+          <div class="card-text">
+            <h1 id="card-title">Calm UI, motion-aware by design</h1>
+            <p class="lead">
+              This layout uses purposeful motion for visual interest, then
+              gracefully degrades to a clean, static state for users who prefer
+              reduced motion — no scripts needed.
+            </p>
+
+            <div class="actions">
+              <button class="btn primary" type="button" id="get-started-btn">Get started →</button>
+              <button class="btn secondary" type="button" id="learn-more-btn">Learn more</button>
+            </div>
+
+            <div class="status-strip">
+              <span class="pulse" aria-hidden="true"></span>
+              <span>Motion is decorative — all content stays clear without it.</span>
+            </div>
+          </div>
+
+          <div class="feature-grid">
+            <div class="feature">
+              <div class="feature-icon sky">✦</div>
+              <div class="feature-text">
+                <h3>Graceful degradation</h3>
+                <p>Animations automatically pause based on system accessibility settings.</p>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon violet">◈</div>
+              <div class="feature-text">
+                <h3>Glassmorphism</h3>
+                <p>Backdrop blur and transparency disabled when motion is reduced.</p>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon emerald">⬡</div>
+              <div class="feature-text">
+                <h3>Hover transitions</h3>
+                <p>All transforms and transition durations shrink to near-zero.</p>
+              </div>
+            </div>
+
+            <div class="motion-badge" role="note">
+              <strong>Try it:</strong> Enable <em>Reduce Motion</em> in your OS accessibility settings
+              — all animations and transitions will instantly stop, with zero layout shift.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
