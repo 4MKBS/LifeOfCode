@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Showcase — Featured Work Carousel</title>
+    <meta
+      name="description"
+      content="A premium project showcase carousel with smooth scroll-snap navigation, rich project cards, and interactive controls."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─── Design Tokens ─── */
+      :root {
+        --bg: #06070d;
+        --surface: rgba(12, 15, 28, 0.8);
+        --surface-2: rgba(18, 22, 40, 0.65);
+        --surface-3: rgba(255, 255, 255, 0.03);
+        --border: rgba(255, 255, 255, 0.06);
+        --border-hover: rgba(255, 255, 255, 0.14);
+        --text: #eaecf5;
+        --text-secondary: #8b94b8;
+        --text-tertiary: #525d80;
+        --indigo: #7c8cff;
+        --indigo-soft: rgba(124, 140, 255, 0.1);
+        --teal: #33d6c5;
+        --teal-soft: rgba(51, 214, 197, 0.1);
+        --rose: #ff6b8a;
+        --amber: #ffb347;
+        --purple: #b07cff;
+        --shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
+        --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.25);
+        --radius: 24px;
+        --radius-sm: 14px;
+        --font: "Inter", system-ui, sans-serif;
+        --mono: "JetBrains Mono", monospace;
+      }
+
+      /* ─── Reset ─── */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { height: 100%; }
+
+      body {
+        font-family: var(--font);
+        color: var(--text);
+        background: var(--bg);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ─── Background ─── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 15% 5%, rgba(124, 140, 255, 0.15) 0%, transparent 40%),
+          radial-gradient(ellipse at 85% 10%, rgba(51, 214, 197, 0.1) 0%, transparent 35%),
+          radial-gradient(ellipse at 50% 95%, rgba(176, 124, 255, 0.06) 0%, transparent 40%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── Layout ─── */
+      .wrap {
+        position: relative;
+        z-index: 1;
+        min-height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 40px 20px;
+      }
+
+      .showcase {
+        width: min(1240px, 100%);
+        animation: fadeUp 0.6s ease-out both;
+      }
+
+      /* ─── Header ─── */
+      .header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: var(--teal);
+        background: var(--teal-soft);
+        border: 1px solid rgba(51, 214, 197, 0.12);
+        padding: 6px 14px;
+        border-radius: 999px;
+        margin-bottom: 14px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--teal);
+        box-shadow: 0 0 10px var(--teal);
+        animation: blink 2s ease-in-out infinite;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 4.5vw, 3.4rem);
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        background: linear-gradient(135deg, #fff 20%, var(--text-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .sub {
+        max-width: 58ch;
+        color: var(--text-secondary);
+        line-height: 1.65;
+        font-size: 1rem;
+        margin-top: 10px;
+      }
+
+      /* ─── Controls ─── */
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .slide-counter {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--text-tertiary);
+        margin-right: 6px;
+      }
+
+      .slide-counter .current {
+        color: var(--text);
+        font-size: 1.1rem;
+      }
+
+      .btn {
+        width: 50px;
+        height: 50px;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        color: var(--text);
+        background: var(--surface);
+        backdrop-filter: blur(12px);
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: grid;
+        place-items: center;
+        transition: all 0.25s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        border-color: var(--border-hover);
+        background: var(--surface-2);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn:active { transform: translateY(0); }
+
+      .btn:focus-visible {
+        outline: 3px solid rgba(124, 140, 255, 0.4);
+        outline-offset: 3px;
+      }
+
+      .btn svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* ─── Progress Bar ─── */
+      .progress-track {
+        height: 3px;
+        background: var(--surface-2);
+        border-radius: 999px;
+        margin-bottom: 24px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--indigo), var(--teal));
+        border-radius: 999px;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* ─── Carousel ─── */
+      .carousel-shell {
+        position: relative;
+      }
+
+      .carousel {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(300px, 1fr);
+        gap: 20px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        padding: 8px 4px 18px;
+        scrollbar-width: none;
+      }
+
+      .carousel::-webkit-scrollbar { display: none; }
+
+      /* ─── Card ─── */
+      .card {
+        scroll-snap-align: center;
+        min-height: 480px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        position: relative;
+        isolation: isolate;
+        transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        border-color: var(--border-hover);
+      }
+
+      /* Card shimmer on hover */
+      .card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at 30% 20%,
+          rgba(255, 255, 255, 0.08),
+          transparent 50%
+        );
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        transition: opacity 0.35s;
+      }
+
+      .card:hover::after { opacity: 1; }
+
+      /* ─── Card Top (Gradient Area) ─── */
+      .card-top {
+        height: 180px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: var(--gradient);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card-top::before {
+        content: "";
+        position: absolute;
+        bottom: -40px;
+        right: -30px;
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        pointer-events: none;
+      }
+
+      .card-top::after {
+        content: "";
+        position: absolute;
+        top: -30px;
+        left: -20px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.04);
+        pointer-events: none;
+      }
+
+      .project-id {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: max-content;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        color: rgba(255, 255, 255, 0.9);
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        font-weight: 700;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        letter-spacing: 0.04em;
+      }
+
+      .project-id .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--teal);
+        box-shadow: 0 0 8px rgba(51, 214, 197, 0.5);
+        animation: blink 2.5s ease-in-out infinite;
+      }
+
+      .project-title {
+        position: relative;
+        z-index: 1;
+        font-size: 1.65rem;
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        color: #fff;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      /* ─── Card Body ─── */
+      .card-body {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        flex: 1;
+      }
+
+      .desc {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 0.9rem;
+      }
+
+      /* ─── Tags ─── */
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tag {
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        background: var(--surface-3);
+        border: 1px solid var(--border);
+        transition: all 0.2s;
+      }
+
+      .tag:hover {
+        color: var(--text);
+        border-color: var(--border-hover);
+        transform: translateY(-1px);
+      }
+
+      /* ─── Stats ─── */
+      .stats {
+        margin-top: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .stat {
+        padding: 14px 12px;
+        border-radius: var(--radius-sm);
+        background: var(--surface-3);
+        border: 1px solid var(--border);
+        text-align: center;
+        transition: border-color 0.25s, background 0.25s;
+      }
+
+      .stat:hover {
+        border-color: var(--border-hover);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.15rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 3px;
+      }
+
+      .stat span {
+        font-size: 0.72rem;
+        color: var(--text-tertiary);
+        font-weight: 500;
+      }
+
+      /* Stat color accents */
+      .card.g1 .stat strong { color: var(--indigo); }
+      .card.g2 .stat strong { color: var(--teal); }
+      .card.g3 .stat strong { color: var(--rose); }
+      .card.g4 .stat strong { color: var(--purple); }
+      .card.g5 .stat strong { color: var(--amber); }
+
+      /* ─── Card Footer Link ─── */
+      .card-footer {
+        padding: 0 24px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.2s, gap 0.2s;
+      }
+
+      .card-link:hover {
+        color: var(--text);
+        gap: 10px;
+      }
+
+      .card-link svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: transform 0.2s;
+      }
+
+      .card-link:hover svg {
+        transform: translateX(2px);
+      }
+
+      .card-year {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text-tertiary);
+        background: var(--surface-3);
+        border: 1px solid var(--border);
+        padding: 4px 10px;
+        border-radius: 8px;
+      }
+
+      /* ─── Dots ─── */
+      .nav-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 24px;
+      }
+
+      .dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border: none;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.15);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .dot:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.15);
+      }
+
+      .dot[aria-current="true"] {
+        width: 32px;
+        background: linear-gradient(90deg, var(--indigo), var(--teal));
+        box-shadow: 0 0 14px rgba(124, 140, 255, 0.3);
+      }
+
+      .dot:focus-visible {
+        outline: 3px solid rgba(51, 214, 197, 0.4);
+        outline-offset: 3px;
+      }
+
+      /* ─── Auto-play Toggle ─── */
+      .autoplay-btn {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        background: var(--surface);
+        color: var(--text-secondary);
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: all 0.25s;
+      }
+
+      .autoplay-btn:hover {
+        border-color: var(--border-hover);
+        color: var(--text);
+      }
+
+      .autoplay-btn.playing {
+        border-color: var(--teal);
+        color: var(--teal);
+        box-shadow: 0 0 12px var(--teal-soft);
+      }
+
+      .autoplay-btn svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* ─── Hint ─── */
+      .hint {
+        text-align: center;
+        color: var(--text-tertiary);
+        font-size: 0.82rem;
+        margin-top: 16px;
+        font-weight: 500;
+      }
+
+      /* ─── Gradient Variants ─── */
+      .g1 { --gradient: linear-gradient(135deg, #6b7cff 0%, #3a4fd9 45%, #1a2260 100%); }
+      .g2 { --gradient: linear-gradient(135deg, #26d0b8 0%, #1a8f9f 45%, #0f3545 100%); }
+      .g3 { --gradient: linear-gradient(135deg, #ff7a8a 0%, #e04870 45%, #5e1f3d 100%); }
+      .g4 { --gradient: linear-gradient(135deg, #b07cff 0%, #7a4aff 45%, #2a1660 100%); }
+      .g5 { --gradient: linear-gradient(135deg, #ffc247 0%, #ff9136 45%, #5e2a10 100%); }
+
+      /* ─── Animations ─── */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+
+      /* ─── Responsive ─── */
+      @media (min-width: 950px) {
+        .carousel {
+          grid-auto-columns: minmax(360px, 400px);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .wrap { padding: 24px 12px; }
+
+        .header {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .controls {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .card {
+          min-height: 440px;
+        }
+
+        .card-top {
+          height: 150px;
+          padding: 18px;
+        }
+
+        .project-title {
+          font-size: 1.35rem;
+        }
+
+        .stats {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .stat {
+          text-align: left;
+          padding: 12px 14px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .stat strong {
+          display: inline;
+          margin: 0;
+        }
+
+        .stat span {
+          font-size: 0.76rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <main class="showcase" aria-label="Project showcase carousel">
+        <!-- ─── Header ─── -->
+        <div class="header">
+          <div>
+            <p class="eyebrow">Selected Work</p>
+            <h1>Project Showcase</h1>
+            <p class="sub">
+              A curated collection of featured projects — from analytics
+              platforms to mobile apps. Each card highlights key metrics,
+              technologies, and impact.
+            </p>
+          </div>
+
+          <div class="controls" aria-label="Carousel controls">
+            <div class="slide-counter">
+              <span class="current" id="slideNum">01</span>
+              <span>/ 05</span>
+            </div>
+            <button class="btn" id="prevBtn" type="button" aria-label="Previous project">
+              <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="btn" id="nextBtn" type="button" aria-label="Next project">
+              <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ─── Progress ─── -->
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+        </div>
+
+        <!-- ─── Carousel ─── -->
+        <section class="carousel-shell">
+          <div class="carousel" id="carousel" tabindex="0" aria-label="Projects">
+
+            <!-- Card 1 -->
+            <article class="card g1">
+              <div class="card-top">
+                <div class="project-id"><span class="dot"></span> PRJ-001</div>
+                <h2 class="project-title">Atlas Dashboard</h2>
+              </div>
+              <div class="card-body">
+                <p class="desc">
+                  A data-rich analytics platform with live reporting, interactive
+                  trend visualization, and streamlined team collaboration workflows.
+                </p>
+                <div class="tags">
+                  <span class="tag">React</span>
+                  <span class="tag">D3.js</span>
+                  <span class="tag">GraphQL</span>
+                  <span class="tag">SaaS</span>
+                </div>
+                <div class="stats">
+                  <div class="stat"><strong>+38%</strong><span>Engagement</span></div>
+                  <div class="stat"><strong>12</strong><span>Modules</span></div>
+                  <div class="stat"><strong>1.2s</strong><span>Load time</span></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="card-link">
+                  View Case Study
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <span class="card-year">2024</span>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="card g2">
+              <div class="card-top">
+                <div class="project-id"><span class="dot"></span> PRJ-002</div>
+                <h2 class="project-title">Nova Commerce</h2>
+              </div>
+              <div class="card-body">
+                <p class="desc">
+                  A conversion-focused storefront with immersive product
+                  storytelling, adaptive layouts, and a mobile-first checkout experience.
+                </p>
+                <div class="tags">
+                  <span class="tag">E-commerce</span>
+                  <span class="tag">Next.js</span>
+                  <span class="tag">Stripe</span>
+                  <span class="tag">CMS</span>
+                </div>
+                <div class="stats">
+                  <div class="stat"><strong>+24%</strong><span>Sales lift</span></div>
+                  <div class="stat"><strong>96</strong><span>Perf score</span></div>
+                  <div class="stat"><strong>3s</strong><span>Checkout</span></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="card-link">
+                  View Case Study
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <span class="card-year">2024</span>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="card g3">
+              <div class="card-top">
+                <div class="project-id"><span class="dot"></span> PRJ-003</div>
+                <h2 class="project-title">Pulse Health</h2>
+              </div>
+              <div class="card-body">
+                <p class="desc">
+                  A patient-friendly interface for scheduling, telehealth
+                  consultations, and real-time appointment tracking with clear visual hierarchy.
+                </p>
+                <div class="tags">
+                  <span class="tag">Healthcare</span>
+                  <span class="tag">A11y</span>
+                  <span class="tag">HIPAA</span>
+                  <span class="tag">PWA</span>
+                </div>
+                <div class="stats">
+                  <div class="stat"><strong>4.8★</strong><span>User rating</span></div>
+                  <div class="stat"><strong>2×</strong><span>Booking speed</span></div>
+                  <div class="stat"><strong>18</strong><span>Flows</span></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="card-link">
+                  View Case Study
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <span class="card-year">2023</span>
+              </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="card g4">
+              <div class="card-top">
+                <div class="project-id"><span class="dot"></span> PRJ-004</div>
+                <h2 class="project-title">Orbit Studio</h2>
+              </div>
+              <div class="card-body">
+                <p class="desc">
+                  A creative portfolio platform designed to showcase motion work,
+                  case studies, and brand identity systems with cinematic transitions.
+                </p>
+                <div class="tags">
+                  <span class="tag">Portfolio</span>
+                  <span class="tag">GSAP</span>
+                  <span class="tag">Three.js</span>
+                  <span class="tag">Branding</span>
+                </div>
+                <div class="stats">
+                  <div class="stat"><strong>8</strong><span>Case studies</span></div>
+                  <div class="stat"><strong>+65%</strong><span>Inquiries</span></div>
+                  <div class="stat"><strong>3</strong><span>Languages</span></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="card-link">
+                  View Case Study
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <span class="card-year">2023</span>
+              </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="card g5">
+              <div class="card-top">
+                <div class="project-id"><span class="dot"></span> PRJ-005</div>
+                <h2 class="project-title">Beacon Mobile</h2>
+              </div>
+              <div class="card-body">
+                <p class="desc">
+                  A lightweight task management app designed to keep focus on
+                  daily priorities with gesture-based interactions and smart widgets.
+                </p>
+                <div class="tags">
+                  <span class="tag">Mobile</span>
+                  <span class="tag">React Native</span>
+                  <span class="tag">Widgets</span>
+                  <span class="tag">Dark Mode</span>
+                </div>
+                <div class="stats">
+                  <div class="stat"><strong>14</strong><span>Widgets</span></div>
+                  <div class="stat"><strong>89%</strong><span>Retention</span></div>
+                  <div class="stat"><strong>50K+</strong><span>Downloads</span></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="card-link">
+                  View Case Study
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <span class="card-year">2023</span>
+              </div>
+            </article>
+          </div>
+
+          <!-- Nav Bar -->
+          <div class="nav-bar">
+            <div class="dots" id="dots" aria-label="Project navigation"></div>
+            <button
+              class="autoplay-btn"
+              id="autoplayBtn"
+              type="button"
+              aria-label="Toggle auto-play"
+              title="Auto-play"
+            >
+              <svg id="playIcon" viewBox="0 0 24 24">
+                <polygon points="5,3 19,12 5,21" fill="currentColor" stroke="none"/>
+              </svg>
+              <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none">
+                <rect x="6" y="4" width="4" height="16" fill="currentColor" stroke="none"/>
+                <rect x="14" y="4" width="4" height="16" fill="currentColor" stroke="none"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="hint">
+            Use arrows, dots, keyboard, or swipe to navigate · Auto-play available
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const carousel = document.getElementById("carousel");
+      const cards = Array.from(carousel.querySelectorAll(".card"));
+      const dotsWrap = document.getElementById("dots");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const slideNum = document.getElementById("slideNum");
+      const progressFill = document.getElementById("progressFill");
+      const autoplayBtn = document.getElementById("autoplayBtn");
+      const playIcon = document.getElementById("playIcon");
+      const pauseIcon = document.getElementById("pauseIcon");
+
+      let currentIndex = 0;
+      let autoplayInterval = null;
+      let isPlaying = false;
+
+      // Create dots
+      const dots = cards.map((card, index) => {
+        const btn = document.createElement("button");
+        btn.className = "dot";
+        btn.type = "button";
+        btn.setAttribute("aria-label", `Go to project ${index + 1}`);
+        btn.addEventListener("click", () => scrollTo(index));
+        dotsWrap.appendChild(btn);
+        return btn;
+      });
+
+      function updateUI(index) {
+        currentIndex = index;
+
+        // Dots
+        dots.forEach((dot, i) =>
+          dot.setAttribute("aria-current", i === index ? "true" : "false")
+        );
+
+        // Slide counter
+        slideNum.textContent = String(index + 1).padStart(2, "0");
+
+        // Progress bar
+        const pct = ((index + 1) / cards.length) * 100;
+        progressFill.style.width = pct + "%";
+      }
+
+      function scrollTo(index) {
+        cards[index].scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }
+
+      // IntersectionObserver for tracking visible card
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (!visible) return;
+          const idx = cards.indexOf(visible.target);
+          if (idx >= 0) updateUI(idx);
+        },
+        { root: carousel, threshold: [0.5, 0.7, 0.9] }
+      );
+
+      cards.forEach((card) => observer.observe(card));
+      updateUI(0);
+
+      // Navigation
+      function move(dir) {
+        const next = Math.min(cards.length - 1, Math.max(0, currentIndex + dir));
+        scrollTo(next);
+      }
+
+      prevBtn.addEventListener("click", () => move(-1));
+      nextBtn.addEventListener("click", () => move(1));
+
+      // Keyboard
+      carousel.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") { e.preventDefault(); move(-1); }
+        if (e.key === "ArrowRight") { e.preventDefault(); move(1); }
+      });
+
+      // Auto-play
+      function startAutoplay() {
+        isPlaying = true;
+        autoplayBtn.classList.add("playing");
+        playIcon.style.display = "none";
+        pauseIcon.style.display = "block";
+        autoplayInterval = setInterval(() => {
+          const next = (currentIndex + 1) % cards.length;
+          scrollTo(next);
+        }, 3500);
+      }
+
+      function stopAutoplay() {
+        isPlaying = false;
+        autoplayBtn.classList.remove("playing");
+        playIcon.style.display = "block";
+        pauseIcon.style.display = "none";
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+      }
+
+      autoplayBtn.addEventListener("click", () => {
+        if (isPlaying) stopAutoplay();
+        else startAutoplay();
+      });
+
+      // Pause auto-play on user interaction
+      carousel.addEventListener("pointerdown", () => {
+        if (isPlaying) stopAutoplay();
+      });
+    </script>
+  </body>
+</html>
