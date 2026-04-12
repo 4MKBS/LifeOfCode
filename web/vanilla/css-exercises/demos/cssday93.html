@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testimonials — What Clients Say</title>
+    <meta name="description" content="Premium testimonial slider with smooth transitions, star ratings, and auto-play." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #07091a;
+        --surface: rgba(12, 15, 32, 0.82);
+        --surface-2: rgba(20, 24, 52, 0.6);
+        --border: rgba(255,255,255,0.07);
+        --border-hover: rgba(255,255,255,0.15);
+        --text: #eaedf8;
+        --text-secondary: #8892b8;
+        --text-tertiary: #50597a;
+        --sky: #38bdf8;
+        --sky-soft: rgba(56,189,248,0.1);
+        --violet: #a78bfa;
+        --violet-soft: rgba(167,139,250,0.1);
+        --amber: #fbbf24;
+        --shadow: 0 32px 80px rgba(0,0,0,0.5);
+        --radius: 26px;
+        --font: "Inter", system-ui, sans-serif;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { min-height: 100%; }
+
+      body {
+        font-family: var(--font);
+        color: var(--text);
+        background: var(--bg);
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        padding: 40px 20px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 15% 15%, rgba(56,189,248,.1) 0%, transparent 40%),
+          radial-gradient(ellipse at 85% 80%, rgba(167,139,250,.09) 0%, transparent 40%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── Wrapper ─── */
+      .wrapper {
+        position: relative;
+        z-index: 1;
+        width: min(860px, 100%);
+        animation: fadeUp 0.6s ease-out both;
+      }
+
+      /* ─── Header ─── */
+      .section-header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .section-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--sky);
+        background: var(--sky-soft);
+        border: 1px solid rgba(56,189,248,.12);
+        padding: 6px 14px;
+        border-radius: 999px;
+        margin-bottom: 14px;
+      }
+
+      .section-eyebrow::before {
+        content: "";
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--sky);
+        box-shadow: 0 0 8px var(--sky);
+        animation: blink 2s ease-in-out infinite;
+      }
+
+      .section-title {
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        background: linear-gradient(135deg, #fff 20%, var(--text-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* ─── Slider ─── */
+      .slider {
+        background: var(--surface);
+        backdrop-filter: blur(22px) saturate(1.3);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 0;
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .slider::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--sky), var(--violet));
+        z-index: 2;
+      }
+
+      /* ─── Track ─── */
+      .track-wrap {
+        overflow: hidden;
+        padding: 48px 48px 32px;
+      }
+
+      .track {
+        display: flex;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* ─── Slide ─── */
+      .slide {
+        min-width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      /* Quote mark */
+      .quote-mark {
+        font-size: 5rem;
+        line-height: 1;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--sky), var(--violet));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        opacity: 0.4;
+        margin-bottom: -16px;
+        user-select: none;
+      }
+
+      blockquote {
+        font-size: clamp(1rem, 2vw, 1.18rem);
+        line-height: 1.75;
+        color: var(--text);
+        font-weight: 500;
+        font-style: italic;
+        margin: 0;
+      }
+
+      /* Stars */
+      .stars {
+        display: flex;
+        gap: 4px;
+        margin-top: 4px;
+      }
+
+      .star {
+        font-size: 1rem;
+        color: var(--amber);
+        text-shadow: 0 0 8px rgba(251,191,36,.4);
+      }
+
+      /* Author row */
+      .author-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+      }
+
+      .avatar {
+        width: 52px; height: 52px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 1rem;
+        color: #fff;
+        flex-shrink: 0;
+        letter-spacing: -0.02em;
+      }
+
+      .author-info {}
+
+      .author-name {
+        font-weight: 800;
+        font-size: 0.95rem;
+        letter-spacing: -0.01em;
+      }
+
+      .author-role {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
+
+      .author-company {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--sky);
+        background: var(--sky-soft);
+        border: 1px solid rgba(56,189,248,.1);
+        padding: 3px 10px;
+        border-radius: 999px;
+        margin-top: 4px;
+      }
+
+      /* ─── Controls ─── */
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 48px 28px;
+        gap: 16px;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 8px;
+      }
+
+      .nav-btn {
+        width: 44px; height: 44px;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        background: var(--surface-2);
+        color: var(--text);
+        cursor: pointer;
+        font-size: 1.1rem;
+        display: grid;
+        place-items: center;
+        transition: all 0.2s;
+      }
+
+      .nav-btn:hover {
+        border-color: var(--border-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(0,0,0,.2);
+      }
+
+      .nav-btn svg {
+        width: 18px; height: 18px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* Dots */
+      .dots {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .dot {
+        width: 10px; height: 10px;
+        border: none;
+        border-radius: 999px;
+        background: rgba(255,255,255,.15);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+      }
+
+      .dot.active {
+        width: 28px;
+        background: linear-gradient(90deg, var(--sky), var(--violet));
+        box-shadow: 0 0 10px rgba(56,189,248,.3);
+      }
+
+      .dot:focus-visible {
+        outline: 3px solid rgba(56,189,248,.4);
+        outline-offset: 3px;
+      }
+
+      /* Progress bar */
+      .progress {
+        height: 3px;
+        background: rgba(255,255,255,.04);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--sky), var(--violet));
+        transition: width 0.4s ease;
+      }
+
+      /* Avatar gradients */
+      .av1 { background: linear-gradient(135deg, #06b6d4, #3b82f6); }
+      .av2 { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+      .av3 { background: linear-gradient(135deg, #10b981, #3b82f6); }
+      .av4 { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+
+      /* ─── Animations ─── */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(18px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.25; }
+      }
+
+      /* ─── Responsive ─── */
+      @media (max-width: 600px) {
+        .track-wrap { padding: 32px 24px 20px; }
+        .controls { padding: 14px 24px 22px; }
+        .section-title { font-size: 1.6rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- ─── Section Header ─── -->
+      <div class="section-header">
+        <div class="section-eyebrow">Client testimonials</div>
+        <h1 class="section-title">What people are saying</h1>
+      </div>
+
+      <!-- ─── Slider ─── -->
+      <section class="slider" aria-label="Testimonial slider">
+        <div class="progress">
+          <div class="progress-fill" id="progressFill" style="width:25%"></div>
+        </div>
+
+        <div class="track-wrap">
+          <div class="track" id="track">
+
+            <!-- Slide 1 -->
+            <article class="slide">
+              <div class="quote-mark" aria-hidden="true">"</div>
+              <blockquote>
+                This team transformed our landing page in two days. Page speed improved dramatically, and conversions went up by 31% in the first week. The attention to detail was outstanding.
+              </blockquote>
+              <div class="stars" aria-label="5 out of 5 stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+              <div class="author-row">
+                <div class="avatar av1" aria-hidden="true">AL</div>
+                <div class="author-info">
+                  <div class="author-name">Ava Lewis</div>
+                  <div class="author-role">Product Manager</div>
+                  <div class="author-company">NovaTech</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Slide 2 -->
+            <article class="slide">
+              <div class="quote-mark" aria-hidden="true">"</div>
+              <blockquote>
+                Clean code, clear communication, and pixel-perfect UI delivery. The handoff docs were excellent and made maintenance effortless. I'd work with them again without hesitation.
+              </blockquote>
+              <div class="stars" aria-label="5 out of 5 stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+              <div class="author-row">
+                <div class="avatar av2" aria-hidden="true">RK</div>
+                <div class="author-info">
+                  <div class="author-name">Rohan Kapoor</div>
+                  <div class="author-role">Engineering Lead</div>
+                  <div class="author-company">BrightLayer</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Slide 3 -->
+            <article class="slide">
+              <div class="quote-mark" aria-hidden="true">"</div>
+              <blockquote>
+                We needed a modern responsive interface quickly. The result looked premium and worked flawlessly on every device during launch. A truly collaborative and professional experience.
+              </blockquote>
+              <div class="stars" aria-label="5 out of 5 stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+              <div class="author-row">
+                <div class="avatar av3" aria-hidden="true">SM</div>
+                <div class="author-info">
+                  <div class="author-name">Sophia Martinez</div>
+                  <div class="author-role">Founder</div>
+                  <div class="author-company">Craftly</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Slide 4 -->
+            <article class="slide">
+              <div class="quote-mark" aria-hidden="true">"</div>
+              <blockquote>
+                The CSS work alone was jaw-dropping. Animations felt smooth and purposeful, not gimmicky. Our users noticed immediately and engagement on key pages jumped significantly.
+              </blockquote>
+              <div class="stars" aria-label="5 out of 5 stars">
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+              <div class="author-row">
+                <div class="avatar av4" aria-hidden="true">JW</div>
+                <div class="author-info">
+                  <div class="author-name">James Walker</div>
+                  <div class="author-role">VP of Design</div>
+                  <div class="author-company">Helix UI</div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- ─── Controls ─── -->
+        <div class="controls">
+          <div class="btn-group">
+            <button class="nav-btn" id="prev" aria-label="Previous testimonial">
+              <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="nav-btn" id="next" aria-label="Next testimonial">
+              <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+          <div class="dots" id="dots" aria-label="Slide indicators"></div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const track = document.getElementById("track");
+      const slides = Array.from(track.children);
+      const dotsWrap = document.getElementById("dots");
+      const prevBtn = document.getElementById("prev");
+      const nextBtn = document.getElementById("next");
+      const progressFill = document.getElementById("progressFill");
+
+      let index = 0, timer;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement("button");
+        dot.className = "dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("aria-label", `Go to testimonial ${i + 1}`);
+        dot.addEventListener("click", () => goTo(i));
+        dotsWrap.appendChild(dot);
+      });
+
+      const dots = Array.from(dotsWrap.children);
+
+      function update() {
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle("active", i === index));
+        progressFill.style.width = `${((index + 1) / slides.length) * 100}%`;
+      }
+
+      function goTo(i) {
+        index = (i + slides.length) % slides.length;
+        update();
+        restartAuto();
+      }
+
+      function next() { goTo(index + 1); }
+      function prev() { goTo(index - 1); }
+
+      function startAuto() { timer = setInterval(next, 4500); }
+      function restartAuto() { clearInterval(timer); startAuto(); }
+
+      prevBtn.addEventListener("click", prev);
+      nextBtn.addEventListener("click", next);
+
+      const slider = document.querySelector(".slider");
+      slider.addEventListener("mouseenter", () => clearInterval(timer));
+      slider.addEventListener("mouseleave", startAuto);
+      slider.addEventListener("focusin", () => clearInterval(timer));
+      slider.addEventListener("focusout", startAuto);
+
+      update();
+      startAuto();
+    </script>
+  </body>
+</html>
