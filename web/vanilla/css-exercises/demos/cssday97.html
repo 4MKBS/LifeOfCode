@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case Study — Atlas Studio Redesign</title>
+    <meta name="description" content="A lean redesign that improved conversions by 42% — detailed case study with challenges, process, and measurable outcomes." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #06081a;
+        --surface: rgba(10,14,30,0.82);
+        --surface-2: rgba(18,22,44,0.65);
+        --surface-3: rgba(255,255,255,0.025);
+        --border: rgba(255,255,255,0.07);
+        --border-hover: rgba(255,255,255,0.14);
+        --text: #e8ecf5;
+        --text-secondary: #8892b8;
+        --text-tertiary: #50597a;
+        --sky: #38bdf8;
+        --sky-soft: rgba(56,189,248,0.1);
+        --violet: #8b5cf6;
+        --violet-soft: rgba(139,92,246,0.1);
+        --emerald: #34d399;
+        --emerald-soft: rgba(52,211,153,0.1);
+        --rose: #fb7185;
+        --rose-soft: rgba(251,113,133,0.1);
+        --amber: #fbbf24;
+        --shadow: 0 24px 70px rgba(0,0,0,0.45);
+        --shadow-sm: 0 4px 16px rgba(0,0,0,0.25);
+        --radius: 22px;
+        --radius-sm: 14px;
+        --font: "Inter", system-ui, sans-serif;
+        --mono: "JetBrains Mono", monospace;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: var(--font);
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 5% 5%, rgba(56,189,248,.12) 0%, transparent 38%),
+          radial-gradient(ellipse at 95% 10%, rgba(139,92,246,.1) 0%, transparent 35%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── Page ─── */
+      .page {
+        position: relative;
+        z-index: 1;
+        width: min(1200px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 48px 0 64px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      /* ─── Generic Card ─── */
+      .card {
+        background: var(--surface);
+        backdrop-filter: blur(18px);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        transition: border-color 0.3s;
+      }
+
+      .card:hover { border-color: var(--border-hover); }
+
+      /* ─── Hero ─── */
+      .hero {
+        display: grid;
+        grid-template-columns: 1.25fr 0.9fr;
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .hero-main {
+        padding: 40px 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-main::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--sky), var(--violet), var(--emerald));
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        padding: 7px 14px;
+        border-radius: 999px;
+        background: var(--sky-soft);
+        color: #cffafe;
+        border: 1px solid rgba(56,189,248,.15);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-family: var(--mono);
+      }
+
+      .hero-badge::before {
+        content: "";
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: var(--sky);
+        box-shadow: 0 0 10px var(--sky);
+        animation: blink 2s ease-in-out infinite;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 3.5vw, 3.8rem);
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        background: linear-gradient(135deg, #fff 20%, var(--text-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .lead {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        line-height: 1.75;
+        max-width: 60ch;
+      }
+
+      .meta-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pill {
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: var(--surface-3);
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        font-size: 0.82rem;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+
+      .pill:hover {
+        color: var(--text);
+        border-color: var(--border-hover);
+      }
+
+      /* Hero Aside */
+      .hero-side {
+        padding: 28px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .stat-card {
+        padding: 18px 16px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--surface-3);
+        transition: border-color 0.25s, transform 0.25s;
+      }
+
+      .stat-card:hover {
+        border-color: var(--border-hover);
+        transform: translateY(-2px);
+      }
+
+      .stat-icon {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+
+      .stat-value {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+
+      .stat-value.up { color: var(--emerald); }
+      .stat-value.down { color: var(--rose); }
+      .stat-value.neutral { color: var(--sky); }
+
+      .stat-label {
+        font-size: 0.76rem;
+        color: var(--text-tertiary);
+        font-weight: 600;
+      }
+
+      .highlights-panel {
+        padding: 18px;
+        border-radius: var(--radius-sm);
+        background: linear-gradient(135deg, rgba(56,189,248,.07), rgba(139,92,246,.06));
+        border: 1px solid rgba(255,255,255,.06);
+      }
+
+      .highlights-panel h3 {
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--sky);
+        margin-bottom: 14px;
+      }
+
+      .highlights-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .highlights-list li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        font-size: 0.86rem;
+        color: var(--text-secondary);
+        line-height: 1.55;
+      }
+
+      .hi-dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--sky), var(--violet));
+        flex-shrink: 0;
+        margin-top: 0.45em;
+      }
+
+      /* ─── Content Grid ─── */
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 20px;
+      }
+
+      /* ─── Process Section ─── */
+      .process-card {
+        padding: 32px 28px;
+      }
+
+      .sec-title {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--violet);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .sec-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(139,92,246,.3), transparent);
+      }
+
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 10px;
+      }
+
+      .process-lead {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 22px;
+        line-height: 1.7;
+      }
+
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: relative;
+        padding-left: 20px;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 8px; bottom: 8px;
+        width: 2px;
+        background: linear-gradient(180deg, var(--sky), var(--violet), transparent);
+        border-radius: 2px;
+      }
+
+      .step {
+        position: relative;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        padding: 16px 18px;
+        border-radius: var(--radius-sm);
+        background: var(--surface-3);
+        border: 1px solid var(--border);
+        transition: border-color 0.25s, transform 0.25s;
+      }
+
+      .step:hover {
+        border-color: var(--border-hover);
+        transform: translateX(4px);
+      }
+
+      .step-dot {
+        position: absolute;
+        left: -24px;
+        top: 18px;
+        width: 10px; height: 10px;
+        border-radius: 50%;
+        background: var(--sky);
+        border: 2px solid var(--bg);
+        box-shadow: 0 0 0 3px rgba(56,189,248,.15);
+      }
+
+      .step-num {
+        width: 48px; height: 48px;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        font-family: var(--mono);
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #fff;
+        background: linear-gradient(135deg, rgba(56,189,248,.2), rgba(139,92,246,.18));
+        border: 1px solid rgba(255,255,255,.06);
+        flex-shrink: 0;
+      }
+
+      .step h3 { font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; }
+      .step p { color: var(--text-secondary); font-size: 0.82rem; line-height: 1.6; }
+
+      /* ─── Quote + Results ─── */
+      .side-col { display: flex; flex-direction: column; gap: 20px; }
+
+      .quote-card {
+        padding: 28px;
+        background: linear-gradient(135deg, rgba(139,92,246,.12), rgba(56,189,248,.08));
+        border: 1px solid rgba(255,255,255,.08);
+      }
+
+      .quote-mark {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1;
+        background: linear-gradient(135deg, var(--violet), var(--sky));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        opacity: 0.5;
+        margin-bottom: -10px;
+        user-select: none;
+      }
+
+      blockquote {
+        font-size: 1.05rem;
+        font-style: italic;
+        font-weight: 500;
+        color: #f1f5ff;
+        line-height: 1.7;
+        margin: 0 0 16px;
+      }
+
+      cite {
+        font-style: normal;
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+      }
+
+      .results-card { padding: 28px; }
+
+      .result-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+
+      .result {
+        padding: 14px 16px;
+        border-radius: var(--radius-sm);
+        background: var(--surface-3);
+        border: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        transition: border-color 0.2s, transform 0.2s;
+      }
+
+      .result:hover {
+        border-color: var(--border-hover);
+        transform: translateX(4px);
+      }
+
+      .result-label { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+      .result-label span { display: block; font-size: 0.75rem; color: var(--text-tertiary); font-weight: 400; margin-top: 2px; }
+
+      .result-value {
+        font-size: 1.15rem;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        font-family: var(--mono);
+      }
+
+      .result-value.pos { color: var(--emerald); }
+      .result-value.neg { color: var(--rose); }
+      .result-value.sky { color: var(--sky); }
+
+      /* ─── Footer ─── */
+      .page-footer {
+        text-align: center;
+        padding: 18px;
+        color: var(--text-tertiary);
+        font-size: 0.8rem;
+        border-top: 1px solid var(--border);
+      }
+
+      /* ─── Animations ─── */
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.25; }
+      }
+
+      /* ─── Responsive ─── */
+      @media (max-width: 960px) {
+        .hero, .content-grid { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 560px) {
+        .page { padding: 24px 0 40px; width: min(100% - 20px, 1200px); }
+        .hero-main, .hero-side, .process-card, .quote-card, .results-card { padding: 22px; }
+        .stat-grid { grid-template-columns: 1fr; }
+        h1 { max-width: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <!-- ─── Hero ─── -->
+      <section class="hero">
+        <article class="card hero-main">
+          <div class="hero-badge">Case Study / Product Design</div>
+          <h1>How a lean redesign improved conversions</h1>
+          <p class="lead">
+            A focused case study with a clear narrative: problem, process, key
+            results, and supporting evidence — built for readability, trust, and
+            quick scanning.
+          </p>
+          <div class="meta-pills">
+            <span class="pill">📌 Client: Atlas Studio</span>
+            <span class="pill">⏱ Timeline: 8 weeks</span>
+            <span class="pill">🎯 UX + UI + Front-end</span>
+          </div>
+        </article>
+
+        <aside class="card hero-side">
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-icon">📈</div>
+              <span class="stat-value up">+42%</span>
+              <span class="stat-label">Lead conversion</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">📉</div>
+              <span class="stat-value down">−31%</span>
+              <span class="stat-label">Bounce rate</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⏱</div>
+              <span class="stat-value neutral">2.4×</span>
+              <span class="stat-label">Time on page</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⚡</div>
+              <span class="stat-value up">99ms</span>
+              <span class="stat-label">Faster LCP</span>
+            </div>
+          </div>
+
+          <div class="highlights-panel">
+            <h3>Key highlights</h3>
+            <ul class="highlights-list">
+              <li><span class="hi-dot"></span> Refined information hierarchy and CTA placement.</li>
+              <li><span class="hi-dot"></span> Introduced modular content blocks for better scanning.</li>
+              <li><span class="hi-dot"></span> Optimised layout across all breakpoints.</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+
+      <!-- ─── Content ─── -->
+      <section class="content-grid">
+        <!-- Process -->
+        <article class="card process-card">
+          <div class="sec-title">Process</div>
+          <h2>Challenge and approach</h2>
+          <p class="process-lead">
+            The original page buried the value proposition and mixed proof points
+            with long-form copy. The redesign focused on a stronger narrative
+            structure and a cleaner layout system.
+          </p>
+
+          <div class="timeline">
+            <div class="step">
+              <div class="step-dot"></div>
+              <div class="step-num">01</div>
+              <div>
+                <h3>Audit the page flow</h3>
+                <p>Mapped the full user journey from headline to proof to the primary conversion action.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-dot"></div>
+              <div class="step-num">02</div>
+              <div>
+                <h3>Rebuild the content order</h3>
+                <p>Moved outcomes and social proof above deep-detail sections to front-load value.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-dot"></div>
+              <div class="step-num">03</div>
+              <div>
+                <h3>Design for consistency</h3>
+                <p>Built a reusable design system with cards, spacing tokens, and clear contrast rules.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Quote + Results -->
+        <div class="side-col">
+          <div class="card quote-card">
+            <div class="quote-mark" aria-hidden="true">"</div>
+            <blockquote>
+              The redesigned case study made our results easier to understand in under 30 seconds.
+            </blockquote>
+            <cite>— Marketing Director, Atlas Studio</cite>
+          </div>
+
+          <article class="card results-card">
+            <div class="sec-title">Outcomes</div>
+            <h2>Outcome summary</h2>
+            <div class="result-list">
+              <div class="result">
+                <div class="result-label">
+                  Higher engagement
+                  <span>Time on page, scroll depth</span>
+                </div>
+                <span class="result-value pos">+38%</span>
+              </div>
+              <div class="result">
+                <div class="result-label">
+                  More qualified leads
+                  <span>Form completions</span>
+                </div>
+                <span class="result-value pos">+42%</span>
+              </div>
+              <div class="result">
+                <div class="result-label">
+                  Better mobile clarity
+                  <span>Mobile conversion rate</span>
+                </div>
+                <span class="result-value pos">+27%</span>
+              </div>
+              <div class="result">
+                <div class="result-label">
+                  Bounce rate
+                  <span>vs. previous period</span>
+                </div>
+                <span class="result-value neg">−31%</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ─── Footer ─── -->
+      <div class="page-footer">
+        Case study layout demo — semantic HTML, responsive CSS Grid, and reusable component architecture.
+      </div>
+    </main>
+  </body>
+</html>
