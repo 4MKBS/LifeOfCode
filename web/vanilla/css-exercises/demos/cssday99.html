@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme Switcher — Adaptive Interface</title>
+    <meta
+      name="description"
+      content="A premium theme switcher component with smooth transitions, glassmorphism, and live UI preview."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─── Light Theme (Default) ─── */
+      :root {
+        color-scheme: light;
+        --bg: #f0f2f8;
+        --bg-mesh-1: rgba(99, 102, 241, 0.12);
+        --bg-mesh-2: rgba(168, 85, 247, 0.10);
+        --bg-mesh-3: rgba(59, 130, 246, 0.08);
+        --surface: rgba(255, 255, 255, 0.72);
+        --surface-solid: #ffffff;
+        --surface-2: rgba(241, 245, 249, 0.8);
+        --border: rgba(15, 23, 42, 0.07);
+        --border-accent: rgba(99, 102, 241, 0.25);
+        --text: #0f172a;
+        --text-secondary: #475569;
+        --text-tertiary: #94a3b8;
+        --accent: #6366f1;
+        --accent-soft: rgba(99, 102, 241, 0.1);
+        --accent-glow: rgba(99, 102, 241, 0.2);
+        --success: #10b981;
+        --warning: #f59e0b;
+        --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+        --shadow: 0 20px 60px rgba(15, 23, 42, 0.1);
+        --shadow-lg: 0 32px 80px rgba(15, 23, 42, 0.14);
+        --knob-bg: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
+        --knob-icon: "☀️";
+        --knob-shadow: 0 4px 16px rgba(15, 23, 42, 0.15);
+        --toggle-bg: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        --chart-1: #6366f1;
+        --chart-2: #a78bfa;
+        --chart-3: #c4b5fd;
+        --chart-4: #ddd6fe;
+        --avatar-bg: linear-gradient(135deg, #6366f1, #8b5cf6);
+      }
+
+      /* ─── Dark Theme ─── */
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #09090f;
+        --bg-mesh-1: rgba(99, 102, 241, 0.08);
+        --bg-mesh-2: rgba(168, 85, 247, 0.06);
+        --bg-mesh-3: rgba(59, 130, 246, 0.05);
+        --surface: rgba(22, 22, 35, 0.75);
+        --surface-solid: #141420;
+        --surface-2: rgba(30, 30, 48, 0.6);
+        --border: rgba(148, 163, 184, 0.08);
+        --border-accent: rgba(129, 140, 248, 0.2);
+        --text: #e2e8f0;
+        --text-secondary: #94a3b8;
+        --text-tertiary: #64748b;
+        --accent: #818cf8;
+        --accent-soft: rgba(129, 140, 248, 0.1);
+        --accent-glow: rgba(129, 140, 248, 0.15);
+        --success: #34d399;
+        --warning: #fbbf24;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        --shadow-lg: 0 32px 80px rgba(0, 0, 0, 0.5);
+        --knob-bg: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+        --knob-icon: "🌙";
+        --knob-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        --toggle-bg: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+        --chart-1: #818cf8;
+        --chart-2: #a78bfa;
+        --chart-3: #6366f1;
+        --chart-4: #4f46e5;
+        --avatar-bg: linear-gradient(135deg, #818cf8, #a78bfa);
+      }
+
+      /* ─── Reset ─── */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* ─── Body ─── */
+      body {
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px 20px;
+        transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                    color 0.4s ease;
+        overflow-x: hidden;
+      }
+
+      /* ─── Mesh Background ─── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 15% 10%, var(--bg-mesh-1) 0%, transparent 50%),
+          radial-gradient(ellipse at 85% 20%, var(--bg-mesh-2) 0%, transparent 45%),
+          radial-gradient(ellipse at 50% 90%, var(--bg-mesh-3) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      /* ─── Container ─── */
+      .container {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 680px);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        animation: fadeIn 0.6s ease-out both;
+      }
+
+      /* ─── Glass Card ─── */
+      .card {
+        background: var(--surface);
+        backdrop-filter: blur(24px) saturate(1.4);
+        -webkit-backdrop-filter: blur(24px) saturate(1.4);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 32px;
+        box-shadow: var(--shadow);
+        transition: background 0.4s ease, border-color 0.4s ease,
+                    box-shadow 0.4s ease;
+      }
+
+      .card:hover {
+        border-color: var(--border-accent);
+      }
+
+      /* ─── Header Card ─── */
+      .header-card {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), #a78bfa, #ec4899, var(--accent));
+        background-size: 200% 100%;
+        animation: gradientShift 4s ease infinite;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .header-left h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.2;
+      }
+
+      .header-left p {
+        color: var(--text-secondary);
+        font-size: 0.92rem;
+        margin-top: 6px;
+        line-height: 1.5;
+      }
+
+      /* ─── Status Badge ─── */
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: var(--success);
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid rgba(16, 185, 129, 0.15);
+        padding: 4px 12px;
+        border-radius: 999px;
+        margin-top: 10px;
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--success);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      /* ─── Toggle Switch ─── */
+      .switch-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      .switch {
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .switch input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .toggle-track {
+        width: 76px;
+        height: 42px;
+        border-radius: 999px;
+        background: var(--toggle-bg);
+        border: 1px solid var(--border);
+        position: relative;
+        transition: background 0.4s ease, border-color 0.4s ease;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.06);
+      }
+
+      .toggle-track::before,
+      .toggle-track::after {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.85rem;
+        transition: opacity 0.3s ease;
+      }
+
+      .toggle-track::before {
+        content: "☀️";
+        left: 10px;
+        opacity: 1;
+      }
+
+      .toggle-track::after {
+        content: "🌙";
+        right: 10px;
+        opacity: 0.3;
+      }
+
+      :root[data-theme="dark"] .toggle-track::before {
+        opacity: 0.3;
+      }
+
+      :root[data-theme="dark"] .toggle-track::after {
+        opacity: 1;
+      }
+
+      .knob {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--knob-bg);
+        box-shadow: var(--knob-shadow);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    background 0.4s ease, box-shadow 0.4s ease;
+      }
+
+      :root[data-theme="dark"] .knob {
+        transform: translateX(34px);
+      }
+
+      .theme-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-secondary);
+        transition: color 0.3s;
+      }
+
+      /* ─── Preview Section ─── */
+      .preview-title {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .preview-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, var(--border-accent), transparent);
+      }
+
+      /* ─── Mini Dashboard Preview ─── */
+      .dashboard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px 16px;
+        transition: background 0.4s, border-color 0.4s, transform 0.2s;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--border-accent);
+      }
+
+      .stat-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+
+      .stat-icon.purple {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--accent);
+      }
+
+      .stat-icon.green {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--success);
+      }
+
+      .stat-icon.amber {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--warning);
+      }
+
+      .stat-value {
+        font-size: 1.35rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .stat-label {
+        font-size: 0.76rem;
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
+
+      .stat-change {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-top: 6px;
+        padding: 2px 7px;
+        border-radius: 6px;
+      }
+
+      .stat-change.up {
+        color: var(--success);
+        background: rgba(16, 185, 129, 0.08);
+      }
+
+      .stat-change.down {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.08);
+      }
+
+      /* ─── Mini Chart ─── */
+      .chart-area {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+
+      .bar-chart {
+        flex: 1;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+        transition: background 0.4s, border-color 0.4s;
+      }
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+
+      .chart-title {
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .chart-badge {
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: var(--accent);
+        background: var(--accent-soft);
+        padding: 3px 8px;
+        border-radius: 6px;
+      }
+
+      .bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 6px;
+        height: 80px;
+      }
+
+      .bar {
+        flex: 1;
+        border-radius: 6px 6px 2px 2px;
+        transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    background 0.4s ease;
+        min-height: 8px;
+      }
+
+      .bar:nth-child(1) { background: var(--chart-1); height: 65%; }
+      .bar:nth-child(2) { background: var(--chart-2); height: 85%; }
+      .bar:nth-child(3) { background: var(--chart-3); height: 45%; }
+      .bar:nth-child(4) { background: var(--chart-1); height: 100%; }
+      .bar:nth-child(5) { background: var(--chart-2); height: 70%; }
+      .bar:nth-child(6) { background: var(--chart-3); height: 90%; }
+      .bar:nth-child(7) { background: var(--chart-4); height: 55%; }
+
+      .donut-chart {
+        width: 200px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.4s, border-color 0.4s;
+      }
+
+      .donut {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: conic-gradient(
+          var(--chart-1) 0% 42%,
+          var(--chart-2) 42% 68%,
+          var(--chart-3) 68% 85%,
+          var(--chart-4) 85% 100%
+        );
+        position: relative;
+        transition: background 0.4s;
+      }
+
+      .donut::after {
+        content: "72%";
+        position: absolute;
+        inset: 12px;
+        border-radius: 50%;
+        background: var(--surface-2);
+        display: grid;
+        place-items: center;
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: var(--text);
+        transition: background 0.4s;
+      }
+
+      .donut-label {
+        font-size: 0.72rem;
+        color: var(--text-secondary);
+        margin-top: 10px;
+        font-weight: 600;
+      }
+
+      /* ─── Activity Feed ─── */
+      .activity-feed {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        transition: background 0.4s, border-color 0.4s, transform 0.2s;
+      }
+
+      .activity-item:hover {
+        transform: translateX(4px);
+        border-color: var(--border-accent);
+      }
+
+      .activity-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: var(--avatar-bg);
+        display: grid;
+        place-items: center;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+        transition: background 0.4s;
+      }
+
+      .activity-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .activity-text {
+        font-size: 0.84rem;
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      .activity-text strong {
+        font-weight: 700;
+      }
+
+      .activity-time {
+        font-size: 0.72rem;
+        color: var(--text-tertiary);
+        margin-top: 2px;
+      }
+
+      .activity-status {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .activity-status.online {
+        background: var(--success);
+        box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+      }
+
+      .activity-status.busy {
+        background: var(--warning);
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+      }
+
+      /* ─── Footer Controls ─── */
+      .footer-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        transition: border-color 0.4s;
+      }
+
+      .theme-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .theme-swatch {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        border: 2px solid var(--border);
+        background: var(--accent);
+        transition: background 0.4s, border-color 0.4s;
+        box-shadow: 0 0 12px var(--accent-glow);
+      }
+
+      .theme-meta {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        transition: color 0.4s;
+      }
+
+      .theme-meta strong {
+        display: block;
+        color: var(--text);
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: color 0.4s;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn {
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        color: var(--text);
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.84rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        border-color: var(--border-accent);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      .btn-accent {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+
+      .btn-accent:hover {
+        filter: brightness(1.1);
+        border-color: var(--accent);
+      }
+
+      /* ─── Features Chips ─── */
+      .features-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .feature-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        padding: 6px 14px;
+        border-radius: 999px;
+        transition: all 0.25s ease;
+      }
+
+      .feature-chip:hover {
+        color: var(--accent);
+        border-color: var(--border-accent);
+        transform: translateY(-1px);
+      }
+
+      .feature-chip .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      /* ─── Accessibility ─── */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* ─── Animations ─── */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50%      { background-position: 100% 50%; }
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50%      { opacity: 0.4; transform: scale(0.85); }
+      }
+
+      /* ─── Staggered card entrance ─── */
+      .card:nth-child(1) { animation: fadeIn 0.5s ease-out 0.1s both; }
+      .card:nth-child(2) { animation: fadeIn 0.5s ease-out 0.25s both; }
+
+      /* ─── Responsive ─── */
+      @media (max-width: 640px) {
+        .header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .dashboard {
+          grid-template-columns: 1fr;
+        }
+
+        .chart-area {
+          flex-direction: column;
+        }
+
+        .donut-chart {
+          width: 100%;
+        }
+
+        .footer-controls {
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .card {
+          padding: 22px 18px;
+          border-radius: 18px;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .header-left h1 {
+          font-size: 1.3rem;
+        }
+
+        .bars {
+          height: 60px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- ─── Header Card ─── -->
+      <main class="card header-card" id="header-card">
+        <div class="header">
+          <div class="header-left">
+            <h1>Theme Switcher</h1>
+            <p>
+              Toggle the interface theme with a smooth adaptive transition.
+              Your preference is persisted across sessions.
+            </p>
+            <div class="status-badge" id="status-badge">
+              <span class="status-dot"></span>
+              <span id="theme-status-text">Light mode active</span>
+            </div>
+          </div>
+
+          <div class="switch-wrapper">
+            <label class="switch" for="themeToggle" id="toggle-label">
+              <div class="toggle-track">
+                <div class="knob"></div>
+              </div>
+              <input id="themeToggle" type="checkbox" class="sr-only" />
+            </label>
+            <span class="theme-label" id="themeLabel">Light</span>
+          </div>
+        </div>
+
+        <div class="features-row" aria-hidden="true">
+          <span class="feature-chip"><span class="dot"></span> CSS Variables</span>
+          <span class="feature-chip"><span class="dot"></span> LocalStorage</span>
+          <span class="feature-chip"><span class="dot"></span> Glassmorphism</span>
+          <span class="feature-chip"><span class="dot"></span> Responsive</span>
+          <span class="feature-chip"><span class="dot"></span> Accessible</span>
+        </div>
+      </main>
+
+      <!-- ─── Preview Card ─── -->
+      <section class="card" id="preview-card" aria-label="Live theme preview">
+        <div class="preview-title">Live Preview</div>
+
+        <!-- Stats Row -->
+        <div class="dashboard" id="dashboard-stats">
+          <div class="stat-card">
+            <div class="stat-icon purple">📊</div>
+            <div class="stat-value" id="stat-views">12.4k</div>
+            <div class="stat-label">Page Views</div>
+            <div class="stat-change up">↑ 12.3%</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon green">👥</div>
+            <div class="stat-value">3.2k</div>
+            <div class="stat-label">Users</div>
+            <div class="stat-change up">↑ 8.1%</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon amber">⏱️</div>
+            <div class="stat-value">2m 14s</div>
+            <div class="stat-label">Avg. Session</div>
+            <div class="stat-change down">↓ 3.2%</div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="chart-area">
+          <div class="bar-chart">
+            <div class="chart-header">
+              <span class="chart-title">Weekly Traffic</span>
+              <span class="chart-badge">This week</span>
+            </div>
+            <div class="bars" id="chart-bars">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+          </div>
+
+          <div class="donut-chart">
+            <div class="donut" id="donut"></div>
+            <span class="donut-label">Completion Rate</span>
+          </div>
+        </div>
+
+        <!-- Activity Feed -->
+        <div class="preview-title">Recent Activity</div>
+        <div class="activity-feed">
+          <div class="activity-item">
+            <div class="activity-avatar">SA</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>Sakib</strong> pushed to main</div>
+              <div class="activity-time">2 minutes ago</div>
+            </div>
+            <div class="activity-status online"></div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-avatar">RK</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>Rahim</strong> reviewed PR #42</div>
+              <div class="activity-time">15 minutes ago</div>
+            </div>
+            <div class="activity-status busy"></div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-avatar">NJ</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>Nadia</strong> deployed to staging</div>
+              <div class="activity-time">1 hour ago</div>
+            </div>
+            <div class="activity-status online"></div>
+          </div>
+        </div>
+
+        <!-- Footer Controls -->
+        <div class="footer-controls">
+          <div class="theme-info">
+            <div class="theme-swatch" id="theme-swatch"></div>
+            <div class="theme-meta">
+              <strong id="active-theme-name">Indigo Light</strong>
+              <span id="active-theme-desc">System default</span>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn" type="button" id="resetTheme">Reset</button>
+            <button class="btn btn-accent" type="button" id="exportTheme">
+              Export CSS
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      const toggle = document.getElementById("themeToggle");
+      const label = document.getElementById("themeLabel");
+      const statusText = document.getElementById("theme-status-text");
+      const themeName = document.getElementById("active-theme-name");
+      const themeDesc = document.getElementById("active-theme-desc");
+      const resetBtn = document.getElementById("resetTheme");
+      const exportBtn = document.getElementById("exportTheme");
+
+      const systemTheme = () =>
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        toggle.checked = theme === "dark";
+
+        const isDark = theme === "dark";
+        label.textContent = isDark ? "Dark" : "Light";
+        statusText.textContent = isDark
+          ? "Dark mode active"
+          : "Light mode active";
+        themeName.textContent = isDark ? "Indigo Dark" : "Indigo Light";
+
+        const saved = localStorage.getItem("theme");
+        themeDesc.textContent = saved ? "User preference" : "System default";
+
+        localStorage.setItem("theme", theme);
+      };
+
+      // Init
+      const savedTheme = localStorage.getItem("theme");
+      applyTheme(savedTheme || systemTheme());
+
+      // Toggle handler
+      toggle.addEventListener("change", () => {
+        applyTheme(toggle.checked ? "dark" : "light");
+      });
+
+      // Reset handler
+      resetBtn.addEventListener("click", () => {
+        localStorage.removeItem("theme");
+        applyTheme(systemTheme());
+        themeDesc.textContent = "System default";
+      });
+
+      // Export handler — copies CSS vars to clipboard
+      exportBtn.addEventListener("click", () => {
+        const styles = getComputedStyle(root);
+        const vars = [
+          "--bg", "--surface", "--border", "--text",
+          "--text-secondary", "--accent"
+        ];
+        const css = vars
+          .map((v) => `  ${v}: ${styles.getPropertyValue(v).trim()};`)
+          .join("\n");
+        const output = `:root {\n${css}\n}`;
+
+        navigator.clipboard.writeText(output).then(() => {
+          const orig = exportBtn.textContent;
+          exportBtn.textContent = "Copied!";
+          setTimeout(() => (exportBtn.textContent = orig), 1500);
+        }).catch(() => {
+          // Fallback if clipboard API not available
+          const orig = exportBtn.textContent;
+          exportBtn.textContent = "See console";
+          console.log(output);
+          setTimeout(() => (exportBtn.textContent = orig), 1500);
+        });
+      });
+
+      // Listen for system theme changes
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem("theme")) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        });
+    </script>
+  </body>
+</html>
