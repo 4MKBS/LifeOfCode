@@ -1,4 +1,4 @@
-# Data Structures & Algorithms (DSA)
+# Data Structures & Algorithms (D.S.A.)
 
 This directory contains implementations and solutions for common data structures and algorithms problems.
 
